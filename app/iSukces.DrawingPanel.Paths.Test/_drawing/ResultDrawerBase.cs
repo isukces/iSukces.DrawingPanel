@@ -165,8 +165,8 @@ namespace iSukces.DrawingPanel.Paths.Test
 
 
         protected const double AngleDelta = 10;
-        protected const int Width = 1920;
-        protected const int Height = 1080;
+        protected const int Width = 1200;
+        protected const int Height = 800;
         protected const float Radius = 4;
 
         public double Scale { get; set; }
