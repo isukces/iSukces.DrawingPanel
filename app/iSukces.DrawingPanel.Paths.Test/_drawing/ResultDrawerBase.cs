@@ -141,7 +141,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Graph.DrawLine(pen, a.X, a.Y, b.X, b.Y);
         }
 
-        protected void GrayCross(Point point) { DrawCross(point, Color.Indigo, 3); }
+        public void GrayCross(Point point) { DrawCross(point, Color.Indigo, 3); }
 
         public PointF Map(Point p)
         {

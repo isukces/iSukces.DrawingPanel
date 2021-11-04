@@ -48,6 +48,24 @@ namespace iSukces.DrawingPanel.Paths
             End        = new PathRay(new Point(100, 0), new Vector(-100, 100));
             Reference1 = new PathRay(new Point(40, 20), new Vector());
             Reference2 = new PathRay(new Point(60, 20), new Vector());
+
+
+
+            Start      = new PathRay(-20, 0, 200, 100);
+            End        = new PathRay(100, 0, -100, 100);
+            Reference1 = new PathRay(52.23347, -12.60536, 0, 0);
+            Reference2 = new PathRay(17.4, 13.16829, 0, 0);
+
+            
+                /*
+                 bardzo dziwna
+                Start      = new PathRay(-20, 0, 200, 100),
+                End        = new PathRay(100, 0, -100, 100),
+                Reference1 = new PathRay(62.22833, -8.31581, 0, 0),
+                Reference2 = new PathRay(17.4, 13.16829, 0, 0)
+                */
+
+
         }
 
         public override void SetReferencePoint(Point p, int nr)

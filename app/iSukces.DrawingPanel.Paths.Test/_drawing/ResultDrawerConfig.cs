@@ -17,6 +17,16 @@ namespace iSukces.DrawingPanel.Paths.Test
             return fi;
         }
 
+        public ResultDrawerConfig With(TwoReferencePointsPathCalculator calc)
+        {
+            ExtraDrawing = g =>
+            {
+                g.GrayCross(calc.Reference1.Point);
+                g.GrayCross(calc.Reference2.Point);
+            };
+            return this;
+        }
+
         public ResultDrawerConfig WithReverseEndMarker()
         {
             Flags |= ResultDrawerConfigFlags.ReverseEndMarker;

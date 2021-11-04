@@ -26,7 +26,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 End    = calc.End,
                 Result = r,
                 Title  = MakeTitle(1, "simple"),
-            }.Draw();
+            }.With(calc).Draw();
 
             #region Asserts
 
@@ -71,7 +71,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 End    = calc.End,
                 Result = r,
                 Title  = MakeTitle(2, "left to close"),
-            }.Draw();
+            }.With(calc).Draw();
 
             #region Asserts
             AssertEx.Equal(-20, 0, r.Start);
@@ -120,7 +120,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 End    = calc.End,
                 Result = r,
                 Title  = MakeTitle(3, "left little out"),
-            }.Draw();
+            }.With(calc).Draw();
 
            
             #region Asserts
@@ -171,7 +171,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 End    = calc.End,
                 Result = r,
                 Title  = MakeTitle(4, "big rotation angle"),
-            }.Draw();
+            }.With(calc).Draw();
 
            
             var code = new TestMaker().Create(r, nameof(r));
