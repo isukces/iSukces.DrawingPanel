@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Windows;
-using iSukces.DrawingPanel.Paths;
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
     public class OneReferencePointPathCalculatorTests
     {
+        private static TestName MakeTitle(int testNumber, string title)
+        {
+            return new TestName(testNumber, "One", title);
+        }
+
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
@@ -25,17 +29,16 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r = a.Compute(null);
             if (Math.Abs(x - 12.4) < 0.0001)
-                ResultDrawer.Draw(a, r, MakeTitle(1,"colinear") );
+                ResultDrawer.Draw(a, r, MakeTitle(1, "colinear"));
+
+            #region Asserts
 
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(50, 0, r.End);
             Assert.Single(r.Arcs);
             AssertEx.Equal(0, 0, 50, 0, (LinePathElement)r.Arcs[0], 6);
-        }
 
-        private static TestName MakeTitle(int testNumber, string title)
-        {
-            return new TestName(testNumber, "One", title);
+            #endregion
         }
 
         [Fact]
@@ -49,7 +52,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(2, "colinear"));
-            var code = new TestMaker().Create(r, nameof(r));
+
+            #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(50, 0, r.End);
             Assert.Equal(4, r.Arcs.Count);
@@ -81,6 +86,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(34, 4, tmp1.Start);
             AssertEx.Equal(50, 0, tmp1.End);
             AssertEx.Equal(30, -16, tmp1.StartVector);
+
+            #endregion
         }
 
         [Theory]
@@ -101,7 +108,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(3, "too small radius, x=" + x));
-            var code = new TestMaker().Create(r, nameof(r));
+
+            #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
             Assert.Equal(3, r.Arcs.Count);
@@ -120,6 +129,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(20.3431457505076, 4, tmp1.Start);
             AssertEx.Equal(30, 0, tmp1.End);
             AssertEx.Equal(30, 0, tmp1.StartVector);
+
+            #endregion
         }
 
         [Fact]
@@ -133,7 +144,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(4, "normal config"));
-            var code = new TestMaker().Create(r, nameof(r));
+
+            #region Asserts
 
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(50, 0, r.End);
@@ -153,6 +165,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(45.7639320225002, 1, tmp1.Start);
             AssertEx.Equal(50, 0, tmp1.End);
             AssertEx.Equal(50, 0, tmp1.StartVector);
+
+            #endregion
         }
 
         [Fact]
@@ -169,8 +183,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             a.Reference = new PathRay(cross + new Vector(0, -0.02), default(Vector));
             var r = a.Compute(new MinimumValuesPathValidator(3, 0.5));
             ResultDrawer.Draw(a, r, MakeTitle(6, "high"));
-            var code = new TestMaker().Create(r, nameof(r));
-            
+
+            #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
             Assert.Equal(4, r.Arcs.Count);
@@ -203,6 +218,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(30, 0, tmp1.End);
             AssertEx.Equal(14.5080263561975, -14.6028596471451, tmp1.StartVector);
 
+            #endregion
         }
 
         [Fact]
@@ -219,8 +235,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             a.Reference = new PathRay(cross, default(Vector));
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(7, "high top"));
-            var code = new TestMaker().Create(r, nameof(r));
-            
+
+            #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
             Assert.Equal(4, r.Arcs.Count);
@@ -252,6 +269,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(26.7878764835803, 5.72390340672037, tmp1.Start);
             AssertEx.Equal(30, 0, tmp1.End);
             AssertEx.Equal(2.85184956044028, -11.7878764835803, tmp1.StartVector);
+
+            #endregion
         }
 
         [Fact]
@@ -259,15 +278,16 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var a = new OneReferencePointPathCalculator
             {
-                Start     = new PathRay(0, 0, 1, 1),
-                End       = new PathRay(30, 0, -2, 1),
+                Start = new PathRay(0, 0, 1, 1),
+                End   = new PathRay(30, 0, -2, 1),
             };
             var cross = a.Start.Cross(a.End).Value;
             a.Reference = new PathRay(cross + new Vector(0, 1), default(Vector));
-            
+
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(8, "too high"));
-            var code = new TestMaker().Create(r, nameof(r));
+
+            #region Asserts
 
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
@@ -301,25 +321,26 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(30, 0, tmp1.End);
             AssertEx.Equal(12.2820029167136, -14.1977614644439, tmp1.StartVector);
 
+            #endregion
         }
 
-        
-        
-         [Fact]
+
+        [Fact]
         public void T09_Should_create_too_high_right()
         {
             var a = new OneReferencePointPathCalculator
             {
-                Start     = new PathRay(0, 0, 1, 1),
-                End       = new PathRay(30, 0, -2, 1),
+                Start = new PathRay(0, 0, 1, 1),
+                End   = new PathRay(30, 0, -2, 1),
             };
             var cross = a.Start.Cross(a.End).Value;
             a.Reference = new PathRay(cross + new Vector(20, 1), default(Vector));
-            
+
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(9, "too high right"));
-            
+
             #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
             Assert.Equal(4, r.Arcs.Count);
@@ -345,27 +366,27 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(30.6399093854028, 5.34893788560484, tmp1.Start);
             AssertEx.Equal(30, 0, tmp1.End);
             AssertEx.Equal(-2.78930034399383, -0.639909385402753, tmp1.StartVector);
-            #endregion
 
+            #endregion
         }
 
-              
-         [Fact]
+
+        [Fact]
         public void T10_Should_create_too_high_left()
         {
             var a = new OneReferencePointPathCalculator
             {
-                Start     = new PathRay(0, 0, 1, 1),
-                End       = new PathRay(30, 0, -2, 1),
+                Start = new PathRay(0, 0, 1, 1),
+                End   = new PathRay(30, 0, -2, 1),
             };
             var cross = a.Start.Cross(a.End).Value;
             a.Reference = new PathRay(cross + new Vector(-7.2, 1), default(Vector));
-            
+
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(10, "too high left"));
-            var code = new TestMaker().Create(r, nameof(r));
-          
+
             #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
             Assert.Equal(4, r.Arcs.Count);
@@ -391,12 +412,11 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(12.6510213931996, 8.67448930340022, tmp1.End);
             AssertEx.Equal(30, 0, tmp1.StartVector);
             AssertEx.Equal(12.6510213931996, 8.67448930340022, 30, 0, (LinePathElement)r.Arcs[3], 6);
+
             #endregion
-
-
         }
 
-        
+
         private const double Epsilon = 1e-6;
     }
 }
