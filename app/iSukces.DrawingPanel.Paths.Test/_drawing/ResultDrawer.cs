@@ -102,6 +102,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             CreateBitmap();
 
             Graph = Graphics.FromImage(Bmp);
+            Graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             {
                 Graph.FillRectangle(Brushes.White, 0, 0, Bmp.Width, Bmp.Height);
                 DrawCircleWithVector(_cfg.Start);
