@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,7 +18,35 @@ namespace iSukces.DrawingPanel.Paths.Test
         public static void Draw(OneReferencePointPathCalculator x, IPathResult r, TestName name,
             [CallerFilePath] string path = null)
         {
-            void ExtraDraw(ResultDrawer g) { g.GrayCross(x.Reference.Point); }
+            
+            void ExtraDraw2(ResultDrawer g)
+            {
+                var crossNullable = x.Start.Cross(x.End);
+                if (!crossNullable.HasValue) return;
+                var cross = crossNullable.Value;
+                var dot   = (cross - x.Start.Point) * x.Start.Vector;
+                if (dot < 0)
+                    return;
+             dot = (cross - x.End.Point) * x.End.Vector;
+                if (dot < 0)
+                    return;
+
+
+                using var pen = new Pen(Color.Aqua, 1)
+                {
+                    DashStyle = DashStyle.DashDot
+                };
+                var       p1  = g.Map(x.Start.Point);
+                var       p2  = g.Map(x.End.Point);
+                var       p3  = g.Map(cross);
+                g.Graph.DrawPolygon(pen, new[] { p1, p2, p3, p1 });
+            }
+            
+            void ExtraDraw(ResultDrawer g)
+            {
+                g.GrayCross(x.Reference.Point);
+                ExtraDraw2(g);
+            }
 
             IEnumerable<Point> ExtraPoints()
             {

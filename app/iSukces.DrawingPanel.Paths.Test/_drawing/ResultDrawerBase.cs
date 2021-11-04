@@ -149,7 +149,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             return m;
         }
 
-        private PointF Map(Point p)
+        public PointF Map(Point p)
         {
             var x = Map(p.X, XRange);
             var y = Bmp.Height - Map(p.Y, YRange);
