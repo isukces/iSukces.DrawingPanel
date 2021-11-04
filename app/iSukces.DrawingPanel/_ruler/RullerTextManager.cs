@@ -49,7 +49,7 @@ namespace iSukces.DrawingPanel
 
         public Brush TextBrush
         {
-            get { return _textBrush; }
+            get => _textBrush;
             set
             {
                 if (value is null)

@@ -29,15 +29,10 @@ namespace iSukces.DrawingPanel.Interfaces
 
         public PointF ToCanvasF(double pointX, double pointY) { return new((float)pointX, (float)pointY); }
 
-        public double Scale
-        {
-            get { return 1; }
-        }
+        public double Scale => 1;
 
         public static IdentityDrawingToPixelsTransformation Instance
-        {
-            get { return IdentityDrawingToPixelsTransformationHolder.SingleIstance; }
-        }
+            => IdentityDrawingToPixelsTransformationHolder.SingleIstance;
 
         private static class IdentityDrawingToPixelsTransformationHolder
         {

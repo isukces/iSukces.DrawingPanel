@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;
 using Point = System.Windows.Point;
 
@@ -16,17 +15,30 @@ namespace iSukces.DrawingPanel
             };
         }
 
-        public override void Draw(Graphics graphics)
+        public override void Draw(Graphics graphics) { _primitive.Draw(graphics, _canvasInfo); }
+
+        public bool IsInside(Point logicPoint, double tolerance)
         {
-            _primitive.Draw(graphics, _canvasInfo);
+            // var transformation = _canvasInfo.Transformation;
+            //var canvasPoint                   = transformation.ToCanvas(logicPoint);
+            //tolerance *= transformation.Scale; 
+            return _primitive.IsInside(logicPoint, tolerance);
         }
 
 
         public Layer DrawableLayer { get; }
 
-        public string Text { get => _primitive.Text; set => _primitive.Text = value; }
+        public string Text
+        {
+            get => _primitive.Text;
+            set => _primitive.Text = value;
+        }
 
-        public Point Point { get => _primitive.Point; set => _primitive.Point = value; }
+        public Point Point
+        {
+            get => _primitive.Point;
+            set => _primitive.Point = value;
+        }
 
         public HorizontalDrawableTextAlignment HorizontalAlignment
         {
@@ -40,20 +52,26 @@ namespace iSukces.DrawingPanel
             set => _primitive.VerticalAlignment = value;
         }
 
-        public double FontSize { get => _primitive.FontSize; set => _primitive.FontSize = value; }
+        public double FontSize
+        {
+            get => _primitive.FontSize;
+            set => _primitive.FontSize = value;
+        }
 
-        public Brush  FontBrush { get => _primitive.FontBrush; set => _primitive.FontBrush = value; }
-        public object Tag       { get;                         set; }
-        public double Angle     { get => _primitive.Angle;     set => _primitive.Angle = value; }
+        public Brush FontBrush
+        {
+            get => _primitive.FontBrush;
+            set => _primitive.FontBrush = value;
+        }
+
+        public object Tag { get; set; }
+
+        public double Angle
+        {
+            get => _primitive.Angle;
+            set => _primitive.Angle = value;
+        }
 
         private readonly LiteDrawableText _primitive = new();
-
-        public bool IsInside(Point logicPoint, double tolerance)
-        {
-            // var transformation = _canvasInfo.Transformation;
-            //var canvasPoint                   = transformation.ToCanvas(logicPoint);
-            //tolerance *= transformation.Scale; 
-            return _primitive.IsInside(logicPoint, tolerance);
-        }
     }
 }

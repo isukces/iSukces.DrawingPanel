@@ -62,7 +62,6 @@ namespace iSukces.DrawingPanel.Paths
                         Arc1 = one,
                         Kind = ResultKind.OneArc
                     };
-
             }
 
             return TryTwo(null);
@@ -250,18 +249,6 @@ namespace iSukces.DrawingPanel.Paths
 
         public sealed class Result
         {
-            public override string ToString()
-            {
-                switch (Kind)
-                {
-                    case ResultKind.OneArc: return $"{Arc1}";
-                    case ResultKind.TwoArcs: return $"{Arc1} {Arc2}";
-                    case ResultKind.Point: return "Point";
-                    case ResultKind.Line: return "Line";
-                    default: return "Unknown";
-                }
-            }
-
             public double GetLength(Point s, Point e)
             {
                 double d = 0;
@@ -301,6 +288,18 @@ namespace iSukces.DrawingPanel.Paths
                 }
 
                 return r;
+            }
+
+            public override string ToString()
+            {
+                switch (Kind)
+                {
+                    case ResultKind.OneArc: return $"{Arc1}";
+                    case ResultKind.TwoArcs: return $"{Arc1} {Arc2}";
+                    case ResultKind.Point: return "Point";
+                    case ResultKind.Line: return "Line";
+                    default: return "Unknown";
+                }
             }
 
             public ResultKind    Kind { get; set; }

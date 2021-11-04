@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using iSukces.DrawingPanel.Paths;
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
@@ -22,17 +21,16 @@ namespace iSukces.DrawingPanel.Paths.Test
             arc.UpdateRadiusVectors();
             Assert.Equal(expected, arc.Direction);
         }
-        
-        
-        
-               
+
+
         [Theory]
-        [InlineData(1,      50, 0,    0, 50)]
-        [InlineData(-1,      50, 0,    0, -50)]
-        [InlineData(1,      -50, 0,    0, -50)]
-        [InlineData(-1,      -50, 0,    0, 50)]
-        [InlineData(1,      0, 50,    -50, 0)]
-        public void T02_Should_find_end_vector(double yOfStart, double x, double y, double expectedX, double expectedY)
+        [InlineData(1, 50, 0, 0, 50)]
+        [InlineData(-1, 50, 0, 0, -50)]
+        [InlineData(1, -50, 0, 0, -50)]
+        [InlineData(-1, -50, 0, 0, 50)]
+        [InlineData(1, 0, 50, -50, 0)]
+        public void T02_Should_find_end_vector(double yOfStart, double x, double y, double expectedX,
+            double expectedY)
         {
             var v = new Vector(x, y);
             v.Normalize();
@@ -51,34 +49,28 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(expectedX, end.X, 6);
             Assert.Equal(expectedY, end.Y, 6);
         }
-        
-        
-        
+
+
         [Theory]
-        [InlineData(1, 50, 0,    0)]
-        [InlineData(1, 50, 50,    45)]
-        [InlineData(1, 0, 50,    90)]
-        [InlineData(1, -50, 50,    135)]
-        [InlineData(1, -50, 0,    180)]
-        [InlineData(1, -50, -50,    225)]
-        [InlineData(1, 0, -50,    270)]
-        [InlineData(1, 50, -50,    315)]
-        
-     
-        
-        [InlineData(-1, 50, 0,    0)]
-        [InlineData(-1, 50, 50,    315)]
-        [InlineData(-1, 0, 50,    270)]
-        [InlineData(-1, -50, 50,    225)]
-        [InlineData(-1, -50, 0,    180)]
-        [InlineData(-1, -50, -50,    135)]
-        [InlineData(-1, 0, -50,    90)]
-        [InlineData(-1, 50, -50,    45)]
-        
-        
+        [InlineData(1, 50, 0, 0)]
+        [InlineData(1, 50, 50, 45)]
+        [InlineData(1, 0, 50, 90)]
+        [InlineData(1, -50, 50, 135)]
+        [InlineData(1, -50, 0, 180)]
+        [InlineData(1, -50, -50, 225)]
+        [InlineData(1, 0, -50, 270)]
+        [InlineData(1, 50, -50, 315)]
+        [InlineData(-1, 50, 0, 0)]
+        [InlineData(-1, 50, 50, 315)]
+        [InlineData(-1, 0, 50, 270)]
+        [InlineData(-1, -50, 50, 225)]
+        [InlineData(-1, -50, 0, 180)]
+        [InlineData(-1, -50, -50, 135)]
+        [InlineData(-1, 0, -50, 90)]
+        [InlineData(-1, 50, -50, 45)]
         public void T03_Should_find_angle(double yOfStart, double x, double y, double expected)
         {
-            var v      = new Vector(x, y);
+            var v = new Vector(x, y);
             v.Normalize();
             v *= 50;
             var center = new Point(100, 200);

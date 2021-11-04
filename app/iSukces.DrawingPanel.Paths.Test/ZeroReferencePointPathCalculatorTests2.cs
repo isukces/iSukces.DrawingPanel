@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using iSukces.DrawingPanel.Paths;
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
@@ -9,9 +8,9 @@ namespace iSukces.DrawingPanel.Paths.Test
         [Fact]
         public void T01_Line_OneArc_Right_27()
         {
-            var start= new PathRay(new Point(-20, 0), new Vector(200, 100));
+            var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(33.6452056050077, 24.7273817080189), new Vector(1, 0));
-            var r = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             Assert.Equal(ArcDirection.Clockwise, r.Arc1.Direction);
             Assert.Equal(26.565051177078, r.Arc1.Angle, 6);
@@ -110,7 +109,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [Fact]
         public void T05_TwoArcs_Left_85_Right_203()
         {
-            var start= new PathRay(new Point(-20, 0), new Vector(200, 100));
+            var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end = new PathRay(new Point(25.6788054191289, 30.3507230156981),
                 new Vector(-1.17316474829017, -49.9862349499677));
             var r = ZeroReferencePointPathCalculator.Compute(start, end, null);

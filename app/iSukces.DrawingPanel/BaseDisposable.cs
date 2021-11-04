@@ -4,10 +4,7 @@ namespace iSukces.DrawingPanel
 {
     public class BaseDisposable : IDisposable
     {
-        ~BaseDisposable()
-        {
-            DisposeInternal();
-        }
+        ~BaseDisposable() { DisposeInternal(); }
 
         public void Dispose()
         {
@@ -19,7 +16,5 @@ namespace iSukces.DrawingPanel
         {
             // Release managed resources here
         }
-
     }
-
 }

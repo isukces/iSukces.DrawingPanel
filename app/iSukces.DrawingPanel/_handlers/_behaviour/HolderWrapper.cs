@@ -8,12 +8,9 @@ namespace iSukces.DrawingPanel
             Order   = order;
         }
 
-        public override string ToString()
-        {
-            return Handler?.ToString() ?? base.ToString();
-        }
+        public override string ToString() { return Handler?.ToString() ?? base.ToString(); }
 
         public INewHandler Handler { get; }
-        public int      Order   { get; }
+        public int         Order   { get; }
     }
 }

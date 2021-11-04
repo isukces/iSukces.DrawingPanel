@@ -88,6 +88,8 @@ namespace iSukces.DrawingPanel
                 supportInitialize.EndInit();
         }
 
+        public DrawingCanvasInfo CanvasInfo => _container.CanvasInfo;
+
         public IList<TItem> Children => _children;
 
 
@@ -96,7 +98,5 @@ namespace iSukces.DrawingPanel
         private ExtendedObservableCollection<TItem> _children;
 
         private IDrawingLayersContainer _container;
-        
-        public DrawingCanvasInfo CanvasInfo => _container.CanvasInfo;
     }
 }

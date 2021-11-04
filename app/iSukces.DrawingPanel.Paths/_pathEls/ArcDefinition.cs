@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.Mathematics;
 
@@ -20,15 +19,6 @@ namespace iSukces.DrawingPanel.Paths
             };
             return arc;
         }
-
-
-        public override string ToString()
-        {
-            return $"{Angle:N2}°, r={Radius:N2}";
-
-        }
-
-        private double Radius => RadiusStart.Length;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArcDefinition Make(PathRay a, Point b, Vector vb) { return Make(a.Point, a.Vector, b, vb); }
@@ -70,15 +60,22 @@ namespace iSukces.DrawingPanel.Paths
 
         Vector IPathElement.GetEndVector() { return EndVector; }
 
+        public double GetLength() { return Radius * Angle * MathEx.DEGTORAD; }
+
         Point IPathElement.GetStartPoint() { return Start; }
 
         Vector IPathElement.GetStartVector() { return StartVector; }
+
+
+        public override string ToString() { return $"{Angle:N2}°, r={Radius:N2}"; }
 
         public void UpdateRadiusVectors()
         {
             RadiusStart = Start - Center;
             RadiusEnd   = End - Center;
         }
+
+        private double Radius => RadiusStart.Length;
 
         public Vector RadiusEnd { get; set; }
 
@@ -131,11 +128,6 @@ namespace iSukces.DrawingPanel.Paths
                     return ArcDirection.Clockwise; // MathematicalMinus
                 return ArcDirection.CounterClockwise; // MathematicalPlus;
             }
-        }
-
-        public double GetLength()
-        {
-            return Radius * Angle * MathEx.DEGTORAD;
         }
     }
 }

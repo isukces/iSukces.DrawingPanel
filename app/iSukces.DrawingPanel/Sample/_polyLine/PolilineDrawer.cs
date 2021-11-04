@@ -104,10 +104,7 @@ namespace iSukces.DrawingPanel.Sample
 
     partial class PolilineDrawer
     {
-        public DrawingHandleResult HandleOnMouseDown(MouseEventArgs e)
-        {
-            return DrawingHandleResult.Continue;
-        }
+        public DrawingHandleResult HandleOnMouseDown(MouseEventArgs e) { return DrawingHandleResult.Continue; }
 
         public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args)
         {

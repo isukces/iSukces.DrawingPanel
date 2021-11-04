@@ -25,12 +25,12 @@ namespace iSukces.DrawingPanel
         {
             if (e.Action != NotifyCollectionChangedAction.Move)
             {
-                
                 var l = e.OldItems;
                 if (e.Action == NotifyCollectionChangedAction.Reset && e is ExtendedNotifyCollectionChangedEventArgs a1)
                 {
                     l = a1.ResetedList;
                 }
+
                 if (l != null)
                     for (var i = 0; i < l.Count; i++)
                     {
@@ -78,10 +78,7 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        private void ElementOnChanged(object sender, EventArgs e)
-        {
-            OnChanged();
-        }
+        private void ElementOnChanged(object sender, EventArgs e) { OnChanged(); }
 
         public void EndInit()
         {
@@ -120,23 +117,21 @@ namespace iSukces.DrawingPanel
         {
             add
             {
-                #if DEBUG
-                if (this.GetType().Name=="AutoCadLayersGroup")
+#if DEBUG
+                if (GetType().Name == "AutoCadLayersGroup")
                     Debug.Write("");
-                #endif
+#endif
                 _changed += value;
             }
             remove
             {
 #if DEBUG
-                if (this.GetType().Name=="AutoCadLayersGroup")
+                if (GetType().Name == "AutoCadLayersGroup")
                     Debug.Write("");
 #endif
                 _changed -= value;
             }
         }
-
-        private EventHandler _changed;
 
         public bool Visible
         {
@@ -160,6 +155,8 @@ namespace iSukces.DrawingPanel
         public string Name { get; set; }
         public object Tag  { get; set; }
         private DrawingCanvasInfo _canvasInfo;
+
+        private EventHandler _changed;
         private ExtendedObservableCollection<TItem> _children;
         private bool _needNotifyOnChanged;
 

@@ -8,10 +8,7 @@ namespace iSukces.DrawingPanel
     {
         public abstract void Draw(Graphics graphics);
 
-        protected void OnChanged()
-        {
-            Changed?.Invoke(this, EventArgs.Empty);
-        }
+        protected void OnChanged() { Changed?.Invoke(this, EventArgs.Empty); }
 
         protected void SetAndNotify(ref int field, int value)
         {
@@ -28,6 +25,7 @@ namespace iSukces.DrawingPanel
             field = value;
             OnChanged();
         }
+
         protected void SetAndNotify<T>(ref T field, T value, Action a)
         {
             if (Equals(field, value))
@@ -37,17 +35,14 @@ namespace iSukces.DrawingPanel
             OnChanged();
         }
 
-        public virtual void SetCanvasInfo(DrawingCanvasInfo canvasInfo)
-        {
-            _canvasInfo = canvasInfo;
-        }
+        public virtual void SetCanvasInfo(DrawingCanvasInfo canvasInfo) { _canvasInfo = canvasInfo; }
 
         public event EventHandler Changed;
 
 
         public bool Visible
         {
-            get { return _visible; }
+            get => _visible;
             set
             {
                 if (_visible == value)

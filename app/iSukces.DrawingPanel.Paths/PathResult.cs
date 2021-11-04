@@ -15,12 +15,19 @@ namespace iSukces.DrawingPanel.Paths
             End   = end;
             Arcs  = arcs ?? Array.Empty<IPathElement>();
         }
-        
+
         public PathResult(IReadOnlyList<IPathElement> arcs)
         {
             Start = arcs[0].GetStartPoint();
             End   = arcs.Last().GetEndPoint();
             Arcs  = arcs;
+        }
+
+        public PathResult([NotNull] IPathElement element)
+        {
+            Start = element.GetStartPoint();
+            End   = element.GetEndPoint();
+            Arcs  = new[] { element };
         }
 
 
@@ -48,13 +55,6 @@ namespace iSukces.DrawingPanel.Paths
                 ? Array.Empty<IPathElement>()
                 : new[] { element };
             return new PathResult(start, end, elements);
-        }
-        
-        public   PathResult([NotNull] IPathElement element)
-        {
-            Start = element.GetStartPoint();
-            End   = element.GetEndPoint();
-            Arcs  = new[] { element };
         }
 
         public Point                       Start { get; }

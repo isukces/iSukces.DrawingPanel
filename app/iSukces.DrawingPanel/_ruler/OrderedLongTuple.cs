@@ -16,10 +16,7 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        public override string ToString()
-        {
-            return $"{Minimum} ... {Maximum}";
-        }
+        public override string ToString() { return $"{Minimum} ... {Maximum}"; }
 
         public long Minimum { get; }
 

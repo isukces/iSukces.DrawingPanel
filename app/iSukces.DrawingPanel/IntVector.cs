@@ -13,19 +13,10 @@ namespace iSukces.DrawingPanel
             _y = y;
         }
 
-        public static IntVector operator +(IntVector a, IntVector b)
-        {
-            return new IntVector(a._x + b._x, a._y + b._y);
-        }
+        public static IntVector operator +(IntVector a, IntVector b) { return new IntVector(a._x + b._x, a._y + b._y); }
 
-        public static Point operator +(Point a, IntVector b)
-        {
-            return new Point(a.X + b._x, a.Y + b._y);
-        }
+        public static Point operator +(Point a, IntVector b) { return new Point(a.X + b._x, a.Y + b._y); }
 
-        public static Point operator -(Point a, IntVector b)
-        {
-            return new Point(a.X - b._x, a.Y - b._y);
-        }
+        public static Point operator -(Point a, IntVector b) { return new Point(a.X - b._x, a.Y - b._y); }
     }
 }

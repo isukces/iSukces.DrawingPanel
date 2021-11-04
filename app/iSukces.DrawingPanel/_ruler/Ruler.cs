@@ -30,10 +30,7 @@ namespace iSukces.DrawingPanel
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static PointF NewPointF(double x, double y)
-        {
-            return new PointF((float)x, (float)y);
-        }
+        private static PointF NewPointF(double x, double y) { return new PointF((float)x, (float)y); }
 
         protected override void OnClientSizeChanged(EventArgs e)
         {
@@ -159,8 +156,8 @@ namespace iSukces.DrawingPanel
         /// </summary>
         public AxisLocation AxisLocation
         {
-            get { return _axisLocation; }
-            set { SetAndInvalidate(ref _axisLocation, value); }
+            get => _axisLocation;
+            set => SetAndInvalidate(ref _axisLocation, value);
         }
 
         /// <summary>
@@ -168,8 +165,8 @@ namespace iSukces.DrawingPanel
         /// </summary>
         public RulerDimension Dimension
         {
-            get { return _dimenison; }
-            set { SetAndInvalidate(ref _dimenison, value); }
+            get => _dimenison;
+            set => SetAndInvalidate(ref _dimenison, value);
         }
 
 
@@ -192,13 +189,10 @@ namespace iSukces.DrawingPanel
         /// </summary>
         public double Length
         {
-            get
-            {
-                return RulerAutoSize
-                    ? (IsHorizontalRuller(AxisLocation) ? ClientSize.Width : ClientSize.Height) / Dimension.Scale
-                    : _length;
-            }
-            set { SetAndInvalidate(ref _length, value); }
+            get => RulerAutoSize
+                ? (IsHorizontalRuller(AxisLocation) ? ClientSize.Width : ClientSize.Height) / Dimension.Scale
+                : _length;
+            set => SetAndInvalidate(ref _length, value);
         }
 
         /// <summary>
@@ -211,8 +205,8 @@ namespace iSukces.DrawingPanel
         /// </summary>
         public bool RulerAutoSize
         {
-            get { return _rulerAutoSize; }
-            set { SetAndInvalidate(ref _rulerAutoSize, value); }
+            get => _rulerAutoSize;
+            set => SetAndInvalidate(ref _rulerAutoSize, value);
         }
 
         private readonly Brush _textBrush = Brushes.DimGray;

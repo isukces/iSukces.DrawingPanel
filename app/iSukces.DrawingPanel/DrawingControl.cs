@@ -102,10 +102,7 @@ namespace iSukces.DrawingPanel
 
         public DrawingLayersContainer Panel { get; }
 
-        public INewHandlerContainer RootBehaviorContainer
-        {
-            get { return Panel.RootBehaviorContainer; }
-        }
+        public INewHandlerContainer RootBehaviorContainer => Panel.RootBehaviorContainer;
 
 
         private readonly Ruler _horizontalRuler;

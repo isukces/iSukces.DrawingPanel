@@ -17,11 +17,11 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         public Point GetEndPoint() { return _end.Point; }
-
-        public Point GetStartPoint() { return _start.Point; }
         public Vector GetEndVector() { return _end.Vector; }
 
-        public Vector GetStartVector() { return _start.Vector;}
+        public Point GetStartPoint() { return _start.Point; }
+
+        public Vector GetStartVector() { return _start.Vector; }
 
         public ArcValidationResult Status { get; }
 

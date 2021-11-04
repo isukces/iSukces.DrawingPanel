@@ -76,20 +76,17 @@ namespace iSukces.DrawingPanel.Sample
             public int IdxX;
             public int IdxY;
 
-            public static AlignInfo Empty
-            {
-                get { return new AlignInfo {IdxX = -1, IdxY = -1}; }
-            }
+            public static AlignInfo Empty => new AlignInfo { IdxX = -1, IdxY = -1 };
 
             public int[] GetUnique()
             {
                 return IdxX < 0
                     ? IdxY < 0
                         ? new int[0]
-                        : new[] {IdxY}
+                        : new[] { IdxY }
                     : IdxY < 0 || IdxY == IdxX
-                        ? new[] {IdxX}
-                        : new[] {IdxX, IdxY};
+                        ? new[] { IdxX }
+                        : new[] { IdxX, IdxY };
             }
         }
     }

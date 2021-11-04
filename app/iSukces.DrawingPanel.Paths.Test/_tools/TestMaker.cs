@@ -8,10 +8,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 {
     internal class TestMaker
     {
-        private static string Create(PathRay tmp)
-        {
-            return $"new PathRay({tmp.Point.ToCs()}, {tmp.Vector.ToCs()})";
-        }
+        private static string Create(PathRay tmp) { return $"new PathRay({tmp.Point.ToCs()}, {tmp.Vector.ToCs()})"; }
 
         private static string FindName(ZeroReferencePointPathCalculator.Result result)
         {

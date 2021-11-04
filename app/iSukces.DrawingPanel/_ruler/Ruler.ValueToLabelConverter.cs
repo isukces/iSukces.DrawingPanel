@@ -7,10 +7,7 @@ namespace iSukces.DrawingPanel
     {
         private sealed class ValueToLabelConverter
         {
-            public ValueToLabelConverter(double majorTickDistance)
-            {
-                _format = GetLabelFormat(majorTickDistance);
-            }
+            public ValueToLabelConverter(double majorTickDistance) { _format = GetLabelFormat(majorTickDistance); }
 
             private static string GetLabelFormat(double majorTickDistance)
             {

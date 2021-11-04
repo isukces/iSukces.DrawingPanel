@@ -5,12 +5,10 @@ namespace iSukces.DrawingPanel.Paths
     public interface IPathElement
     {
         Point GetEndPoint();
-        Point GetStartPoint();
-        
-        
-        
-        Vector GetEndVector();
-        Vector GetStartVector();
 
+
+        Vector GetEndVector();
+        Point GetStartPoint();
+        Vector GetStartVector();
     }
 }

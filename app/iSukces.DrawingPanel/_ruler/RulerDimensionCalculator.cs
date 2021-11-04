@@ -46,10 +46,7 @@ namespace iSukces.DrawingPanel
             return new RulerValueAndDrawPosition(value, valueToDrawPosition);
         }
 
-        public double ValueToDrawPosition(double value)
-        {
-            return (value + _offset) * _scale;
-        }
+        public double ValueToDrawPosition(double value) { return (value + _offset) * _scale; }
 
         /// <summary>
         ///     Wartość dodawana do wyświetlanych etykiet

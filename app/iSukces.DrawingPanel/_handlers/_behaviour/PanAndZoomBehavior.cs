@@ -6,7 +6,8 @@ using WinPoint = System.Windows.Point;
 
 namespace iSukces.DrawingPanel
 {
-    public sealed class PanAndZoomBehavior : INewMouseWheelHandler, INewMouseButtonHandler, IDrawingPanelSizeChangedHandler
+    public sealed class PanAndZoomBehavior : INewMouseWheelHandler, INewMouseButtonHandler,
+        IDrawingPanelSizeChangedHandler
     {
         public PanAndZoomBehavior(double mouseWheelResponsibility, ZoomInfo zoom)
         {
@@ -14,18 +15,9 @@ namespace iSukces.DrawingPanel
             Zoom                      = zoom;
         }
 
-        public ZoomInfo Zoom        { get; }
-        public Size     DrawingSize { get; set; }
-
-        private Point _lastMouseSeenAt;
- 
-        private readonly double _mouseWheelResponsibility;
-
-        private sealed class DragMoveContext
+        private FlippedYDrawingToPixelsTransformation GetDrawingCanvasInfo()
         {
-            public Point MouseStart { get; set; }
-
-            public WinPoint Start { get; set; }
+            return FlippedYDrawingToPixelsTransformation.Make(DrawingSize, Zoom.Center, Zoom.Scale);
         }
 
 
@@ -45,24 +37,6 @@ namespace iSukces.DrawingPanel
             return DrawingHandleResult.Break;
         }
 
-        public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args)
-        {
-            _lastMouseSeenAt = args.Location;
-            if (_c is null)
-                return DrawingHandleResult.ContinueAfterAction;
-
-            if (args.Location == _c.MouseStart)
-                return DrawingHandleResult.Break;
-            var info      = GetDrawingCanvasInfo();
-            var toLogical = info.FromCanvas(args.Location);
-            var delta     = toLogical - _c.Start;
-            Zoom.Center -= delta;
-
-            return DrawingHandleResult.Break;
-        }
-
-        private DragMoveContext _c;
-
         public DrawingHandleResult HandleOnMouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)
@@ -79,16 +53,20 @@ namespace iSukces.DrawingPanel
             return DrawingHandleResult.Continue;
         }
 
-        private WinPoint ToLogicalLocation(Point mouseLocation)
+        public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args)
         {
-            var info            = GetDrawingCanvasInfo();
-            var toLogicalBefore = info.FromCanvas(mouseLocation);
-            return toLogicalBefore;
-        }
+            _lastMouseSeenAt = args.Location;
+            if (_c is null)
+                return DrawingHandleResult.ContinueAfterAction;
 
-        private FlippedYDrawingToPixelsTransformation GetDrawingCanvasInfo()
-        {
-            return FlippedYDrawingToPixelsTransformation.Make(DrawingSize, Zoom.Center, Zoom.Scale);
+            if (args.Location == _c.MouseStart)
+                return DrawingHandleResult.Break;
+            var info      = GetDrawingCanvasInfo();
+            var toLogical = info.FromCanvas(args.Location);
+            var delta     = toLogical - _c.Start;
+            Zoom.Center -= delta;
+
+            return DrawingHandleResult.Break;
         }
 
         public DrawingHandleResult HandleOnMouseUp(MouseEventArgs e)
@@ -97,6 +75,29 @@ namespace iSukces.DrawingPanel
                 return DrawingHandleResult.Continue;
             _c = null;
             return DrawingHandleResult.Break;
+        }
+
+        private WinPoint ToLogicalLocation(Point mouseLocation)
+        {
+            var info            = GetDrawingCanvasInfo();
+            var toLogicalBefore = info.FromCanvas(mouseLocation);
+            return toLogicalBefore;
+        }
+
+        public ZoomInfo Zoom        { get; }
+        public Size     DrawingSize { get; set; }
+
+        private readonly double _mouseWheelResponsibility;
+
+        private DragMoveContext _c;
+
+        private Point _lastMouseSeenAt;
+
+        private sealed class DragMoveContext
+        {
+            public Point MouseStart { get; set; }
+
+            public WinPoint Start { get; set; }
         }
     }
 }

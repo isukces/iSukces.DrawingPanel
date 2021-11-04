@@ -4,10 +4,7 @@ namespace iSukces.DrawingPanel
 {
     internal sealed class MathUtils
     {
-        public static double Round05(double value)
-        {
-            return Math.Round(value + 0.5) - 0.5;
-        }
+        public static double Round05(double value) { return Math.Round(value + 0.5) - 0.5; }
 
         public static long RoundToLong(double d)
         {

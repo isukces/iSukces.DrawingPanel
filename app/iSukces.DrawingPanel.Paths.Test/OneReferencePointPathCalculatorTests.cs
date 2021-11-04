@@ -665,8 +665,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r = a.Compute(null);
             ResultDrawer.Draw(a, r, MakeTitle(11, "below"));
-            
+
             #region Asserts
+
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(50, 0, r.End);
             Assert.Equal(4, r.Arcs.Count);
@@ -698,8 +699,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(24.9480754296928, 0.546699582043599, tmp1.Start);
             AssertEx.Equal(50, 0, tmp1.End);
             AssertEx.Equal(26.7543978632724, 11.9480754296928, tmp1.StartVector);
-            #endregion
 
+            #endregion
         }
 
 

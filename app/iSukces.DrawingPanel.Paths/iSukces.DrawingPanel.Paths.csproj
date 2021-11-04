@@ -33,14 +33,14 @@
         <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="WindowsBase" />
-        <Reference Include="System.Windows.Forms" />
+        <Reference Include="WindowsBase"/>
+        <Reference Include="System.Windows.Forms"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="iSukces.Math" Version="1.0.21253.118" />
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+        <PackageReference Include="iSukces.Math" Version="1.0.21253.118"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0"/>
     </ItemGroup>
     <ItemGroup>
-      <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
+        <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings"/>
     </ItemGroup>
 </Project>

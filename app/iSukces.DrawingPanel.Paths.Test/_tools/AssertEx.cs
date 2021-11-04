@@ -1,19 +1,18 @@
 ﻿using System.Windows;
-using iSukces.DrawingPanel.Paths;
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
     internal class AssertEx : Assert
     {
-        public static void Equal(double x, double y, Point point, int decimalPlaces=6)
+        public static void Equal(double x, double y, Point point, int decimalPlaces = 6)
         {
             Equal(x, point.X, decimalPlaces);
             Equal(y, point.Y, decimalPlaces);
         }
 
-        
-        public static void Equal(double x, double y, Vector point, int decimalPlaces=6)
+
+        public static void Equal(double x, double y, Vector point, int decimalPlaces = 6)
         {
             Equal(x, point.X, decimalPlaces);
             Equal(y, point.Y, decimalPlaces);

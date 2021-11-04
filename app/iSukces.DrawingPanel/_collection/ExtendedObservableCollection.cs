@@ -46,7 +46,7 @@ namespace iSukces.DrawingPanel
 
         public BlaFlags Flags { get; private set; }
 
-        
+
         private int _initializeLevel;
     }
 }

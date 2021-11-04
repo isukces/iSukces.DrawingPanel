@@ -4,15 +4,9 @@ namespace iSukces.DrawingPanel
 {
     public struct RulerDimension : IEquatable<RulerDimension>
     {
-        public static bool operator ==(RulerDimension left, RulerDimension right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(RulerDimension left, RulerDimension right) { return left.Equals(right); }
 
-        public static bool operator !=(RulerDimension left, RulerDimension right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(RulerDimension left, RulerDimension right) { return !left.Equals(right); }
 
         public bool Equals(RulerDimension other)
         {
@@ -53,13 +47,13 @@ namespace iSukces.DrawingPanel
 
         public int MinorCount
         {
-            get { return _minorCountMinus1 + 1; }
-            set { _minorCountMinus1 = Math.Max(value - 1, 0); }
+            get => _minorCountMinus1 + 1;
+            set => _minorCountMinus1 = Math.Max(value - 1, 0);
         }
 
         public double Scale
         {
-            get { return _scaleMinus1 + 1; }
+            get => _scaleMinus1 + 1;
             set
             {
                 if (value <= 0)

@@ -16,10 +16,7 @@ namespace iSukces.DrawingPanel
 
     public sealed class UniversalBehavior : INewHandlerContainer, IBehaviorSource
     {
-        public UniversalBehavior()
-        {
-            _handlers = new SortableSynchronizedCollection<HolderWrapper>();
-        }
+        public UniversalBehavior() { _handlers = new SortableSynchronizedCollection<HolderWrapper>(); }
 
         [Conditional("DEBUG")]
         private static void Log(string text) { Debug.WriteLine("----------UniversalBehavior: " + text); }
@@ -88,11 +85,12 @@ namespace iSukces.DrawingPanel
 
         private void HandleOnMouseMove(object sender, MouseEventArgs e)
         {
-            if (this.KeyboardFrom != null)
+            if (KeyboardFrom != null)
             {
                 if (!KeyboardFrom.Focused)
                     KeyboardFrom.Focus();
             }
+
             Handle<INewMouseButtonHandler>(h =>
             {
                 // PdLog.DebugWriteLine("run UniversalBehavior.HandleOnMouseMove");
@@ -172,12 +170,13 @@ namespace iSukces.DrawingPanel
             set
             {
                 if (_keyboardFrom == value)
-                return;
+                    return;
                 if (_keyboardFrom is not null)
                 {
                     _keyboardFrom.KeyDown -= HandleKeyDown;
-                    _keyboardFrom.KeyUp -= HandleKeyUp;
+                    _keyboardFrom.KeyUp   -= HandleKeyUp;
                 }
+
                 _keyboardFrom = value;
                 if (_keyboardFrom is not null)
                 {
@@ -215,7 +214,7 @@ namespace iSukces.DrawingPanel
             keyboard.KeyUp   += HandleKeyUp;
 #endif
         }*/
- 
+
 
         /*
         protected override void OnDetached()

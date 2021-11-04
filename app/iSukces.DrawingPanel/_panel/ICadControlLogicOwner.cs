@@ -14,23 +14,15 @@ namespace iSukces.DrawingPanel
 
     public sealed class EventControls
     {
-        private readonly Control _drawingControl;
-
         public EventControls(
-            [NotNull] Control mouseEventSource, 
+            [NotNull] Control mouseEventSource,
             [NotNull] Control keyboardEventSource,
             Control drawingControl)
         {
-            _drawingControl = drawingControl;
-            MouseEventSource     = mouseEventSource ?? throw new ArgumentNullException(nameof(mouseEventSource));
-            KeyboardEventSource  = keyboardEventSource ?? throw new ArgumentNullException(nameof(keyboardEventSource));
+            _drawingControl     = drawingControl;
+            MouseEventSource    = mouseEventSource ?? throw new ArgumentNullException(nameof(mouseEventSource));
+            KeyboardEventSource = keyboardEventSource ?? throw new ArgumentNullException(nameof(keyboardEventSource));
         }
-
-        [NotNull]
-        public Control MouseEventSource { get; }
-        
-        [NotNull]
-        public Control KeyboardEventSource { get; }
 
 
         public Point GetMousePositionOnDrawingControl()
@@ -39,5 +31,12 @@ namespace iSukces.DrawingPanel
             return _drawingControl.PointToClient(pos);
         }
 
+        [NotNull]
+        public Control MouseEventSource { get; }
+
+        [NotNull]
+        public Control KeyboardEventSource { get; }
+
+        private readonly Control _drawingControl;
     }
 }

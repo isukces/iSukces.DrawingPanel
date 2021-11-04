@@ -33,13 +33,13 @@ namespace iSukces.DrawingPanel
 
         public Point Center
         {
-            get { return _center; }
-            set { SetAndNotify(ref _center, value); }
+            get => _center;
+            set => SetAndNotify(ref _center, value);
         }
 
         public double Scale
         {
-            get { return _scale; }
+            get => _scale;
             set
             {
                 if (value < MinScale)
@@ -54,9 +54,13 @@ namespace iSukces.DrawingPanel
         private double _scale = 1;
     }
 
-    public class NpcBase: INotifyPropertyChanged
+    public class NpcBase : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         protected bool SetAndNotify<T>(ref T backField, T value,
             [CallerMemberName] string propertyName = null)
@@ -68,11 +72,6 @@ namespace iSukces.DrawingPanel
             return true;
         }
 
-        
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

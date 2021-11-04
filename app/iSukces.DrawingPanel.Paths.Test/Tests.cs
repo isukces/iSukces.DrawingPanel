@@ -1,5 +1,4 @@
-﻿using iSukces.DrawingPanel.Paths;
-using Xunit;
+﻿using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
@@ -20,7 +19,6 @@ namespace iSukces.DrawingPanel.Paths.Test
         [Fact]
         public void T02_Should_compute_line()
         {
-
             var start = new PathRay(0, 0, 100, 0);
             var end   = new PathRay(200, 0, 100, 0);
             var c     = ZeroReferencePointPathCalculator.Compute(start, end, null);
@@ -34,7 +32,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(0, 0, 100, 0);
             var end   = new PathRay(200, 20, 100, 100);
-            var c = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var c     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.NotNull(c.Arc1);
             Assert.Null(c.Arc2);
 
@@ -52,7 +50,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var c     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.NotNull(c.Arc1);
             Assert.NotNull(c.Arc2);
-            
+
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, c.Kind);
             {
                 var a = c.Arc1;
@@ -69,8 +67,6 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Assert.Equal(-7.9912375396536435, a.RadiusStart.X, 8);
                 Assert.Equal(-2.778513763488645, a.RadiusStart.Y, 8);
             }
-
         }
- 
     }
 }

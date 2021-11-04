@@ -10,8 +10,8 @@ namespace iSukces.DrawingPanel
 
         public static TickConfigutation FindForScale(double scale)
         {
-            var       possible    = new[] {1, 2, 5};
-            var       possible2   = new[] {5, 4, 5};
+            var       possible    = new[] { 1, 2, 5 };
+            var       possible2   = new[] { 5, 4, 5 };
             const int minDistance = 90;
 
             var baseFactor = 100.0;
@@ -37,10 +37,7 @@ namespace iSukces.DrawingPanel
             return new TickConfigutation(100, 10);
         }
 
-        public override string ToString()
-        {
-            return $"Major={Major}, MinorCount={MinorCount}";
-        }
+        public override string ToString() { return $"Major={Major}, MinorCount={MinorCount}"; }
 
         public double Major      { get; }
         public int    MinorCount { get; }

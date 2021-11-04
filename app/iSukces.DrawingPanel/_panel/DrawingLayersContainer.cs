@@ -4,7 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -14,7 +13,7 @@ using Point = System.Drawing.Point;
 
 namespace iSukces.DrawingPanel
 {
-    public partial class DrawingLayersContainer : Control, ICadControlLogicOwner 
+    public partial class DrawingLayersContainer : Control, ICadControlLogicOwner
     {
         public DrawingLayersContainer()
         {
@@ -27,13 +26,11 @@ namespace iSukces.DrawingPanel
             Overlay   = CollectionFactory.Make<IDrawable>(DrawablesCollectionChanged);
             Drawables = CollectionFactory.Make<IDrawable>(DrawablesCollectionChanged);
             Underlay  = CollectionFactory.Make<IDrawable>(DrawablesCollectionChanged);
-            _layers   = new[] {Overlay, Drawables, Underlay};
+            _layers   = new[] { Overlay, Drawables, Underlay };
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
-        
 
-        public IBehaviorSource BehaviorSource => _logic.BehaviorSource;
         public void ApplyBounds(Rect bounds) { _logic.ApplyBounds(bounds); }
 
         public void ClearAll()
@@ -107,10 +104,7 @@ namespace iSukces.DrawingPanel
         }
 
 
-        EventControls ICadControlLogicOwner.GetEventSourceControl()
-        {
-            return new(this, this, this);
-        }
+        EventControls ICadControlLogicOwner.GetEventSourceControl() { return new(this, this, this); }
 
         private void InvalidateBitmap()
         {
@@ -195,7 +189,6 @@ namespace iSukces.DrawingPanel
                         }
                         catch
                         {
-                            
                         }
                     }
                 }
@@ -238,7 +231,10 @@ namespace iSukces.DrawingPanel
         public event EventHandler DrawingTranformChanged;
 
         private static readonly bool cache = true;
-        public IDrawingColorScheme ColorScheme { get; }
+
+
+        public IBehaviorSource     BehaviorSource => _logic.BehaviorSource;
+        public IDrawingColorScheme ColorScheme    { get; }
 
         private Bitmap _backgroundBitmap;
     }

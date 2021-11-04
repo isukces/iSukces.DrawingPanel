@@ -61,6 +61,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 if (current.ListSequenceEqual(existing))
                     return;
             }
+
             File.WriteAllBytes(fileName, current);
         }
 

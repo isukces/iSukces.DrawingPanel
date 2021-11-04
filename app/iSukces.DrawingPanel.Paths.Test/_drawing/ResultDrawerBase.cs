@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        protected void  DrawCircleWithVector(PathRay r, bool isShort = false)
+        protected void DrawCircleWithVector(PathRay r, bool isShort = false)
         {
             DrawCircleWithVector(r.Point, r.Vector, isShort);
         }
@@ -92,7 +92,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             v.Normalize();
             v *= 50;
             var a = Map(point);
-            
 
             {
                 if (isShort)
@@ -118,7 +117,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                     Graph.DrawLine(pen, (float)p3.X, (float)p3.Y, (float)p1.X, (float)p1.Y);
                 }
             }
-            
+
             {
                 using var pen = new Pen(Color.Fuchsia, 2);
                 Graph.DrawEllipse(pen, a.X - Radius, a.Y - Radius, Radius * 2, Radius * 2);
