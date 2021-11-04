@@ -5,6 +5,9 @@
         <Authors>Internet Sukces Piotr Stęclik</Authors>
         <Company>Internet Sukces Piotr Stęclik</Company>
         <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2021</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <TargetFramework>net48</TargetFramework>
         <IncludeSource>false</IncludeSource>
         <IncludeSymbols>true</IncludeSymbols>
