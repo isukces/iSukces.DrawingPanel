@@ -12,6 +12,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             var files = dir.GetFiles("*.png").ToList();
             files.Sort(comparision);
             var sb = new StringBuilder();
+            
+            sb.AppendLine("# Test output");
             foreach (var file in files)
             {
                 var uri = "https://github.com/isukces/iSukces.DrawingPanel/blob/main/doc/testDrawings/"
@@ -20,7 +22,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 sb.AppendLine(code);
             }
 
-            var fileName = Path.Combine(dir.FullName, "index.md");
+            var fileName = Path.Combine(dir.FullName, "ReadMe.md");
             TestExtensions.SaveIfDifferent(fileName, sb.ToString());
         }
     }
