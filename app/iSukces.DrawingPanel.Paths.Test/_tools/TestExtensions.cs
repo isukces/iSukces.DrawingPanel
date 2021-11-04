@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using iSukces.Mathematics;
 using Point = System.Windows.Point;
@@ -71,5 +72,37 @@ namespace iSukces.DrawingPanel.Paths.Test
         public static string ToCs(this Point x) { return $"new Point({x.X.ToCs()}, {x.Y.ToCs()})"; }
 
         public static string ToCs(this Vector x) { return $"new Vector({x.X.ToCs()}, {x.Y.ToCs()})"; }
+
+        public static string ToFileName(this string s)
+        {
+            s = s.Replace("°", " ").Replace(":", " ").Replace(" ", "_");
+            Rep("__", "_");
+            Rep("_+", "+");
+            Rep("_,", ",");
+            Rep(",_", ",");
+            Rep("+_", "+");
+            s = s.TrimEnd('_').TrimStart('_');
+
+            s = DigitAfterLetterRegex.Replace(s, m =>
+            {
+                return m.Groups[1].Value + m.Groups[2].Value;
+            });
+
+            return s;
+
+            void Rep(string a, string b)
+            {
+                while (s.Contains(a))
+                {
+                    s = s.Replace(a, b);
+                }
+            }
+        }
+
+
+        const string DigitAfterLetterFilter = @"([a-z])_(\d)";
+
+        static readonly Regex DigitAfterLetterRegex =
+            new Regex(DigitAfterLetterFilter, RegexOptions.IgnoreCase | RegexOptions.Compiled);
     }
 }

@@ -13,9 +13,14 @@
 
         public string GetFileName()
         {
-            return $"{GroupName}_{TestNumber:00}_{Title}.png".Replace(" ", "_").Replace("__", "_");
+            var s = $"{GroupName}_{TestNumber:00}_{Title}";
+            s = s.ToFileName();
+            return s;
+
         }
 
+        
+        
         public string Title { get; set; }
 
         public string GroupName { get; set; }

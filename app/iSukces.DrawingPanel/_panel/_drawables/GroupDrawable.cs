@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;
 using TItem = iSukces.DrawingPanel.Interfaces.IDrawable;

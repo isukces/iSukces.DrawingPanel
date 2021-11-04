@@ -62,16 +62,16 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Setup(PathRay start, Point endPoint, Vector endVector)
         {
-            StartPoint  = start.Point;
+            StartPoint = start.Point;
             StartVector = start.Vector;
-            EndPoint    = endPoint;
-            EndVector   = endVector;
+            EndPoint = endPoint;
+            EndVector = endVector;
         }
 
         public bool UpdateCross()
         {
-            var a     = LineEquationNotNormalized.FromPointAndDeltas(StartPoint, StartVector);
-            var b     = LineEquationNotNormalized.FromPointAndDeltas(EndPoint, EndVector);
+            var a = LineEquationNotNormalized.FromPointAndDeltas(StartPoint, StartVector);
+            var b = LineEquationNotNormalized.FromPointAndDeltas(EndPoint, EndVector);
             var cross = LineEquationNotNormalized.Cross(a, b);
             if (cross.HasValue)
             {

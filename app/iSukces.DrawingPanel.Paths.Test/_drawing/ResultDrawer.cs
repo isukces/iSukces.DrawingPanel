@@ -11,16 +11,8 @@ namespace iSukces.DrawingPanel.Paths.Test
 {
     internal class ResultDrawer : ResultDrawerBase
     {
-        private ResultDrawer(FileInfo fi, IPathResult result, PathRay start, PathRay end,
-            Action<ResultDrawer> action, Func<IEnumerable<Point>> extraPoints)
-        {
-            _fi          = fi;
-            _result      = result;
-            _start       = start;
-            _end         = end;
-            _action      = action;
-            _extraPoints = extraPoints;
-        }
+        private ResultDrawer(ResultDrawerConfig cfg) { _cfg = cfg; }
+
 
         public static void Draw(OneReferencePointPathCalculator x, IPathResult r, TestName name,
             [CallerFilePath] string path = null)
@@ -35,27 +27,26 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
 
             // ReSharper disable once ExplicitCallerInfoArgument
-            Draw(x.Start, x.End, r, name,
-                ExtraDraw, ExtraPoints, path);
+            Draw(new ResultDrawerConfig
+            {
+                Start        = x.Start,
+                End          = x.End,
+                Result       = r,
+                Title        = name,
+                ExtraPoints  = ExtraPoints,
+                ExtraDrawing = ExtraDraw
+            }, path);
         }
 
-        public static void Draw(PathRay start, PathRay end, IPathResult r, TestName title,
-            Action<ResultDrawer> action = null,
-            Func<IEnumerable<Point>> extraPoints = null,
-            [CallerFilePath] string path = null)
+        public static void Draw(ResultDrawerConfig cfg, [CallerFilePath] string path = null)
         {
-            if (r is null)
+            if (cfg.Result is null)
                 return;
             var dir = GetDir(path);
             if (dir is null)
                 return;
-            var name2 = title.GetFileName();
-            var fi    = new FileInfo(Path.Combine(dir.FullName, name2 + ".png"));
-            //if (fi.Exists) return;
-            var p = new ResultDrawer(fi, r, start, end, action, extraPoints)
-            {
-                Title = title.GetDescription()
-            };
+            cfg.OutputDirectory = dir;
+            var p = new ResultDrawer(cfg);
             p.DrawInternal();
         }
 
@@ -113,13 +104,16 @@ namespace iSukces.DrawingPanel.Paths.Test
             Graph = Graphics.FromImage(Bmp);
             {
                 Graph.FillRectangle(Brushes.White, 0, 0, Bmp.Width, Bmp.Height);
-                DrawCircleWithVector(_start);
-                DrawCircleWithVector(_end);
+                DrawCircleWithVector(_cfg.Start);
+                if ((_cfg.Flags & ResultDrawerConfigFlags.ReverseEndMarker) != 0)
+                    DrawCircleWithVector(_cfg.End.WithInvertedVector());
+                else
+                    DrawCircleWithVector(_cfg.End);
 
-                _action?.Invoke(this);
+                _cfg.ExtraDrawing?.Invoke(this);
 
                 // var p = _start.Point;
-                foreach (var element in _result.Arcs)
+                foreach (var element in _cfg.Result.Arcs)
                 {
                     // DrawLine(p, element.GetStartPoint(), new Pen(Color.Gainsboro, 1));
 
@@ -143,10 +137,12 @@ namespace iSukces.DrawingPanel.Paths.Test
                 }
                 // DrawLine(_result.Start, _result.End, new Pen(Color.Crimson, 2));
             }
-            Graph.DrawString(Title, new Font("Arial", 10), Brushes.Black, 5, 5);
+            var description = _cfg.Title.GetDescription();
+            Graph.DrawString(description, new Font("Arial", 10), Brushes.Black, 5, 5);
             Graph.Dispose();
-            _fi.Directory?.Create();
-            Bmp.SaveIfDifferent(_fi.FullName);
+            var fileInfo = _cfg.GetImageFile();
+            fileInfo.Directory?.Create();
+            Bmp.SaveIfDifferent(fileInfo.FullName);
 
             Bmp.Dispose();
         }
@@ -171,9 +167,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                 }
             }
 
-            if (_extraPoints != null)
+            if (_cfg.ExtraPoints != null)
             {
-                var a = _extraPoints().ToArray();
+                var a = _cfg.ExtraPoints().ToArray();
                 foreach (var i in a)
                     yield return i;
             }
@@ -184,7 +180,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             XRange = new MinMax();
             YRange = new MinMax();
-            foreach (var i in GetPoints(_result))
+            foreach (var i in GetPoints(_cfg.Result))
             {
                 XRange.Add(i.X);
                 YRange.Add(i.Y);
@@ -194,16 +190,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             Grow(ref YRange);
         }
 
-        public string Title { get; set; }
-
-        private readonly Action<ResultDrawer> _action;
-
-
-        private readonly PathRay _end;
-        private readonly Func<IEnumerable<Point>> _extraPoints;
-
-        private readonly FileInfo _fi;
-        private readonly IPathResult _result;
-        private readonly PathRay _start;
+        private readonly ResultDrawerConfig _cfg;
     }
 }

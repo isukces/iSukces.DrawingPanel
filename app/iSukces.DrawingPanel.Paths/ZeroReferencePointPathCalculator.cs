@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
@@ -30,6 +32,7 @@ namespace iSukces.DrawingPanel.Paths
             return x.Compute();
         }
 
+
         private Result Compute()
         {
             var cross = Start.Cross(End);
@@ -38,17 +41,20 @@ namespace iSukces.DrawingPanel.Paths
                 var a = (End.Point - Start.Point);
                 if (a.LengthSquared == 0)
                 {
-                    return new Result
+                    var result = new Result(ResultKind.Point)
                     {
-                        Kind = ResultKind.Point
+                        Start = Start.Point,
+                        End   = End.Point
                     };
+                    return result;
                 }
 
                 var dot = Vector.CrossProduct(Start.Vector, a);
                 if (dot == 0)
-                    return new Result
+                    return new Result(ResultKind.Line)
                     {
-                        Kind = ResultKind.Line
+                        Start = Start.Point,
+                        End   = End.Point
                     };
                 return TryTwo(null);
             }
@@ -57,10 +63,11 @@ namespace iSukces.DrawingPanel.Paths
             if (IsOk(one))
             {
                 if (one.Angle < 180)
-                    return new Result
+                    return new Result(ResultKind.OneArc)
                     {
-                        Arc1 = one,
-                        Kind = ResultKind.OneArc
+                        Arc1  = one,
+                        Start = Start.Point,
+                        End   = End.Point
                     };
             }
 
@@ -198,10 +205,11 @@ namespace iSukces.DrawingPanel.Paths
             if (bestResult != null)
                 return bestResult;
             if (one != null)
-                return new Result
+                return new Result(ResultKind.OneArc)
                 {
-                    Arc1 = one,
-                    Kind = ResultKind.OneArc
+                    Arc1  = one,
+                    Start = Start.Point,
+                    End   = End.Point
                 };
 
             return null;
@@ -219,11 +227,12 @@ namespace iSukces.DrawingPanel.Paths
             if (dot <= 0) return null;
             dot = End.Vector * arc2.EndVector;
             if (dot <= 0) return null;
-            return new Result
+            return new Result(ResultKind.TwoArcs)
             {
-                Arc1 = arc1,
-                Arc2 = arc2,
-                Kind = ResultKind.TwoArcs,
+                Arc1  = arc1,
+                Arc2  = arc2,
+                Start = Start.Point,
+                End   = End.Point
             };
         }
 
@@ -247,8 +256,10 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        public sealed class Result
+        public sealed class Result : IPathResult
         {
+            public Result(ResultKind kind) { Kind = kind; }
+
             public double GetLength(Point s, Point e)
             {
                 double d = 0;
@@ -302,7 +313,35 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-            public ResultKind    Kind { get; set; }
+            public Point Start { get; set; }
+            public Point End   { get; set; }
+
+            public IReadOnlyList<IPathElement> Arcs
+            {
+                get
+                {
+                    switch (Kind)
+                    {
+                        case ResultKind.Line:
+                            return new[]
+                            {
+                                new LinePathElement(Start, End)
+                            };
+                        case ResultKind.Point: return Array.Empty<IPathElement>();
+                        case ResultKind.OneArc:
+                        case ResultKind.TwoArcs:
+                            var builder = new PathBuilder();
+                            builder.CurrentPoint = Start;
+                            builder.ArcTo(Arc1);
+                            builder.ArcTo(Arc2);
+                            builder.LineTo(End);
+                            return builder.List;
+                        default: throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
+
+            public ResultKind    Kind { get; }
             public ArcDefinition Arc1 { get; set; }
             public ArcDefinition Arc2 { get; set; }
         }

@@ -22,7 +22,7 @@ namespace iSukces.DrawingPanel.Paths
 
             IReadOnlyList<IPathElement> Find()
             {
-                var ll = new Aggregator
+                var ll = new PathBuilder
                 {
                     CurrentPoint = Start.Point,
                     Validator    = validator
@@ -31,9 +31,9 @@ namespace iSukces.DrawingPanel.Paths
                 IReadOnlyList<IPathElement> FlexiS()
                 {
                     ll.Clear();
-                    ll.Add(Start, Reference);
+                    ll.AddFlexi(Start, Reference);
                     var endInverted = End.WithInvertedVector();
-                    ll.Add(Reference, endInverted);
+                    ll.AddFlexi(Reference, endInverted);
                     return ll.List;
                 }
 
@@ -56,13 +56,13 @@ namespace iSukces.DrawingPanel.Paths
                         return FlexiS();
                     }
 
-                    ll.Add(Start, Reference);
+                    ll.AddFlexi(Start, Reference);
                 }
                 else
                 {
                     if (endCrossNullable is null)
                     {
-                        ll.Add(Reference, End.WithInvertedVector());
+                        ll.AddFlexi(Reference, End.WithInvertedVector());
                     }
                     else
                     {
@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross,
-            Aggregator aggregator,
+            PathBuilder aggregator,
             IPathValidator validator)
         {
             var startIsInvalid = DotNotPositive(startCross, Start);
@@ -179,12 +179,12 @@ namespace iSukces.DrawingPanel.Paths
             if (ok1)
             {
                 aggregator.ArcTo(arc1);
-                aggregator.Add(Reference, End.WithInvertedVector());
+                aggregator.AddFlexi(Reference, End.WithInvertedVector());
                 aggregator.LineTo(End.Point);
                 return FromTwoCrossesResult.None;
             }
 
-            aggregator.Add(Start, Reference);
+            aggregator.AddFlexi(Start, Reference);
             aggregator.ArcTo(arc2);
             aggregator.LineTo(End.Point);
             return FromTwoCrossesResult.None;
@@ -251,64 +251,6 @@ namespace iSukces.DrawingPanel.Paths
         {
             None,
             TwoS
-        }
-
-
-        private class Aggregator
-        {
-            public void Add(PathRay a, PathRay b)
-            {
-                var x = ZeroReferencePointPathCalculator.Compute(a, b, Validator);
-                if (x is null)
-                {
-                    _list.Add(new InvalidPathElement(a, b, ArcValidationResult.UnableToConstructArc));
-                    return;
-                }
-
-                if (x.Kind == ZeroReferencePointPathCalculator.ResultKind.Line)
-                {
-                    _list.Add(new LinePathElement(a.Point, b.Point));
-                    return;
-                }
-
-                ArcTo(x.Arc1);
-                ArcTo(x.Arc2);
-                LineTo(b.Point);
-            }
-
-
-            public void AddLine(Point startPoint, Point endPoint)
-            {
-                var linePathElement = new LinePathElement(startPoint, endPoint);
-                LineTo(startPoint);
-                _list.Add(linePathElement);
-                CurrentPoint = endPoint;
-            }
-
-            public void ArcTo(ArcDefinition arc)
-            {
-                if (arc is null)
-                    return;
-                LineTo(arc.Start);
-                _list.Add(arc);
-                CurrentPoint = arc.End;
-            }
-
-            public void Clear() { _list.Clear(); }
-
-            public void LineTo(Point p)
-            {
-                var line = p - CurrentPoint;
-                if (!(line.LengthSquared > LengthEpsilonSquare)) return;
-                _list.Add(new LinePathElement(CurrentPoint, p));
-                CurrentPoint = p;
-            }
-
-            public IReadOnlyList<IPathElement> List      => _list;
-            public IPathValidator              Validator { get; set; }
-
-            private readonly List<IPathElement> _list = new List<IPathElement>();
-            public Point CurrentPoint;
         }
     }
 }

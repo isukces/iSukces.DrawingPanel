@@ -78,6 +78,11 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
 
             name += ".";
+            if (result is ZeroReferencePointPathCalculator.Result zero)
+            {
+                Add(zero.Kind, name + nameof(zero.Kind));
+            }
+
             Add(result.Start, name + nameof(result.Start));
             Add(result.End, name + nameof(result.End));
             Add(result.Arcs, name + nameof(result.Arcs));
