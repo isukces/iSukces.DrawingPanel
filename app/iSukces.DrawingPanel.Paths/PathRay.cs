@@ -1,0 +1,84 @@
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
+
+namespace iSukces.DrawingPanel.Paths
+{
+    public struct PathRay
+    {
+        public PathRay(double x, double y, double vx, double vy)
+            : this(new Point(x, y), new Vector(vx, vy))
+        {
+        }
+
+        public PathRay(Point point, Point endPoint)
+        {
+            Point  = point;
+            Vector = endPoint - point;
+            Vector.Normalize();
+        }
+
+        public override string ToString() { return $"{Point} => {Vector}"; }
+
+        public Point? Cross(PathRay other)
+        {
+            var l1         = GetLine();
+            var l2         = other.GetLine();
+            var crossPoint = l1.CrossWith(l2);
+            return crossPoint;
+        }
+
+        public Point? Cross(Point p, Vector v)
+        {
+            var l1         = GetLine();
+            var l2         = LineEquationNotNormalized.FromPointAndDeltas(p, v);
+            var crossPoint = l1.CrossWith(l2);
+            return crossPoint;
+        }
+
+        public Vector Vector { get; }
+
+        public Point Point { get; }
+
+        public PathRay(Point point, Vector vector)
+        {
+            Point  = point;
+            Vector = vector;
+            //Vector.Normalize();
+        }
+
+        public LineEquationNotNormalized GetLine()
+        {
+            return LineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
+        }
+
+        public PathRay With(Point point) { return new PathRay(point, Vector); }
+
+        public PathRay With(Vector vector) { return new PathRay(Point, vector); }
+
+        public Vector GetNormalizedVector() { return Vector.GetNormalizedVector(); }
+
+        public Vector GetPrependicularVector() { return Vector.GetPrependicularVector(); }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PathRay WithInvertedVector() { return new PathRay(Point, -Vector); }
+
+        public PathRay WithEnd(Point end, double length)
+        {
+            var vector = end - Point;
+            vector *= length / vector.Length;
+            return new PathRay(Point, vector);
+        }
+
+        public PathRay Normalize()
+        {
+            var v = Vector;
+            v.Normalize();
+            return new PathRay(Point, v);
+        }
+
+        public Point GetPoint(double d) { return Point + d * Vector; }
+
+        public Point Get(double distance) { return Point + Vector * distance; }
+    }
+}

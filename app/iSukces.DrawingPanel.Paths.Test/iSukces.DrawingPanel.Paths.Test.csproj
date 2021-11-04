@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Title>Drawing panel paths tests</Title>
+        <Authors>Internet Sukces Piotr Stęclik</Authors>
+        <Company>Internet Sukces Piotr Stęclik</Company>
+        <Copyright>Copyright by Internet Sukces Piotr Stęclik 2021</Copyright>
+        <TargetFramework>net48</TargetFramework>
+        <IncludeSource>false</IncludeSource>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <Version>1.0.0.0</Version>
+        <FileVersion>1.0.0.0</FileVersion>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+        <DefineConstants>COREFX;NETSTANDARD20</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+        <DefineConstants>COREFX;NETSTANDARD16</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
+        <DefineConstants>FULLFRAMEWORK;NET461</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+        <DefineConstants>FULLFRAMEWORK;NET451</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+        <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+        <PackageReference Include="iSukces.Math" Version="1.0.21253.118" />
+        <PackageReference Include="xunit" Version="2.1.0" />
+        <PackageReference Include="xunit.abstractions" Version="2.0.0" />
+        <PackageReference Include="xunit.assert" Version="2.1.0" />
+        <PackageReference Include="xunit.core" Version="2.1.0" />
+        <PackageReference Include="xunit.extensibility.core" Version="2.1.0" />
+        <PackageReference Include="xunit.extensibility.execution" Version="2.1.0" />
+        <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="WindowsBase" />
+        <Reference Include="System.Windows.Forms" />
+    </ItemGroup>
+</Project>

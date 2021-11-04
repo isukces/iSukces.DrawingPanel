@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.DrawingPanel.Interfaces", "iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj", "{B68B64E1-8EC6-449F-B6C0-E0588D69FC31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.DrawingPanel", "iSukces.DrawingPanel\iSukces.DrawingPanel.csproj", "{0B3D872A-56AC-4AED-BF09-B7B480D74AEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.DrawingPanel.Paths", "iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj", "{8ABED208-1D5C-4944-9735-942981ABC94E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.DrawingPanel.Paths.Test", "iSukces.DrawingPanel.Paths.Test\iSukces.DrawingPanel.Paths.Test.csproj", "{F4807205-D0D4-46CD-85E7-D43B7A04A20B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B68B64E1-8EC6-449F-B6C0-E0588D69FC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68B64E1-8EC6-449F-B6C0-E0588D69FC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68B64E1-8EC6-449F-B6C0-E0588D69FC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68B64E1-8EC6-449F-B6C0-E0588D69FC31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3D872A-56AC-4AED-BF09-B7B480D74AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3D872A-56AC-4AED-BF09-B7B480D74AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3D872A-56AC-4AED-BF09-B7B480D74AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3D872A-56AC-4AED-BF09-B7B480D74AEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ABED208-1D5C-4944-9735-942981ABC94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ABED208-1D5C-4944-9735-942981ABC94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ABED208-1D5C-4944-9735-942981ABC94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ABED208-1D5C-4944-9735-942981ABC94E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
