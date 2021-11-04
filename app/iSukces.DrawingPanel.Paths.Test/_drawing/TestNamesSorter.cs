@@ -3,7 +3,7 @@ using System.IO;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
-    sealed class TestNamesSorter
+    static class TestNamesSorter
     {
         private static int GetGroup(string name)
         {
@@ -11,6 +11,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 return 0;
             if (name.StartsWith("One", StringComparison.OrdinalIgnoreCase))
                 return 1;
+            if (name.StartsWith("Two", StringComparison.OrdinalIgnoreCase))
+                return 2;
             return 99;
         }
 

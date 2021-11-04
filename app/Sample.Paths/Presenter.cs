@@ -33,7 +33,7 @@ namespace Sample.Paths
                     DrawPathResult(result);
                     break;
                 }
-                case TwoReferencePointPathCalculator two:
+                case TwoReferencePointsPathCalculator two:
                 {
                     CodeMaker.Dump(two);
                     DrawCircle(two.Reference1.Point);

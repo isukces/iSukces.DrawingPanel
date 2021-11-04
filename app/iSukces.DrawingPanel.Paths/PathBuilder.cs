@@ -5,6 +5,42 @@ namespace iSukces.DrawingPanel.Paths
 {
     internal class PathBuilder
     {
+        public void AddConnectionAutomatic(PathRay start, PathRay end)
+        {
+            bool CheckDot(ArcDefinition arc)
+            {
+                var dot = arc.StartVector * start.Vector;
+                if (dot <= 0) return false;
+                dot = arc.EndVector * end.Vector;
+                if (dot <= 0) return false;
+                return true;
+
+            }
+            var cross = start.Cross(end);
+            if (cross is null)
+            {
+                AddFlexi(start, end);
+                return;
+            }
+
+            var c = new OneArcFinder
+            {
+                Cross = cross.Value
+            };
+            c.Setup(start, end);
+            var res = c.CalculateArc();
+            if (Validator.IsOk(res))
+            {
+                if (res.Angle<180)
+                if (CheckDot(res))
+                {
+                    ArcTo(res);
+                    return;
+                }
+            }
+            AddFlexi(start, end);
+        }
+
         /// <summary>
         ///     Adds flexible fragment containing up to 4 arcs
         /// </summary>

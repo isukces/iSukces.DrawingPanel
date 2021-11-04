@@ -17,14 +17,15 @@ namespace Sample.Paths
             props.Add("Start", Get(x.Start));
             props.Add("End", Get(x.End));
             props.Add("Reference", GetWithNoVector(x.Reference));
-            a.WriteLine("var calc = new OneReferencePointPathCalculator {");
+            
+            a.Open<OneReferencePointPathCalculator>("calc");
             a.WriteLine(props);
             a.WriteLine("};");
             Debug.WriteLine(a.ToString());
         }
 
 
-        public static void Dump(TwoReferencePointPathCalculator x)
+        public static void Dump(TwoReferencePointsPathCalculator x)
         {
             var a     = new CodeMaker();
             var props = new Props();
@@ -32,10 +33,17 @@ namespace Sample.Paths
             props.Add("End", Get(x.End));
             props.Add("Reference1", GetWithNoVector(x.Reference1));
             props.Add("Reference2", GetWithNoVector(x.Reference2));
-            a.WriteLine("var calc = new TwoReferencePointPathCalculator {");
+            
+            a.Open<TwoReferencePointsPathCalculator>("calc");
             a.WriteLine(props);
             a.WriteLine("};");
             Debug.WriteLine(a.ToString());
+        }
+
+        private void Open<T>(string varName)
+        {
+            var name =typeof(T).Name;
+            WriteLine($"var {varName} = new {name} {{");
         }
 
         private static string Get(PathRay ray)

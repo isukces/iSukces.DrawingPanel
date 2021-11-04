@@ -2,7 +2,7 @@
 
 namespace iSukces.DrawingPanel.Paths
 {
-    public sealed class TwoReferencePointPathCalculator : ReferencePointPathCalculator
+    public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalculator
     {
         public IPathResult Compute(IPathValidator validator)
         {
@@ -28,10 +28,18 @@ namespace iSukces.DrawingPanel.Paths
             Reference1 = Reference1.With(refVector);
             Reference2 = Reference2.With(refVector);
 
-            var arc1 = Make(Start, Reference1).Validate(validator, Start, Reference1);
-            var arc2 = Make(Reference2, End).Validate(validator, Start, Reference1);
+            var b = new PathBuilder
+            {
+                Validator    = validator,
+                CurrentPoint = Start.Point
+            };
+            b.AddConnectionAutomatic(Start, Reference1);
+            b.LineTo(Reference2.Point);
+            b.AddConnectionAutomatic(Reference2, End.WithInvertedVector());
+            b.LineTo(End.Point);
+
             result = ArcValidationResult.Ok;
-            return new PathResult(Start.Point, End.Point, new[] { arc1, arc2 });
+            return new PathResult(Start.Point, End.Point, b.List);
         }
 
         public override void InitDemo()

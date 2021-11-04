@@ -111,7 +111,7 @@ namespace Sample.Paths
                     _bc = new OneReferencePointPathCalculator();
                     break;
                 case 2:
-                    _bc = new TwoReferencePointPathCalculator();
+                    _bc = new TwoReferencePointsPathCalculator();
                     break;
                 case 3:
                     _bc = new ThreeReferencePointPathCalculator();

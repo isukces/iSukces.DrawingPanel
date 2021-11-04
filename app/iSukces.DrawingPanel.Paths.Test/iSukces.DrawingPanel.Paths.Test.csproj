@@ -32,18 +32,18 @@
         <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0"/>
-        <PackageReference Include="iSukces.Math" Version="1.0.21253.118"/>
-        <PackageReference Include="xunit" Version="2.1.0"/>
-        <PackageReference Include="xunit.abstractions" Version="2.0.0"/>
-        <PackageReference Include="xunit.assert" Version="2.1.0"/>
-        <PackageReference Include="xunit.core" Version="2.1.0"/>
-        <PackageReference Include="xunit.extensibility.core" Version="2.1.0"/>
-        <PackageReference Include="xunit.extensibility.execution" Version="2.1.0"/>
-        <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+        <PackageReference Include="iSukces.Math" Version="1.0.21253.118" />
+        <PackageReference Include="xunit" Version="2.1.0" />
+        <PackageReference Include="xunit.abstractions" Version="2.0.0" />
+        <PackageReference Include="xunit.assert" Version="2.1.0" />
+        <PackageReference Include="xunit.core" Version="2.1.0" />
+        <PackageReference Include="xunit.extensibility.core" Version="2.1.0" />
+        <PackageReference Include="xunit.extensibility.execution" Version="2.1.0" />
+        <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="WindowsBase"/>
-        <Reference Include="System.Windows.Forms"/>
+        <Reference Include="WindowsBase" />
+        <Reference Include="System.Windows.Forms" />
     </ItemGroup>
 </Project>
