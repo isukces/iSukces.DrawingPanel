@@ -146,11 +146,11 @@ namespace iSukces.DrawingPanel.Paths.Test
             Graph.DrawString(Title, new Font("Arial", 10), Brushes.Black, 5, 5);
             Graph.Dispose();
             _fi.Directory?.Create();
-            Bmp.Save(_fi.FullName);
+            TestExtensions.SaveIfDifferent(Bmp, _fi.FullName);
 
             Bmp.Dispose();
         }
-
+        
         private IEnumerable<Point> GetPoints(IPathResult r)
         {
             yield return r.Start;
