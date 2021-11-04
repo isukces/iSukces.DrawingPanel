@@ -16,11 +16,9 @@
             var s = $"{GroupName}_{TestNumber:00}_{Title}";
             s = s.ToFileName();
             return s;
-
         }
 
-        
-        
+
         public string Title { get; set; }
 
         public string GroupName { get; set; }

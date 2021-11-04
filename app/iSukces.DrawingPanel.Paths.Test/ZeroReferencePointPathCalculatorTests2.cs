@@ -24,9 +24,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Title  = MakeTitle(1, "line+arc right 27°"),
                 Flags  = ResultDrawerConfigFlags.ReverseEndMarker
             }.Draw();
-            
 
             #region Asserts
+
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(33.6452056050077, 24.7273817080189, r.End);
@@ -39,8 +39,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(25.7067179799099, 22.853358989955, tmp1.Start);
             AssertEx.Equal(33.6452056050077, 24.7273817080189, tmp1.End);
             AssertEx.Equal(200, 100, tmp1.StartVector);
-            #endregion
 
+            #endregion
         }
 
         [Fact]
@@ -59,6 +59,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             }.Draw();
 
             #region Asserts
+
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(32.3955742033012, 3.01503610336888, r.End);
@@ -70,9 +71,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(-7.22810211151334, 3.01503610336888, tmp1.End);
             AssertEx.Equal(200, 100, tmp1.StartVector);
-            AssertEx.Equal(-7.22810211151334, 3.01503610336888, 32.3955742033012, 3.01503610336888, (LinePathElement)r.Arcs[1], 6);
-            #endregion
+            AssertEx.Equal(-7.22810211151334, 3.01503610336888, 32.3955742033012, 3.01503610336888,
+                (LinePathElement)r.Arcs[1], 6);
 
+            #endregion
         }
 
 
@@ -82,7 +84,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(46.7663353229257, 45.5025037613891), new Vector(1, 0));
             var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
-            
+
             new ResultDrawerConfig
             {
                 Start  = start,
@@ -91,8 +93,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Title  = MakeTitle(3, "two arcs: left 32°+right 59°"),
                 Flags  = ResultDrawerConfigFlags.ReverseEndMarker
             }.Draw();
-            
+
             #region Asserts
+
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(46.7663353229257, 45.5025037613891, r.End);
@@ -111,8 +114,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(1.59358273869592, 19.9681084124149, tmp1.Start);
             AssertEx.Equal(46.7663353229257, 45.5025037613891, tmp1.End);
             AssertEx.Equal(27.1902312786528, 45.1727525842298, tmp1.StartVector);
-            #endregion
 
+            #endregion
         }
 
 
@@ -122,7 +125,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(38.1595425371264, -16.5774819323465), new Vector(1, 0));
             var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
-            
+
             new ResultDrawerConfig
             {
                 Start  = start,
@@ -131,8 +134,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Title  = MakeTitle(4, "two arcs: right 74° + left 48°"),
                 Flags  = ResultDrawerConfigFlags.ReverseEndMarker
             }.Draw();
-            
+
             #region Asserts
+
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(38.1595425371264, -16.5774819323465, r.End);
@@ -151,8 +155,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(15.8273191869863, -6.69586097598819, tmp1.Start);
             AssertEx.Equal(38.1595425371264, -16.5774819323465, tmp1.End);
             AssertEx.Equal(20.2943306977043, -22.3322233501401, tmp1.StartVector);
-            #endregion
 
+            #endregion
         }
 
 
@@ -163,8 +167,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var end = new PathRay(new Point(25.6788054191289, 30.3507230156981),
                 new Vector(-1.17316474829017, -49.9862349499677));
             var r = ZeroReferencePointPathCalculator.Compute(start, end, null);
-            
-            
+
             new ResultDrawerConfig
             {
                 Start  = start,
@@ -173,8 +176,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Title  = MakeTitle(5, "two arcs: left 85° + right 203°"),
                 Flags  = ResultDrawerConfigFlags.ReverseEndMarker
             }.Draw();
-            
+
             #region Asserts
+
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(25.6788054191289, 30.3507230156981, r.End);
@@ -193,10 +197,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-10.8533245119608, 23.8615812943749, tmp1.Start);
             AssertEx.Equal(25.6788054191289, 30.3507230156981, tmp1.End);
             AssertEx.Equal(-6.93321939748438, 17.6108564364844, tmp1.StartVector);
+
             #endregion
-
-
-
         }
     }
 }

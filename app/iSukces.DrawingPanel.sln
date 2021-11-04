@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.DrawingPanel.Paths"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.DrawingPanel.Paths.Test", "iSukces.DrawingPanel.Paths.Test\iSukces.DrawingPanel.Paths.Test.csproj", "{F4807205-D0D4-46CD-85E7-D43B7A04A20B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AB3F9EE7-6C43-4D6A-8401-03BD90EB63D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Paths", "Sample.Paths\Sample.Paths.csproj", "{B9826AFD-CE62-4FE4-B7A7-4DDD7079372C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,12 @@ Global
 		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4807205-D0D4-46CD-85E7-D43B7A04A20B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9826AFD-CE62-4FE4-B7A7-4DDD7079372C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9826AFD-CE62-4FE4-B7A7-4DDD7079372C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9826AFD-CE62-4FE4-B7A7-4DDD7079372C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9826AFD-CE62-4FE4-B7A7-4DDD7079372C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9826AFD-CE62-4FE4-B7A7-4DDD7079372C} = {AB3F9EE7-6C43-4D6A-8401-03BD90EB63D0}
 	EndGlobalSection
 EndGlobal

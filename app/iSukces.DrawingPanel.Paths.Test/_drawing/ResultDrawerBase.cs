@@ -143,17 +143,17 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         protected void GrayCross(Point point) { DrawCross(point, Color.Indigo, 3); }
 
-        private double Map(double value, MinMax range)
-        {
-            var m = (value - range.Min) / Scale;
-            return m;
-        }
-
         public PointF Map(Point p)
         {
             var x = Map(p.X, XRange);
             var y = Bmp.Height - Map(p.Y, YRange);
             return new PointF((float)x, (float)y);
+        }
+
+        private double Map(double value, MinMax range)
+        {
+            var m = (value - range.Min) / Scale;
+            return m;
         }
 
         private Point Map2(Point p)

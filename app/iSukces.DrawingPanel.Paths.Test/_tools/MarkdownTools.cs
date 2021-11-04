@@ -12,7 +12,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var files = dir.GetFiles("*.png").ToList();
             files.Sort(comparision);
             var sb = new StringBuilder();
-            
+
             sb.AppendLine("# Test output");
             foreach (var file in files)
             {

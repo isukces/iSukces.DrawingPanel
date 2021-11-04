@@ -18,7 +18,6 @@ namespace iSukces.DrawingPanel.Paths.Test
         public static void Draw(OneReferencePointPathCalculator x, IPathResult r, TestName name,
             [CallerFilePath] string path = null)
         {
-            
             void ExtraDraw2(ResultDrawer g)
             {
                 var crossNullable = x.Start.Cross(x.End);
@@ -27,21 +26,20 @@ namespace iSukces.DrawingPanel.Paths.Test
                 var dot   = (cross - x.Start.Point) * x.Start.Vector;
                 if (dot < 0)
                     return;
-             dot = (cross - x.End.Point) * x.End.Vector;
+                dot = (cross - x.End.Point) * x.End.Vector;
                 if (dot < 0)
                     return;
-
 
                 using var pen = new Pen(Color.Aqua, 1)
                 {
                     DashStyle = DashStyle.DashDot
                 };
-                var       p1  = g.Map(x.Start.Point);
-                var       p2  = g.Map(x.End.Point);
-                var       p3  = g.Map(cross);
+                var p1 = g.Map(x.Start.Point);
+                var p2 = g.Map(x.End.Point);
+                var p3 = g.Map(cross);
                 g.Graph.DrawPolygon(pen, new[] { p1, p2, p3, p1 });
             }
-            
+
             void ExtraDraw(ResultDrawer g)
             {
                 g.GrayCross(x.Reference.Point);
@@ -130,8 +128,8 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             CreateBitmap();
 
-            Graph = Graphics.FromImage(Bmp);
-            Graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            Graph               = Graphics.FromImage(Bmp);
+            Graph.SmoothingMode = SmoothingMode.HighQuality;
             {
                 Graph.FillRectangle(Brushes.White, 0, 0, Bmp.Width, Bmp.Height);
                 DrawCircleWithVector(_cfg.Start);

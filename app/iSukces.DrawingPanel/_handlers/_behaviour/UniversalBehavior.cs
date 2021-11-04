@@ -1,5 +1,5 @@
 ﻿#define KEYBOARD_FROM_FORM_
-#define LOG
+#define _LOG
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -19,7 +19,12 @@ namespace iSukces.DrawingPanel
         public UniversalBehavior() { _handlers = new SortableSynchronizedCollection<HolderWrapper>(); }
 
         [Conditional("DEBUG")]
-        private static void Log(string text) { Debug.WriteLine("----------UniversalBehavior: " + text); }
+        private static void Log(string text)
+        {
+#if LOG
+            Debug.WriteLine("----------UniversalBehavior: " + text);
+#endif
+        }
 
         private bool Handle<THandler>(Func<THandler, DrawingHandleResult> func)
         {
