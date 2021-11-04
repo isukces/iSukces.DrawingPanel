@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
@@ -18,43 +19,15 @@ namespace iSukces.DrawingPanel.Paths
             return true;
         }
 
-        public static Result Compute(PathRay start, PathRay end)
+        public static Result Compute(PathRay start, PathRay end, IPathValidator validator)
         {
             var x = new ZeroReferencePointPathCalculator
             {
-                Start = start,
-                End   = end
+                Start     = start,
+                End       = end,
+                Validator = validator
             };
             return x.Compute();
-        }
-
-        private static bool IsOk(ArcDefinition q)
-        {
-            if (q is null)
-                return false;
-            if (q.Angle < 180 && q.RadiusStart.Length > 3)
-                return true;
-            return false;
-        }
-
-        private Result TryTwoArcsSolution(bool reverseEnd, bool useSmallerRadius)
-        {
-            var finder = new TwoArcsFinder();
-            finder.UpdateFromPoints(Start, End, reverseEnd);
-            // finder.Normalize();
-            var isOk = finder.Compute(out var arc1, out var arc2, useSmallerRadius);
-            if (!isOk) return null;
-            
-            var dot = Start.Vector * arc1.StartVector;
-            if (dot <= 0) return null;
-            dot = End.Vector * arc2.EndVector;
-            if (dot <= 0) return null;
-            return new Result
-            {
-                Arc1 = arc1,
-                Arc2 = arc2,
-                Kind = ResultKind.TwoArcs,
-            };
         }
 
         private Result Compute()
@@ -82,59 +55,17 @@ namespace iSukces.DrawingPanel.Paths
 
             var one = TryOne(cross.Value);
             if (IsOk(one))
-                return new Result
-                {
-                    Arc1 = one,
-                    Kind    = ResultKind.OneArc
-                };
-
-         
-            return TryTwo(one);
-        }
-
-        private Result TryTwo(ArcDefinition one)
-        {
-            var toCompare = one;
-            if (toCompare != null)
-                if (toCompare.RadiusStart.Length <= 3)
-                    toCompare = null;
-
-            Start = Start.Normalize();
-            End   = End.Normalize();
-            var    minLength  = double.MaxValue;
-            Result bestResult = null;
-
-            void CheckAndAdd(Result r)
             {
-                if (r is null)                    
-                    return ;
-                if (!Check(r, toCompare))
-                    return ;
-                        
-                var l = r.GetLength(Start.Point, End.Point);
-                if (l < minLength)
-                {
-                    minLength  = l;
-                    bestResult = r;
-                }
+                if (one.Angle < 180)
+                    return new Result
+                    {
+                        Arc1 = one,
+                        Kind = ResultKind.OneArc
+                    };
+
             }
-            CheckAndAdd(TryTwoArcsSolution(false, false));
-            CheckAndAdd(TryTwoArcsSolution(true, false));
-            CheckAndAdd(TryTwoArcsSolution(false, true));
-            CheckAndAdd(TryTwoArcsSolution(true, true));
-            
-    
 
-            if (bestResult != null)
-                return bestResult;
-            if (one != null)
-                return new Result
-                {
-                    Arc1 = one,
-                    Kind = ResultKind.OneArc
-                };
-
-            return null;
+            return TryTwo(null);
         }
 
         public override void InitDemo()
@@ -143,12 +74,16 @@ namespace iSukces.DrawingPanel.Paths
             End   = new PathRay(new Point(100, 20), new Vector(-100, 100));
         }
 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool IsOk(ArcDefinition arc) { return Validator.IsOk(arc); }
+
         public override void SetReferencePoint(Point p, int nr) { }
 
         private ArcDefinition TryOne(Point point)
         {
-            var v1    = point - Start.Point;
-            var dot1  = v1 * Start.Vector;
+            var v1   = point - Start.Point;
+            var dot1 = v1 * Start.Vector;
 
             var v2   = End.Point - point;
             var dot2 = v2 * End.Vector;
@@ -229,8 +164,72 @@ namespace iSukces.DrawingPanel.Paths
             return null;
         }
 
+        private Result TryTwo(ArcDefinition one)
+        {
+            var toCompare = one;
+            if (toCompare != null)
+                if (toCompare.RadiusStart.Length <= 3)
+                    toCompare = null;
 
-        
+            Start = Start.Normalize();
+            End   = End.Normalize();
+            var    minLength  = double.MaxValue;
+            Result bestResult = null;
+
+            void CheckAndAdd(Result r)
+            {
+                if (r is null)
+                    return;
+                if (!Check(r, toCompare))
+                    return;
+
+                var l = r.GetLength(Start.Point, End.Point);
+                if (l < minLength)
+                {
+                    minLength  = l;
+                    bestResult = r;
+                }
+            }
+
+            CheckAndAdd(TryTwoArcsSolution(false, false));
+            CheckAndAdd(TryTwoArcsSolution(true, false));
+            CheckAndAdd(TryTwoArcsSolution(false, true));
+            CheckAndAdd(TryTwoArcsSolution(true, true));
+
+            if (bestResult != null)
+                return bestResult;
+            if (one != null)
+                return new Result
+                {
+                    Arc1 = one,
+                    Kind = ResultKind.OneArc
+                };
+
+            return null;
+        }
+
+        private Result TryTwoArcsSolution(bool reverseEnd, bool useSmallerRadius)
+        {
+            var finder = new TwoArcsFinder();
+            finder.UpdateFromPoints(Start, End, reverseEnd);
+            // finder.Normalize();
+            var isOk = finder.Compute(out var arc1, out var arc2, useSmallerRadius);
+            if (!isOk) return null;
+
+            var dot = Start.Vector * arc1.StartVector;
+            if (dot <= 0) return null;
+            dot = End.Vector * arc2.EndVector;
+            if (dot <= 0) return null;
+            return new Result
+            {
+                Arc1 = arc1,
+                Arc2 = arc2,
+                Kind = ResultKind.TwoArcs,
+            };
+        }
+
+        public IPathValidator Validator { get; set; }
+
 
         public enum ResultKind
         {
@@ -251,9 +250,17 @@ namespace iSukces.DrawingPanel.Paths
 
         public sealed class Result
         {
-            public ResultKind    Kind    { get; set; }
-            public ArcDefinition Arc1 { get; set; }
-            public ArcDefinition Arc2 { get; set; }
+            public override string ToString()
+            {
+                switch (Kind)
+                {
+                    case ResultKind.OneArc: return $"{Arc1}";
+                    case ResultKind.TwoArcs: return $"{Arc1} {Arc2}";
+                    case ResultKind.Point: return "Point";
+                    case ResultKind.Line: return "Line";
+                    default: return "Unknown";
+                }
+            }
 
             public double GetLength(Point s, Point e)
             {
@@ -295,6 +302,10 @@ namespace iSukces.DrawingPanel.Paths
 
                 return r;
             }
+
+            public ResultKind    Kind { get; set; }
+            public ArcDefinition Arc1 { get; set; }
+            public ArcDefinition Arc2 { get; set; }
         }
     }
 }

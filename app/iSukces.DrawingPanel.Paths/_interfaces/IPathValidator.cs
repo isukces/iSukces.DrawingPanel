@@ -5,7 +5,6 @@ namespace iSukces.DrawingPanel.Paths
 {
     public interface IPathValidator
     {
-
         ArcValidationResult ValidateArc([NotNull] ArcDefinition arc);
         LineValidationResult ValidateLine(Vector vector);
     }
@@ -18,11 +17,24 @@ namespace iSukces.DrawingPanel.Paths
 
     public enum ArcValidationResult
     {
-       Ok,
-       RadiusTooSmall,
-       ArcLengthTooSmall,
-       NoCrossPoints,
-       InvalidDirectionVector,
-       UnableToConstructArc
+        Ok,
+        RadiusTooSmall,
+        ArcLengthTooSmall,
+        NoCrossPoints,
+        InvalidDirectionVector,
+        UnableToConstructArc
+    }
+
+    public static class PathValidatorExtensions
+    {
+        public static bool IsOk(this IPathValidator validator, ArcDefinition arc)
+        {
+            if (arc is null)
+                return false;
+            if (validator is null)
+                return true;
+            var result = validator.ValidateArc(arc);
+            return result == ArcValidationResult.Ok;
+        }
     }
 }

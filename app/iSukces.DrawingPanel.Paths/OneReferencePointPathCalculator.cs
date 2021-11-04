@@ -24,8 +24,18 @@ namespace iSukces.DrawingPanel.Paths
             {
                 var ll = new Aggregator
                 {
-                    CurrentPoint = Start.Point
+                    CurrentPoint = Start.Point,
+                    Validator    = validator
                 };
+
+                IReadOnlyList<IPathElement> FlexiS()
+                {
+                    ll.Clear();
+                    ll.Add(Start, Reference);
+                    var endInverted = End.WithInvertedVector();
+                    ll.Add(Reference, endInverted);
+                    return ll.List;
+                }
 
                 var startCrossNullable = Start.Cross(Reference);
                 var endCrossNullable   = End.Cross(Reference);
@@ -37,16 +47,13 @@ namespace iSukces.DrawingPanel.Paths
                         var line = LineEquation.Make(Start.Point, Reference.Vector);
                         var dist = line.DistanceNotNormalized(Reference.Point);
 
-                        //if (dist * dist < LengthEpsilonSquare)
                         if (dist == 0)
                         {
                             ll.AddLine(Start.Point, End.Point);
                             return ll.List;
                         }
 
-                        ll.Add(Start, Reference);
-                        ll.Add(Reference, End.WithInvertedVector());
-                        return ll.List;
+                        return FlexiS();
                     }
 
                     ll.Add(Start, Reference);
@@ -63,37 +70,27 @@ namespace iSukces.DrawingPanel.Paths
                         var cross2 = endCrossNullable.Value;
                         var q      = FromTwoCrosses(cross1, cross2, ll, validator);
                         if (q == FromTwoCrossesResult.TwoS)
-                        {
-                            ll.Add(Start, Reference);
-                            ll.Add(Reference, End.WithInvertedVector());
-                            return ll.List;
-                        }
+                            return FlexiS();
                     }
                 }
 
                 if (ll.List.Count == 0)
-                    ll.Add(Start, End.WithInvertedVector());
-
-                /*
-                if (endCrossNullable is null)
-                {
-                    ll.Add(Reference, End.WithInvertedVector());
-                }*/
+                    return FlexiS();
 
                 return ll.List;
             }
         }
 
-        private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross, Aggregator aggregator,
+        private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross,
+            Aggregator aggregator,
             IPathValidator validator)
         {
             var startIsInvalid = DotNotPositive(startCross, Start);
-            var endIsInvalid   = DotNotPositive(endCross, End);
-            if (startIsInvalid || endIsInvalid)
-            {
-                aggregator.AddLine(Start.Point, End.Point);
-                return FromTwoCrossesResult.None;
-            }
+            if (startIsInvalid)
+                return FromTwoCrossesResult.TwoS;
+            var endIsInvalid = DotNotPositive(endCross, End);
+            if (endIsInvalid)
+                return FromTwoCrossesResult.TwoS;
 
             var vMiddle = endCross - startCross;
             {
@@ -108,7 +105,7 @@ namespace iSukces.DrawingPanel.Paths
             double startLength;
             {
                 var tmp = startCross - Reference.Point;
-                var dot = tmp * vMiddle; // ujemne OK
+                var dot = tmp * vMiddle; // negative is OK
 
                 startLength = vStart.Length;
                 if (dot < 0)
@@ -120,7 +117,7 @@ namespace iSukces.DrawingPanel.Paths
             double endLength;
             {
                 var tmp = endCross - Reference.Point;
-                var dot = tmp * vMiddle; // dodatnie Ok
+                var dot = tmp * vMiddle; // positive is Ok
                 endLength = vEnd.Length;
                 if (dot > 0)
                     endLength = Math.Min(endLength, tmp.Length);
@@ -162,17 +159,35 @@ namespace iSukces.DrawingPanel.Paths
 
             var result1 = validator.ValidateArc(arc1);
             var result2 = validator.ValidateArc(arc2);
-            var isOk    = result1 == ArcValidationResult.Ok && result2 == ArcValidationResult.Ok;
-
-            if (isOk)
+            var ok1     = result1 == ArcValidationResult.Ok;
+            var ok2     = result2 == ArcValidationResult.Ok;
+            {
+                var bothOk = ok1 && ok2;
+                if (bothOk)
+                {
+                    aggregator.ArcTo(arc1);
+                    aggregator.ArcTo(arc2);
+                    aggregator.LineTo(End.Point);
+                    return FromTwoCrossesResult.None;
+                }
+            }
+            {
+                var bothInvalid = !ok1 && !ok2;
+                if (bothInvalid)
+                    return FromTwoCrossesResult.TwoS;
+            }
+            if (ok1)
             {
                 aggregator.ArcTo(arc1);
-                aggregator.ArcTo(arc2);
+                aggregator.Add(Reference, End.WithInvertedVector());
                 aggregator.LineTo(End.Point);
                 return FromTwoCrossesResult.None;
             }
 
-            return FromTwoCrossesResult.TwoS;
+            aggregator.Add(Start, Reference);
+            aggregator.ArcTo(arc2);
+            aggregator.LineTo(End.Point);
+            return FromTwoCrossesResult.None;
         }
 
         public Point? Get()
@@ -243,7 +258,7 @@ namespace iSukces.DrawingPanel.Paths
         {
             public void Add(PathRay a, PathRay b)
             {
-                var x = ZeroReferencePointPathCalculator.Compute(a, b);
+                var x = ZeroReferencePointPathCalculator.Compute(a, b, Validator);
                 if (x is null)
                 {
                     _list.Add(new InvalidPathElement(a, b, ArcValidationResult.UnableToConstructArc));
@@ -279,6 +294,8 @@ namespace iSukces.DrawingPanel.Paths
                 CurrentPoint = arc.End;
             }
 
+            public void Clear() { _list.Clear(); }
+
             public void LineTo(Point p)
             {
                 var line = p - CurrentPoint;
@@ -287,7 +304,9 @@ namespace iSukces.DrawingPanel.Paths
                 CurrentPoint = p;
             }
 
-            public IReadOnlyList<IPathElement> List => _list;
+            public IReadOnlyList<IPathElement> List      => _list;
+            public IPathValidator              Validator { get; set; }
+
             private readonly List<IPathElement> _list = new List<IPathElement>();
             public Point CurrentPoint;
         }

@@ -22,7 +22,7 @@ namespace iSukces.DrawingPanel.Paths
 
             void Add(PathRay st, PathRay en)
             {
-                var s = ZeroReferencePointPathCalculator.Compute(st, en);
+                var s = ZeroReferencePointPathCalculator.Compute(st, en, null);
 #if DEBUG && DEEP_DEBUG
                 var code = new TestMaker().GetDebugCode(st, en, s);
                 Debug.WriteLine("\r\n\r\n" + code + "\r\n\r\n");

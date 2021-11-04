@@ -11,7 +11,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start= new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(33.6452056050077, 24.7273817080189), new Vector(1, 0));
-            var r = ZeroReferencePointPathCalculator.Compute(start, end);
+            var r = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             Assert.Equal(ArcDirection.Clockwise, r.Arc1.Direction);
             Assert.Equal(26.565051177078, r.Arc1.Angle, 6);
@@ -31,7 +31,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(32.3955742033012, 3.01503610336888), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end);
+            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             Assert.Equal(ArcDirection.Clockwise, r.Arc1.Direction);
             Assert.Equal(26.565051177078, r.Arc1.Angle, 6);
@@ -52,7 +52,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(46.7663353229257, 45.5025037613891), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end);
+            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             Assert.Equal(ArcDirection.CounterClockwise, r.Arc1.Direction);
             Assert.Equal(32.3905141231159, r.Arc1.Angle, 6);
@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end   = new PathRay(new Point(38.1595425371264, -16.5774819323465), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end);
+            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             Assert.Equal(ArcDirection.Clockwise, r.Arc1.Direction);
             Assert.Equal(74.3021669144872, r.Arc1.Angle, 6);
@@ -113,7 +113,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var start= new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end = new PathRay(new Point(25.6788054191289, 30.3507230156981),
                 new Vector(-1.17316474829017, -49.9862349499677));
-            var r = ZeroReferencePointPathCalculator.Compute(start, end);
+            var r = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             Assert.Equal(ArcDirection.CounterClockwise, r.Arc1.Direction);
             Assert.Equal(84.9240162298895, r.Arc1.Angle, 6);

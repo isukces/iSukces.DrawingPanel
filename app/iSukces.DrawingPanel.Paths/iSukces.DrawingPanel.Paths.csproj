@@ -40,4 +40,7 @@
         <PackageReference Include="iSukces.Math" Version="1.0.21253.118" />
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
+    </ItemGroup>
 </Project>

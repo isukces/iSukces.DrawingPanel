@@ -10,7 +10,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(0, 0, 100, 0);
             var end   = new PathRay(0, 0, 200, 0);
-            var c     = ZeroReferencePointPathCalculator.Compute(start, end);
+            var c     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.Point, c.Kind);
             Assert.Null(c.Arc1);
             Assert.Null(c.Arc2);
@@ -23,7 +23,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             var start = new PathRay(0, 0, 100, 0);
             var end   = new PathRay(200, 0, 100, 0);
-            var c     = ZeroReferencePointPathCalculator.Compute(start, end);
+            var c     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.Line, c.Kind);
             Assert.Null(c.Arc1);
             Assert.Null(c.Arc2);
@@ -34,7 +34,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(0, 0, 100, 0);
             var end   = new PathRay(200, 20, 100, 100);
-            var c = ZeroReferencePointPathCalculator.Compute(start, end);
+            var c = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.NotNull(c.Arc1);
             Assert.Null(c.Arc2);
 
@@ -49,7 +49,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var start = new PathRay(0, 0, 100, 0);
             var end   = new PathRay(10, 20, 100, 100);
-            var c     = ZeroReferencePointPathCalculator.Compute(start, end);
+            var c     = ZeroReferencePointPathCalculator.Compute(start, end, null);
             Assert.NotNull(c.Arc1);
             Assert.NotNull(c.Arc2);
             
