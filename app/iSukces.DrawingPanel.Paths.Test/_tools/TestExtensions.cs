@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using iSukces.Mathematics;
@@ -55,7 +56,16 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             using var ms = new MemoryStream();
             bmp.Save(ms, ImageFormat.Png);
-            var current = ms.ToArray();
+            SaveIfDifferent(ms.ToArray(), fileName);
+        }
+
+        public static void SaveIfDifferent(string fileName, string content)
+        {
+            SaveIfDifferent(Encoding.UTF8.GetBytes(content), fileName);
+        }
+
+        private static void SaveIfDifferent(this byte[] current, string fileName)
+        {
             if (File.Exists(fileName))
             {
                 var existing = File.ReadAllBytes(fileName);
@@ -66,9 +76,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             File.WriteAllBytes(fileName, current);
         }
 
+
         public static string ToCs(this double x) { return x.ToString(CultureInfo.InvariantCulture); }
         public static string ToCs(this int x) { return x.ToString(CultureInfo.InvariantCulture); }
-
         public static string ToCs(this Point x) { return $"new Point({x.X.ToCs()}, {x.Y.ToCs()})"; }
 
         public static string ToCs(this Vector x) { return $"new Vector({x.X.ToCs()}, {x.Y.ToCs()})"; }

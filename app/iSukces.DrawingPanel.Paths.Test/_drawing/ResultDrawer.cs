@@ -144,9 +144,11 @@ namespace iSukces.DrawingPanel.Paths.Test
             var fileInfo = _cfg.GetImageFile();
             fileInfo.Directory?.Create();
             Bmp.SaveIfDifferent(fileInfo.FullName);
-
             Bmp.Dispose();
+
+            MarkdownTools.MakeMarkdownIndex(_cfg.OutputDirectory, TestNamesSorter.Sort);
         }
+
 
         private IEnumerable<Point> GetPoints(IPathResult r)
         {
