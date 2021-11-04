@@ -90,14 +90,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             #endregion
         }
 
-        [Theory]
-        [InlineData(2)]
-        [InlineData(6)]
-        [InlineData(30 - 4)]
-        [InlineData(30 - 4 + 3)]
-        public void T03_Should_create_too_small_radius(double x)
+        [Fact]
+        public void T03_Should_create_too_small_radius_2()
         {
-            // lewy punkt przecięcia leży dokładnie na przedłużeniu lewej prostej
+            const double x  = 2;
             const double dx = 6;
             const double dy = 4;
             var a = new OneReferencePointPathCalculator
@@ -113,16 +109,23 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(30, 0, r.End);
-            Assert.Equal(3, r.Arcs.Count);
+            Assert.Equal(4, r.Arcs.Count);
             var tmp1 = (ArcDefinition)r.Arcs[0];
-            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
-            Assert.Equal(33.6900675259798, tmp1.Angle, 6);
-            AssertEx.Equal(13.211102550928, -19.816653826392, tmp1.Center);
+            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
+            Assert.Equal(78.6180267593746, tmp1.Angle, 6);
+            AssertEx.Equal(-0.856275169326163, 1.28441275398924, tmp1.Center);
             AssertEx.Equal(0, 0, tmp1.Start);
-            AssertEx.Equal(13.211102550928, 4, tmp1.End);
-            AssertEx.Equal(6, 4, tmp1.StartVector);
-            AssertEx.Equal(13.211102550928, 4, 20.3431457505076, 4, (LinePathElement)r.Arcs[1], 6);
-            tmp1 = (ArcDefinition)r.Arcs[2];
+            AssertEx.Equal(0.571862415336919, 1.8703703697666, tmp1.End);
+            AssertEx.Equal(0.832050294337844, 0.554700196225229, tmp1.StartVector);
+            tmp1 = (ArcDefinition)r.Arcs[1];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(112.308094285354, tmp1.Angle, 6);
+            AssertEx.Equal(2, 2.45632798554396, tmp1.Center);
+            AssertEx.Equal(0.571862415336919, 1.8703703697666, tmp1.Start);
+            AssertEx.Equal(2, 4, tmp1.End);
+            AssertEx.Equal(-0.585957615777356, 1.42813758466308, tmp1.StartVector);
+            AssertEx.Equal(2, 4, 20.3431457505076, 4, (LinePathElement)r.Arcs[2], 6);
+            tmp1 = (ArcDefinition)r.Arcs[3];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(45, tmp1.Angle, 6);
             AssertEx.Equal(20.3431457505076, -9.65685424949238, tmp1.Center);
@@ -132,6 +135,145 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             #endregion
         }
+
+        [Fact]
+        public void T03_Should_create_too_small_radius_26()
+        {
+            const double x  = 26;
+            const double dx = 6;
+            const double dy = 4;
+            var a = new OneReferencePointPathCalculator
+            {
+                Start     = new PathRay(0, 0, dx, dy),
+                End       = new PathRay(30, 0, -1, 1),
+                Reference = new PathRay(x, 4, 0, 0)
+            };
+            var r = a.Compute(null);
+            ResultDrawer.Draw(a, r, MakeTitle(3, "too small radius, x=" + x));
+
+            #region Asserts
+
+            AssertEx.Equal(0, 0, r.Start);
+            AssertEx.Equal(30, 0, r.End);
+            Assert.Equal(4, r.Arcs.Count);
+            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(33.6900675259798, tmp1.Angle, 6);
+            AssertEx.Equal(13.211102550928, -19.816653826392, tmp1.Center);
+            AssertEx.Equal(0, 0, tmp1.Start);
+            AssertEx.Equal(13.211102550928, 4, tmp1.End);
+            AssertEx.Equal(6, 4, tmp1.StartVector);
+            AssertEx.Equal(13.211102550928, 4, 26, 4, (LinePathElement)r.Arcs[1], 6);
+            tmp1 = (ArcDefinition)r.Arcs[2];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(76.399714809919, tmp1.Angle, 6);
+            AssertEx.Equal(26, 0.765881025674692, tmp1.Center);
+            AssertEx.Equal(26, 4, tmp1.Start);
+            AssertEx.Equal(29.1434337289548, 1.5263742417921, tmp1.End);
+            AssertEx.Equal(1, 0, tmp1.StartVector);
+            tmp1 = (ArcDefinition)r.Arcs[3];
+            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
+            Assert.Equal(31.399714809919, tmp1.Angle, 6);
+            AssertEx.Equal(32.2868674579095, 2.28686745790951, tmp1.Center);
+            AssertEx.Equal(29.1434337289548, 1.5263742417921, tmp1.Start);
+            AssertEx.Equal(30, 0, tmp1.End);
+            AssertEx.Equal(0.760493216117408, -3.14343372895475, tmp1.StartVector);
+
+            #endregion
+        }
+
+        [Fact]
+        public void T03_Should_create_too_small_radius_29()
+        {
+            const double x  = 29;
+            const double dx = 6;
+            const double dy = 4;
+            var a = new OneReferencePointPathCalculator
+            {
+                Start     = new PathRay(0, 0, dx, dy),
+                End       = new PathRay(30, 0, -1, 1),
+                Reference = new PathRay(x, 4, 0, 0)
+            };
+            var r = a.Compute(null);
+            ResultDrawer.Draw(a, r, MakeTitle(3, "too small radius, x=" + x));
+
+            #region Asserts
+
+            AssertEx.Equal(0, 0, r.Start);
+            AssertEx.Equal(30, 0, r.End);
+            Assert.Equal(4, r.Arcs.Count);
+            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(33.6900675259798, tmp1.Angle, 6);
+            AssertEx.Equal(13.211102550928, -19.816653826392, tmp1.Center);
+            AssertEx.Equal(0, 0, tmp1.Start);
+            AssertEx.Equal(13.211102550928, 4, tmp1.End);
+            AssertEx.Equal(6, 4, tmp1.StartVector);
+            AssertEx.Equal(13.211102550928, 4, 29, 4, (LinePathElement)r.Arcs[1], 6);
+            tmp1 = (ArcDefinition)r.Arcs[2];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(132.595764207088, tmp1.Angle, 6);
+            AssertEx.Equal(29, 2.69313071723601, tmp1.Center);
+            AssertEx.Equal(29, 4, tmp1.Start);
+            AssertEx.Equal(29.9620480659834, 1.80861342460141, tmp1.End);
+            AssertEx.Equal(1, 0, tmp1.StartVector);
+            tmp1 = (ArcDefinition)r.Arcs[3];
+            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
+            Assert.Equal(87.5957642070877, tmp1.Angle, 6);
+            AssertEx.Equal(30.9240961319668, 0.924096131966815, tmp1.Center);
+            AssertEx.Equal(29.9620480659834, 1.80861342460141, tmp1.Start);
+            AssertEx.Equal(30, 0, tmp1.End);
+            AssertEx.Equal(-0.884517292634599, -0.96204806598341, tmp1.StartVector);
+
+            #endregion
+        }
+
+        [Fact]
+        public void T03_Should_create_too_small_radius_6()
+        {
+            const double x  = 6;
+            const double dx = 6;
+            const double dy = 4;
+            var a = new OneReferencePointPathCalculator
+            {
+                Start     = new PathRay(0, 0, dx, dy),
+                End       = new PathRay(30, 0, -1, 1),
+                Reference = new PathRay(x, 4, 0, 0)
+            };
+            var r = a.Compute(null);
+            ResultDrawer.Draw(a, r, MakeTitle(3, "too small radius, x=" + x));
+
+            #region Asserts
+
+            AssertEx.Equal(0, 0, r.Start);
+            AssertEx.Equal(30, 0, r.End);
+            Assert.Equal(4, r.Arcs.Count);
+            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
+            Assert.Equal(23.6482664310892, tmp1.Angle, 6);
+            AssertEx.Equal(-2.94780495706329, 4.42170743559494, tmp1.Center);
+            AssertEx.Equal(0, 0, tmp1.Start);
+            AssertEx.Equal(1.52609752146835, 1.55373823710781, tmp1.End);
+            AssertEx.Equal(0.832050294337844, 0.554700196225229, tmp1.StartVector);
+            tmp1 = (ArcDefinition)r.Arcs[1];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(57.338333957069, tmp1.Angle, 6);
+            AssertEx.Equal(6, -1.31423096137931, tmp1.Center);
+            AssertEx.Equal(1.52609752146835, 1.55373823710781, tmp1.Start);
+            AssertEx.Equal(6, 4, tmp1.End);
+            AssertEx.Equal(2.86796919848713, 4.47390247853165, tmp1.StartVector);
+            AssertEx.Equal(6, 4, 20.3431457505076, 4, (LinePathElement)r.Arcs[2], 6);
+            tmp1 = (ArcDefinition)r.Arcs[3];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(45, tmp1.Angle, 6);
+            AssertEx.Equal(20.3431457505076, -9.65685424949238, tmp1.Center);
+            AssertEx.Equal(20.3431457505076, 4, tmp1.Start);
+            AssertEx.Equal(30, 0, tmp1.End);
+            AssertEx.Equal(30, 0, tmp1.StartVector);
+
+            #endregion
+        }
+
 
         [Fact]
         public void T04_Should_create_normal_configuration()

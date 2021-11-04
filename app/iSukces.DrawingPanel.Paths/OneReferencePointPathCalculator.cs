@@ -61,7 +61,7 @@ namespace iSukces.DrawingPanel.Paths
                     {
                         var cross1 = startCrossNullable.Value;
                         var cross2 = endCrossNullable.Value;
-                        var q = FromTwoCrosses(cross1, cross2, ll, validator);
+                        var q      = FromTwoCrosses(cross1, cross2, ll, validator);
                         if (q == FromTwoCrossesResult.TwoS)
                         {
                             ll.Add(Start, Reference);
@@ -84,13 +84,8 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
-        public enum FromTwoCrossesResult
-        {
-            None,
-            TwoS
-        }
-
-        private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross, Aggregator aggregator, IPathValidator validator)
+        private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross, Aggregator aggregator,
+            IPathValidator validator)
         {
             var startIsInvalid = DotNotPositive(startCross, Start);
             var endIsInvalid   = DotNotPositive(endCross, End);
@@ -99,6 +94,7 @@ namespace iSukces.DrawingPanel.Paths
                 aggregator.AddLine(Start.Point, End.Point);
                 return FromTwoCrossesResult.None;
             }
+
             var vMiddle = endCross - startCross;
             {
                 var dot = vMiddle * (End.Point - Start.Point);
@@ -106,27 +102,30 @@ namespace iSukces.DrawingPanel.Paths
                     return FromTwoCrossesResult.TwoS;
             }
 
-            var vStart  = startCross - Start.Point;
-            var vEnd    = End.Point - endCross;
+            var vStart = startCross - Start.Point;
+            var vEnd   = End.Point - endCross;
 
             double startLength;
             {
                 var tmp = startCross - Reference.Point;
                 var dot = tmp * vMiddle; // ujemne OK
-                
+
                 startLength = vStart.Length;
-                if (dot<0)
-                startLength = Math.Min(startLength, tmp.Length);
+                if (dot < 0)
+                    startLength = Math.Min(startLength, tmp.Length);
+                else
+                    return FromTwoCrossesResult.TwoS;
             }
             var    middleLength = vMiddle.Length;
-            double    endLength;
+            double endLength;
             {
                 var tmp = endCross - Reference.Point;
                 var dot = tmp * vMiddle; // dodatnie Ok
                 endLength = vEnd.Length;
                 if (dot > 0)
                     endLength = Math.Min(endLength, tmp.Length);
-                
+                else
+                    return FromTwoCrossesResult.TwoS;
             }
 
             var xReference = Reference.GetNormalizedVector();
@@ -172,6 +171,7 @@ namespace iSukces.DrawingPanel.Paths
                 aggregator.LineTo(End.Point);
                 return FromTwoCrossesResult.None;
             }
+
             return FromTwoCrossesResult.TwoS;
         }
 
@@ -231,6 +231,12 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         public PathRay Reference { get; set; }
+
+        public enum FromTwoCrossesResult
+        {
+            None,
+            TwoS
+        }
 
 
         private class Aggregator
