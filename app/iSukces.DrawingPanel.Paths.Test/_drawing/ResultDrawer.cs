@@ -42,7 +42,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             void ExtraDraw(ResultDrawer g)
             {
-                g.GrayCross(x.Reference.Point);
+                g.DrawCircleWithVector(x.Reference, true);
                 ExtraDraw2(g);
             }
 

@@ -16,9 +16,11 @@ namespace iSukces.DrawingPanel.Paths.Test
             sb.AppendLine("# Test output");
             foreach (var file in files)
             {
+                /*
                 var uri = "https://github.com/isukces/iSukces.DrawingPanel/blob/main/doc/testDrawings/"
                           + file.Name + "?raw=true";
-                var code = "![](" + uri + ")";
+                */
+                var code = "![](" + file.Name + ")";
                 sb.AppendLine(code);
             }
 

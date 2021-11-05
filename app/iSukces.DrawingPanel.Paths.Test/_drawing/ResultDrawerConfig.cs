@@ -21,8 +21,8 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             ExtraDrawingTop = g =>
             {
-                g.GrayCross(calc.Reference1.Point);
-                g.GrayCross(calc.Reference2.Point);
+                g.DrawCircleWithVector(calc.Reference1, true);
+                g.DrawCircleWithVector(calc.Reference2, true);
             };
             return this;
         }
