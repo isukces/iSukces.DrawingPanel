@@ -7,28 +7,35 @@ namespace iSukces.DrawingPanel.Paths
     {
         public ArcDefinition CalculateArc()
         {
-            var p1 = StartPoint;
-            var p2 = EndPoint;
-            var v1 = p1 - Cross;
-            var v2 = p2 - Cross;
-            var l1 = v1.Length;
-            var l2 = v2.Length;
-            if (l1 < l2)
+            var start              = StartPoint;
+            var end                = EndPoint;
+            var startToCross       = start - Cross;
+            var endToCross         = end - Cross;
+            var startToCrossLength = startToCross.Length;
+            var endToCrossLength   = endToCross.Length;
+
+            bool usePointsFurtherFromCrossPoint;
             {
-                var scale = l1 / l2;
+                var a = startToCross * StartVector;
+                var b = endToCross * EndVector;
+                usePointsFurtherFromCrossPoint = a > 0 && b < 0;
+            }
+            if (usePointsFurtherFromCrossPoint ^ startToCrossLength < endToCrossLength)
+            {
+                var scale = startToCrossLength / endToCrossLength;
                 if (double.IsNaN(scale))
                     return null;
-                p2 = Cross + v2 * scale;
+                end   = Cross + endToCross * scale;
             }
             else
             {
-                var scale = l2 / l1;
+                var scale = endToCrossLength / startToCrossLength;
                 if (double.IsNaN(scale))
                     return null;
-                p1 = Cross + v1 * scale;
+                start = Cross + startToCross * scale;
             }
 
-            return ArcDefinition.Make(p1, StartVector, p2, EndVector);
+            return ArcDefinition.Make(start, StartVector, end, EndVector);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -31,7 +31,6 @@ namespace iSukces.DrawingPanel.Paths
             var res = c.CalculateArc();
             if (Validator.IsOk(res))
             {
-                if (res.Angle<180)
                 if (CheckDot(res))
                 {
                     ArcTo(res);
