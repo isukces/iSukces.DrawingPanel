@@ -1,13 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using JetBrains.Annotations;
 using Size = System.Drawing.Size;
 
 namespace iSukces.DrawingPanel
 {
-    public class ZoomInfo : NpcBase
+    public class ZoomInfo : DpNotifyPropertyChanged
     {
         public void ApplyBounds(Rect bounds, Size size)
         {
@@ -52,26 +49,5 @@ namespace iSukces.DrawingPanel
 
         private Point _center;
         private double _scale = 1;
-    }
-
-    public class NpcBase : INotifyPropertyChanged
-    {
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetAndNotify<T>(ref T backField, T value,
-            [CallerMemberName] string propertyName = null)
-        {
-            if (Equals(backField, value))
-                return false;
-            backField = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

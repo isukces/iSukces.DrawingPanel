@@ -6,7 +6,7 @@ using WinPoint = System.Windows.Point;
 
 namespace iSukces.DrawingPanel.Sample
 {
-    public partial class PolilineDrawer : DrawableBase, INewMouseButtonHandler
+    public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
     {
         private static void DrawDimension(Graphics graphics, WinPoint a, WinPoint b,
             IDrawingToPixelsTransformation transf)

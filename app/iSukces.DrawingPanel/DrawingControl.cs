@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel
 {
@@ -102,7 +103,7 @@ namespace iSukces.DrawingPanel
 
         public DrawingLayersContainer Panel { get; }
 
-        public INewHandlerContainer RootBehaviorContainer => Panel.RootBehaviorContainer;
+        public IDpHandlerContainer RootBehaviorContainer => Panel.RootBehaviorContainer;
 
 
         private readonly Ruler _horizontalRuler;

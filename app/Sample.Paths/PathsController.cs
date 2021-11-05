@@ -10,7 +10,7 @@ using Point = System.Windows.Point;
 
 namespace Sample.Paths
 {
-    internal sealed class PathsController : DrawableBase, INewMouseButtonHandler
+    internal sealed class PathsController : DrawableBase, IDpMouseButtonHandler
     {
         public PathsController()
         {

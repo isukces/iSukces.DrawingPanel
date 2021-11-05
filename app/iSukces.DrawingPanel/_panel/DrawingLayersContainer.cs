@@ -245,7 +245,7 @@ namespace iSukces.DrawingPanel
         public IExtendedObservableCollection<IDrawable> Drawables { get; }
         public IExtendedObservableCollection<IDrawable> Overlay   { get; }
 
-        public INewHandlerContainer RootBehaviorContainer => _logic.RootBehaviorContainer;
+        public IDpHandlerContainer RootBehaviorContainer => _logic.RootBehaviorContainer;
 
         private readonly IExtendedObservableCollection<IDrawable>[] _layers;
         private readonly CadControlLogic _logic;

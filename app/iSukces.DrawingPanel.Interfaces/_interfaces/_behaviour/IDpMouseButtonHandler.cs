@@ -1,9 +1,8 @@
 using System.Windows.Forms;
-using iSukces.DrawingPanel.Interfaces;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel.Interfaces
 {
-    public interface INewMouseButtonHandler : INewHandler
+    public interface IDpMouseButtonHandler : IDpHandler
     {
         DrawingHandleResult HandleOnMouseDown(MouseEventArgs e);
         DrawingHandleResult HandleOnMouseMove(MouseEventArgs args);

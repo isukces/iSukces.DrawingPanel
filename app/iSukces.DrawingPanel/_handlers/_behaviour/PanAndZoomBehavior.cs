@@ -6,8 +6,8 @@ using WinPoint = System.Windows.Point;
 
 namespace iSukces.DrawingPanel
 {
-    public sealed class PanAndZoomBehavior : INewMouseWheelHandler, INewMouseButtonHandler,
-        IDrawingPanelSizeChangedHandler
+    public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHandler,
+        IDpSizeChangedHandler
     {
         public PanAndZoomBehavior(double mouseWheelResponsibility, ZoomInfo zoom)
         {

@@ -14,7 +14,7 @@ namespace iSukces.DrawingPanel
         Control KeyboardFrom   { get; set; }
     }
 
-    public sealed class UniversalBehavior : INewHandlerContainer, IBehaviorSource
+    public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
     {
         public UniversalBehavior() { _handlers = new SortableSynchronizedCollection<HolderWrapper>(); }
 
@@ -45,21 +45,21 @@ namespace iSukces.DrawingPanel
 
         private void HandleKeyDown(object sender, KeyEventArgs e)
         {
-            e.Handled = Handle<INewKeyboardHandler>(h => h.HandleKeyDown(e));
+            e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyDown(e));
             if (e.Handled)
                 e.SuppressKeyPress = true;
         }
 
         private void HandleKeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = Handle<INewKeyboardHandler>(h => h.HandleKeyUp(e));
+            e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyUp(e));
         }
 
         private void HandleMouseWheel(object sender, MouseEventArgs e)
         {
             //DebugLog.Log("-------------- Wheel");
             // e.Handled = 
-            Handle<INewMouseWheelHandler>(h => h.HandleMouseWheel(e));
+            Handle<IDpMouseWheelHandler>(h => h.HandleMouseWheel(e));
         }
 
         private void HandleOnMouseDown(object sender, MouseEventArgs e)
@@ -67,7 +67,7 @@ namespace iSukces.DrawingPanel
 #if LOG
             Log("-------------- Down");
 #endif
-            Handle<INewMouseButtonHandler>(h =>
+            Handle<IDpMouseButtonHandler>(h =>
             {
                 var result = h.HandleOnMouseDown(e);
                 switch (result)
@@ -96,7 +96,7 @@ namespace iSukces.DrawingPanel
                     KeyboardFrom.Focus();
             }
 
-            Handle<INewMouseButtonHandler>(h =>
+            Handle<IDpMouseButtonHandler>(h =>
             {
                 // PdLog.DebugWriteLine("run UniversalBehavior.HandleOnMouseMove");
                 return h.HandleOnMouseMove(e);
@@ -108,7 +108,7 @@ namespace iSukces.DrawingPanel
 #if LOG
             Log("-------------- Up");
 #endif
-            Handle<INewMouseButtonHandler>(h =>
+            Handle<IDpMouseButtonHandler>(h =>
             {
                 var result = h.HandleOnMouseUp(e);
                 switch (result)
@@ -249,7 +249,7 @@ namespace iSukces.DrawingPanel
             base.OnDetached();
         }*/
 
-        public void RegisterHandler(INewHandler handler, int order)
+        public void RegisterHandler(IDpHandler handler, int order)
         {
             if (handler == null) return;
             lock(_handlers.SyncRoot)
@@ -260,7 +260,7 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        public void UnregisterHandler(INewHandler o)
+        public void UnregisterHandler(IDpHandler o)
         {
             if (o == null) return;
             lock(_handlers.SyncRoot)

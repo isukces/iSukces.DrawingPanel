@@ -1,9 +1,8 @@
 ﻿using System.Windows.Forms;
-using iSukces.DrawingPanel.Interfaces;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel.Interfaces
 {
-    public interface INewKeyboardHandler : INewHandler
+    public interface IDpKeyboardHandler : IDpHandler
     {
         DrawingHandleResult HandleKeyDown(KeyEventArgs keyEventArgs);
         DrawingHandleResult HandleKeyUp(KeyEventArgs keyEventArgs);

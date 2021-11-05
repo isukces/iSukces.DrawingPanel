@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel
         public IBehaviorSource   BehaviorSource => _behaviorContainer;
         public DrawingCanvasInfo CanvasInfo     { get; private set; }
 
-        public INewHandlerContainer RootBehaviorContainer => _behaviorContainer;
+        public IDpHandlerContainer RootBehaviorContainer => _behaviorContainer;
 
         private readonly UniversalBehavior _behaviorContainer;
         private readonly ICadControlLogicOwner _owner;

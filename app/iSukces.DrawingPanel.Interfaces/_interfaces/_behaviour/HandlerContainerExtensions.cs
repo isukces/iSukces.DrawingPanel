@@ -1,20 +1,14 @@
 using System;
 using JetBrains.Annotations;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel.Interfaces
 {
-    public interface INewHandlerContainer
-    {
-        void RegisterHandler(INewHandler handler, int order);
-        void UnregisterHandler(INewHandler handler);
-    }
-
-    public static class HandlerContainerEx
+    public static class HandlerContainerExtensions
     {
         [CanBeNull]
-        public static IDisposable RegisterHandler2<T>([NotNull] this INewHandlerContainer handlerContainer,
+        public static IDisposable RegisterHandler2<T>([NotNull] this IDpHandlerContainer handlerContainer,
             [NotNull] T handler, int order)
-            where T : class, INewHandler
+            where T : class, IDpHandler
         {
             if (handlerContainer == null) throw new ArgumentNullException(nameof(handlerContainer));
             if (handler == null) throw new ArgumentNullException(nameof(handler));
@@ -22,8 +16,8 @@ namespace iSukces.DrawingPanel
             return new Registration(handlerContainer, handler);
         }
 
-        public static void UnregisterDisposeAndSetNull<T>(this INewHandlerContainer handlerContainer, ref T handler)
-            where T : class, INewHandler
+        public static void UnregisterDisposeAndSetNull<T>(this IDpHandlerContainer handlerContainer, ref T handler)
+            where T : class, IDpHandler
         {
             if (handler is null)
                 return;
@@ -36,7 +30,7 @@ namespace iSukces.DrawingPanel
 
         private sealed class Registration : IDisposable
         {
-            public Registration(INewHandlerContainer container, INewHandler handler)
+            public Registration(IDpHandlerContainer container, IDpHandler handler)
             {
                 _container = container;
                 _handler   = handler;
@@ -59,8 +53,8 @@ namespace iSukces.DrawingPanel
                 _handler   = null;
             }
 
-            private INewHandlerContainer _container;
-            private INewHandler _handler;
+            private IDpHandlerContainer _container;
+            private IDpHandler _handler;
         }
     }
 }
