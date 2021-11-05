@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
-    sealed class ResultDrawerConfig
+    internal sealed class ResultDrawerConfig
     {
         public void Draw([CallerFilePath] string path = null) { ResultDrawer.Draw(this, path); }
 

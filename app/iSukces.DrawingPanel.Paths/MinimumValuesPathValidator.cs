@@ -12,7 +12,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool IsTooSmall(Vector v, double minLengthSquared) { return v.LengthSquared < minLengthSquared; }
+        private static bool IsTooSmall(Vector v, double minLengthSquared) { return v.LengthSquared < minLengthSquared; }
 
 
         public ArcValidationResult ValidateArc(ArcDefinition arc)

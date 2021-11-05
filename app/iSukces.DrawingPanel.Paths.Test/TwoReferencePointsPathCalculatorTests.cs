@@ -206,7 +206,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        static readonly MinimumValuesPathValidator validator = new(5, 4);
+        private static readonly MinimumValuesPathValidator validator = new(5, 4);
     }
 }
 

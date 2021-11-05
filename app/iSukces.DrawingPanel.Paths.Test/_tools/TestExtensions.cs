@@ -110,9 +110,9 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        const string DigitAfterLetterFilter = @"([a-z])_(\d)";
+        private const string DigitAfterLetterFilter = @"([a-z])_(\d)";
 
-        static readonly Regex DigitAfterLetterRegex =
+        private static readonly Regex DigitAfterLetterRegex =
             new Regex(DigitAfterLetterFilter, RegexOptions.IgnoreCase | RegexOptions.Compiled);
     }
 }

@@ -138,13 +138,13 @@ namespace Sample.Paths
             ArrangeLeftPanel();
         }
 
-        const string strMaxArc = "Max arc";
+        private const string strMaxArc = "Max arc";
 
-        const string EndsWithFilter = @"(\d+)$";
+        private const string EndsWithFilter = @"(\d+)$";
 
         private const int LeftPanelWidth = 130;
 
-        static readonly Regex EndsWithRegex =
+        private static readonly Regex EndsWithRegex =
             new Regex(EndsWithFilter, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         private readonly PathsController _controller;

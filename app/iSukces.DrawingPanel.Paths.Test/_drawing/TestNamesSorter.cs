@@ -3,7 +3,7 @@ using System.IO;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
-    static class TestNamesSorter
+    internal static class TestNamesSorter
     {
         private static int GetGroup(string name)
         {

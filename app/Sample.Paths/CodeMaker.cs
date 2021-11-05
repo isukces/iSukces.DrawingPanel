@@ -77,9 +77,9 @@ namespace Sample.Paths
 
         private void WriteLine(string txt) { _sb.AppendLine(txt); }
 
-        readonly StringBuilder _sb = new();
+        private readonly StringBuilder _sb = new();
 
-        sealed class Props
+        private sealed class Props
         {
             public void Add(string name, string value) { _props.Add(Tuple.Create(name, value)); }
 
