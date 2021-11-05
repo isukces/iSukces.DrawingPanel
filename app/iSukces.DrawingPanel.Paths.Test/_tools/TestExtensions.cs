@@ -52,6 +52,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             return true;
         }
 
+        public static PointF MapT1(this Point point) { return new PointF((float)point.X, (float)point.Y); }
+
         public static void SaveIfDifferent(this Bitmap bmp, string fileName)
         {
             using var ms = new MemoryStream();

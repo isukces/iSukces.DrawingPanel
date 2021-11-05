@@ -23,3 +23,4 @@
 ![](https://github.com/isukces/iSukces.DrawingPanel/blob/main/doc/testDrawings/Two02_left_to_close.png?raw=true)
 ![](https://github.com/isukces/iSukces.DrawingPanel/blob/main/doc/testDrawings/Two03_left_little_out.png?raw=true)
 ![](https://github.com/isukces/iSukces.DrawingPanel/blob/main/doc/testDrawings/Two04_big_rotation_angle.png?raw=true)
+![](https://github.com/isukces/iSukces.DrawingPanel/blob/main/doc/testDrawings/Three01_simple.png?raw=true)

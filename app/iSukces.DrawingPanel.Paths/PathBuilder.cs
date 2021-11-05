@@ -5,6 +5,12 @@ namespace iSukces.DrawingPanel.Paths
 {
     internal class PathBuilder
     {
+        public PathBuilder(Point currentPoint, IPathValidator validator = null)
+        {
+            CurrentPoint = currentPoint;
+            Validator    = validator;
+        }
+
         public void AddConnectionAutomatic(PathRay start, PathRay end)
         {
             bool CheckDot(ArcDefinition arc)
@@ -14,8 +20,8 @@ namespace iSukces.DrawingPanel.Paths
                 dot = arc.EndVector * end.Vector;
                 if (dot <= 0) return false;
                 return true;
-
             }
+
             var cross = start.Cross(end);
             if (cross is null)
             {
@@ -37,6 +43,7 @@ namespace iSukces.DrawingPanel.Paths
                     return;
                 }
             }
+
             AddFlexi(start, end);
         }
 
@@ -91,6 +98,14 @@ namespace iSukces.DrawingPanel.Paths
             if (!(line.LengthSquared > PathBase.LengthEpsilonSquare)) return;
             _list.Add(new LinePathElement(CurrentPoint, p));
             CurrentPoint = p;
+        }
+
+        public IPathResult LineToAndCreate(Point endPoint)
+        {
+            LineTo(endPoint);
+            if (_list.Count == 0)
+                return null;
+            return new PathResult(_list[0].GetStartPoint(), endPoint, List);
         }
 
         public IReadOnlyList<IPathElement> List      => _list;

@@ -13,6 +13,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 return 1;
             if (name.StartsWith("Two", StringComparison.OrdinalIgnoreCase))
                 return 2;
+            if (name.StartsWith("Three", StringComparison.OrdinalIgnoreCase))
+                return 3;
             return 99;
         }
 

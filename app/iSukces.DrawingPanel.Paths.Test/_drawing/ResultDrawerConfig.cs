@@ -19,7 +19,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         public ResultDrawerConfig With(TwoReferencePointsPathCalculator calc)
         {
-            ExtraDrawing = g =>
+            ExtraDrawingTop = g =>
             {
                 g.GrayCross(calc.Reference1.Point);
                 g.GrayCross(calc.Reference2.Point);
@@ -27,19 +27,29 @@ namespace iSukces.DrawingPanel.Paths.Test
             return this;
         }
 
-        public ResultDrawerConfig WithReverseEndMarker()
+        public ResultDrawerConfig With(ThreeReferencePointsPathCalculator calc)
         {
-            Flags |= ResultDrawerConfigFlags.ReverseEndMarker;
+            ExtraDrawingTop = g =>
+            {
+                g.DrawCircleWithVector(calc.Reference1, true);
+                g.DrawCircleWithVector(calc.Reference2, true);
+                g.DrawCircleWithVector(calc.Reference3, true);
+            };
+            ExtraPoints = () =>
+            {
+                return new[] { calc.Reference1.Point, calc.Reference2.Point, calc.Reference3.Point };
+            };
             return this;
         }
 
-        public PathRay                  Start           { get; set; }
-        public PathRay                  End             { get; set; }
-        public IPathResult              Result          { get; set; }
-        public TestName                 Title           { get; set; }
-        public Action<ResultDrawer>     ExtraDrawing    { get; set; }
-        public Func<IEnumerable<Point>> ExtraPoints     { get; set; }
-        public DirectoryInfo            OutputDirectory { get; set; }
+        public PathRay                  Start              { get; set; }
+        public PathRay                  End                { get; set; }
+        public IPathResult              Result             { get; set; }
+        public TestName                 Title              { get; set; }
+        public Action<ResultDrawer>     ExtraDrawingBottom { get; set; }
+        public Action<ResultDrawer>     ExtraDrawingTop    { get; set; }
+        public Func<IEnumerable<Point>> ExtraPoints        { get; set; }
+        public DirectoryInfo            OutputDirectory    { get; set; }
 
         public ResultDrawerConfigFlags Flags { get; set; }
     }

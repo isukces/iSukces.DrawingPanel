@@ -28,18 +28,13 @@ namespace iSukces.DrawingPanel.Paths
             Reference1 = Reference1.With(refVector);
             Reference2 = Reference2.With(refVector);
 
-            var b = new PathBuilder
-            {
-                Validator    = validator,
-                CurrentPoint = Start.Point
-            };
-            b.AddConnectionAutomatic(Start, Reference1);
-            b.LineTo(Reference2.Point);
-            b.AddConnectionAutomatic(Reference2, End.WithInvertedVector());
-            b.LineTo(End.Point);
+            var builder = new PathBuilder(Start.Point, validator);
+            builder.AddConnectionAutomatic(Start, Reference1);
+            builder.LineTo(Reference2.Point);
+            builder.AddConnectionAutomatic(Reference2, End.WithInvertedVector());
 
             result = ArcValidationResult.Ok;
-            return new PathResult(Start.Point, End.Point, b.List);
+            return builder.LineToAndCreate(End.Point);
         }
 
         public override void InitDemo()
@@ -48,24 +43,6 @@ namespace iSukces.DrawingPanel.Paths
             End        = new PathRay(new Point(100, 0), new Vector(-100, 100));
             Reference1 = new PathRay(new Point(40, 20), new Vector());
             Reference2 = new PathRay(new Point(60, 20), new Vector());
-
-
-
-            Start      = new PathRay(-20, 0, 200, 100);
-            End        = new PathRay(100, 0, -100, 100);
-            Reference1 = new PathRay(52.23347, -12.60536, 0, 0);
-            Reference2 = new PathRay(17.4, 13.16829, 0, 0);
-
-            
-                /*
-                 bardzo dziwna
-                Start      = new PathRay(-20, 0, 200, 100),
-                End        = new PathRay(100, 0, -100, 100),
-                Reference1 = new PathRay(62.22833, -8.31581, 0, 0),
-                Reference2 = new PathRay(17.4, 13.16829, 0, 0)
-                */
-
-
         }
 
         public override void SetReferencePoint(Point p, int nr)

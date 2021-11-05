@@ -18,9 +18,9 @@
         <OutputType>WinExe</OutputType>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />
-        <ProjectReference Include="..\iSukces.DrawingPanel\iSukces.DrawingPanel.csproj" />
-        <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
+        <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj"/>
+        <ProjectReference Include="..\iSukces.DrawingPanel\iSukces.DrawingPanel.csproj"/>
+        <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj"/>
     </ItemGroup>
     <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
         <DefineConstants>COREFX;NETSTANDARD20</DefineConstants>
@@ -38,8 +38,8 @@
         <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="WindowsBase" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.ServiceModel" />
+        <Reference Include="WindowsBase"/>
+        <Reference Include="System.Windows.Forms"/>
+        <Reference Include="System.ServiceModel"/>
     </ItemGroup>
 </Project>

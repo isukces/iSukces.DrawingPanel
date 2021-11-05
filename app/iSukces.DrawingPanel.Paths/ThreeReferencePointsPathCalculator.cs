@@ -1,5 +1,4 @@
 ﻿#define _DEEP_DEBUG
-using System.Collections.Generic;
 using System.Windows;
 #if DEBUG && DEEP_DEBUG
 using System.Diagnostics;
@@ -8,36 +7,26 @@ using Newtonsoft.Json;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    public sealed class ThreeReferencePointPathCalculator : ReferencePointPathCalculator
+    public sealed class ThreeReferencePointsPathCalculator : ReferencePointPathCalculator
     {
         public IPathResult Compute(IPathValidator validator)
         {
-#if DEBUG && DEEP_DEBUG
-            {
-                var json = JsonConvert.SerializeObject(this);
-                Debug.WriteLine(json);
-            }
-#endif
-            var list = new List<ArcDefinition>();
+            var builder = new PathBuilder(Start.Point);
 
             void Add(PathRay st, PathRay en)
             {
-                var s = ZeroReferencePointPathCalculator.Compute(st, en, null);
-#if DEBUG && DEEP_DEBUG
-                var code = new TestMaker().GetDebugCode(st, en, s);
-                Debug.WriteLine("\r\n\r\n" + code + "\r\n\r\n");
-#endif
+                var s = ZeroReferencePointPathCalculator.Compute(st, en, validator);
                 if (s is null)
                     return;
-                if (s.Arc1 != null) list.Add(s.Arc1);
-                if (s.Arc2 != null) list.Add(s.Arc2);
+                builder.ArcTo(s.Arc1);
+                builder.ArcTo(s.Arc2);
             }
 
             Add(Start, Reference1);
             Add(Reference1, Reference2);
             Add(Reference2, Reference3);
             Add(Reference3, End.WithInvertedVector());
-            return new PathResult(Start.Point, End.Point, list.ToArray());
+            return builder.LineToAndCreate(End.Point);
         }
 
         public override void InitDemo()

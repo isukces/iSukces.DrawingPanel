@@ -53,12 +53,13 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             #endregion
         }
-        
-        
+
+
         [Fact]
         public void T02_Should_create_left_too_close()
         {
-            var calc = new TwoReferencePointsPathCalculator {
+            var calc = new TwoReferencePointsPathCalculator
+            {
                 Start      = new PathRay(-20, 0, 200, 100),
                 End        = new PathRay(100, 0, -100, 100),
                 Reference1 = new PathRay(23.02022, 21.05943, 0, 0),
@@ -74,6 +75,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             }.With(calc).Draw();
 
             #region Asserts
+
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(100, 0, r.End);
             Assert.Equal(5, r.Arcs.Count);
@@ -100,14 +102,15 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(95.1550927988293, 4.84490720117068, tmp1.End);
             AssertEx.Equal(36.97978, -1.05943, tmp1.StartVector);
             AssertEx.Equal(95.1550927988293, 4.84490720117068, 100, 0, (LinePathElement)r.Arcs[4], 6);
-            #endregion
 
+            #endregion
         }
 
-    [Fact]
+        [Fact]
         public void T03_Should_create_left_little_out()
         {
-            var calc = new TwoReferencePointsPathCalculator {
+            var calc = new TwoReferencePointsPathCalculator
+            {
                 Start      = new PathRay(-20, 0, 200, 100),
                 End        = new PathRay(100, 0, -100, 100),
                 Reference1 = new PathRay(-6, 20, 0, 0),
@@ -122,8 +125,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Title  = MakeTitle(3, "left little out"),
             }.With(calc).Draw();
 
-           
             #region Asserts
+
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(100, 0, r.End);
             Assert.Equal(5, r.Arcs.Count);
@@ -150,14 +153,16 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(94.142135623731, 5.85786437626905, tmp1.End);
             AssertEx.Equal(66, 0, tmp1.StartVector);
             AssertEx.Equal(94.142135623731, 5.85786437626905, 100, 0, (LinePathElement)r.Arcs[4], 6);
+
             #endregion
         }
 
-        
+
         [Fact]
         public void T04_Should_create_big_rotation_angle()
         {
-            var calc = new TwoReferencePointsPathCalculator {
+            var calc = new TwoReferencePointsPathCalculator
+            {
                 Start      = new PathRay(-20, 0, 200, 100),
                 End        = new PathRay(100, 0, -100, 100),
                 Reference1 = new PathRay(52.23347, -12.60536, 0, 0),
@@ -173,8 +178,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Title  = MakeTitle(4, "big rotation angle"),
             }.With(calc).Draw();
 
-           
             #region Asserts
+
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(100, 0, r.End);
             Assert.Equal(5, r.Arcs.Count);
@@ -201,8 +206,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(49.535450849535, 50.464549150465, tmp1.End);
             AssertEx.Equal(-34.83347, 25.77365, tmp1.StartVector);
             AssertEx.Equal(49.535450849535, 50.464549150465, 100, 0, (LinePathElement)r.Arcs[4], 6);
-            #endregion
 
+            #endregion
         }
 
 

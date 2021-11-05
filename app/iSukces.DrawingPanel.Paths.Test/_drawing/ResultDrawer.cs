@@ -56,12 +56,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             // ReSharper disable once ExplicitCallerInfoArgument
             Draw(new ResultDrawerConfig
             {
-                Start        = x.Start,
-                End          = x.End,
-                Result       = r,
-                Title        = name,
-                ExtraPoints  = ExtraPoints,
-                ExtraDrawing = ExtraDraw
+                Start              = x.Start,
+                End                = x.End,
+                Result             = r,
+                Title              = name,
+                ExtraPoints        = ExtraPoints,
+                ExtraDrawingBottom = ExtraDraw
             }, path);
         }
 
@@ -138,7 +138,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 else
                     DrawCircleWithVector(_cfg.End);
 
-                _cfg.ExtraDrawing?.Invoke(this);
+                _cfg.ExtraDrawingBottom?.Invoke(this);
 
                 // var p = _start.Point;
                 foreach (var element in _cfg.Result.Arcs)
@@ -163,7 +163,9 @@ namespace iSukces.DrawingPanel.Paths.Test
 
                     // p = element.GetEndPoint();
                 }
+
                 // DrawLine(_result.Start, _result.End, new Pen(Color.Crimson, 2));
+                _cfg.ExtraDrawingTop?.Invoke(this);
             }
             var description = _cfg.Title.GetDescription();
             Graph.DrawString(description, new Font("Arial", 10), Brushes.Black, 5, 5);

@@ -32,8 +32,7 @@ namespace Sample.Paths
                 _leftPanel.Size     = new Size(LeftPanelWidth, ClientSize.Height);
                 _leftPanel.Anchor   = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom;
                 Controls.Add(_leftPanel);
-                
-                
+
                 CreateButton("1 ref point", () => SetPointsCount(1));
                 CreateButton(strMaxArc, () => _controller.MaximumArc());
                 CreateButton("2 ref point", () => SetPointsCount(2));
@@ -65,8 +64,6 @@ namespace Sample.Paths
                     cb.CheckedChanged += CheckBoxCheckedChanged;
                     _leftPanel.Controls.Add(cb);
                 }
-
-              
             }
             _controller = new PathsController();
             dp.RootBehaviorContainer.RegisterHandler(_controller, NewHandlerOrders.ElementEditor);

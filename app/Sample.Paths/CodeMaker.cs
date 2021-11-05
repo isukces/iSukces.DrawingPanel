@@ -17,8 +17,24 @@ namespace Sample.Paths
             props.Add("Start", Get(x.Start));
             props.Add("End", Get(x.End));
             props.Add("Reference", GetWithNoVector(x.Reference));
-            
+
             a.Open<OneReferencePointPathCalculator>("calc");
+            a.WriteLine(props);
+            a.WriteLine("};");
+            Debug.WriteLine(a.ToString());
+        }
+
+        public static void Dump(ThreeReferencePointsPathCalculator x)
+        {
+            var a     = new CodeMaker();
+            var props = new Props();
+            props.Add("Start", Get(x.Start));
+            props.Add("End", Get(x.End));
+            props.Add("Reference1", Get(x.Reference1));
+            props.Add("Reference2", Get(x.Reference2));
+            props.Add("Reference3", Get(x.Reference3));
+
+            a.Open<ThreeReferencePointsPathCalculator>("calc");
             a.WriteLine(props);
             a.WriteLine("};");
             Debug.WriteLine(a.ToString());
@@ -33,17 +49,11 @@ namespace Sample.Paths
             props.Add("End", Get(x.End));
             props.Add("Reference1", GetWithNoVector(x.Reference1));
             props.Add("Reference2", GetWithNoVector(x.Reference2));
-            
+
             a.Open<TwoReferencePointsPathCalculator>("calc");
             a.WriteLine(props);
             a.WriteLine("};");
             Debug.WriteLine(a.ToString());
-        }
-
-        private void Open<T>(string varName)
-        {
-            var name =typeof(T).Name;
-            WriteLine($"var {varName} = new {name} {{");
         }
 
         private static string Get(PathRay ray)
@@ -64,6 +74,12 @@ namespace Sample.Paths
         {
             ray = ray.With(new Vector(0, 0));
             return Get(ray);
+        }
+
+        private void Open<T>(string varName)
+        {
+            var name = typeof(T).Name;
+            WriteLine($"var {varName} = new {name} {{");
         }
 
         public override string ToString() { return _sb.ToString(); }

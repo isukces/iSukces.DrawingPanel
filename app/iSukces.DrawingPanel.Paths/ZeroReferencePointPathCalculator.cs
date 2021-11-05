@@ -330,8 +330,7 @@ namespace iSukces.DrawingPanel.Paths
                         case ResultKind.Point: return Array.Empty<IPathElement>();
                         case ResultKind.OneArc:
                         case ResultKind.TwoArcs:
-                            var builder = new PathBuilder();
-                            builder.CurrentPoint = Start;
+                            var builder = new PathBuilder(Start);
                             builder.ArcTo(Arc1);
                             builder.ArcTo(Arc2);
                             builder.LineTo(End);

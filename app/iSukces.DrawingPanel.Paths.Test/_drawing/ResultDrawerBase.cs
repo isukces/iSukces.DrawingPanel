@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        protected void DrawCircleWithVector(PathRay r, bool isShort = false)
+        public void DrawCircleWithVector(PathRay r, bool isShort = false)
         {
             DrawCircleWithVector(r.Point, r.Vector, isShort);
         }
@@ -91,30 +91,39 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             v.Normalize();
             v *= 50;
-            var a = Map(point);
-
+            var          a               = Map(point);
+            const double arrowHeadLength = 50;
+            const double arrowHeadSize   = 15;
             {
                 if (isShort)
                 {
                     v =  -v;
-                    v *= 50 / v.Length;
+                    v *= arrowHeadLength / v.Length;
                 }
 
                 v = new Vector(v.X, -v.Y);
+                var v1 = v;
+                if (isShort)
+                {
+                    v1 *= (arrowHeadLength - arrowHeadSize) / arrowHeadLength;
+                }
 
-                using var pen = new Pen(Color.LightGreen, isShort ? 2 : 9);
-                var       bx  = a.X - (float)v.X;
-                var       by  = a.Y - (float)v.Y;
+                var       lineColor = isShort ? Color.Fuchsia : Color.LightGreen;
+                using var pen       = new Pen(lineColor, isShort ? 2 : 9);
+                var       bx        = a.X - (float)v1.X;
+                var       by        = a.Y - (float)v1.Y;
                 Graph.DrawLine(pen, a.X, a.Y, bx, by);
                 if (isShort)
                 {
+                    bx = a.X - (float)v.X;
+                    by = a.Y - (float)v.Y;
+
                     var cs = SimpleCoordinateSystem2D.FromPointAndVector(new Point(bx, by), v);
-                    var p1 = cs.Transform(new Point(15, 4));
-                    var p3 = cs.Transform(new Point(15, -4));
-                    var p2 = cs.Transform(new Point(0, 0));
-                    Graph.DrawLine(pen, (float)p1.X, (float)p1.Y, (float)p2.X, (float)p2.Y);
-                    Graph.DrawLine(pen, (float)p3.X, (float)p3.Y, (float)p2.X, (float)p2.Y);
-                    Graph.DrawLine(pen, (float)p3.X, (float)p3.Y, (float)p1.X, (float)p1.Y);
+                    var p1 = cs.Transform(new Point(15, 4)).MapT1();
+                    var p3 = cs.Transform(new Point(15, -4)).MapT1();
+                    var p2 = cs.Transform(new Point(0, 0)).MapT1();
+
+                    Graph.FillPolygon(Brushes.Fuchsia, new[] { p1, p2, p3 });
                 }
             }
 
@@ -123,6 +132,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Graph.DrawEllipse(pen, a.X - Radius, a.Y - Radius, Radius * 2, Radius * 2);
             }
         }
+
 
         protected void DrawCross(Point point, Color c, int thickbess)
         {

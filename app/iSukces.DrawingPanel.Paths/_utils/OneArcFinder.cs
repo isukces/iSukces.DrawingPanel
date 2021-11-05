@@ -25,7 +25,7 @@ namespace iSukces.DrawingPanel.Paths
                 var scale = startToCrossLength / endToCrossLength;
                 if (double.IsNaN(scale))
                     return null;
-                end   = Cross + endToCross * scale;
+                end = Cross + endToCross * scale;
             }
             else
             {

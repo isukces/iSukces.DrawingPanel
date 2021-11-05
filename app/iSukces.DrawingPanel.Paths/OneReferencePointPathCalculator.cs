@@ -22,19 +22,15 @@ namespace iSukces.DrawingPanel.Paths
 
             IReadOnlyList<IPathElement> Find()
             {
-                var ll = new PathBuilder
-                {
-                    CurrentPoint = Start.Point,
-                    Validator    = validator
-                };
+                var builder = new PathBuilder(Start.Point, validator);
 
                 IReadOnlyList<IPathElement> FlexiS()
                 {
-                    ll.Clear();
-                    ll.AddFlexi(Start, Reference);
+                    builder.Clear();
+                    builder.AddFlexi(Start, Reference);
                     var endInverted = End.WithInvertedVector();
-                    ll.AddFlexi(Reference, endInverted);
-                    return ll.List;
+                    builder.AddFlexi(Reference, endInverted);
+                    return builder.List;
                 }
 
                 var startCrossNullable = Start.Cross(Reference);
@@ -49,35 +45,35 @@ namespace iSukces.DrawingPanel.Paths
 
                         if (dist == 0)
                         {
-                            ll.AddLine(Start.Point, End.Point);
-                            return ll.List;
+                            builder.AddLine(Start.Point, End.Point);
+                            return builder.List;
                         }
 
                         return FlexiS();
                     }
 
-                    ll.AddFlexi(Start, Reference);
+                    builder.AddFlexi(Start, Reference);
                 }
                 else
                 {
                     if (endCrossNullable is null)
                     {
-                        ll.AddFlexi(Reference, End.WithInvertedVector());
+                        builder.AddFlexi(Reference, End.WithInvertedVector());
                     }
                     else
                     {
                         var cross1 = startCrossNullable.Value;
                         var cross2 = endCrossNullable.Value;
-                        var q      = FromTwoCrosses(cross1, cross2, ll, validator);
+                        var q      = FromTwoCrosses(cross1, cross2, builder, validator);
                         if (q == FromTwoCrossesResult.TwoS)
                             return FlexiS();
                     }
                 }
 
-                if (ll.List.Count == 0)
+                if (builder.List.Count == 0)
                     return FlexiS();
 
-                return ll.List;
+                return builder.List;
             }
         }
 

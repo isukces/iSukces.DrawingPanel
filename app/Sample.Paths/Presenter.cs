@@ -29,7 +29,7 @@ namespace Sample.Paths
                     DrawLineBeginEnd(result is null);
                     if (result is null)
                         return;
-                    
+
                     DrawPathResult(result);
                     break;
                 }
@@ -47,8 +47,9 @@ namespace Sample.Paths
 
                     break;
                 }
-                case ThreeReferencePointPathCalculator three:
+                case ThreeReferencePointsPathCalculator three:
                 {
+                    CodeMaker.Dump(three);
                     DrawLineBeginEnd(false);
                     var result = three.Compute(validator);
                     if (result != null)
@@ -220,7 +221,7 @@ namespace Sample.Paths
                 DrawArcLine(r.Start, r.End);
                 return;
             }
-            
+
             foreach (var i in p)
             {
                 switch (i)
@@ -230,7 +231,7 @@ namespace Sample.Paths
                         break;
                     case InvalidPathElement invalidPathElement:
                         break;
-                    case LinePathElement linePathElement:  
+                    case LinePathElement linePathElement:
                         DrawArcLine(linePathElement.GetStartPoint(), linePathElement.GetEndPoint());
                         break;
 
