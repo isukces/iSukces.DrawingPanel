@@ -6,7 +6,7 @@ using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
-    internal class TestMaker
+    internal class DpAssertsBuilder : AssertsBuilder
     {
         private static string Create(PathRay tmp) { return $"new PathRay({tmp.Point.ToCs()}, {tmp.Vector.ToCs()})"; }
 
@@ -47,12 +47,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        private void Add(double n, string name) { AssertEqual(n.ToCs(), name, "6"); }
-
-        private void Add(int n, string name) { AssertEqual(n.ToCs(), name); }
-
         private void Add(ArcDirection n, string name) { AssertEqual("ArcDirection." + n, name); }
-
 
         private void Add(ZeroReferencePointPathCalculator.ResultKind n, string name)
         {
@@ -90,21 +85,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         private void Add(IReadOnlyList<IPathElement> a, string name)
         {
-            if (a is null)
-            {
-                AssertNull(name);
-                return;
-            }
-
-            if (a.Count == 1)
-                AssertSingle(name);
-            else
-                Add(a.Count, name + "." + nameof(a.Count));
-            for (var index = 0; index < a.Count; index++)
-            {
-                var name2 = $"{name}[{index.ToCs()}]";
-                Add(a[index], name2);
-            }
+            AssertList(a, name, Add);
         }
 
         private void Add(InvalidPathElement x, string name)
@@ -126,21 +107,21 @@ namespace iSukces.DrawingPanel.Paths.Test
                 case ArcDefinition arcDefinition:
                     var n = Declare(arcDefinition, name);
                     Add(arcDefinition, n);
-                    _variables.Release(n);
+                    Release(n);
                     break;
                 case InvalidPathElement invalidPathElement:
                     n = Declare(invalidPathElement, name);
                     Add(invalidPathElement, n);
-                    _variables.Release(n);
+                    Release(n);
                     break;
                 case LinePathElement linePathElement:
                     n = "(LinePathElement)" + name;
                     Add(linePathElement, n);
-                    // _variables.Release(n);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(el));
             }
         }
+
 
         private void Add(LinePathElement x, string name)
         {
@@ -160,51 +141,26 @@ namespace iSukces.DrawingPanel.Paths.Test
             var point = x.GetStartPoint();
             var n     = Declare(point, name + nameof(x.GetStartPoint) + "()");
             Add(point, n);
-            _variables.Release(n);
+            Release(n);
 
             point = x.GetEndPoint();
             n     = Declare(point, name + nameof(x.GetEndPoint) + "()");
             Add(point, n);
-            _variables.Release(n);
+            Release(n);
         }
 
-        private void Assert(string method, params string[] x)
-        {
-            var a = string.Join(", ", x);
-            WriteLine($"Assert.{method}({a});");
-        }
-
-
-        private void AssertEqual(params string[] x) { Assert("Equal", x); }
-
-        private void AssertExEqual(params string[] a) { WriteLine("AssertEx.Equal(" + string.Join(", ", a) + ");"); }
-
-        private void AssertNull(string name) { Assert("Null", name); }
-
-        private void AssertSingle(string name) { Assert("Single", name); }
 
         public string Create(IPathResult result, string name)
         {
-            _sb = new StringBuilder();
-            WriteLine("#region Asserts");
-            Add(result, name);
-            WriteLine("#endregion");
-            return _sb.ToString();
+            return Create(() =>
+            {
+                Add(result, name);
+            });
         }
 
-        private string Declare<T>(T info, string expression)
-        {
-            var n  = _variables.GetName(typeof(T), out var first);
-            var ex = n + " = (" + typeof(T).Name + ")" + expression + ";";
-            if (first)
-                ex = "var " + ex;
-            WriteLine(ex);
-            return n;
-        }
 
         public string GetDebugCode(PathRay st, PathRay en, ZeroReferencePointPathCalculator.Result result)
         {
-            _sb = new StringBuilder();
             var name = FindName(result);
             WriteLine("[Fact]");
             WriteLine("public void Txxx_" + name + "()");
@@ -224,61 +180,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
 
             WriteLine("}");
-            return _sb.ToString();
-        }
-
-        private void WriteLine(string x) { _sb.AppendLine(x); }
-
-        private readonly Variables _variables = new();
-
-        private StringBuilder _sb;
-
-        private class Variables
-        {
-            public string GetName(Type t, out bool first)
-            {
-                foreach (var i in _list)
-                {
-                    if (i.Busy)
-                        continue;
-                    if (i.Typ != t) continue;
-                    i.Busy = true;
-                    first  = false;
-                    return i.Name;
-                }
-
-                var nr = _list.Count + 1;
-                var info = new Info
-                {
-                    Busy = true,
-                    Name = "tmp" + nr.ToCs(),
-                    Typ  = t
-                };
-                _list.Add(info);
-                first = true;
-                return info.Name;
-            }
-
-            public void Release(string s)
-            {
-                foreach (var i in _list)
-                {
-                    if (i.Name == s)
-                    {
-                        i.Busy = false;
-                        return;
-                    }
-                }
-            }
-
-            private readonly List<Info> _list = new();
-
-            private class Info
-            {
-                public bool   Busy { get; set; }
-                public Type   Typ  { get; set; }
-                public string Name { get; set; }
-            }
+            return Code;
         }
     }
 }

@@ -366,7 +366,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r = a.Compute(new MinimumValuesPathValidator(4, 1));
             ResultDrawer.Draw(a, r, MakeTitle(5, "normal config, min radius=4, right"));
-            var code = new TestMaker().Create(r, nameof(r));
+            var code = new DpAssertsBuilder().Create(r, nameof(r));
 
             #region Asserts
 

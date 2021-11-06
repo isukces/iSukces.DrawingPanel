@@ -46,4 +46,12 @@
         <Reference Include="WindowsBase"/>
         <Reference Include="System.Windows.Forms"/>
     </ItemGroup>
+    <ItemGroup>
+        <None Remove="iSukces.DrawingPanel.Paths.Test.csproj.DotSettings"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="_tools\DpAssertsBuilder.cs">
+            <DependentUpon>AssertsBuilder.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
 </Project>
