@@ -10,6 +10,6 @@ namespace iSukces.DrawingPanel.Paths
         Point End   { get; }
 
         [NotNull]
-        IReadOnlyList<IPathElement> Arcs { get; }
+        IReadOnlyList<IPathElement> Elements { get; }
     }
 }

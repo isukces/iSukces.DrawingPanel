@@ -141,7 +141,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 _cfg.ExtraDrawingBottom?.Invoke(this);
 
                 // var p = _start.Point;
-                foreach (var element in _cfg.Result.Arcs)
+                foreach (var element in _cfg.Result.Elements)
                 {
                     // DrawLine(p, element.GetStartPoint(), new Pen(Color.Gainsboro, 1));
 
@@ -183,7 +183,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             yield return r.Start;
             yield return r.End;
-            foreach (var i in r.Arcs)
+            foreach (var i in r.Elements)
             {
                 yield return i.GetStartPoint();
                 yield return i.GetEndPoint();

@@ -30,9 +30,9 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(33.6452056050077, 24.7273817080189, r.End);
-            Assert.Equal(2, r.Arcs.Count);
-            AssertEx.Equal(-20, 0, 25.7067179799099, 22.853358989955, (LinePathElement)r.Arcs[0], 6);
-            var tmp1 = (ArcDefinition)r.Arcs[1];
+            Assert.Equal(2, r.Elements.Count);
+            AssertEx.Equal(-20, 0, 25.7067179799099, 22.853358989955, (LinePathElement)r.Elements[0], 6);
+            var tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(26.565051177078, tmp1.Angle, 6);
             AssertEx.Equal(33.6452056050077, 6.97638373975939, tmp1.Center);
@@ -63,8 +63,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(32.3955742033012, 3.01503610336888, r.End);
-            Assert.Equal(2, r.Arcs.Count);
-            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(2, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(26.565051177078, tmp1.Angle, 6);
             AssertEx.Equal(-7.22810211151334, -25.5437957769733, tmp1.Center);
@@ -72,7 +72,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-7.22810211151334, 3.01503610336888, tmp1.End);
             AssertEx.Equal(200, 100, tmp1.StartVector);
             AssertEx.Equal(-7.22810211151334, 3.01503610336888, 32.3955742033012, 3.01503610336888,
-                (LinePathElement)r.Arcs[1], 6);
+                (LinePathElement)r.Elements[1], 6);
 
             #endregion
         }
@@ -99,15 +99,15 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(46.7663353229257, 45.5025037613891, r.End);
-            Assert.Equal(2, r.Arcs.Count);
-            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(2, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
             Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
             Assert.Equal(32.3905141231159, tmp1.Angle, 6);
             AssertEx.Equal(-43.5791698455339, 47.1583396910677, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(1.59358273869592, 19.9681084124149, tmp1.End);
             AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
-            tmp1 = (ArcDefinition)r.Arcs[1];
+            tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(58.9555653001939, tmp1.Angle, 6);
             AssertEx.Equal(46.7663353229257, -7.22212286623781, tmp1.Center);
@@ -140,15 +140,15 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(38.1595425371264, -16.5774819323465, r.End);
-            Assert.Equal(2, r.Arcs.Count);
-            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(2, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(74.3021669144873, tmp1.Angle, 6);
             AssertEx.Equal(-6.50490416315376, -26.9901916736925, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(15.8273191869863, -6.69586097598819, tmp1.End);
             AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
-            tmp1 = (ArcDefinition)r.Arcs[1];
+            tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
             Assert.Equal(47.7371157374093, tmp1.Angle, 6);
             AssertEx.Equal(38.1595425371264, 13.5984697217161, tmp1.Center);
@@ -182,15 +182,15 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.TwoArcs, r.Kind);
             AssertEx.Equal(-20, 0, r.Start);
             AssertEx.Equal(25.6788054191289, 30.3507230156981, r.End);
-            Assert.Equal(2, r.Arcs.Count);
-            var tmp1 = (ArcDefinition)r.Arcs[0];
+            Assert.Equal(2, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
             Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
             Assert.Equal(84.9240162298896, tmp1.Angle, 6);
             AssertEx.Equal(-28.4641809484453, 16.9283618968905, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(-10.8533245119608, 23.8615812943749, tmp1.End);
             AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
-            tmp1 = (ArcDefinition)r.Arcs[1];
+            tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(202.833538562328, tmp1.Angle, 6);
             AssertEx.Equal(6.75753192452358, 30.7948006918593, tmp1.Center);

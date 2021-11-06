@@ -215,7 +215,7 @@ namespace Sample.Paths
 
         private void DrawPathResult(IPathResult r)
         {
-            var p = r.Arcs;
+            var p = r.Elements;
             if (p.Count == 0)
             {
                 DrawArcLine(r.Start, r.End);

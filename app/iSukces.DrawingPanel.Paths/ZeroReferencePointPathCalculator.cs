@@ -316,7 +316,7 @@ namespace iSukces.DrawingPanel.Paths
             public Point Start { get; set; }
             public Point End   { get; set; }
 
-            public IReadOnlyList<IPathElement> Arcs
+            public IReadOnlyList<IPathElement> Elements
             {
                 get
                 {

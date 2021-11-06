@@ -80,7 +80,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             Add(result.Start, name + nameof(result.Start));
             Add(result.End, name + nameof(result.End));
-            Add(result.Arcs, name + nameof(result.Arcs));
+            Add(result.Elements, name + nameof(result.Elements));
         }
 
         private void Add(IReadOnlyList<IPathElement> a, string name)

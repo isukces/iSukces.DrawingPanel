@@ -13,21 +13,21 @@ namespace iSukces.DrawingPanel.Paths
         {
             Start = start;
             End   = end;
-            Arcs  = arcs ?? Array.Empty<IPathElement>();
+            Elements  = arcs ?? Array.Empty<IPathElement>();
         }
 
         public PathResult(IReadOnlyList<IPathElement> arcs)
         {
             Start = arcs[0].GetStartPoint();
             End   = arcs.Last().GetEndPoint();
-            Arcs  = arcs;
+            Elements  = arcs;
         }
 
         public PathResult([NotNull] IPathElement element)
         {
             Start = element.GetStartPoint();
             End   = element.GetEndPoint();
-            Arcs  = new[] { element };
+            Elements  = new[] { element };
         }
 
 
@@ -59,6 +59,6 @@ namespace iSukces.DrawingPanel.Paths
 
         public Point                       Start { get; }
         public Point                       End   { get; }
-        public IReadOnlyList<IPathElement> Arcs  { get; }
+        public IReadOnlyList<IPathElement> Elements  { get; }
     }
 }
