@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    internal class PathBuilder
+    public class PathBuilder
     {
         public PathBuilder(Point currentPoint, IPathValidator validator = null)
         {

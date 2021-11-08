@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    internal partial class OneArcFinder
+    public partial class OneArcFinder
     {
         public ArcDefinition CalculateArc()
         {
@@ -64,7 +64,7 @@ namespace iSukces.DrawingPanel.Paths
     }
 
 #if DEBUG
-    internal partial class OneArcFinder
+    public partial class OneArcFinder
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Setup(PathRay start, Point endPoint, Vector endVector)
