@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
@@ -9,7 +7,7 @@ namespace iSukces.DrawingPanel.Paths
     {
         private ZeroReferencePointPathCalculator() { }
 
-        private static bool Check(Result result, ArcDefinition one)
+        private static bool Check(ZeroReferencePointPathCalculatorResult result, ArcDefinition one)
         {
             if (result is null)
                 return false;
@@ -21,7 +19,7 @@ namespace iSukces.DrawingPanel.Paths
             return true;
         }
 
-        public static Result Compute(PathRay start, PathRay end, IPathValidator validator)
+        public static ZeroReferencePointPathCalculatorResult Compute(PathRay start, PathRay end, IPathValidator validator)
         {
             var x = new ZeroReferencePointPathCalculator
             {
@@ -33,7 +31,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        private Result Compute()
+        private ZeroReferencePointPathCalculatorResult Compute()
         {
             var cross = Start.Cross(End);
             if (cross is null)
@@ -41,7 +39,7 @@ namespace iSukces.DrawingPanel.Paths
                 var a = (End.Point - Start.Point);
                 if (a.LengthSquared == 0)
                 {
-                    var result = new Result(ResultKind.Point)
+                    var result = new ZeroReferencePointPathCalculatorResult(ResultKind.Point)
                     {
                         Start = Start.Point,
                         End   = End.Point
@@ -51,7 +49,7 @@ namespace iSukces.DrawingPanel.Paths
 
                 var dot = Vector.CrossProduct(Start.Vector, a);
                 if (dot == 0)
-                    return new Result(ResultKind.Line)
+                    return new ZeroReferencePointPathCalculatorResult(ResultKind.Line)
                     {
                         Start = Start.Point,
                         End   = End.Point
@@ -63,7 +61,7 @@ namespace iSukces.DrawingPanel.Paths
             if (IsOk(one))
             {
                 if (one.Angle < 180)
-                    return new Result(ResultKind.OneArc)
+                    return new ZeroReferencePointPathCalculatorResult(ResultKind.OneArc)
                     {
                         Arc1  = one,
                         Start = Start.Point,
@@ -170,7 +168,7 @@ namespace iSukces.DrawingPanel.Paths
             return null;
         }
 
-        private Result TryTwo(ArcDefinition one)
+        private ZeroReferencePointPathCalculatorResult TryTwo(ArcDefinition one)
         {
             var toCompare = one;
             if (toCompare != null)
@@ -180,9 +178,9 @@ namespace iSukces.DrawingPanel.Paths
             Start = Start.Normalize();
             End   = End.Normalize();
             var    minLength  = double.MaxValue;
-            Result bestResult = null;
+            ZeroReferencePointPathCalculatorResult bestResult = null;
 
-            void CheckAndAdd(Result r)
+            void CheckAndAdd(ZeroReferencePointPathCalculatorResult r)
             {
                 if (r is null)
                     return;
@@ -205,7 +203,7 @@ namespace iSukces.DrawingPanel.Paths
             if (bestResult != null)
                 return bestResult;
             if (one != null)
-                return new Result(ResultKind.OneArc)
+                return new ZeroReferencePointPathCalculatorResult(ResultKind.OneArc)
                 {
                     Arc1  = one,
                     Start = Start.Point,
@@ -215,7 +213,7 @@ namespace iSukces.DrawingPanel.Paths
             return null;
         }
 
-        private Result TryTwoArcsSolution(bool reverseEnd, bool useSmallerRadius)
+        private ZeroReferencePointPathCalculatorResult TryTwoArcsSolution(bool reverseEnd, bool useSmallerRadius)
         {
             var finder = new TwoArcsFinder();
             finder.UpdateFromPoints(Start, End, reverseEnd);
@@ -227,7 +225,7 @@ namespace iSukces.DrawingPanel.Paths
             if (dot <= 0) return null;
             dot = End.Vector * arc2.EndVector;
             if (dot <= 0) return null;
-            return new Result(ResultKind.TwoArcs)
+            return new ZeroReferencePointPathCalculatorResult(ResultKind.TwoArcs)
             {
                 Arc1  = arc1,
                 Arc2  = arc2,
@@ -253,96 +251,6 @@ namespace iSukces.DrawingPanel.Paths
 
             OneArc,
             TwoArcs
-        }
-
-
-        public sealed class Result : IPathResult
-        {
-            public Result(ResultKind kind) { Kind = kind; }
-
-            public double GetLength(Point s, Point e)
-            {
-                double d = 0;
-                Point  p = s;
-
-                void AddArc(ArcDefinition a)
-                {
-                    if (a is null)
-                        return;
-                    var v = a.Start - p;
-                    d += v.Length;
-                    d += a.GetLength();
-                    p =  a.End;
-                }
-
-                {
-                    AddArc(Arc1);
-                    AddArc(Arc2);
-                    var v = e - p;
-                    d += v.Length;
-                    return d;
-                }
-            }
-
-            public double GetLength()
-            {
-                var r = 0d;
-                if (Arc1 is not null)
-                    r += Arc1.GetLength();
-                if (Arc2 is not null)
-                {
-                    r += Arc2.GetLength();
-                    if (Arc1 is not null)
-                    {
-                        r += (Arc1.End - Arc2.Start).Length;
-                    }
-                }
-
-                return r;
-            }
-
-            public override string ToString()
-            {
-                switch (Kind)
-                {
-                    case ResultKind.OneArc: return $"{Arc1}";
-                    case ResultKind.TwoArcs: return $"{Arc1} {Arc2}";
-                    case ResultKind.Point: return "Point";
-                    case ResultKind.Line: return "Line";
-                    default: return "Unknown";
-                }
-            }
-
-            public Point Start { get; set; }
-            public Point End   { get; set; }
-
-            public IReadOnlyList<IPathElement> Elements
-            {
-                get
-                {
-                    switch (Kind)
-                    {
-                        case ResultKind.Line:
-                            return new[]
-                            {
-                                new LinePathElement(Start, End)
-                            };
-                        case ResultKind.Point: return Array.Empty<IPathElement>();
-                        case ResultKind.OneArc:
-                        case ResultKind.TwoArcs:
-                            var builder = new PathBuilder(Start);
-                            builder.ArcTo(Arc1);
-                            builder.ArcTo(Arc2);
-                            builder.LineTo(End);
-                            return builder.List;
-                        default: throw new ArgumentOutOfRangeException();
-                    }
-                }
-            }
-
-            public ResultKind    Kind { get; }
-            public ArcDefinition Arc1 { get; set; }
-            public ArcDefinition Arc2 { get; set; }
         }
     }
 }

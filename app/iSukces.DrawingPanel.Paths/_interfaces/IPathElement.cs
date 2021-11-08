@@ -8,5 +8,6 @@ namespace iSukces.DrawingPanel.Paths
         Vector GetEndVector();
         Point GetStartPoint();
         Vector GetStartVector();
+        double GetLength();
     }
 }

@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    internal class PathResult : IPathResult
+    public class PathResult : IPathResult
     {
         public PathResult(Point start, Point end, IReadOnlyList<IPathElement> arcs)
         {

@@ -19,6 +19,8 @@ namespace iSukces.DrawingPanel.Paths
         public Point GetEndPoint() { return _end.Point; }
         public Vector GetEndVector() { return _end.Vector; }
 
+        public double GetLength() { return (_end.Point - _start.Point).Length; }
+
         public Point GetStartPoint() { return _start.Point; }
 
         public Vector GetStartVector() { return _start.Vector; }

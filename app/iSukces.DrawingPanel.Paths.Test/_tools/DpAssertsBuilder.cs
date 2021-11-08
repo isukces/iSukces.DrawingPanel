@@ -10,7 +10,7 @@ namespace iSukces.DrawingPanel.Paths.Test
     {
         private static string Create(PathRay tmp) { return $"new PathRay({tmp.Point.ToCs()}, {tmp.Vector.ToCs()})"; }
 
-        private static string FindName(ZeroReferencePointPathCalculator.Result result)
+        private static string FindName(ZeroReferencePointPathCalculatorResult result)
         {
             if (result is null)
                 return "";
@@ -73,7 +73,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
 
             name += ".";
-            if (result is ZeroReferencePointPathCalculator.Result zero)
+            if (result is ZeroReferencePointPathCalculatorResult zero)
             {
                 Add(zero.Kind, name + nameof(zero.Kind));
             }
@@ -159,7 +159,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        public string GetDebugCode(PathRay st, PathRay en, ZeroReferencePointPathCalculator.Result result)
+        public string GetDebugCode(PathRay st, PathRay en, ZeroReferencePointPathCalculatorResult result)
         {
             var name = FindName(result);
             WriteLine("[Fact]");

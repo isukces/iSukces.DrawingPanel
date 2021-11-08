@@ -19,6 +19,11 @@ namespace iSukces.DrawingPanel.Paths
 
         public Vector GetStartVector() { return _vector; }
 
+        public double GetLength()
+        {
+            return _vector.Length;
+        }
+
         private readonly Point _end;
 
         private readonly Point _start;

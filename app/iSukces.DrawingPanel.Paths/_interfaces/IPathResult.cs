@@ -12,4 +12,20 @@ namespace iSukces.DrawingPanel.Paths
         [NotNull]
         IReadOnlyList<IPathElement> Elements { get; }
     }
+
+    public static class PathResultExtensions
+    {
+        public static double GetAllElementsLength(this IPathResult path)
+        {
+            var result   = 0d;
+            var elements = path.Elements;
+            for (var index = 0; index < elements.Count; index++)
+            {
+                var element = elements[index];
+                result += element.GetLength();
+            }
+
+            return result;
+        }
+    }
 }
