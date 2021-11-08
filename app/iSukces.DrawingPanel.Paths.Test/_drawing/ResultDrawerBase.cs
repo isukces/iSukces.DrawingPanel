@@ -119,9 +119,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                     by = a.Y - (float)v.Y;
 
                     var cs = SimpleCoordinateSystem2D.FromPointAndVector(new Point(bx, by), v);
-                    var p1 = cs.Transform(new Point(15, 4)).MapT1();
-                    var p3 = cs.Transform(new Point(15, -4)).MapT1();
-                    var p2 = cs.Transform(new Point(0, 0)).MapT1();
+                    var p1 = cs.Transform(new Point(15, 4)).ToPointF();
+                    var p3 = cs.Transform(new Point(15, -4)).ToPointF();
+                    var p2 = cs.Transform(new Point(0, 0)).ToPointF();
 
                     Graph.FillPolygon(Brushes.Fuchsia, new[] { p1, p2, p3 });
                 }

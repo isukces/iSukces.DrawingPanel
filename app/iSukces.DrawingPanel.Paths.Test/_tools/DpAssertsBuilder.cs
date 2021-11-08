@@ -85,7 +85,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         private void Add(IReadOnlyList<IPathElement> a, string name)
         {
-            AssertList(a, name, Add);
+            AssertList(a, name, Add, true);
         }
 
         private void Add(InvalidPathElement x, string name)

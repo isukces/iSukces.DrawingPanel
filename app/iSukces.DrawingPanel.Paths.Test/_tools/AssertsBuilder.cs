@@ -38,16 +38,25 @@ namespace iSukces.DrawingPanel.Paths.Test
             return false;
         }
         
-        
-        
-        protected void AssertList<T>(IReadOnlyList<T> a, string name, Action<T, string> itemAssert)
+        protected void AssertList<T>(IReadOnlyList<T> a, string name, Action<T, string> itemAssert, bool resolveRealType)
         {
             if (AssertCount(a, name))
                 return;
             for (var index = 0; index < a.Count; index++)
             {
-                var name2 = $"{name}[{index.ToCs()}]";
-                itemAssert(a[index], name2);
+                var expression = $"{name}[{index.ToCs()}]";
+
+                var value = a[index];
+                if (value is null)
+                {
+                    AssertNull(expression);
+                    continue;
+                }
+
+                var type    = resolveRealType ? value.GetType() : typeof(T);
+                var tmpName = Declare(type, expression);
+                itemAssert(value, tmpName);
+                Release(tmpName);
             }
         }
 
@@ -76,15 +85,27 @@ namespace iSukces.DrawingPanel.Paths.Test
             return _sb.ToString();
         }
 
-        protected string Declare<T>(T ignore, string expression)
+        protected string Declare<T>(T ignore, string expression, bool cast = true)
         {
-            var n  = _variables.GetName(typeof(T), out var first);
-            var ex = n + " = (" + typeof(T).Name + ")" + expression + ";";
+            return Declare<T>(expression, cast);
+        }
+
+        protected string Declare<T>(string expression, bool cast = true)
+        {
+            return Declare(typeof(T), expression, cast);
+        }
+
+        protected string Declare(Type t, string expression, bool cast = true)
+        {
+            var n       = _variables.GetName(t, out var first);
+            var castStr = cast ? $"({t.Name})" : "";
+            var ex      = $"{n} = {castStr}{expression};";
             if (first)
                 ex = "var " + ex;
             WriteLine(ex);
             return n;
         }
+
 
         protected void Release(string name) { _variables.Release(name); }
 
