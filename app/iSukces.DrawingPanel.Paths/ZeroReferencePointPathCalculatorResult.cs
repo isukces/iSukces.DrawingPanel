@@ -88,6 +88,54 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        public Vector StartVector
+        {
+            get
+            {
+                switch (Kind)
+                {
+                    case ZeroReferencePointPathCalculator.ResultKind.Line:
+                        return End - Start;
+                    case ZeroReferencePointPathCalculator.ResultKind.Point:
+                        return default;
+                    case ZeroReferencePointPathCalculator.ResultKind.OneArc:
+                    case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
+                        var line = Arc1.Start - Start;
+                        if (line.LengthSquared < PathBase.LengthEpsilonSquare)
+                            return Arc1.StartVector;
+                        return line;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public Vector EndVector
+        {
+            get
+            {
+                switch (Kind)
+                {
+                    case ZeroReferencePointPathCalculator.ResultKind.Line:
+                        return End - Start;
+                    case ZeroReferencePointPathCalculator.ResultKind.Point:
+                        return default;
+                    case ZeroReferencePointPathCalculator.ResultKind.OneArc:
+                        var line = End - Arc1.End;
+                        if (line.LengthSquared < PathBase.LengthEpsilonSquare)
+                            return Arc1.EndVector;
+                        return line;
+                    case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
+                        line = End - Arc2.End;
+                        if (line.LengthSquared < PathBase.LengthEpsilonSquare)
+                            return Arc2.EndVector;
+                        return line;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         public ZeroReferencePointPathCalculator.ResultKind Kind { get; }
         public ArcDefinition                               Arc1 { get; set; }
         public ArcDefinition                               Arc2 { get; set; }

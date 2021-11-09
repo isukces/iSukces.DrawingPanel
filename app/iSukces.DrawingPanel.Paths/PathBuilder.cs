@@ -95,7 +95,8 @@ namespace iSukces.DrawingPanel.Paths
         public void LineTo(Point p)
         {
             var line = p - CurrentPoint;
-            if (!(line.LengthSquared > PathBase.LengthEpsilonSquare)) return;
+            if (line.LengthSquared < PathBase.LengthEpsilonSquare) 
+                return;
             _list.Add(new LinePathElement(CurrentPoint, p));
             CurrentPoint = p;
         }

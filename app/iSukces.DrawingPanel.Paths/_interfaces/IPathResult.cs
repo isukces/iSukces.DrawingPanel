@@ -11,6 +11,10 @@ namespace iSukces.DrawingPanel.Paths
 
         [NotNull]
         IReadOnlyList<IPathElement> Elements { get; }
+
+        Vector StartVector { get; }
+
+        Vector EndVector { get; }
     }
 
     public static class PathResultExtensions

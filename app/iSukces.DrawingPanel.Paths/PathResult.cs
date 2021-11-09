@@ -11,23 +11,23 @@ namespace iSukces.DrawingPanel.Paths
     {
         public PathResult(Point start, Point end, IReadOnlyList<IPathElement> arcs)
         {
-            Start = start;
-            End   = end;
-            Elements  = arcs ?? Array.Empty<IPathElement>();
+            Start    = start;
+            End      = end;
+            Elements = arcs ?? Array.Empty<IPathElement>();
         }
 
         public PathResult(IReadOnlyList<IPathElement> arcs)
         {
-            Start = arcs[0].GetStartPoint();
-            End   = arcs.Last().GetEndPoint();
-            Elements  = arcs;
+            Start    = arcs[0].GetStartPoint();
+            End      = arcs.Last().GetEndPoint();
+            Elements = arcs;
         }
 
         public PathResult([NotNull] IPathElement element)
         {
-            Start = element.GetStartPoint();
-            End   = element.GetEndPoint();
-            Elements  = new[] { element };
+            Start    = element.GetStartPoint();
+            End      = element.GetEndPoint();
+            Elements = new[] { element };
         }
 
 
@@ -57,8 +57,28 @@ namespace iSukces.DrawingPanel.Paths
             return new PathResult(start, end, elements);
         }
 
-        public Point                       Start { get; }
-        public Point                       End   { get; }
-        public IReadOnlyList<IPathElement> Elements  { get; }
+        public Point                       Start    { get; }
+        public Point                       End      { get; }
+        public IReadOnlyList<IPathElement> Elements { get; }
+
+        public Vector StartVector
+        {
+            get
+            {
+                if (Elements.Count == 0)
+                    return default;
+                return Elements[0].GetStartVector();
+            }
+        }
+
+        public Vector EndVector
+        {
+            get
+            {
+                if (Elements.Count == 0)
+                    return default;
+                return Elements[Elements.Count - 1].GetEndVector();
+            }
+        }
     }
 }
