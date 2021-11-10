@@ -4,13 +4,23 @@ namespace iSukces.DrawingPanel.Paths.Test
 {
     public struct TypedExpression
     {
-        public TypedExpression(string expression, Type type)
+        public TypedExpression(string code, Type type)
         {
-            Expression = expression;
-            Type       = type;
+            Code = code;
+            Type = type;
         }
 
-        public string Expression { get; }
-        public Type   Type       { get; }
+        public string Code { get; }
+        public Type   Type { get; }
+
+        public bool SameType(Type requestedType)
+        {
+            return requestedType == Type;
+            
+        }
+        public static TypedExpression Make<T>(string code)
+        {
+            return new TypedExpression(code, typeof(T));
+        }
     }
 }

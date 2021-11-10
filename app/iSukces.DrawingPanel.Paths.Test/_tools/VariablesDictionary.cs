@@ -41,6 +41,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
         }
 
+        public static Func<Type, string> GetVarName { get; set; }
+
         private readonly List<Info> _list = new();
 
         private class Info

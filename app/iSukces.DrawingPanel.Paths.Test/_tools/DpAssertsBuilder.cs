@@ -30,22 +30,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             return s.ToString();
         }
 
-        private void Add(ArcDefinition c, string name)
-        {
-            if (c is null)
-                AssertNull(name);
-            else
-            {
-                name += ".";
-                Add(c.Direction, name + nameof(c.Direction));
-                Add(c.Angle, name + nameof(c.Angle));
-                Add(c.Center, name + nameof(c.Center));
-                Add(c.Start, name + nameof(c.Start));
-                Add(c.End, name + nameof(c.End));
-                Add(c.StartVector, name + nameof(c.StartVector));
-            }
-        }
-
 
         private void Add(ArcDirection n, string name) { AssertEqual("ArcDirection." + n, name); }
 
@@ -83,45 +67,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Add(result.Elements, name + nameof(result.Elements));
         }
 
-        private void Add(IReadOnlyList<IPathElement> a, string name)
-        {
-            AssertList(a, name, Add, true);
-        }
-
-        private void Add(InvalidPathElement x, string name)
-        {
-            name += ".";
-            Add(x.Status, name + "." + nameof(x.Status));
-            AddIPathElement(x, name);
-        }
-
-        private void Add(ArcValidationResult value, string expression)
-        {
-            AssertEqual(nameof(ArcValidationResult) + "." + value, expression);
-        }
-
-        private void Add(IPathElement el, string name)
-        {
-            switch (el)
-            {
-                case ArcDefinition arcDefinition:
-                    var n = Declare(arcDefinition, name);
-                    Add(arcDefinition, n);
-                    Release(n);
-                    break;
-                case InvalidPathElement invalidPathElement:
-                    n = Declare(invalidPathElement, name);
-                    Add(invalidPathElement, n);
-                    Release(n);
-                    break;
-                case LinePathElement linePathElement:
-                    n = "(LinePathElement)" + name;
-                    Add(linePathElement, n);
-                    break;
-                default: throw new ArgumentOutOfRangeException(nameof(el));
-            }
-        }
-
+     
 
         private void Add(LinePathElement x, string name)
         {
@@ -133,6 +79,106 @@ namespace iSukces.DrawingPanel.Paths.Test
                 name, "6"
             };
             AssertExEqual(a);
+        }
+
+
+        private void Add(ArcPathMakerResult x, string name)
+        {
+            if (x is null)
+            {
+                AssertNull(name);
+                return;
+            }
+
+            name += ".";
+            Add(x.Segments, name + nameof(x.Segments));
+        }
+
+
+        private void Add(IReadOnlyList<IPathResult> x, string name) { AssertList(x, name, AssertPoint, false); }
+
+     
+        private void Add(IReadOnlyList<IPathElement> x, string name) { AssertList(x, name, AddIPathElement, true); }
+
+
+
+        private void AddIPathElement(IPathElement x, string name, Type knownType)
+        {
+            if (x is null)
+            {
+                AssertNull(name);
+                return;
+            }
+
+            switch (x)
+            {
+                case ArcDefinition arcDefinition:
+
+                    CastAndDoAction(arcDefinition, knownType, name, e =>
+                    {
+                        Add(arcDefinition, e.Code);
+                    });
+                    break;
+                case InvalidPathElement invalidPathElement:
+                    CastAndDoAction(invalidPathElement, knownType, name, e =>
+                    {
+                        Add(invalidPathElement, e.Code);
+                    });
+                    
+                    break;
+                case LinePathElement linePathElement:
+                    CastAndDoAction(linePathElement, knownType, name, e =>
+                    {
+                        Add(linePathElement, e.Code);
+                    });
+
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(x));
+            }
+        }
+
+        
+
+        private void Add(IPathElement x, string name)
+        {
+            var s = x.GetStartPoint();
+            var e = x.GetEndPoint();
+            var a = new[]
+            {
+                s.X.ToCs(), s.Y.ToCs(), e.X.ToCs(), e.Y.ToCs(),
+                name, "6"
+            };
+            AssertExEqual(a);
+        }
+
+        private void Add(ArcValidationResult value, string expression)
+        {
+            AssertEqual(nameof(ArcValidationResult) + "." + value, expression);
+        }
+
+
+        private void Add(InvalidPathElement x, string name)
+        {
+            name += ".";
+            Add(x.Status, name + "." + nameof(x.Status));
+            AddIPathElementCommon(x, name);
+        }
+
+
+        private void Add(ArcDefinition c, string name)
+        {
+            if (c is null)
+                AssertNull(name);
+            else
+            {
+                name += ".";
+                Add(c.Direction, name + nameof(c.Direction));
+                Add(c.Angle, name + nameof(c.Angle));
+                Add(c.Center, name + nameof(c.Center));
+                Add(c.Start, name + nameof(c.Start));
+                Add(c.End, name + nameof(c.End));
+                Add(c.StartVector, name + nameof(c.StartVector));
+            }
         }
 
         private void AddIPathElement(IPathElement x, string name)
@@ -149,6 +195,40 @@ namespace iSukces.DrawingPanel.Paths.Test
             Release(n);
         }
 
+      
+        private void AddIPathElementCommon(IPathElement x, string name)
+        {
+            name += ".";
+            var point = x.GetStartPoint();
+            var n     = Declare(point, TypedExpression.Make<IPathElement>(name + nameof(x.GetStartPoint) + "()"));
+            Add(point, n);
+            Release(n);
+
+            point = x.GetEndPoint();
+            n     = Declare(point, TypedExpression.Make<IPathElement>(name + nameof(x.GetEndPoint) + "()"));
+            Add(point, n);
+            Release(n);
+        }
+ 
+
+        private void AssertPoint(IPathResult x, string name, Type knownType)
+        {
+            if (x is null)
+            {
+                AssertNull(name);
+                return;
+            }
+
+            name += ".";
+            Add(x.Start, name + nameof(x.Start));
+            Add(x.End, name + nameof(x.End));
+            Add(x.Elements, name + nameof(x.Elements));
+        }
+
+        public string Create(ArcPathMakerResult x, string name)
+        {
+            return Create(() => { Add(x, name); });
+        }
 
         public string Create(IPathResult result, string name)
         {
@@ -159,6 +239,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
+     
         public string GetDebugCode(PathRay st, PathRay en, ZeroReferencePointPathCalculatorResult result)
         {
             var name = FindName(result);

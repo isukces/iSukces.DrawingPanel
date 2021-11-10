@@ -24,6 +24,29 @@ namespace iSukces.DrawingPanel.Paths.Test
             YRange = MinMax.FromCenterAndSize(YRange.Center, yLength);
         }
 
+        const double arrowHeadLength = 50;
+        const double arrowHeadSize   = 15;
+        protected void DrawArrow(Point point, Vector v, bool arrowStart )
+        {
+            var b = Map(point).ToPoint();
+            v = new Vector(v.X, -v.Y);
+            v.Normalize();
+            if (!arrowStart) 
+                b -= v * arrowHeadLength;
+
+
+
+            var cs = SimpleCoordinateSystem2D.FromPointAndVector(b, v);
+            var p1 = cs.Transform(new Point(arrowHeadLength-15, 4)).ToPointF();
+            var p3 = cs.Transform(new Point(arrowHeadLength-15, -4)).ToPointF();
+            var p2 = cs.Transform(new Point(arrowHeadLength, 0)).ToPointF();
+            Graph.FillPolygon(Brushes.Fuchsia, new[] { p1, p2, p3 });
+            
+            
+            var       p4  = cs.Transform(new Point(0, 0)).ToPointF();
+            using var pen = new Pen(Color.Fuchsia, 2);
+            Graph.DrawLine(pen, p2, p4);
+        }
 
         protected void DrawArc(ArcDefinition c)
         {
@@ -92,8 +115,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             v.Normalize();
             v *= 50;
             var          a               = Map(point);
-            const double arrowHeadLength = 50;
-            const double arrowHeadSize   = 15;
             {
                 if (isShort)
                 {
