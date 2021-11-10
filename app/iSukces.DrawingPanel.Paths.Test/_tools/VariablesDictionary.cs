@@ -1,27 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
-    internal class VariablesDictionary
+    public class VariablesDictionary
     {
         public string GetName(Type t, out bool first)
         {
+            var cnt = 0;
             foreach (var i in _list)
             {
+                if (i.Typ != t) continue;
+                cnt++;
                 if (i.Busy)
                     continue;
-                if (i.Typ != t) continue;
                 i.Busy = true;
                 first  = false;
                 return i.Name;
             }
 
-            var nr = _list.Count + 1;
+            var name = GetVarName?.Invoke(t);
+            if (string.IsNullOrEmpty(name))
+            {
+                var nr = _list.Count + 1;
+                name = "tmp" + nr.ToString(CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                if (cnt > 0)
+                    name += cnt.ToString(CultureInfo.InvariantCulture);
+            }
+
             var info = new Info
             {
                 Busy = true,
-                Name = "tmp" + nr.ToCs(),
+                Name = name,
                 Typ  = t
             };
             _list.Add(info);

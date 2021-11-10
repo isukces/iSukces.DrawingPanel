@@ -25,5 +25,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             Equal(x1, y1, point.GetStartPoint(), decimalPlaces);
             Equal(x2, y2, point.GetEndPoint(), decimalPlaces);
         }
+        
+        public static void Equal(double x1, double y1, double x2, double y2,
+            PathRay point, int decimalPlaces = 6)
+        {
+            Equal(x1, y1, point.Point, decimalPlaces);
+            Equal(x2, y2, point.Vector, decimalPlaces);
+        }
     }
 }

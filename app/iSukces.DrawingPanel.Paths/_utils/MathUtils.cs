@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
@@ -18,5 +19,14 @@ namespace iSukces.DrawingPanel.Paths
             var crossPoint = l1.CrossWith(l2);
             return crossPoint;
         }
+
+        public static Vector GetNormalized(this Vector v)
+        {
+            v.Normalize();
+            return v;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsZero(this Vector v) { return v.X.Equals(0d) && v.Y.Equals(0d); }
     }
 }

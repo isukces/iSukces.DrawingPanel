@@ -33,7 +33,7 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IPathResult Handle1()
         {
-            var refs = Point.Refs;
+            var refs = Point.ReferencePoints;
             if (_inArmLengthPlus || _outArmLengthPlus)
             {
                 var builder = new PathBuilder(_start.Point, Validator);
@@ -67,7 +67,7 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IPathResult Handle2()
         {
-            var refs = Point.Refs;
+            var refs = Point.ReferencePoints;
             if (_inArmLengthPlus || _outArmLengthPlus)
             {
                 var builder = new PathBuilder(_start.Point, Validator);
@@ -103,7 +103,7 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IPathResult Handle3AndMore()
         {
-            var refs    = Point.Refs;
+            var refs    = Point.ReferencePoints;
             var builder = new PdPathBuilder(_start.Point, Validator);
 
            
@@ -130,7 +130,7 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IPathResult MakeItem()
         {
-            var refs = Point.Refs;
+            var refs = Point.ReferencePoints;
 
             _startVector = PreviousPoint.OutVector;
             _endVector   = Point.InVector;

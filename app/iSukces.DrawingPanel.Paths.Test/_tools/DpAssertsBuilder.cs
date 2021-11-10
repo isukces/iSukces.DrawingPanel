@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using iSukces.Mathematics;
@@ -30,15 +31,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             return s.ToString();
         }
 
-
-        private void Add(ArcDirection n, string name) { AssertEqual("ArcDirection." + n, name); }
-
-        private void Add(ZeroReferencePointPathCalculator.ResultKind n, string name)
-        {
-            AssertEqual("ZeroReferencePointPathCalculator.ResultKind." + n, name);
-        }
-
-
+        
         private void Add(Point p, string name) { AssertExEqual(p.X.ToCs(), p.Y.ToCs(), name); }
 
         private void Add(PathRay p, string name)
@@ -59,7 +52,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             name += ".";
             if (result is ZeroReferencePointPathCalculatorResult zero)
             {
-                Add(zero.Kind, name + nameof(zero.Kind));
+                AddEnum(zero.Kind, name + nameof(zero.Kind));
             }
 
             Add(result.Start, name + nameof(result.Start));
@@ -67,7 +60,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             Add(result.Elements, name + nameof(result.Elements));
         }
 
-     
 
         private void Add(LinePathElement x, string name)
         {
@@ -97,9 +89,83 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         private void Add(IReadOnlyList<IPathResult> x, string name) { AssertList(x, name, AssertPoint, false); }
 
-     
+
         private void Add(IReadOnlyList<IPathElement> x, string name) { AssertList(x, name, AddIPathElement, true); }
 
+
+        private void Add(ArcValidationResult value, string expression)
+        {
+            const string prefix = nameof(ArcValidationResult) + ".";
+            AssertEqual(prefix + value, expression);
+        }
+
+
+        private void Add(InvalidPathElement x, string name)
+        {
+            name += ".";
+            Add(x.Status, name + "." + nameof(x.Status));
+            AddIPathElementCommon(x, name);
+        }
+
+
+        private void Add(ArcDefinition c, string name)
+        {
+            if (c is null)
+                AssertNull(name);
+            else
+            {
+                name += ".";
+                AddEnum(c.Direction, name + nameof(c.Direction));
+                Add(c.Angle, name + nameof(c.Angle));
+                Add(c.Center, name + nameof(c.Center));
+                Add(c.Start, name + nameof(c.Start));
+                Add(c.End, name + nameof(c.End));
+                Add(c.StartVector, name + nameof(c.StartVector));
+            }
+        }
+        
+        
+
+        private void Add(ArcPathMakerVertex x, string name, Type type)
+        {
+            if (x is null)
+            {
+                AssertNull(name);
+                return;
+            }
+
+            name += ".";
+            Add(x.Location, name + nameof(x.Location));
+            Add(x.InVector, name + nameof(x.InVector));
+            Add(x.OutVector, name + nameof(x.OutVector));
+            AddEnum(x.Flags, name + nameof(x.Flags));
+
+            AssertList(x.ReferencePoints, name + nameof(x.ReferencePoints), AssertPoint, false);
+        }
+
+        private void AddEnum(FlexiPathMakerItem2Flags n, string expression)
+        {
+            const string prefix   = nameof(FlexiPathMakerItem2Flags) + ".";
+            var          tmp      = n.ToString().Split(',').Select(a => prefix + a.Trim()).ToArray();
+            var          expexted = string.Join(" | ", tmp);
+            AssertEqual(expexted, expression);
+        }
+
+
+        private void AddEnum(ArcDirection n, string name)
+        {
+            const string prefix = nameof(ArcDirection) + ".";
+            AssertEqual(prefix + n, name);
+        }
+
+        private void AddEnum(ZeroReferencePointPathCalculator.ResultKind value, string expression)
+        {
+            const string prefix = nameof(ZeroReferencePointPathCalculator)
+                                  + "."
+                                  + nameof(ZeroReferencePointPathCalculator.ResultKind)
+                                  + ".";
+            AssertEqual(prefix + value, expression);
+        }
 
 
         private void AddIPathElement(IPathElement x, string name, Type knownType)
@@ -124,7 +190,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                     {
                         Add(invalidPathElement, e.Code);
                     });
-                    
+
                     break;
                 case LinePathElement linePathElement:
                     CastAndDoAction(linePathElement, knownType, name, e =>
@@ -134,50 +200,6 @@ namespace iSukces.DrawingPanel.Paths.Test
 
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(x));
-            }
-        }
-
-        
-
-        private void Add(IPathElement x, string name)
-        {
-            var s = x.GetStartPoint();
-            var e = x.GetEndPoint();
-            var a = new[]
-            {
-                s.X.ToCs(), s.Y.ToCs(), e.X.ToCs(), e.Y.ToCs(),
-                name, "6"
-            };
-            AssertExEqual(a);
-        }
-
-        private void Add(ArcValidationResult value, string expression)
-        {
-            AssertEqual(nameof(ArcValidationResult) + "." + value, expression);
-        }
-
-
-        private void Add(InvalidPathElement x, string name)
-        {
-            name += ".";
-            Add(x.Status, name + "." + nameof(x.Status));
-            AddIPathElementCommon(x, name);
-        }
-
-
-        private void Add(ArcDefinition c, string name)
-        {
-            if (c is null)
-                AssertNull(name);
-            else
-            {
-                name += ".";
-                Add(c.Direction, name + nameof(c.Direction));
-                Add(c.Angle, name + nameof(c.Angle));
-                Add(c.Center, name + nameof(c.Center));
-                Add(c.Start, name + nameof(c.Start));
-                Add(c.End, name + nameof(c.End));
-                Add(c.StartVector, name + nameof(c.StartVector));
             }
         }
 
@@ -195,7 +217,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Release(n);
         }
 
-      
+
         private void AddIPathElementCommon(IPathElement x, string name)
         {
             name += ".";
@@ -209,7 +231,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Add(point, n);
             Release(n);
         }
- 
+
 
         private void AssertPoint(IPathResult x, string name, Type knownType)
         {
@@ -225,10 +247,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             Add(x.Elements, name + nameof(x.Elements));
         }
 
-        public string Create(ArcPathMakerResult x, string name)
+        private void AssertPoint(PathRay expected, string expression, Type type)
         {
-            return Create(() => { Add(x, name); });
+            Add(expected, expression);
         }
+
+        public string Create(ArcPathMakerResult x, string name) { return Create(() => { Add(x, name); }); }
 
         public string Create(IPathResult result, string name)
         {
@@ -239,29 +263,14 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-     
-        public string GetDebugCode(PathRay st, PathRay en, ZeroReferencePointPathCalculatorResult result)
+        public string Create(IReadOnlyList<ArcPathMakerVertex> result, string name)
         {
-            var name = FindName(result);
-            WriteLine("[Fact]");
-            WriteLine("public void Txxx_" + name + "()");
-            WriteLine("{");
+            return Create(() => { AssertList(result, name, Add, false); });
+        }
 
-            /*
-            _sb.AppendLine("var c = new ZeroReferencePointPathCalculator();");
-            _sb.AppendLine($"c.Start = {Create(st)};");
-            _sb.AppendLine($"c.End = {Create(en)};");
-            */
-            WriteLine($"var r = ZeroReferencePointPathCalculator.Compute({Create(st)}, {Create(en)});");
-            if (result is not null)
-            {
-                Add(result.Kind, "r.Kind");
-                Add(result.Arc1, nameof(result.Arc1));
-                Add(result.Arc2, nameof(result.Arc2));
-            }
-
-            WriteLine("}");
-            return Code;
+        public string Create(ArcPathMakerVertex x, string name)
+        {
+            return Create(() => { Add(x, name, typeof(ArcPathMakerVertex)); });
         }
     }
 }

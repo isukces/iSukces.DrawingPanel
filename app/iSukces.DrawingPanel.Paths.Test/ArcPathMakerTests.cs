@@ -261,7 +261,7 @@ namespace Test.Pd.Common.Geometry
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                     new ArcPathMakerVertex(24, 100)
                         .WithInVector(0, 1)
-                        .WithRefs(new PathRay(3, 50, 0, 0))
+                        .WithReferencePoints(new PathRay(3, 50, 0, 0))
                 }
             };
             var result = maker.Compute();
@@ -316,7 +316,7 @@ namespace Test.Pd.Common.Geometry
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                     new ArcPathMakerVertex(24, 100)
                         .WithInVector(1, 1)
-                        .WithRefs(new PathRay(3, 50, 0, 0))
+                        .WithReferencePoints(new PathRay(3, 50, 0, 0))
                 }
             };
             var result = maker.Compute();
@@ -364,7 +364,7 @@ namespace Test.Pd.Common.Geometry
                 Vertices = new[]
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
-                    new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13).WithRefs(new PathRay(-3, 50, 0, 0))
+                    new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13).WithReferencePoints(new PathRay(-3, 50, 0, 0))
                 }
             };
             var result = maker.Compute();
@@ -427,7 +427,7 @@ namespace Test.Pd.Common.Geometry
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                     new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
-                        .WithRefs(new PathRay(-4, 45, 0, 0), new PathRay(-4, 55, 0, 0))
+                        .WithReferencePoints(new PathRay(-4, 45, 0, 0), new PathRay(-4, 55, 0, 0))
                 }
             };
             var result = maker.Compute();
@@ -489,7 +489,7 @@ namespace Test.Pd.Common.Geometry
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                     new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
-                        .WithRefs(new PathRay(-4, 45, 0, 0), new PathRay(-4, 55, 0, 0))
+                        .WithReferencePoints(new PathRay(-4, 45, 0, 0), new PathRay(-4, 55, 0, 0))
                 }
             };
             var result = maker.Compute();
@@ -555,7 +555,7 @@ namespace Test.Pd.Common.Geometry
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                     new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
-                        .WithRefs(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1), new PathRay(-4, 59, 0, 1))
+                        .WithReferencePoints(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1), new PathRay(-4, 59, 0, 1))
                 }
             };
             var result = maker.Compute();
@@ -643,7 +643,7 @@ namespace Test.Pd.Common.Geometry
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                     new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
-                        .WithRefs(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1), new PathRay(-4, 59, 0, 1))
+                        .WithReferencePoints(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1), new PathRay(-4, 59, 0, 1))
                 }
             };
             var result = maker.Compute();

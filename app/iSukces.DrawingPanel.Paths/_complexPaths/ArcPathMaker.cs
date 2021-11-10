@@ -64,7 +64,7 @@ namespace iSukces.DrawingPanel.Paths
 
                     if ((point.Flags & FlexiPathMakerItem2Flags.HasInVector) != 0)
                         flags |= SegmentFlags.HasEndVector;
-                    if (point.Refs != null && point.Refs.Count > 0)
+                    if (point.ReferencePoints != null && point.ReferencePoints.Count > 0)
                         flags |= SegmentFlags.HasReferencePoints;
                 }
                 _segmentFlags[index] = flags;

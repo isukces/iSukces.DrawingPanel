@@ -10,6 +10,12 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
+        public PathRay(double x, double y)
+            : this(new Point(x, y), default(Vector))
+        {
+        }
+
+
         public PathRay(Point point, Point endPoint)
         {
             Point  = point;
@@ -43,7 +49,6 @@ namespace iSukces.DrawingPanel.Paths
         {
             Point  = point;
             Vector = vector;
-            //Vector.Normalize();
         }
 
         public LineEquationNotNormalized GetLine()
@@ -80,5 +85,7 @@ namespace iSukces.DrawingPanel.Paths
         public Point GetPoint(double d) { return Point + d * Vector; }
 
         public Point Get(double distance) { return Point + Vector * distance; }
+
+        public PathRay WithPoint(Point point) { return new PathRay(point, Vector); }
     }
 }

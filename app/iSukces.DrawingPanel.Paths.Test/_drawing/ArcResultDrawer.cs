@@ -97,7 +97,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 DrawArrow(i.Location, i.OutVector, true);
             }
 
-            var refs = i.Refs;
+            var refs = i.ReferencePoints;
             if (refs == null || refs.Count == 0) return;
             var drawArrows = refs.Count > 2;
             for (var ii = 0; ii < refs.Count; ii++)
