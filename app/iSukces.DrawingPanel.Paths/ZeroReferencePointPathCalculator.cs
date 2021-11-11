@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
@@ -47,8 +48,9 @@ namespace iSukces.DrawingPanel.Paths
                     return result;
                 }
 
-                var dot = Vector.CrossProduct(Start.Vector, a);
-                if (dot == 0)
+                var isSmall   = MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.HMaximum);
+                
+                if (isSmall)
                     return new ZeroReferencePointPathCalculatorResult(ResultKind.Line)
                     {
                         Start = Start.Point,

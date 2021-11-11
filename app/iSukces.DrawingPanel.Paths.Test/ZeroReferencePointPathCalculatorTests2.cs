@@ -200,5 +200,25 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             #endregion
         }
+
+        [Fact]
+        public void T06_Should()
+        {
+            var start = new PathRay(48.5777405281936, 43.1561421153959, 0.967110733663976, 0.25435571318908);
+            var end   = new PathRay(147.16164261446, 69.084278213229, 0.967110733663976, 0.25435571318908);
+
+            var result    = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var code = new DpAssertsBuilder().Create(result, nameof(result));
+            
+            #region Asserts
+            Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.Line, result.Kind);
+            AssertEx.Equal(48.5777405281936, 43.1561421153959, result.Start);
+            AssertEx.Equal(147.16164261446, 69.084278213229, result.End);
+            Assert.Single(result.Elements);
+            var tmp1 = (LinePathElement)result.Elements[0];
+            AssertEx.Equal(48.5777405281936, 43.1561421153959, 147.16164261446, 69.084278213229, tmp1, 6);
+            #endregion
+
+        }
     }
 }

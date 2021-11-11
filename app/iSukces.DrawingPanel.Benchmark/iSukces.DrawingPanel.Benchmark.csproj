@@ -8,10 +8,15 @@
 
     <ItemGroup>
       <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+      <PackageReference Include="iSukces.Math" Version="1.0.21253.118" />
     </ItemGroup>
 
     <ItemGroup>
       <Reference Include="WindowsBase" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace iSukces.DrawingPanel.Benchmark
 {
+    [SimpleJob(targetCount: 10, invocationCount:1_0000_000)]
     public class MathOperationsBenchmark
     {
         [Benchmark(Description = "Sin")]
@@ -31,6 +32,13 @@ namespace iSukces.DrawingPanel.Benchmark
             return Math.Sqrt(X);
         }
         
+        [Benchmark(Description = "Atan2")]
+        public double Atan2()
+        {
+            return Math.Atan2(X, Y);
+        }
+
+        
         [Benchmark(Description = "Exp")]
         public double TestExp()
         {
@@ -51,5 +59,8 @@ namespace iSukces.DrawingPanel.Benchmark
 
         [Params(0.5)]
         public double X { get; set; }
+        
+        [Params(0.8)]
+        public double Y { get; set; }
     }
 }
