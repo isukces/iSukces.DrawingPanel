@@ -164,6 +164,12 @@ namespace iSukces.DrawingPanel.Paths
             return FromPointAndDeltas(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
         }
 
+        public static LineEquationNotNormalized From2Points(double x1, double y1, double x2, double y2)
+        {
+            return FromPointAndDeltas(x1, y1, x2 - x1, y2 - y1);
+        }
+
+
         public static LineEquationNotNormalized FromPointAndDeltas(double x, double y, double dx, double dy)
         {
             //double a = -dy;
@@ -199,6 +205,28 @@ namespace iSukces.DrawingPanel.Paths
         public double DistanceNotNormalized(Point p) { return A * p.X + B * p.Y + C; }
 
         public double DistanceNotNormalized(double x, double y) { return A * x + B * y + C; }
+
+        public double GetDeterminantSquared()
+        {
+            var a = A;
+            a *= a;
+            var b = B;
+            b *= b;
+            return a + b;
+        }
+
+        public Point GetNearestPoint(Point hitPoint)
+        {
+            var x     = hitPoint.X;
+            var y     = hitPoint.Y;
+            var b2    = _b * _b;
+            var a2    = _a * _a;
+            var ab    = _a * _b;
+            var denom = a2 + b2;
+            var xOut  = (b2 * x - ab * y - _a * _c) / denom;
+            var yOut  = (a2 * y - ab * x - _b * _c) / denom;
+            return new Point(xOut, yOut);
+        }
 
         /// <summary>
         ///     Zwraca współrzędną X dla podanego Y - jeśli linia pozioma (dy=a=0) to będzie NaN
@@ -348,14 +376,5 @@ namespace iSukces.DrawingPanel.Paths
         private double _a;
         private double _b;
         private double _c;
-
-        public double Get_determinant_squared()
-        {
-            var a = A;
-            a *= a;
-            var b = B;
-            b *= b;
-            return a + b;
-        }
     }
 }

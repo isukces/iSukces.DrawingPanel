@@ -17,20 +17,34 @@ namespace iSukces.DrawingPanel.Paths
 
         public double GetLength() { return _vector.Length; }
 
+        public Point GetNearestPoint(Point point)
+        {
+            var line = LineEquationNotNormalized.FromPointAndDeltas(_start, _vector);
+            return line.GetNearestPoint(point);
+        }
+
         public Point GetStartPoint() { return _start; }
 
         public Vector GetStartVector() { return _vector; }
 
-        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared)
+        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
+            out Point correctedPoint)
         {
             var line    = LineEquationNotNormalized.FromPointAndDeltas(_start, _vector);
             var counter = line.DistanceNotNormalized(hitPoint);
             counter *= counter;
 
-            var determinant = line.Get_determinant_squared();
+            var determinant = line.GetDeterminantSquared();
             distanceSquared = counter / determinant;
 
-            return distanceSquared <= toleranceSquared;
+            if (distanceSquared <= toleranceSquared)
+            {
+                correctedPoint = line.GetNearestPoint(hitPoint);
+                return true;
+            }
+
+            correctedPoint = default;
+            return false;
         }
 
         private readonly Point _end;

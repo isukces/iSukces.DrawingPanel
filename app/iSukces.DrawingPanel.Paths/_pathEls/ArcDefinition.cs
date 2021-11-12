@@ -67,7 +67,28 @@ namespace iSukces.DrawingPanel.Paths
 
         Vector IPathElement.GetStartVector() { return StartVector; }
 
-        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared)
+        
+        public Point GetNearestPointOnCircle(Point point)
+        {
+            var v = point - Center;
+            v.Normalize();
+            var res= Center + v * Radius;
+            return res;
+        }
+
+        public Point GetNearestPointOnCircleFast(Point point)
+        {
+            var v          = point - Center;
+            var lenSquared = v.LengthSquared;
+            if (lenSquared == 0)
+                return Start;
+            var radiusSquared = RadiusStart.LengthSquared;
+            var res           = Center + v * Math.Sqrt(radiusSquared / lenSquared);
+            return res;
+        }
+
+        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
+            out Point correctedPoint)
         {
           
             var toCenter = hitPoint - Center;
@@ -85,6 +106,8 @@ namespace iSukces.DrawingPanel.Paths
             var tmpSqrt     = (y1Sq + x1Sq) * (y2Sq + x2Sq);
             var distSquared = -2 * Math.Sqrt(tmpSqrt) + y2Sq + y1Sq + x2Sq + x1Sq;
 
+            
+            distanceSquared = distSquared;
             if (distSquared <= toleranceSquared)
             {
                 var angle = Vector.AngleBetween(toCenter, RadiusStart);
@@ -92,11 +115,16 @@ namespace iSukces.DrawingPanel.Paths
                     angle = -angle;
                 if (angle<0)
                     angle += 360;
-                distanceSquared = distSquared;
-                return angle >= 0 && angle <= Angle;
+
+                if (angle >= 0 && angle <= Angle)
+                {
+                    // todo: maybe it can be faster
+                    correctedPoint = GetNearestPointOnCircleFast(hitPoint);
+                    return true;
+                }
             }
 
-            distanceSquared = distSquared;
+            correctedPoint = default;
             return false;
         }
 

@@ -59,7 +59,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                     while (angle < 360)
                     {
                         var testPoint   = a.Center + radius * MathEx.GetCosSinV(angle);
-                        var isCollision = a.IsLineCollision(testPoint, toler.Square(), out var distanceSquared);
+                        var isCollision = a.IsLineCollision(testPoint, toler.Square(), out var distanceSquared, out var corrected);
 
                         var expectedResult = delta <= toler;
                         if (expectedResult)
@@ -77,6 +77,12 @@ namespace iSukces.DrawingPanel.Paths.Test
 
                         Assert.Equal(expectedResult, isCollision);
                         Assert.Equal(delta.Square(), distanceSquared, 8);
+
+                        if (isCollision)
+                        {
+                            var p = a.GetNearestPointOnCircle(testPoint);
+                            AssertEx.Equal(p.X, p.Y, corrected);
+                        }
                         angle++;
                     }
                 }
@@ -211,7 +217,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                         {
                             var yy = (y) * YRange.Length / width;
                             yy = YRange.Max - yy;
-                            var ok = arc.IsLineCollision(new Point(xx, yy), dist.Square(), out _);
+                            var ok = arc.IsLineCollision(new Point(xx, yy), dist.Square(), out _, out _);
                             Bmp.SetPixel(x, y, ok ? Color.GreenYellow : Color.LightGray);
                         }
                     }

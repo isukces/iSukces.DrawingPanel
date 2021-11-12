@@ -26,16 +26,24 @@ namespace iSukces.DrawingPanel.Paths
 
         public Vector GetStartVector() { return _start.Vector; }
 
-        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared)
+        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
+            out Point correctedPoint)
         {
             var line    = LineEquationNotNormalized.FromPointAndDeltas(_start.Point, _vector);
             var counter = line.DistanceNotNormalized(hitPoint);
             counter *= counter;
 
-            var determinant = line.Get_determinant_squared();
+            var determinant = line.GetDeterminantSquared();
             distanceSquared = counter / determinant;
 
-            return distanceSquared <= toleranceSquared;
+            if (distanceSquared <= toleranceSquared)
+            {
+                correctedPoint = line.GetNearestPoint(hitPoint);
+                return true;
+            }
+
+            correctedPoint = default;
+            return false;
         }
 
         public ArcValidationResult Status { get; }
