@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -52,9 +53,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             return true;
         }
 
-        public static Point ToPoint(this PointF point) { return new Point(point.X, point.Y); }
-        public static PointF ToPointF(this Point point) { return new PointF((float)point.X, (float)point.Y); }
-
         public static void SaveIfDifferent(this Bitmap bmp, string fileName)
         {
             using var ms = new MemoryStream();
@@ -78,6 +76,9 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             File.WriteAllBytes(fileName, current);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double Square(this double d) { return d * d; }
 
 
         public static string ToCs(this double x) { return x.ToString(CultureInfo.InvariantCulture); }
@@ -111,6 +112,9 @@ namespace iSukces.DrawingPanel.Paths.Test
                 }
             }
         }
+
+        public static Point ToPoint(this PointF point) { return new Point(point.X, point.Y); }
+        public static PointF ToPointF(this Point point) { return new PointF((float)point.X, (float)point.Y); }
 
 
         private const string DigitAfterLetterFilter = @"([a-z])_(\d)";

@@ -53,5 +53,8 @@
         <Compile Update="_tools\DpAssertsBuilder.cs">
             <DependentUpon>AssertsBuilder.cs</DependentUpon>
         </Compile>
+        <Compile Update="ArcDefinitionTests.Collider.cs">
+          <DependentUpon>ArcDefinitionTests.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 {
     internal class ResultDrawer : ResultDrawerBase
     {
-        private ResultDrawer(ResultDrawerConfig cfg) { _cfg = cfg; }
+        protected ResultDrawer(ResultDrawerConfig cfg) { _cfg = cfg; }
 
 
         public static void Draw(OneReferencePointPathCalculator x, IPathResult r, TestName name,
@@ -77,7 +77,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             p.DrawInternal();
         }
 
-        private static DirectoryInfo GetDir(string path)
+        protected static DirectoryInfo GetDir(string path, string additional = null)
         {
             if (string.IsNullOrEmpty(path))
                 return null;
@@ -86,7 +86,13 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 var h = Path.Combine(directory.FullName, ".git", "HEAD");
                 if (File.Exists(h))
-                    return new DirectoryInfo(Path.Combine(directory.FullName, "doc", "testDrawings"));
+                {
+                    var combine = Path.Combine(directory.FullName, "doc", "testDrawings");
+                    if (additional != null)
+                        combine = Path.Combine(combine, additional);
+                    return new DirectoryInfo(combine);
+                }
+
                 directory = directory.Parent;
             }
 
@@ -167,15 +173,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 // DrawLine(_result.Start, _result.End, new Pen(Color.Crimson, 2));
                 _cfg.ExtraDrawingTop?.Invoke(this);
             }
-            var description = _cfg.Title.GetDescription();
-            Graph.DrawString(description, new Font("Arial", 10), Brushes.Black, 5, 5);
-            Graph.Dispose();
-            var fileInfo = _cfg.GetImageFile();
-            fileInfo.Directory?.Create();
-            Bmp.SaveIfDifferent(fileInfo.FullName);
-            Bmp.Dispose();
-
-            MarkdownTools.MakeMarkdownIndex(_cfg.OutputDirectory, TestNamesSorter.Sort);
+            SaveAndDispose();
         }
 
 
@@ -205,6 +203,24 @@ namespace iSukces.DrawingPanel.Paths.Test
                 foreach (var i in a)
                     yield return i;
             }
+        }
+
+        protected void SaveAndDispose()
+        {
+            var description = _cfg.Title.GetDescription();
+            Graph.DrawString(description, new Font("Arial", 10), Brushes.Black, 5, 5);
+            Graph.Dispose();
+            SaveBitmapAndDispose();
+        }
+
+        protected void SaveBitmapAndDispose()
+        {
+            var fileInfo = _cfg.GetImageFile();
+            fileInfo.Directory?.Create();
+            Bmp.SaveIfDifferent(fileInfo.FullName);
+            Bmp.Dispose();
+
+            MarkdownTools.MakeMarkdownIndex(_cfg.OutputDirectory, TestNamesSorter.Sort);
         }
 
 

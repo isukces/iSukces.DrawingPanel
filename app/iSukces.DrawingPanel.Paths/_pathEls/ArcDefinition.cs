@@ -1,10 +1,11 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    public sealed class ArcDefinition : IPathElement
+    public sealed class ArcDefinition : IPathElement, ILineCollider
     {
         public static ArcDefinition FromCenterAndArms(Point center, Point start, Vector startV, Point end)
         {
@@ -66,6 +67,38 @@ namespace iSukces.DrawingPanel.Paths
 
         Vector IPathElement.GetStartVector() { return StartVector; }
 
+        public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared)
+        {
+          
+            var toCenter = hitPoint - Center;
+
+            var x1 = RadiusStart.X;
+            var y1 = RadiusStart.Y;
+            var x2 = toCenter.X;
+            var y2 = toCenter.Y;
+
+            var y1Sq = y1 * y1;
+            var x1Sq = x1 * x1;
+            var y2Sq = y2 * y2;
+            var x2Sq = x2 * x2;
+
+            var tmpSqrt     = (y1Sq + x1Sq) * (y2Sq + x2Sq);
+            var distSquared = -2 * Math.Sqrt(tmpSqrt) + y2Sq + y1Sq + x2Sq + x1Sq;
+
+            if (distSquared <= toleranceSquared)
+            {
+                var angle = Vector.AngleBetween(toCenter, RadiusStart);
+                if (Direction==ArcDirection.CounterClockwise)
+                    angle = -angle;
+                if (angle<0)
+                    angle += 360;
+                distanceSquared = distSquared;
+                return angle >= 0 && angle <= Angle;
+            }
+
+            distanceSquared = distSquared;
+            return false;
+        }
 
         public override string ToString() { return $"{Angle:N2}°, r={Radius:N2}"; }
 
@@ -75,7 +108,7 @@ namespace iSukces.DrawingPanel.Paths
             RadiusEnd   = End - Center;
         }
 
-        private double Radius => RadiusStart.Length;
+        public double Radius => RadiusStart.Length;
 
         public Vector RadiusEnd { get; set; }
 

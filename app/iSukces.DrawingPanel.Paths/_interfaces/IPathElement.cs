@@ -2,7 +2,7 @@
 
 namespace iSukces.DrawingPanel.Paths
 {
-    public interface IPathElement
+    public interface IPathElement:ILineCollider
     {
         Point GetEndPoint();
         Vector GetEndVector();

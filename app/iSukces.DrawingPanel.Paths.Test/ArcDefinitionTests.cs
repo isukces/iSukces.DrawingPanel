@@ -3,7 +3,7 @@ using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
-    public class ArcDefinitionTests
+    public partial class ArcDefinitionTests
     {
         [Theory]
         [InlineData(1, ArcDirection.CounterClockwise)] // MathematicalPlus__
@@ -84,5 +84,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             arc.UpdateRadiusVectors();
             Assert.Equal(expected, arc.Angle);
         }
+
     }
 }

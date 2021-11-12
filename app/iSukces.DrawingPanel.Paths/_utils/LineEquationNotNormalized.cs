@@ -348,5 +348,14 @@ namespace iSukces.DrawingPanel.Paths
         private double _a;
         private double _b;
         private double _c;
+
+        public double Get_determinant_squared()
+        {
+            var a = A;
+            a *= a;
+            var b = B;
+            b *= b;
+            return a + b;
+        }
     }
 }
