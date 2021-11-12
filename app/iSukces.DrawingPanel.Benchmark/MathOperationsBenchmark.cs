@@ -3,13 +3,26 @@ using BenchmarkDotNet.Attributes;
 
 namespace iSukces.DrawingPanel.Benchmark
 {
-    [SimpleJob(targetCount: 10, invocationCount:1_0000_000)]
+    [SimpleJob(targetCount: 10/*, invocationCount:1_0000_000*/)]
     public class MathOperationsBenchmark
     {
         [Benchmark(Description = "Sin")]
         public double TestSin()
         {
             return Math.Sin(X);
+        }
+        
+        [Benchmark(Description = "Cos")]
+        public double TestCos()
+        {
+            return Math.Cos(X);
+        }
+        
+        
+        [Benchmark(Description = "aCos")]
+        public double TestACos()
+        {
+            return Math.Acos(X);
         }
 
         [Benchmark(Description = "SinDEG")]
@@ -19,7 +32,7 @@ namespace iSukces.DrawingPanel.Benchmark
             return Math.Sin(X * mul);
         }
 
-        [Benchmark(Description = "SinDEG 2")]
+        [Benchmark(Description = "SinDEG alt")]
         public double TestSinDeg2()
         {
             const double div = 180 / Math.PI;
