@@ -202,10 +202,10 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
         [Fact]
-        public void T06_Should()
+        public void T06_Should_compute_line_from_very_flat_arc()
         {
-            var start = new PathRay(48.5777405281936, 43.1561421153959, 0.967110733663976, 0.25435571318908);
-            var end   = new PathRay(147.16164261446, 69.084278213229, 0.967110733663976, 0.25435571318908);
+            var start = new PathRay(48.5777405281936,43.1561421153959 , 0.967110733663976,0.25435571318908);
+            var end   = new PathRay(147.16164261446,69.084278213229 ,0.967110733663976,0.25435571318908);
 
             var result    = ZeroReferencePointPathCalculator.Compute(start, end, null);
             var code = new DpAssertsBuilder().Create(result, nameof(result));

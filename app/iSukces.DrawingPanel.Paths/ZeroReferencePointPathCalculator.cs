@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
@@ -20,7 +19,8 @@ namespace iSukces.DrawingPanel.Paths
             return true;
         }
 
-        public static ZeroReferencePointPathCalculatorResult Compute(PathRay start, PathRay end, IPathValidator validator)
+        public static ZeroReferencePointPathCalculatorResult Compute(PathRay start, PathRay end,
+            IPathValidator validator)
         {
             var x = new ZeroReferencePointPathCalculator
             {
@@ -48,8 +48,9 @@ namespace iSukces.DrawingPanel.Paths
                     return result;
                 }
 
-                var isSmall   = MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.HMaximum);
-                
+                var isSmall =
+                    MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.HMaximum);
+
                 if (isSmall)
                     return new ZeroReferencePointPathCalculatorResult(ResultKind.Line)
                     {
@@ -179,7 +180,7 @@ namespace iSukces.DrawingPanel.Paths
 
             Start = Start.Normalize();
             End   = End.Normalize();
-            var    minLength  = double.MaxValue;
+            var                                    minLength  = double.MaxValue;
             ZeroReferencePointPathCalculatorResult bestResult = null;
 
             void CheckAndAdd(ZeroReferencePointPathCalculatorResult r)
