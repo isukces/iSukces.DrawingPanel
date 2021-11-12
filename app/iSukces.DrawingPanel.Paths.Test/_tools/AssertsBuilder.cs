@@ -117,7 +117,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Release(name);
         }
 
-        protected string Create(Action action)
+        public string Create(Action action)
         {
             _sb = new StringBuilder();
             WriteLine("#region Asserts");
