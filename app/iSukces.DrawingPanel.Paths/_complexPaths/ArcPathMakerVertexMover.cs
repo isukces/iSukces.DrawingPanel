@@ -11,19 +11,21 @@ namespace iSukces.DrawingPanel.Paths
     /// </summary>
     public sealed class ArcPathMakerVertexMover
     {
-        private ArcPathMakerVertexMover(ArcPathMakerVertex[] list, double movement)
+        private ArcPathMakerVertexMover(ArcPathMakerVertex[] list,
+            GetMovementBySegmentIndexDelegate movementBySegmentIndex)
         {
-            _count    = list.Length;
-            _list     = list;
-            _exists   = new bool[_count];
-            _vectors  = new Vector[_count];
-            _movement = movement;
+            _count                  = list.Length;
+            _list                   = list;
+            _exists                 = new bool[_count];
+            _vectors                = new Vector[_count];
+            _movementBySegmentIndex = movementBySegmentIndex;
         }
-
 
         public static IReadOnlyList<ArcPathMakerVertex> Move(
             IReadOnlyList<ArcPathMakerVertex> list,
-            double movement, bool vectorsAreValid = false, bool canModifyExistingListIfPossible = false)
+            GetMovementBySegmentIndexDelegate movement,
+            bool vectorsAreValid = false,
+            bool canModifyExistingListIfPossible = false)
         {
             if (list is null)
                 return null;
@@ -53,6 +55,22 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
+        public static IReadOnlyList<ArcPathMakerVertex> Move(
+            IReadOnlyList<ArcPathMakerVertex> list,
+            double movement,
+            bool vectorsAreValid = false,
+            bool canModifyExistingListIfPossible = false)
+        {
+            if (list is null)
+                return null;
+            return Move(list, pointIdx =>
+                {
+                    return movement;
+                },
+                vectorsAreValid, canModifyExistingListIfPossible);
+        }
+
+
         private IReadOnlyList<ArcPathMakerVertex> MoveInternal()
         {
             var previous    = new Point[_count];
@@ -63,10 +81,11 @@ namespace iSukces.DrawingPanel.Paths
                 previous[index] = _list[index].Location;
             }
 
+            var movement0 = _movementBySegmentIndex(0);
             {
                 var a             = _list[0];
                 var prependicular = a.OutVector.GetPrependicular(false);
-                var vector        = prependicular * _movement;
+                var vector        = prependicular * movement0;
                 moveVectors[0] =  vector;
                 a.Location     += vector;
             }
@@ -74,21 +93,25 @@ namespace iSukces.DrawingPanel.Paths
             {
                 var a             = _list[lastIndex];
                 var prependicular = a.InVector.GetPrependicular(false);
-                var vector        = prependicular * _movement;
+                var movementLast      = _movementBySegmentIndex(lastIndex - 1);
+                var vector        = prependicular * movementLast;
                 moveVectors[lastIndex] =  vector;
                 a.Location             += vector;
             }
 
+            var movement = movement0;
             for (var index = 1; index < lastIndex; index++)
             {
+                // var movement = _movementBySegmentIndex(index-1);
                 var vertex = _list[index];
                 var v      = vertex.InVector;
-                var loc1   = vertex.Location + v.GetPrependicular(false) * _movement;
+                var loc1   = vertex.Location + v.GetPrependicular(false) * movement;
 
                 var line1 = LineEquationNotNormalized.FromPointAndDeltas(loc1, v);
 
-                v = vertex.OutVector;
-                var loc2  = vertex.Location + v.GetPrependicular(false) * _movement;
+                movement = _movementBySegmentIndex(index);
+                v        = vertex.OutVector;
+                var loc2  = vertex.Location + v.GetPrependicular(false) * movement;
                 var line2 = LineEquationNotNormalized.FromPointAndDeltas(loc2, v);
 
                 var   cross            = LineEquationNotNormalized.Cross(line1, line2);
@@ -153,7 +176,7 @@ namespace iSukces.DrawingPanel.Paths
 
         private readonly bool[] _exists;
         private readonly ArcPathMakerVertex[] _list;
-        private readonly double _movement;
+        private readonly GetMovementBySegmentIndexDelegate _movementBySegmentIndex;
         private readonly Vector[] _vectors;
     }
 
@@ -163,4 +186,6 @@ namespace iSukces.DrawingPanel.Paths
         None = 0,
         UpdateExistingIfPossible = 1
     }
+
+    public delegate double GetMovementBySegmentIndexDelegate(int segmentIndex);
 }

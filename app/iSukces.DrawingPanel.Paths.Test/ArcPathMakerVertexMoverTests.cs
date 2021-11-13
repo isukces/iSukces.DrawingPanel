@@ -113,6 +113,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
 
         }
+        
         [Fact]
         public void T16_Should_move_three_point_path_with_reference()
         {
@@ -147,8 +148,45 @@ namespace iSukces.DrawingPanel.Paths.Test
             var ray = tmp1.ReferencePoints[0];
             AssertEx.Equal(7, 11.5, 0, 0, ray);
             #endregion
+        }
+        
+        [Fact]
+        public void T17_Should_move_three_point()
+        {
+            var list = new[]
+            {
+                new ArcPathMakerVertex(1, 2),
+                new ArcPathMakerVertex(5, 2),
+                new ArcPathMakerVertex(5, 22)
+            };
+            var r    = ArcPathMakerVertexMover.Move(list, segmentIndex =>
+            {
+                return segmentIndex * 2 + 2;
+            });
+            var code = new DpAssertsBuilder().Create(r, nameof(r));
+            #region Asserts
+            Assert.Equal(3, r.Count);
+            var tmp1 = r[0];
+            AssertEx.Equal(1, 0, tmp1.Location);
+            AssertEx.Equal(0, 0, tmp1.InVector);
+            AssertEx.Equal(1, 0, tmp1.OutVector);
+            Assert.Equal(FlexiPathMakerItem2Flags.HasOutVector, tmp1.Flags);
+            Assert.Null(tmp1.ReferencePoints);
+            tmp1 = r[1];
+            AssertEx.Equal(9, 0, tmp1.Location);
+            AssertEx.Equal(1, 0, tmp1.InVector);
+            AssertEx.Equal(0, 1, tmp1.OutVector);
+            Assert.Equal(FlexiPathMakerItem2Flags.HasBothVectors, tmp1.Flags);
+            Assert.Null(tmp1.ReferencePoints);
+            tmp1 = r[2];
+            AssertEx.Equal(9, 22, tmp1.Location);
+            AssertEx.Equal(0, 1, tmp1.InVector);
+            AssertEx.Equal(0, 0, tmp1.OutVector);
+            Assert.Equal(FlexiPathMakerItem2Flags.HasInVector, tmp1.Flags);
+            Assert.Null(tmp1.ReferencePoints);
+            #endregion
 
-
+            
         }
     }
 }
