@@ -56,7 +56,6 @@ namespace iSukces.DrawingPanel.Paths
                 case ZeroReferencePointPathCalculator.ResultKind.OneArc: return $"{Arc1}";
                 case ZeroReferencePointPathCalculator.ResultKind.TwoArcs: return $"{Arc1} {Arc2}";
                 case ZeroReferencePointPathCalculator.ResultKind.Point: return "Point";
-                case ZeroReferencePointPathCalculator.ResultKind.Line: return "Line";
                 default: return "Unknown";
             }
         }
@@ -70,11 +69,6 @@ namespace iSukces.DrawingPanel.Paths
             {
                 switch (Kind)
                 {
-                    case ZeroReferencePointPathCalculator.ResultKind.Line:
-                        return new[]
-                        {
-                            new LinePathElement(Start, End)
-                        };
                     case ZeroReferencePointPathCalculator.ResultKind.Point: return Array.Empty<IPathElement>();
                     case ZeroReferencePointPathCalculator.ResultKind.OneArc:
                     case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
@@ -94,8 +88,6 @@ namespace iSukces.DrawingPanel.Paths
             {
                 switch (Kind)
                 {
-                    case ZeroReferencePointPathCalculator.ResultKind.Line:
-                        return End - Start;
                     case ZeroReferencePointPathCalculator.ResultKind.Point:
                         return default;
                     case ZeroReferencePointPathCalculator.ResultKind.OneArc:
@@ -116,8 +108,6 @@ namespace iSukces.DrawingPanel.Paths
             {
                 switch (Kind)
                 {
-                    case ZeroReferencePointPathCalculator.ResultKind.Line:
-                        return End - Start;
                     case ZeroReferencePointPathCalculator.ResultKind.Point:
                         return default;
                     case ZeroReferencePointPathCalculator.ResultKind.OneArc:

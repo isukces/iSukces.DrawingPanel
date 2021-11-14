@@ -19,7 +19,7 @@ namespace iSukces.DrawingPanel.Paths
             return true;
         }
 
-        public static ZeroReferencePointPathCalculatorResult Compute(PathRay start, PathRay end,
+        public static IPathResult Compute(PathRay start, PathRay end,
             IPathValidator validator)
         {
             var x = new ZeroReferencePointPathCalculator
@@ -32,7 +32,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        private ZeroReferencePointPathCalculatorResult Compute()
+        private IPathResult Compute()
         {
             var cross = Start.Cross(End);
             if (cross is null)
@@ -52,11 +52,7 @@ namespace iSukces.DrawingPanel.Paths
                     MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.HMaximum);
 
                 if (isSmall)
-                    return new ZeroReferencePointPathCalculatorResult(ResultKind.Line)
-                    {
-                        Start = Start.Point,
-                        End   = End.Point
-                    };
+                    return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);
                 return TryTwo(null);
             }
 
@@ -247,11 +243,7 @@ namespace iSukces.DrawingPanel.Paths
             /// </summary>
             Point,
 
-            /// <summary>
-            ///     Pocz-koniec jest poprawną linią
-            /// </summary>
-            Line,
-
+ 
             OneArc,
             TwoArcs
         }

@@ -14,8 +14,8 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T01_Line_OneArc_Right_27()
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
-            var end   = new PathRay(new Point(33.6452056050077, 24.7273817080189), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var end = new PathRay(new Point(33.6452056050077, 24.7273817080189), new Vector(1, 0));
+            var r = (ZeroReferencePointPathCalculatorResult)ZeroReferencePointPathCalculator.Compute(start, end, null);
             new ResultDrawerConfig
             {
                 Start  = start,
@@ -47,8 +47,8 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T02_OneArc_Right_27_Line()
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
-            var end   = new PathRay(new Point(32.3955742033012, 3.01503610336888), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var end = new PathRay(new Point(32.3955742033012, 3.01503610336888), new Vector(1, 0));
+            var r = (ZeroReferencePointPathCalculatorResult)ZeroReferencePointPathCalculator.Compute(start, end, null);
             new ResultDrawerConfig
             {
                 Start  = start,
@@ -82,8 +82,8 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T03_TwoArcs_Left_32_Right()
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
-            var end   = new PathRay(new Point(46.7663353229257, 45.5025037613891), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var end = new PathRay(new Point(46.7663353229257, 45.5025037613891), new Vector(1, 0));
+            var r = (ZeroReferencePointPathCalculatorResult)ZeroReferencePointPathCalculator.Compute(start, end, null);
 
             new ResultDrawerConfig
             {
@@ -123,8 +123,8 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T04_TwoArcs_Right_74_Left_48()
         {
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
-            var end   = new PathRay(new Point(38.1595425371264, -16.5774819323465), new Vector(1, 0));
-            var r     = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var end = new PathRay(new Point(38.1595425371264, -16.5774819323465), new Vector(1, 0));
+            var r = (ZeroReferencePointPathCalculatorResult)ZeroReferencePointPathCalculator.Compute(start, end, null);
 
             new ResultDrawerConfig
             {
@@ -166,7 +166,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var start = new PathRay(new Point(-20, 0), new Vector(200, 100));
             var end = new PathRay(new Point(25.6788054191289, 30.3507230156981),
                 new Vector(-1.17316474829017, -49.9862349499677));
-            var r = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var r = (ZeroReferencePointPathCalculatorResult)ZeroReferencePointPathCalculator.Compute(start, end, null);
 
             new ResultDrawerConfig
             {
@@ -204,19 +204,20 @@ namespace iSukces.DrawingPanel.Paths.Test
         [Fact]
         public void T06_Should_compute_line_from_very_flat_arc()
         {
-            var start = new PathRay(48.5777405281936,43.1561421153959 , 0.967110733663976,0.25435571318908);
-            var end   = new PathRay(147.16164261446,69.084278213229 ,0.967110733663976,0.25435571318908);
+            var start = new PathRay(48.5777405281936, 43.1561421153959, 0.967110733663976, 0.25435571318908);
+            var end   = new PathRay(147.16164261446, 69.084278213229, 0.967110733663976, 0.25435571318908);
 
-            var result    = ZeroReferencePointPathCalculator.Compute(start, end, null);
+            var result =
+                (ZeroReferencePointPathCalculatorLineResult)ZeroReferencePointPathCalculator.Compute(start, end, null);
             var code = new DpAssertsBuilder().Create(result, nameof(result));
-            
+
             #region Asserts
-            Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.Line, result.Kind);
             AssertEx.Equal(48.5777405281936, 43.1561421153959, result.Start);
             AssertEx.Equal(147.16164261446, 69.084278213229, result.End);
             Assert.Single(result.Elements);
             var tmp1 = (LinePathElement)result.Elements[0];
             AssertEx.Equal(48.5777405281936, 43.1561421153959, 147.16164261446, 69.084278213229, tmp1, 6);
+
             #endregion
 
         }

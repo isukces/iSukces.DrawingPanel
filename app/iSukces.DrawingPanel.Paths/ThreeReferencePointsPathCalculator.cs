@@ -18,8 +18,15 @@ namespace iSukces.DrawingPanel.Paths
                 var s = ZeroReferencePointPathCalculator.Compute(st, en, validator);
                 if (s is null)
                     return;
-                builder.ArcTo(s.Arc1);
-                builder.ArcTo(s.Arc2);
+                if (s is ZeroReferencePointPathCalculatorLineResult line)
+                {
+                    builder.LineTo(line.End);
+                    
+                } else if (s is ZeroReferencePointPathCalculatorResult r2)
+                {
+                    builder.ArcTo(r2.Arc1);
+                    builder.ArcTo(r2.Arc2);
+                }
             }
 
             Add(Start, Reference1);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
@@ -55,21 +56,21 @@ namespace iSukces.DrawingPanel.Paths
         public void AddFlexi(PathRay start, PathRay end)
         {
             var result = ZeroReferencePointPathCalculator.Compute(start, end, Validator);
-            if (result is null)
+            switch (result)
             {
-                _list.Add(new InvalidPathElement(start, end, ArcValidationResult.UnableToConstructArc));
-                return;
+                case null:
+                    _list.Add(new InvalidPathElement(start, end, ArcValidationResult.UnableToConstructArc));
+                    return;
+                case ZeroReferencePointPathCalculatorLineResult:
+                    _list.Add(new LinePathElement(start.Point, end.Point));
+                    return;
+                case ZeroReferencePointPathCalculatorResult r2:
+                    ArcTo(r2.Arc1);
+                    ArcTo(r2.Arc2);
+                    LineTo(end.Point);
+                    return;
+                default: throw new NotSupportedException();
             }
-
-            if (result.Kind == ZeroReferencePointPathCalculator.ResultKind.Line)
-            {
-                _list.Add(new LinePathElement(start.Point, end.Point));
-                return;
-            }
-
-            ArcTo(result.Arc1);
-            ArcTo(result.Arc2);
-            LineTo(end.Point);
         }
 
 

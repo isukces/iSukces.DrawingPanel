@@ -229,7 +229,7 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
         
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /*[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(PathRay st, PathRay en)
         {
             var s = ZeroReferencePointPathCalculator.Compute(st, en, Validator);
@@ -237,6 +237,6 @@ namespace iSukces.DrawingPanel.Paths
                 return;
             ArcTo(s.Arc1);
             ArcTo(s.Arc2);
-        }
+        }*/
     }
 }

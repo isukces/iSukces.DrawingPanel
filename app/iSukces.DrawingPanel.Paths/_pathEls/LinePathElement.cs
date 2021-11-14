@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
@@ -11,8 +12,11 @@ namespace iSukces.DrawingPanel.Paths
             _vector = _end - _start;
         }
 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Point GetEndPoint() { return _end; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector GetEndVector() { return _vector; }
 
         public double GetLength() { return _vector.Length; }
@@ -23,8 +27,10 @@ namespace iSukces.DrawingPanel.Paths
             return line.GetNearestPoint(point);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Point GetStartPoint() { return _start; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector GetStartVector() { return _vector; }
 
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
