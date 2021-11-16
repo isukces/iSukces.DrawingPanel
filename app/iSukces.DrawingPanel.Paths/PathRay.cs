@@ -1,10 +1,19 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows;
+using Newtonsoft.Json;
 
 namespace iSukces.DrawingPanel.Paths
 {
     public struct PathRay
     {
+        
+        [JsonConstructor]
+        public PathRay(Point point, Vector vector)
+        {
+            Point  = point;
+            Vector = vector;
+        }
+        
         public PathRay(double x, double y, double vx, double vy)
             : this(new Point(x, y), new Vector(vx, vy))
         {
@@ -14,7 +23,6 @@ namespace iSukces.DrawingPanel.Paths
             : this(new Point(x, y), default(Vector))
         {
         }
-
 
         public PathRay(Point point, Point endPoint)
         {
@@ -45,11 +53,7 @@ namespace iSukces.DrawingPanel.Paths
 
         public Point Point { get; }
 
-        public PathRay(Point point, Vector vector)
-        {
-            Point  = point;
-            Vector = vector;
-        }
+ 
 
         public LineEquationNotNormalized GetLine()
         {
@@ -78,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths
         public PathRay Normalize()
         {
             var v = Vector;
-            v.Normalize();
+            v=v.NormalizeFast();
             return new PathRay(Point, v);
         }
 

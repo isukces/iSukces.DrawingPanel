@@ -171,7 +171,7 @@ namespace iSukces.DrawingPanel.Paths
         {
             var toCompare = one;
             if (toCompare != null)
-                if (toCompare.RadiusStart.Length <= 3)
+                if (toCompare.RadiusStart.Length <= 3) // todo: why 3?
                     toCompare = null;
 
             Start = Start.Normalize();

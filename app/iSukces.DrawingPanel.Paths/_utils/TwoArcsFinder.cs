@@ -46,9 +46,20 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-            var center1 = StartCenterSearch.Get(radius);
-            var center2 = EndCenterSearch.Get(radius);
-            var cross   = MathUtils.Average(center1, center2);
+            var   center1 = StartCenterSearch.Get(radius);
+            var   center2 = EndCenterSearch.Get(radius);
+            Point cross;
+            {
+                // c1 = p1 + v1 * radius
+                // c2 = p2 + v2 * radius
+                // (c1 + c2) / 2 = (p1 + p2) / 2 + (v1 + v2) / 2 * radius
+                // sometimes radius is very big and (v1 + v2) is very small or even zero 
+                // so { (c1 + c2) / 2 } can have errors 
+                cross = MathUtils.Average(StartCenterSearch.Point, EndCenterSearch.Point);
+                var ve   = StartCenterSearch.Vector + EndCenterSearch.Vector;
+                var move = ve * (radius * 0.5);
+                cross += move;
+            }
 
             arc1 = ArcDefinition.FromCenterAndArms(center1, StartCenterSearch.Point, StartDirection, cross);
             arc2 = ArcDefinition.FromCenterAndArms(center2, cross, arc1.EndVector, EndCenterSearch.Point);

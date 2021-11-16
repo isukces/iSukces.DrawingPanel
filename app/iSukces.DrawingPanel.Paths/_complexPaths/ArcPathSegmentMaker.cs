@@ -39,12 +39,13 @@ namespace iSukces.DrawingPanel.Paths
                 var builder = new PathBuilder(_start.Point, Validator);
                 NormalizeVectorsAndMovePoints();
 
-                var r = new OneReferencePointPathCalculator
+                var calculator = new OneReferencePointPathCalculator
                 {
                     Start     = _start,
                     End       = _end.WithInvertedVector(),
                     Reference = refs[0]
-                }.Compute(Validator);
+                };
+                var r = calculator.Compute(Validator);
                 if (r is null)
                     throw new NotImplementedException();
                 ArcPathMaker.Add(builder, r);
@@ -52,12 +53,13 @@ namespace iSukces.DrawingPanel.Paths
             }
             else
             {
-                var r = new OneReferencePointPathCalculator
+                var calculator = new OneReferencePointPathCalculator
                 {
                     Start     = _start,
                     End       = _end.WithInvertedVector(),
                     Reference = refs[0]
-                }.Compute(Validator);
+                };
+                var r = calculator.Compute(Validator);
                 if (r is null)
                     throw new NotImplementedException();
                 return r;

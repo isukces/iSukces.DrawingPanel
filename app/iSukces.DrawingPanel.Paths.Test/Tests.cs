@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
@@ -64,6 +66,24 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Assert.Equal(-7.9912375396536435, a.RadiusStart.X, 8);
                 Assert.Equal(-2.778513763488645, a.RadiusStart.Y, 8);
             }
+        }
+
+        [Fact]
+        public void T05_Practical()
+        {
+            const string Json = @"
+[
+{""Location"":""48.6807545920352,42.764462268262"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0,""ReferencePoints"":null},
+{""Location"":""147.159706379571,68.6649958308797"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0,""ReferencePoints"":[{""Vector"":""1,0"",""Point"":""96.13121924784,59.8634246985647""}]},
+{""Location"":""210.045000453121,51.5032938674065"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0,""ReferencePoints"":null},
+{""Location"":""224.717683004725,105.268122033596"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0,""ReferencePoints"":null}
+]";
+            var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json);
+            
+            var pipePoints = new ArcPathMaker
+            {
+                Vertices = input
+            }.Compute();
         }
     }
 }
