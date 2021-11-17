@@ -13,6 +13,39 @@ namespace iSukces.DrawingPanel.Paths
             return new Point(x, y);
         }
 
+        public static Point? CrossNormalized(LineEquationNotNormalized p1, LineEquationNotNormalized p2)
+        {
+            // var epsilon = 5.5511151231257827E-17
+            const double epsilon = 1E-16;
+
+            var a1 = p1.A;
+            var b1 = p1.B;
+            var a2 = p2.A;
+            var b2 = p2.B;
+
+            var determinant = a1 * b2 - a2 * b1;
+            if (determinant > 0)
+            {
+                if (determinant < epsilon)
+                    return null;
+            }
+            else
+            {
+                if (determinant > -epsilon)
+                    return null;
+            }
+
+            var c1 = p1.C;
+            var c2 = p2.C;
+
+            var dx = b1 * c2 - b2 * c1;
+            var dy = a2 * c1 - a1 * c2;
+
+            var x = dx / determinant;
+            var y = dy / determinant;
+            return new Point(x, y);
+        }
+
         public static Point? GetCrossPoint(Point start, Vector vStart, Point end, Vector vEnd)
         {
             var l1         = LineEquationNotNormalized.FromPointAndDeltas(start, vStart);
@@ -25,6 +58,39 @@ namespace iSukces.DrawingPanel.Paths
         {
             v.Normalize();
             return v;
+        }
+
+
+        public static bool IsAngleBetweenSmallEnoughtBasedOnH(Vector vector1, Vector vector2, double h)
+        {
+            /*
+            see :
+            https://raw.githubusercontent.com/isukces/iSukces.DrawingPanel/main/doc/vector_for_arc_compare.jpg
+            */
+
+            var x1 = vector1.X;
+            var x2 = vector2.X;
+            var y1 = vector1.Y;
+            var y2 = vector2.Y;
+
+            var hSquare = h * h;
+            var aSquare = (x1 * x1 + y1 * y1);
+            var bSquare = aSquare * 0.25;
+
+            var m = (hSquare + bSquare);
+            m *= m;
+
+            var counter      = aSquare * hSquare;
+            var sinSquareByH = counter / m;
+
+            var cross         = x1 * y2 - x2 * y1;
+            var lengthSquare2 = (x2 * x2 + y2 * y2);
+            var sqr           = aSquare * lengthSquare2;
+            var sinusSquare   = (cross * cross) / sqr;
+
+            //======================= 
+
+            return sinusSquare < sinSquareByH;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -129,41 +195,5 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         const double minusOne = -1d;
-
-
-
-        public static bool IsAngleBetweenSmallEnoughtBasedOnH(Vector vector1, Vector vector2, double h)
-        {
-            /*
-            see :
-            https://raw.githubusercontent.com/isukces/iSukces.DrawingPanel/main/doc/vector_for_arc_compare.jpg
-            */
-
-            var x1    = vector1.X;
-            var x2    = vector2.X;
-            var y1    = vector1.Y;
-            var y2    = vector2.Y;
-            
-            var hSquare = h * h;
-            var aSquare = (x1 * x1 + y1 * y1);
-            var bSquare = aSquare * 0.25;
-            
-            var m = ( hSquare + bSquare);
-            m *= m;
-
-            var counter = aSquare * hSquare;
-            var sinSquareByH = counter / m;
-
-            var cross         = x1 * y2 - x2 * y1;
-            var lengthSquare2 = (x2 * x2 + y2 * y2);
-            var sqr           = aSquare * lengthSquare2;
-            var sinusSquare   = (cross * cross) / sqr;
-
-            //======================= 
-
-            return sinusSquare < sinSquareByH;
-
-        }
-
     }
 }

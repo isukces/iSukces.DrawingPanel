@@ -11,9 +11,14 @@ namespace iSukces.DrawingPanel.Paths
     {
         public IPathResult Compute(IPathValidator validator)
         {
-            Reference = Reference.With(End.Point - Start.Point);
-            if (Reference.Vector.LengthSquared < LengthEpsilonSquare)
+            var vector = End.Point - Start.Point;
+            if (vector.LengthSquared < LengthEpsilonSquare)
                 return CreateResultLine();
+            
+            Reference = Reference.With(vector).Normalize();
+            Start     = Start.Normalize();
+            End       = End.Normalize();
+            
 
             var list = Find();
             if (list.Count == 0)
@@ -33,8 +38,21 @@ namespace iSukces.DrawingPanel.Paths
                     return builder.List;
                 }
 
-                var startCrossNullable = Start.Cross(Reference);
-                var endCrossNullable   = End.Cross(Reference);
+                var l1 = Start.GetLine();
+                var l2 = End.GetLine();
+                var l  = Reference.GetLine();
+
+                var startCrossNullable = MathUtils.CrossNormalized(l, l1);
+                var endCrossNullable   = MathUtils.CrossNormalized(l, l2);
+                //var startCrossNullable = Start.Cross(Reference);
+                //var endCrossNullable   = End.Cross(Reference);
+                /*{
+                    var a1 = Start.Vector * Reference.Vector;
+                    var a2 = End.Vector * Reference.Vector;
+
+                    var b1 = Vector.CrossProduct(Start.Vector, Reference.Vector);
+                    var b2 = Vector.CrossProduct(End.Vector, Reference.Vector);
+                }*/
 
                 if (startCrossNullable is null)
                 {
@@ -49,16 +67,22 @@ namespace iSukces.DrawingPanel.Paths
                             return builder.List;
                         }
 
-                        return FlexiS();
+                        {
+                            builder.AddFlexiFromPararell(Start, Reference, validator);
+                            var endInverted = End.WithInvertedVector();
+                            builder.AddFlexiFromPararell(Reference, endInverted, validator);
+                            return builder.List;
+                        }
                     }
 
-                    builder.AddFlexi(Start, Reference);
+                    builder.AddFlexiFromPararell(Start, Reference, validator);
                 }
                 else
                 {
                     if (endCrossNullable is null)
                     {
-                        builder.AddFlexi(Reference, End.WithInvertedVector());
+                        var endInverted = End.WithInvertedVector();
+                        builder.AddFlexiFromPararell(Reference, endInverted, validator);
                     }
                     else
                     {
@@ -71,7 +95,8 @@ namespace iSukces.DrawingPanel.Paths
                 }
 
                 if (builder.List.Count == 0)
-                    return FlexiS();
+                    builder.AddLine(Start.Point, End.Point);
+                    // return FlexiS();
 
                 return builder.List;
             }

@@ -41,7 +41,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(40, -64.7213595499958, tmp1.Center);
             AssertEx.Equal(2.11145618000168, 11.0557280900008, tmp1.Start);
             AssertEx.Equal(40, 20, tmp1.End);
-            AssertEx.Equal(200, 100, tmp1.StartVector);
+            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
             tmp1 = (ArcDefinition)r.Elements[2];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(4.03716308472048, tmp1.Angle, 6);

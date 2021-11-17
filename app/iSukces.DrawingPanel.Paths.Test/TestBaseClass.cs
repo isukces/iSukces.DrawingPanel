@@ -8,6 +8,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 if (type == typeof(PathRay))
                     return "ray";
+                
+                if (type == typeof(ArcDefinition))
+                    return "arc";
+                if (type == typeof(LinePathElement))
+                    return "line";
+                
+                
+                
                 return null;
             };
         }

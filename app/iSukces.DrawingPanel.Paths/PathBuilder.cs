@@ -56,6 +56,26 @@ namespace iSukces.DrawingPanel.Paths
         public void AddFlexi(PathRay start, PathRay end)
         {
             var result = ZeroReferencePointPathCalculator.Compute(start, end, Validator);
+            AddZ(start, end, result);
+        }
+
+        public void AddFlexiFromPararell(PathRay start, PathRay end, IPathValidator validator)
+        {
+            var tmp = ZeroReferencePointPathCalculator.ComputeFromPararell(start, end, validator);
+            AddZ(start, end, tmp);
+        }
+
+
+        public void AddLine(Point startPoint, Point endPoint)
+        {
+            var linePathElement = new LinePathElement(startPoint, endPoint);
+            LineTo(startPoint);
+            _list.Add(linePathElement);
+            CurrentPoint = endPoint;
+        }
+
+        public void AddZ(PathRay start, PathRay end, IPathResult result)
+        {
             switch (result)
             {
                 case null:
@@ -73,15 +93,6 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
-
-        public void AddLine(Point startPoint, Point endPoint)
-        {
-            var linePathElement = new LinePathElement(startPoint, endPoint);
-            LineTo(startPoint);
-            _list.Add(linePathElement);
-            CurrentPoint = endPoint;
-        }
-
         public void ArcTo(ArcDefinition arc)
         {
             if (arc is null)
@@ -96,7 +107,7 @@ namespace iSukces.DrawingPanel.Paths
         public void LineTo(Point p)
         {
             var line = p - CurrentPoint;
-            if (line.LengthSquared < PathBase.LengthEpsilonSquare) 
+            if (line.LengthSquared < PathBase.LengthEpsilonSquare)
                 return;
             _list.Add(new LinePathElement(CurrentPoint, p));
             CurrentPoint = p;

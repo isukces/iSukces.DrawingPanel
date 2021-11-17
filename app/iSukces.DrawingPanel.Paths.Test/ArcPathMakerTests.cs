@@ -328,7 +328,6 @@ namespace Test.Pd.Common.Geometry
             var code = new DpAssertsBuilder().Create(result, nameof(result));
 
             #region Asserts
-
             Assert.Single(result.Segments);
             var pathResult = result.Segments[0];
             AssertEx.Equal(0, 0, pathResult.Start);
@@ -348,12 +347,12 @@ namespace Test.Pd.Common.Geometry
             arc = (ArcDefinition)pathResult.Elements[3];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(31.5042667192042, arc.Angle, 6);
-            AssertEx.Equal(65.9829543856344, 58.0170456143656, arc.Center);
+            AssertEx.Equal(65.9829543856344, 58.0170456143655, arc.Center);
             AssertEx.Equal(8.2495358548225, 71.8730660617604, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(24, 100, arc.StartVector);
-
+            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.StartVector);
             #endregion
+
         }
 
         [Fact]

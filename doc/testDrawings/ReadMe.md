@@ -1,5 +1,6 @@
 # Test output
 ![](Zero01_line+arc_right27.png)
+![](Zero01_practical_case_A.png)
 ![](Zero02_arc_right27+line.png)
 ![](Zero03_two_arcs_left32+right59.png)
 ![](Zero04_two_arcs_right74+left48.png)
