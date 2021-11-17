@@ -252,7 +252,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             Add(expected, expression);
         }
 
-        public string Create(ArcPathMakerResult x, string name) { return Create(() => { Add(x, name); }); }
+        public string Create(ArcPathMakerResult x, string name)
+        {
+            return Create(() => { Add(x, name); });
+        }
+        public string Create(ArcDefinition x, string name)
+        {
+            return Create(() => { Add(x, name); });
+        }
 
         public string Create(IPathResult result, string name)
         {

@@ -4,27 +4,58 @@ using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    internal sealed class TwoArcsFinder
+    public sealed class TwoArcsFinder
     {
         public bool Compute(out ArcDefinition arc1, out ArcDefinition arc2, bool useSmaller)
         {
             var dx = EndCenterSearch.Point.X - StartCenterSearch.Point.X;
             var dy = EndCenterSearch.Point.Y - StartCenterSearch.Point.Y;
 
-            
             // when v1 = -v2
             // then (v1-v2).LengthSquared = 4 so "a" ==0
             // due to calculations it sometimes is small but not zero, so calculated radius is not correct
-            var sumX     = StartCenterSearch.Vector.X + EndCenterSearch.Vector.X;
-            var sumY     = StartCenterSearch.Vector.Y + EndCenterSearch.Vector.Y;
-            var aIsZero = sumX == 0 && sumY == 0;
+            var sV = StartCenterSearch.Vector;
+            var eV = EndCenterSearch.Vector;
+
             
-            var vx  = StartCenterSearch.Vector.X - EndCenterSearch.Vector.X;
-            var vy  = StartCenterSearch.Vector.Y - EndCenterSearch.Vector.Y;
+            var  sumX = sV.X + eV.X;
+            var  sumY = sV.Y + eV.Y;
+            
+            bool aIsZero;
+            {
+              
+
+                // due to length ov sV=1 and eV=1 if sumX is zero then sumY is also zero and vice versa
+
+                var isSumXZero = sumX == 0;
+                var isSumYZero = sumY == 0;
+                aIsZero = isSumXZero || isSumYZero;
+                {
+                    if (aIsZero)
+                    {
+                        if (!isSumXZero)
+                        {
+                            var x = (eV.X - sV.X) * 0.5;
+                            sV = new Vector(-x, sV.Y);
+                            eV = new Vector(x, eV.Y);
+                        }
+
+                        if (!isSumYZero)
+                        {
+                            var y = (eV.Y - sV.Y) * 0.5;
+                            sV = new Vector(-sV.X, y);
+                            eV = new Vector(eV.X, y);
+                        }
+                    }
+                }
+            }
+
+            var vx  = sV.X - eV.X;
+            var vy  = sV.Y - eV.Y;
             var vy2 = vy * vy;
             var vx2 = vx * vx;
 
-            var a =  vy2 + vx2 - 4;
+            var a = vy2 + vx2 - 4;
             var b = -2 * (dy * vy + dx * vx);
             var c = dy * dy + dx * dx;
 
@@ -36,14 +67,14 @@ namespace iSukces.DrawingPanel.Paths
                 arc2 = null;
                 return false;
             }
-            #if DEBUG && useexpr
-            var aa   = vy2.X() + vx2 - 4;
-            var bb   = -2 * (dy.X() * vy + dx.X() * vx).Brackets();
-            var cc   = dy.X() * dy + dx.X() * dx;
+#if DEBUG && useexpr
+            var aa = vy2.X() + vx2 - 4;
+            var bb = -2 * (dy.X() * vy + dx.X() * vx).Brackets();
+            var cc = dy.X() * dy + dx.X() * dx;
             aa = aa.Brackets();
             bb = bb.Brackets();
-            var expr = aa * aa * new TinyExpr("r") + bb * new TinyExpr("r") + cc; 
-            #endif
+            var expr = aa * aa * new TinyExpr("r") + bb * new TinyExpr("r") + cc;
+#endif
 
             double radius;
             {
@@ -72,14 +103,17 @@ namespace iSukces.DrawingPanel.Paths
                 // sometimes radius is very big and (v1 + v2) is very small or even zero 
                 // so { (c1 + c2) / 2 } can have errors 
                 cross = MathUtils.Average(StartCenterSearch.Point, EndCenterSearch.Point);
-                var ve   = StartCenterSearch.Vector + EndCenterSearch.Vector;
-                var move = ve * (radius * 0.5);
-                cross += move;
+                if (!aIsZero)
+                {
+                    var ve   = new Vector(sumX, sumY);
+                    var move = ve * (radius * 0.5);
+                    cross += move;
+                }
             }
 
             arc1 = ArcDefinition.FromCenterAndArms(center1, StartCenterSearch.Point, StartDirection, cross);
             arc2 = ArcDefinition.FromCenterAndArms(center2, cross, arc1.EndVector, EndCenterSearch.Point);
-            
+
             var arc3 = ArcDefinition.FromCenterAndArms(center2, EndCenterSearch.Point, EndDirection, cross);
 
             arc2.RadiusStart = arc3.RadiusEnd;
@@ -89,11 +123,11 @@ namespace iSukces.DrawingPanel.Paths
             // arc2.EndVector   = arc3.StartVector;
 
             arc2.Start = arc3.End;
-            arc2.End = arc3.Start;
-            
-            
+            arc2.End   = arc3.Start;
+
             if (radius < 0)
                 radius = -radius;
+            if (PathCalculationConfig.CheckRadius)
             {
                 var arc1Radius = radius - arc1.Radius;
                 if (Math.Abs(arc1Radius) > 0.000001)

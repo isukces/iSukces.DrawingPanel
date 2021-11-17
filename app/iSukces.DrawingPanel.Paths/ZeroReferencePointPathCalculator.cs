@@ -49,7 +49,7 @@ namespace iSukces.DrawingPanel.Paths
                 }
 
                 var isSmall =
-                    MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.HMaximum);
+                    MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.MaximumSagitta);
 
                 if (isSmall)
                     return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);
