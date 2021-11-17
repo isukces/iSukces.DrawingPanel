@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.Mathematics;
@@ -87,5 +88,17 @@ namespace iSukces.DrawingPanel.Paths
                 return arc;
             return new InvalidPathElement(start, end, r);
         }
+        
+        internal static string Str(this double d)
+        {
+            return d.ToString(CultureInfo.InvariantCulture);
+        }
+        
+        
+        internal static TinyExpr X(this double d)
+        {
+            return new TinyExpr(d);
+        }
     }
+    
 }

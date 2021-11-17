@@ -63,16 +63,12 @@ namespace iSukces.DrawingPanel.Paths
 
         public double GetLength() { return Radius * Angle * MathEx.DEGTORAD; }
 
-        Point IPathElement.GetStartPoint() { return Start; }
 
-        Vector IPathElement.GetStartVector() { return StartVector; }
-
-        
         public Point GetNearestPointOnCircle(Point point)
         {
             var v = point - Center;
             v.Normalize();
-            var res= Center + v * Radius;
+            var res = Center + v * Radius;
             return res;
         }
 
@@ -87,10 +83,13 @@ namespace iSukces.DrawingPanel.Paths
             return res;
         }
 
+        Point IPathElement.GetStartPoint() { return Start; }
+
+        Vector IPathElement.GetStartVector() { return StartVector; }
+
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
         {
-          
             var toCenter = hitPoint - Center;
 
             var x1 = RadiusStart.X;
@@ -106,14 +105,13 @@ namespace iSukces.DrawingPanel.Paths
             var tmpSqrt     = (y1Sq + x1Sq) * (y2Sq + x2Sq);
             var distSquared = -2 * Math.Sqrt(tmpSqrt) + y2Sq + y1Sq + x2Sq + x1Sq;
 
-            
             distanceSquared = distSquared;
             if (distSquared <= toleranceSquared)
             {
                 var angle = Vector.AngleBetween(toCenter, RadiusStart);
-                if (Direction==ArcDirection.CounterClockwise)
+                if (Direction == ArcDirection.CounterClockwise)
                     angle = -angle;
-                if (angle<0)
+                if (angle < 0)
                     angle += 360;
 
                 if (angle >= 0 && angle <= Angle)
@@ -136,11 +134,50 @@ namespace iSukces.DrawingPanel.Paths
             RadiusEnd   = End - Center;
         }
 
-        public double Radius => RadiusStart.Length;
+        
+        /// <summary>
+        /// Use this value as radius. It's useful when center and/or start point is calculated from known radius
+        /// </summary>
+        /// <param name="radius"></param>
+        public void UseRadius(double radius)
+        {
+            _flags  |= ArcFlags.HasRadius;
+            _radius =  RadiusStart.Length;
+        }
 
-        public Vector RadiusEnd { get; set; }
+        public double Radius
+        {
+            get
+            {
+                if ((_flags & ArcFlags.HasRadius) != 0)
+                    return _radius;
+                _flags  |= ArcFlags.HasRadius;
+                _radius =  RadiusStart.Length;
+                return _radius;
+            }
+        }
 
-        public Vector RadiusStart { get; set; }
+        public Vector RadiusEnd
+        {
+            get => _radiusEnd;
+            set
+            {
+                const ArcFlags flags = ~(ArcFlags.HasDirection | ArcFlags.HasAngle);
+                _radiusEnd =  value;
+                _flags     &= flags;
+            }
+        }
+
+        public Vector RadiusStart
+        {
+            get => _radiusStart;
+            set
+            {
+                const ArcFlags arcFlags = ~(ArcFlags.HasDirection | ArcFlags.HasAngle | ArcFlags.HasRadius);
+                _radiusStart =  value;
+                _flags       &= arcFlags;
+            }
+        }
 
         public Vector EndVector
         {
@@ -154,9 +191,28 @@ namespace iSukces.DrawingPanel.Paths
 
         public Vector StartVector { get; set; }
 
-        public Point End { get; set; }
 
-        public Point Start { get; set; }
+        public Point Start
+        {
+            get => _start;
+            set
+            {
+                _start = value;
+                const ArcFlags arcFlags = ~(ArcFlags.HasChord);
+                _flags &= arcFlags;
+            }
+        }
+
+        public Point End
+        {
+            get => _end;
+            set
+            {
+                _end = value;
+                const ArcFlags arcFlags = ~(ArcFlags.HasChord);
+                _flags &= arcFlags;
+            }
+        }
 
         public Point Center { get; set; }
 
@@ -164,6 +220,13 @@ namespace iSukces.DrawingPanel.Paths
         {
             get
             {
+                if ((_flags & ArcFlags.HasAngle) != 0)
+                {
+                    return _angleCached;
+                }
+
+                _flags |= ArcFlags.HasAngle;
+
                 var angle = Vector.AngleBetween(RadiusStart, RadiusEnd);
                 switch (angle)
                 {
@@ -176,6 +239,7 @@ namespace iSukces.DrawingPanel.Paths
                 if (Direction == ArcDirection.Clockwise)
                     angle = 360 - angle;
 
+                _angleCached = angle;
                 return angle;
             }
         }
@@ -184,11 +248,89 @@ namespace iSukces.DrawingPanel.Paths
         {
             get
             {
+                if ((_flags & ArcFlags.HasDirection) != 0)
+                {
+                    return (_flags & ArcFlags.IsCounterClockwise) == 0
+                        ? ArcDirection.Clockwise
+                        : ArcDirection.CounterClockwise;
+                }
+
+                _flags |= ArcFlags.HasDirection;
+
                 var dotStart = Vector.CrossProduct(RadiusStart, StartVector);
                 if (dotStart < 0)
-                    return ArcDirection.Clockwise; // MathematicalMinus
-                return ArcDirection.CounterClockwise; // MathematicalPlus;
+                {
+                    //_direction= ArcDirection.Clockwise; // MathematicalMinus
+                    _flags &= ~ArcFlags.IsCounterClockwise;
+                }
+                else
+                {
+                    //_direction= ArcDirection.CounterClockwise; // MathematicalPlus;
+                    _flags |= ArcFlags.IsCounterClockwise;
+                }
+
+                return (_flags & ArcFlags.IsCounterClockwise) == 0
+                    ? ArcDirection.Clockwise
+                    : ArcDirection.CounterClockwise;
             }
+        }
+
+
+        /// <summary>
+        ///     see https://en.wikipedia.org/wiki/Sagitta_(geometry)
+        /// </summary>
+        public double Sagitta
+        {
+            get
+            {
+                if ((_flags & ArcFlags.HasSagitta) != 0)
+                    return _sagittaCached;
+                _flags |= ArcFlags.HasSagitta;
+
+                var r   = Radius;
+                var lsq = (End - Start).LengthSquared;
+                _sagittaCached = r - Math.Sqrt(r * r - lsq * 0.25);
+                return _sagittaCached;
+            }
+        }
+
+
+        /// <summary>
+        ///     see https://en.wikipedia.org/wiki/Chord_(geometry)
+        /// </summary>
+        public double Chord
+        {
+            get
+            {
+                if ((_flags & ArcFlags.HasChord) != 0)
+                    return _chordCached;
+                _flags       |= ArcFlags.HasChord;
+                _chordCached =  (End - Start).Length;
+                return _chordCached;
+            }
+        }
+
+        private double _angleCached;
+        private double _chordCached;
+        private Point _end;
+        private ArcFlags _flags;
+        private double _radius;
+        private Vector _radiusEnd;
+        private Vector _radiusStart;
+        private double _sagittaCached;
+        private Point _start;
+
+
+        [Flags]
+        private enum ArcFlags : byte
+        {
+            None = 0,
+            HasDirection = 1,
+            HasAngle = 2,
+            IsCounterClockwise = 4,
+            HasRadius = 8,
+            HasChord = 16,
+            HasSagitta = 32
         }
     }
 }

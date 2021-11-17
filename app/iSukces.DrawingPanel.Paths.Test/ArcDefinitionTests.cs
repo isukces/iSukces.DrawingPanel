@@ -85,5 +85,36 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(expected, arc.Angle);
         }
 
+
+        [Fact]
+        public void T04_Should_calculate_Chord()
+        {
+            var center = new Point(100, 200);
+            var arc = new ArcDefinition
+            {
+                Center      = center,
+                Start       = center + new Vector(50, 0),
+                StartVector = new Vector(0, 0),
+                End         = center + new Vector(0, 50)
+            };
+            arc.UpdateRadiusVectors();
+            Assert.Equal(70.710678118654755, arc.Chord);
+        }
+        
+        
+        [Fact]
+        public void T05_Should_calculate_Sagitta()
+        {
+            var center = new Point(100, 200);
+            var arc = new ArcDefinition
+            {
+                Center      = center,
+                Start       = center + new Vector(50, 0),
+                StartVector = new Vector(0, 0),
+                End         = center + new Vector(0, 50)
+            };
+            arc.UpdateRadiusVectors();
+            Assert.Equal(14.644660940672622, arc.Sagitta);
+        }
     }
 }
