@@ -100,8 +100,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             arc.UpdateRadiusVectors();
             Assert.Equal(70.710678118654755, arc.Chord);
         }
-        
-        
+
+
         [Fact]
         public void T05_Should_calculate_Sagitta()
         {
@@ -116,5 +116,72 @@ namespace iSukces.DrawingPanel.Paths.Test
             arc.UpdateRadiusVectors();
             Assert.Equal(14.644660940672622, arc.Sagitta);
         }
+
+
+        [Fact]
+        public void T06_Should_calculate_Sagitta()
+        {
+            var center = new Point(100, 200);
+            var arc = new ArcDefinition
+            {
+                Center      = center,
+                Start       = center + new Vector(50, 0),
+                StartVector = new Vector(0, 0),
+                End         = center + new Vector(0, 50)
+            };
+            arc.UpdateRadiusVectors();
+            Assert.Equal(14.644660940672622, arc.Sagitta);
+        }
+
+
+        [Theory]
+        [InlineData(15, 20, 0, 0)]
+        [InlineData(15 + 2, 20, 2, 0)]
+        [InlineData(15 + 2, 19, 2.23606797749979, 0)]
+        [InlineData(15 + 2, 21, 2.0710678118654755, 0.70948527302082)]
+        [InlineData(15 + 10, 20 + 10, 13.0277563773199, 2.94001301773784)]
+        [InlineData(15, 20 + 10, 6.18033988749895, 5.53574358897045)]
+        [InlineData(10 - 1, 20 + 10, 5.09901951359278, ArcLength)]
+        [InlineData(10 - 2, 20 + 10, 5.3851648071345, ArcLength)]
+        [InlineData(-20, 20, 30.4138126514911, ArcLength)]
+        [InlineData(-20, 25, 30, ArcLength)]
+        public void T07_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
+        {
+            var arc = ArcDefinition.FromCenterAndArms(
+                new Point(10, 20),
+                new Point(15, 20),
+                new Vector(0, 1),
+                new Point(10, 25));
+            var point = new Point(x, y);
+            var d     = arc.DistanceFromElement(point, out var loc);
+            Assert.Equal(dist, d, 10);
+            Assert.Equal(locExpected, loc, 10);
+        }
+
+        [Theory]
+        [InlineData(15, 20, 0, 0)]
+        [InlineData(10, -30, 45, ArcLength)]
+        [InlineData(16, 20, 1, 0)]
+        [InlineData(16, 21, 1.4142135623731, 0)]
+        [InlineData(10, 15, 0, ArcLength)]
+        [InlineData(10, 12.6, 2.4, ArcLength)]
+        [InlineData(10, 17.4, 2.4, ArcLength)]
+        [InlineData(9.9, 17.4, 2.40208242989286, ArcLength)]
+        [InlineData(10+7, 20-7, 4.89949493661167, ArcLength/2)]
+        public void T08_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
+        {
+            var arc = ArcDefinition.FromCenterAndArms(
+                new Point(10, 20),
+                new Point(15, 20),
+                new Vector(0, -1),
+                new Point(10, 15));
+            var point = new Point(x, y);
+            var d     = arc.DistanceFromElement(point, out var loc);
+            Assert.Equal(dist, d, 10);
+            Assert.Equal(locExpected, loc, 10);
+        }
+
+
+        private const double ArcLength = 7.853981633974483;
     }
 }

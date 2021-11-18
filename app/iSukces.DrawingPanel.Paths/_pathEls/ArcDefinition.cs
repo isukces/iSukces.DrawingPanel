@@ -51,6 +51,65 @@ namespace iSukces.DrawingPanel.Paths
             return c;
         }
 
+        public double DistanceFromElement(Point point, out double distanceFromStart)
+        {
+            var v          = point - Center;
+            var a          = v.Angle();
+            var sweepAngle = Angle;
+            if (Direction == ArcDirection.CounterClockwise)
+            {
+                var angleMinusStart = a - StartAngle;
+                var isInside        = MathUtils.IsAngleInRegion(angleMinusStart, sweepAngle);
+                switch (isInside)
+                {
+                    case Three.Below:
+                        distanceFromStart = 0;
+                        return (point - Start).Length;
+                    case Three.Above:
+                        distanceFromStart = sweepAngle * MathUtils.DegreesToRadians * Radius;
+                        return (point - End).Length;
+                    default:
+                        var vLength = v.Length;
+
+                        distanceFromStart = angleMinusStart * MathUtils.DegreesToRadians * Radius;
+
+                        var dist = vLength - Radius;
+                        if (dist < 0)
+                            dist = -dist;
+                        return dist;
+                }
+            }
+            else
+            {
+                var min = StartAngle - sweepAngle;
+                min = MathUtils.NormalizeAngleDeg(min);
+
+                var angleMinusMinAngle = a - min;
+                if (angleMinusMinAngle < 0)
+                    angleMinusMinAngle += 360;
+                var isInside = MathUtils.IsAngleInRegion(angleMinusMinAngle, sweepAngle);
+                switch (isInside)
+                {
+                    case Three.Below:
+                        distanceFromStart = sweepAngle * MathUtils.DegreesToRadians * Radius;
+                        return (point - End).Length;
+                    case Three.Above:
+                        distanceFromStart = 0;
+                        return (point - Start).Length;
+                    default:
+                        var vLength = v.Length;
+
+                        distanceFromStart = (sweepAngle-angleMinusMinAngle) * MathUtils.DegreesToRadians * Radius;
+
+                        var dist = vLength - Radius;
+                        if (dist < 0)
+                            dist = -dist;
+                        return dist;
+                }
+            }
+        }
+
+
         public string GetDirectionAlternative()
         {
             var isRight = Direction == ArcDirection.Clockwise;
@@ -134,9 +193,9 @@ namespace iSukces.DrawingPanel.Paths
             RadiusEnd   = End - Center;
         }
 
-        
+
         /// <summary>
-        /// Use this value as radius. It's useful when center and/or start point is calculated from known radius
+        ///     Use this value as radius. It's useful when center and/or start point is calculated from known radius
         /// </summary>
         /// <param name="radius"></param>
         public void UseRadius(double radius)
@@ -173,7 +232,10 @@ namespace iSukces.DrawingPanel.Paths
             get => _radiusStart;
             set
             {
-                const ArcFlags arcFlags = ~(ArcFlags.HasDirection | ArcFlags.HasAngle | ArcFlags.HasRadius);
+                const ArcFlags arcFlags = ~(ArcFlags.HasDirection
+                                            | ArcFlags.HasAngle
+                                            | ArcFlags.HasRadius
+                                            | ArcFlags.HasStartAngle);
                 _radiusStart =  value;
                 _flags       &= arcFlags;
             }
@@ -310,6 +372,19 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+
+        public double StartAngle
+        {
+            get
+            {
+                if ((_flags & ArcFlags.HasStartAngle) != 0)
+                    return _startAngleCached;
+                _flags            |= ArcFlags.HasStartAngle;
+                _startAngleCached =  RadiusStart.Angle();
+                return _startAngleCached;
+            }
+        }
+
         private double _angleCached;
         private double _chordCached;
         private Point _end;
@@ -319,7 +394,7 @@ namespace iSukces.DrawingPanel.Paths
         private Vector _radiusStart;
         private double _sagittaCached;
         private Point _start;
-
+        private double _startAngleCached;
 
         [Flags]
         private enum ArcFlags : byte
@@ -330,7 +405,8 @@ namespace iSukces.DrawingPanel.Paths
             IsCounterClockwise = 4,
             HasRadius = 8,
             HasChord = 16,
-            HasSagitta = 32
+            HasSagitta = 32,
+            HasStartAngle = 64
         }
     }
 }

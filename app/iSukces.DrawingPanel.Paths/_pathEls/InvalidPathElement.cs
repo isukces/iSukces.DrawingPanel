@@ -17,6 +17,11 @@ namespace iSukces.DrawingPanel.Paths
             return new PathResult(new InvalidPathElement(start, end, status));
         }
 
+        public double DistanceFromElement(Point point, out double distanceFromStart)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Point GetEndPoint() { return _end.Point; }
         public Vector GetEndVector() { return _end.Vector; }
 

@@ -6,6 +6,19 @@ namespace iSukces.DrawingPanel.Paths
 {
     public static class MathUtils
     {
+        public const double DegreesToRadians =
+            0.017453292519943295769236907684886127134428718885417254560971914401710091146034494;
+
+        public static double NormalizeAngleDeg(double angle)
+        {
+            const double full  = 360;
+            
+            if (angle is >= 0 and < full)
+                return angle;
+            var cycles = Math.Floor(angle / full);
+            return angle - cycles * full;
+        }
+
         public static Point Average(Point a, Point b)
         {
             var x = (a.X + b.X) * 0.5;
@@ -91,6 +104,34 @@ namespace iSukces.DrawingPanel.Paths
             //======================= 
 
             return sinusSquare < sinSquareByH;
+        }
+
+
+        /// <summary>
+        ///     Assume min<=max and min is <0,360>, angle is <0,360> and max is <0,720>
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Three IsAngleInRegion(double angle, double min, double max)
+        {
+            return IsAngleInRegion(angle - min, max - min);
+        }
+
+        /// <param name="angle"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Three IsAngleInRegion(double angle, double max)
+        {
+            angle =  NormalizeAngleDeg(angle);
+            if (angle <= max)
+                return Three.Inside;
+            var special = max * 0.5 + 180;
+            if (angle <= special)
+                return Three.Above;
+            return Three.Below;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -194,6 +235,121 @@ namespace iSukces.DrawingPanel.Paths
             return new Vector(x, y);
         }
 
+
+        public static Vector NormalizeFast(this Vector src, out double length)
+        {
+            var x = src.X;
+            var y = src.Y;
+
+            {
+                var    xMinus = x < 0;
+                var    yMinus = y < 0;
+                double vLength;
+
+                if (yMinus)
+                {
+                    var absY = -y;
+
+                    if (xMinus)
+                    {
+                        var absX = -x;
+
+                        if (absX > absY)
+                        {
+                            length  =  absX;
+                            y       /= absX;
+                            x       =  minusOne;
+                            vLength =  Math.Sqrt(1 + y * y);
+                        }
+                        else
+                        {
+                            length  =  absY;
+                            x       /= absY;
+                            y       =  minusOne;
+                            vLength =  Math.Sqrt(x * x + 1);
+                        }
+                    }
+                    else
+                    {
+                        var absX = x;
+                        if (absX > absY)
+                        {
+                            length  =  absX;
+                            y       /= absX;
+                            x       =  1;
+                            vLength =  Math.Sqrt(1 + y * y);
+                        }
+                        else
+                        {
+                            length  =  absY;
+                            x       /= absY;
+                            y       =  minusOne;
+                            vLength =  Math.Sqrt(x * x + 1);
+                        }
+                    }
+                }
+                else
+                {
+                    var absY = y;
+
+                    if (xMinus)
+                    {
+                        var absX = -x;
+
+                        if (absX > absY)
+                        {
+                            length  =  absX;
+                            y       /= absX;
+                            x       =  minusOne;
+                            vLength =  Math.Sqrt(1 + y * y);
+                        }
+                        else
+                        {
+                            length  =  absY;
+                            x       /= absY;
+                            y       =  1;
+                            vLength =  Math.Sqrt(x * x + 1);
+                        }
+                    }
+                    else
+                    {
+                        var absX = x;
+
+                        if (absX > absY)
+                        {
+                            length =  absX;
+                            y      /= absX;
+                            x      =  1;
+                            var a = y * y;
+                            a++;
+                            vLength = Math.Sqrt(a);
+                        }
+                        else
+                        {
+                            length =  absY;
+                            x      /= absY;
+                            y      =  1;
+                            var a = x * x;
+                            a++;
+                            vLength = Math.Sqrt(a);
+                        }
+                    }
+                }
+
+                length *= vLength;
+                x      /= vLength;
+                y      /= vLength;
+            }
+            return new Vector(x, y);
+        }
+
         const double minusOne = -1d;
+    }
+
+    public enum Three : byte
+    {
+        Below,
+        Inside,
+        Above
     }
 }

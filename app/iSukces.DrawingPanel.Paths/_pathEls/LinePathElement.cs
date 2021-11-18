@@ -10,8 +10,36 @@ namespace iSukces.DrawingPanel.Paths
             _start  = start;
             _end    = end;
             _vector = _end - _start;
+            _versor = _vector.NormalizeFast(out _length);
         }
 
+
+        public double DistanceFromElement(Point point, out double distanceFromStart)
+        {
+            var v = _vector.NormalizeFast();
+
+            var vToBegin = point - _start;
+            var loc      = v * vToBegin;
+            if (loc <= 0)
+            {
+                var g = vToBegin.Length;
+                distanceFromStart = 0;
+                return g < 0 ? -g : g;
+            }
+
+            var endLoc = v * _vector; // == _vector.Length
+            if (loc >= endLoc)
+            {
+                var g = (_end - point).Length;
+                distanceFromStart = _length;
+                return g < 0 ? -g : g;
+            }
+
+            var l    = LineEquationNotNormalized.FromPointAndDeltas(_start, v);
+            var dist = l.DistanceNotNormalized(point);
+            distanceFromStart = loc;
+            return dist < 0 ? -dist : dist;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Point GetEndPoint() { return _end; }
@@ -56,5 +84,7 @@ namespace iSukces.DrawingPanel.Paths
         private readonly Point _end;
         private readonly Point _start;
         private readonly Vector _vector;
+        private readonly Vector _versor;
+        private double _length;
     }
 }

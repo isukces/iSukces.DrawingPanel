@@ -35,5 +35,32 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(5e-3, distanceSquared);
             AssertEx.Equal(0, 0, corrected);
         }
+
+        [Theory]
+        [InlineData(0, 6, 3.60555127546399, 0)]
+        [InlineData(2, 5, 2, 0)]
+        [InlineData(3, 5, 2, 1)]
+        [InlineData(11, -5, 8, 9)]
+        [InlineData(11, 5, 2, 9)]
+        [InlineData(12, 5, 2, 10)]
+        [InlineData(13, 5, 2.23606797749979, 10)]
+        public void T04_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
+        {
+            var line = new LinePathElement(new Point(2, 3), new Point(12, 3));
+            var d    = line.DistanceFromElement(new Point(x, y), out var loc);
+            Assert.Equal(dist, d, 10);
+            Assert.Equal(locExpected, loc, 10);
+        }
+
+        [Theory]
+        [InlineData(10, 6, 0.894427190999916, 8.4970583144992)]
+        [InlineData(-10, 6, 12.3693168769, 0)]
+        public void T05_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
+        {
+            var line = new LinePathElement(new Point(2, 3), new Point(12, 8));
+            var d    = line.DistanceFromElement(new Point(x, y), out var loc);
+            Assert.Equal(dist, d, 10);
+            Assert.Equal(locExpected, loc, 10);
+        }
     }
 }
