@@ -19,7 +19,7 @@ namespace iSukces.DrawingPanel.Paths
 
     public static class PathResultExtensions
     {
-        private static bool FindDistanceFromSegmentStart(Point aPoint, IPathResult segment, out double distance)
+        public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint, out double distance)
         {
             var elements = segment?.Elements;
             if (elements is null)
