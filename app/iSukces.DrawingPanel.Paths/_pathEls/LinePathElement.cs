@@ -7,10 +7,10 @@ namespace iSukces.DrawingPanel.Paths
     {
         public LinePathElement(Point start, Point end)
         {
-            _start  = start;
-            _end    = end;
-            _vector = _end - _start;
-            _versor = _vector.NormalizeFast(out _length);
+            _start      = start;
+            _end        = end;
+            _vector     = _end - _start;
+            _unitVector = _vector.NormalizeFast(out _length);
         }
 
 
@@ -45,9 +45,9 @@ namespace iSukces.DrawingPanel.Paths
         public Point GetEndPoint() { return _end; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector GetEndVector() { return _vector; }
+        public Vector GetEndVector() { return _unitVector; }
 
-        public double GetLength() { return _vector.Length; }
+        public double GetLength() { return _length; }
 
         public Point GetNearestPoint(Point point)
         {
@@ -59,7 +59,7 @@ namespace iSukces.DrawingPanel.Paths
         public Point GetStartPoint() { return _start; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector GetStartVector() { return _vector; }
+        public Vector GetStartVector() { return _unitVector; }
 
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
@@ -84,7 +84,7 @@ namespace iSukces.DrawingPanel.Paths
         private readonly Point _end;
         private readonly Point _start;
         private readonly Vector _vector;
-        private readonly Vector _versor;
+        private readonly Vector _unitVector;
         private double _length;
     }
 }
