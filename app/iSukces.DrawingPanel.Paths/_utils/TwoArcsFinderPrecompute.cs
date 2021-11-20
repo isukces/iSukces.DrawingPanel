@@ -7,13 +7,15 @@ namespace iSukces.DrawingPanel.Paths
     /// <summary>
     ///     Contains precomputed values for solving square equation
     /// </summary>
-    internal struct TwoArcsFinderPrecompute
+    internal class TwoArcsFinderPrecompute
     {
-        public TwoArcsFinderPrecompute(TwoArcsFinder owner)
-            : this()
+        public TwoArcsFinderPrecompute(TwoArcsFinder finder)
+            // : this()
         {
-            _owner = owner; 
-            
+            _owner_StartCenterSearch = finder.StartCenterSearch;
+            _owner_EndCenterSearch   = finder.EndCenterSearch;
+            _owner_StartDirection    = finder.StartDirection;
+            _owner_EndDirection      = finder.EndDirection;
         }
 
         public bool UpdateCompute(bool useSmallerRadius, [CanBeNull] IMinRadiusPathValidator pathValidator)
@@ -27,8 +29,8 @@ namespace iSukces.DrawingPanel.Paths
                     return false;
             }
 
-            var   center1 = _owner.StartCenterSearch.Get(radius);
-            var   center2 = _owner.EndCenterSearch.Get(radius);
+            var   center1 = _owner_StartCenterSearch.Get(radius);
+            var   center2 = _owner_EndCenterSearch.Get(radius);
             Point cross;
             {
                 // c1 = p1 + v1 * radius
@@ -36,7 +38,7 @@ namespace iSukces.DrawingPanel.Paths
                 // (c1 + c2) / 2 = (p1 + p2) / 2 + (v1 + v2) / 2 * radius
                 // sometimes radius is very big and (v1 + v2) is very small or even zero 
                 // so { (c1 + c2) / 2 } can have errors 
-                cross = MathUtils.Average(_owner.StartCenterSearch.Point, _owner.EndCenterSearch.Point);
+                cross = MathUtils.Average(_owner_StartCenterSearch.Point, _owner_EndCenterSearch.Point);
                 if (!AIsZero)
                 {
                     var ve   = new Vector(SumX, SumY);
@@ -45,17 +47,17 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-            Arc1 = ArcDefinition.FromCenterAndArms(center1, _owner.StartCenterSearch.Point, _owner.StartDirection,
+            Arc1 = ArcDefinition.FromCenterAndArms(center1, _owner_StartCenterSearch.Point, _owner_StartDirection,
                 cross);
 
-            var arc3 = ArcDefinition.FromCenterAndArms(center2, _owner.EndCenterSearch.Point, _owner.EndDirection,
+            var arc3 = ArcDefinition.FromCenterAndArms(center2, _owner_EndCenterSearch.Point, _owner_EndDirection,
                 cross);
 
             Arc2 = arc3.GetComplementar();
 
             if (radius < 0)
                 radius = -radius;
- 
+
             if (PathCalculationConfig.CheckRadius)
             {
                 var arc1Radius = radius - Arc1.Radius;
@@ -67,14 +69,12 @@ namespace iSukces.DrawingPanel.Paths
             }
             else
                 _radiusNotEqual = false;
- 
 
             Arc1.UseRadius(radius);
             Arc2.UseRadius(radius);
             return true;
         }
-
-        private readonly TwoArcsFinder _owner;
+ 
 
         public bool AIsZero;
 
@@ -86,5 +86,9 @@ namespace iSukces.DrawingPanel.Paths
         public ArcDefinition Arc1;
         public ArcDefinition Arc2;
         private bool _radiusNotEqual;
+        private readonly PathRay _owner_StartCenterSearch;
+        private readonly PathRay _owner_EndCenterSearch;
+        private readonly Vector _owner_StartDirection;
+        private readonly Vector _owner_EndDirection;
     }
 }
