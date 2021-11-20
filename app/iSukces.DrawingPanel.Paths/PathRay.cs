@@ -1,6 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Windows;
 using Newtonsoft.Json;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
+
 
 namespace iSukces.DrawingPanel.Paths
 {

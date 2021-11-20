@@ -7,7 +7,6 @@
         <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2021</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
-        <TargetFramework>net48</TargetFramework>
         <IncludeSource>false</IncludeSource>
         <IncludeSymbols>true</IncludeSymbols>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
@@ -15,6 +14,7 @@
         <Version>1.0.0.0</Version>
         <FileVersion>1.0.0.0</FileVersion>
         <LangVersion>latest</LangVersion>
+        <TargetFramework>net48</TargetFramework>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
         <DefineConstants>COREFX;NETSTANDARD20</DefineConstants>

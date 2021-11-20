@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using iSukces.Mathematics;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
 
 namespace iSukces.DrawingPanel.Paths
 {

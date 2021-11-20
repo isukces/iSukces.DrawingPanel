@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
+
 
 namespace iSukces.DrawingPanel.Paths
 {

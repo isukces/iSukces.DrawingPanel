@@ -1,9 +1,15 @@
 ﻿#define _DEEP_DEBUG
-using System.Windows;
 #if DEBUG && DEEP_DEBUG
 using System.Diagnostics;
 using Newtonsoft.Json;
 #endif
+
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
+
 
 namespace iSukces.DrawingPanel.Paths
 {

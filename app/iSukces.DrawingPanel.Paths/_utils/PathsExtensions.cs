@@ -2,9 +2,14 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using iSukces.Mathematics;
 using JetBrains.Annotations;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
+
 
 namespace iSukces.DrawingPanel.Paths
 {
