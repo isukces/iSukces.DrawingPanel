@@ -83,16 +83,20 @@ namespace iSukces.DrawingPanel.Paths
                     return result;
                 }
 
+                /*
                 var startVector = Start.Vector.NormalizeFast();
                 var endVector   = End.Vector.NormalizeFast();
                 var aa          = a.NormalizeFast();
 
                 var isSmall =
                     MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.MaximumSagitta);
+                    */
+                
+                
             }
 
             var one = TryOne(cross.Value);
-            if (IsOk(one))
+            if (Validator.IsOk(one))
             {
                 if (one.Angle < 180)
                     return new ZeroReferencePointPathCalculatorResult(ResultKind.OneArc)
@@ -112,9 +116,7 @@ namespace iSukces.DrawingPanel.Paths
             End   = new PathRay(new Point(100, 20), new Vector(-100, 100));
         }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool IsOk(ArcDefinition arc) { return Validator.IsOk(arc); }
+ 
 
         public override void SetReferencePoint(Point p, int nr) { }
 
@@ -204,10 +206,10 @@ namespace iSukces.DrawingPanel.Paths
 
         private ZeroReferencePointPathCalculatorResult TryTwo(ArcDefinition one, bool normalize)
         {
-            var toCompare = one;
+            /*var toCompare = one;
             if (toCompare != null)
                 if (toCompare.RadiusStart.Length <= 3) // todo: why 3?
-                    toCompare = null;
+                    toCompare = null;*/
 
             if (normalize)
             {
@@ -222,7 +224,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 if (r is null)
                     return;
-                if (!Check(r, toCompare))
+                if (!Check(r, one))
                     return;
 
                 var l = r.GetLength(Start.Point, End.Point);
@@ -239,18 +241,24 @@ namespace iSukces.DrawingPanel.Paths
 
             var sol1 = TryTwoArcsSolution(prec, false);
             CheckAndAdd(sol1);
-            var sol2 = TryTwoArcsSolution(prec, true);
-            CheckAndAdd(sol2);
-            
-            
+            if (!prec.AIsZero)
+            {
+                var sol2 = TryTwoArcsSolution(prec, true);
+                CheckAndAdd(sol2);
+            }
+
+
             //finder = new TwoArcsFinder();
             finder.UpdateFromPoints(Start, End, true);
             prec = finder.Compute();
 
             var sol3 = TryTwoArcsSolution(prec, false);
             CheckAndAdd(sol3);
-            var sol4 = TryTwoArcsSolution(prec, true);
-            CheckAndAdd(sol4);
+            if (!prec.AIsZero)
+            {
+                var sol4 = TryTwoArcsSolution(prec, true);
+                CheckAndAdd(sol4);
+            }
 
             if (bestResult != null)
                 return bestResult;
@@ -266,22 +274,16 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         private ZeroReferencePointPathCalculatorResult TryTwoArcsSolution(
-            TwoArcsFinderPrecompute precompute,
-            bool useSmallerRadius)
+            TwoArcsFinderPrecompute precompute, bool useSmallerRadius)
         {
             var isOk =precompute.UpdateCompute(useSmallerRadius, Validator as IMinRadiusPathValidator);
             if (!isOk) return null;
-            /*var finder = new TwoArcsFinder();
-            finder.UpdateFromPoints(Start, End, reverseEnd);
-            // finder.Normalize();
-            var isOk = finder.Compute(out var arc1, out var arc2, useSmallerRadius);
-            if (!isOk) return null;*/
-
-            var arc1 = precompute.arc1;
+            
+            var arc1 = precompute.Arc1;
             var dot = Start.Vector * arc1.StartVector;
             if (dot <= 0) return null;
             
-            var arc2 = precompute.arc2;
+            var arc2 = precompute.Arc2;
             dot = End.Vector * arc2.EndVector;
             if (dot <= 0) return null;
             

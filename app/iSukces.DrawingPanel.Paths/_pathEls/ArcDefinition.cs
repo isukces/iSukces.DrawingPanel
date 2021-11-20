@@ -99,7 +99,7 @@ namespace iSukces.DrawingPanel.Paths
                     default:
                         var vLength = v.Length;
 
-                        distanceFromStart = (sweepAngle-angleMinusMinAngle) * MathUtils.DegreesToRadians * Radius;
+                        distanceFromStart = (sweepAngle - angleMinusMinAngle) * MathUtils.DegreesToRadians * Radius;
 
                         var dist = vLength - Radius;
                         if (dist < 0)
@@ -107,6 +107,27 @@ namespace iSukces.DrawingPanel.Paths
                         return dist;
                 }
             }
+        }
+
+        public ArcDefinition GetComplementar()
+        {
+            const ArcFlags mask = ArcFlags.HasRadius
+                                  | ArcFlags.HasDirection
+                                  | ArcFlags.IsCounterClockwise
+                                  | ArcFlags.HasChord;
+            var result = new ArcDefinition
+            {
+                Center       = Center,
+                RadiusStart  = RadiusEnd,
+                RadiusEnd    = RadiusStart,
+                StartVector  = EndVector,
+                Start        = End,
+                End          = Start,
+                _flags       = _flags & mask,
+                _radius      = _radius,
+                _chordCached = _chordCached
+            };
+            return result;
         }
 
 
@@ -407,24 +428,6 @@ namespace iSukces.DrawingPanel.Paths
             HasChord = 16,
             HasSagitta = 32,
             HasStartAngle = 64
-        }
-
-        public ArcDefinition GetComplementar()
-        {
-            var result = new ArcDefinition
-            {
-                Center      = Center,
-                RadiusStart = RadiusEnd,
-                RadiusEnd   = RadiusStart,
-                StartVector = EndVector,
-                Start       = End,
-                End         = Start,
-                _flags      = _flags & (ArcFlags.HasRadius),
-                _radius     = _radius
-            };
-
-            return result;
-
         }
     }
 }
