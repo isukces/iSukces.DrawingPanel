@@ -1,6 +1,9 @@
 # Test output
 ![](Zero01_line+arc_right27.png)
 ![](Zero01_practical_case_A.png)
+![](Zero01_practical_case_B.png)
+![](Zero01_practical_case_C.png)
+![](Zero01_practical_case_D.png)
 ![](Zero02_arc_right27+line.png)
 ![](Zero03_two_arcs_left32+right59.png)
 ![](Zero04_two_arcs_right74+left48.png)
@@ -20,6 +23,7 @@
 ![](One09_too_high_right.png)
 ![](One10_too_high_left.png)
 ![](One11_below.png)
+![](One99_practical_case_A.png)
 ![](Two01_simple.png)
 ![](Two02_left_to_close.png)
 ![](Two03_left_little_out.png)

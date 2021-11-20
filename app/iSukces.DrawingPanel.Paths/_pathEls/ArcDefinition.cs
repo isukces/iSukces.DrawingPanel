@@ -408,5 +408,23 @@ namespace iSukces.DrawingPanel.Paths
             HasSagitta = 32,
             HasStartAngle = 64
         }
+
+        public ArcDefinition GetComplementar()
+        {
+            var result = new ArcDefinition
+            {
+                Center      = Center,
+                RadiusStart = RadiusEnd,
+                RadiusEnd   = RadiusStart,
+                StartVector = EndVector,
+                Start       = End,
+                End         = Start,
+                _flags      = _flags & (ArcFlags.HasRadius),
+                _radius     = _radius
+            };
+
+            return result;
+
+        }
     }
 }

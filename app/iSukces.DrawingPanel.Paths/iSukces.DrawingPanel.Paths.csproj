@@ -12,9 +12,9 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.21322.20</AssemblyVersion>
-    <Version>1.0.21322.20</Version>
-    <FileVersion>1.0.21322.20</FileVersion>
+    <AssemblyVersion>1.0.21324.21</AssemblyVersion>
+    <Version>1.0.21324.21</Version>
+    <FileVersion>1.0.21324.21</FileVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
@@ -31,6 +31,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>TRACE;USE_TINYEXPR</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="WindowsBase" />

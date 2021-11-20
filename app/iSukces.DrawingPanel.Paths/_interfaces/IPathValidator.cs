@@ -8,6 +8,10 @@ namespace iSukces.DrawingPanel.Paths
         ArcValidationResult ValidateArc([NotNull] ArcDefinition arc);
         LineValidationResult ValidateLine(Vector vector);
     }
+    public interface IMinRadiusPathValidator : IPathValidator
+    {
+        double GetMinRadius();
+    }
 
     public enum LineValidationResult
     {

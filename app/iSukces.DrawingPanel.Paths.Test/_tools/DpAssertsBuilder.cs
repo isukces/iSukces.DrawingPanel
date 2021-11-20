@@ -117,6 +117,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 name += ".";
                 AddEnum(c.Direction, name + nameof(c.Direction));
                 Add(c.Angle, name + nameof(c.Angle));
+                Add(c.Radius, name + nameof(c.Radius));
                 Add(c.Center, name + nameof(c.Center));
                 Add(c.Start, name + nameof(c.Start));
                 Add(c.End, name + nameof(c.End));

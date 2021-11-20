@@ -232,11 +232,25 @@ namespace iSukces.DrawingPanel.Paths
                     bestResult = r;
                 }
             }
+            
+            var finder = new TwoArcsFinder();
+            finder.UpdateFromPoints(Start, End, false);
+            var prec = finder.Compute();
 
-            CheckAndAdd(TryTwoArcsSolution(false, false));
-            CheckAndAdd(TryTwoArcsSolution(true, false));
-            CheckAndAdd(TryTwoArcsSolution(false, true));
-            CheckAndAdd(TryTwoArcsSolution(true, true));
+            var sol1 = TryTwoArcsSolution(prec, false);
+            CheckAndAdd(sol1);
+            var sol2 = TryTwoArcsSolution(prec, true);
+            CheckAndAdd(sol2);
+            
+            
+            //finder = new TwoArcsFinder();
+            finder.UpdateFromPoints(Start, End, true);
+            prec = finder.Compute();
+
+            var sol3 = TryTwoArcsSolution(prec, false);
+            CheckAndAdd(sol3);
+            var sol4 = TryTwoArcsSolution(prec, true);
+            CheckAndAdd(sol4);
 
             if (bestResult != null)
                 return bestResult;
@@ -251,18 +265,29 @@ namespace iSukces.DrawingPanel.Paths
             return null;
         }
 
-        private ZeroReferencePointPathCalculatorResult TryTwoArcsSolution(bool reverseEnd, bool useSmallerRadius)
+        private ZeroReferencePointPathCalculatorResult TryTwoArcsSolution(
+            TwoArcsFinderPrecompute precompute,
+            bool useSmallerRadius)
         {
-            var finder = new TwoArcsFinder();
+            var isOk =precompute.UpdateCompute(useSmallerRadius, Validator as IMinRadiusPathValidator);
+            if (!isOk) return null;
+            /*var finder = new TwoArcsFinder();
             finder.UpdateFromPoints(Start, End, reverseEnd);
             // finder.Normalize();
             var isOk = finder.Compute(out var arc1, out var arc2, useSmallerRadius);
-            if (!isOk) return null;
+            if (!isOk) return null;*/
 
+            var arc1 = precompute.arc1;
             var dot = Start.Vector * arc1.StartVector;
             if (dot <= 0) return null;
+            
+            var arc2 = precompute.arc2;
             dot = End.Vector * arc2.EndVector;
             if (dot <= 0) return null;
+            
+            dot = arc1.EndVector * arc2.StartVector;
+            if (dot <= 0) return null;
+            
             return new ZeroReferencePointPathCalculatorResult(ResultKind.TwoArcs)
             {
                 Arc1  = arc1,
@@ -273,6 +298,20 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         public IPathValidator Validator { get; set; }
+
+        
+#if DEBUG && USE_TINYEXPR        
+        public string DebugCreate
+        {
+            get
+            {
+                var a = PathsExtensions.DebugCreate(Start, "start") + "\r\n";
+                var b = PathsExtensions.DebugCreate(End, "end") + "\r\n";
+                var c = $"var g = {nameof(ZeroReferencePointPathCalculator)}.Compute(start, end, null)";
+                return a + b + c;
+            }
+        }
+#endif
 
 
         public enum ResultKind

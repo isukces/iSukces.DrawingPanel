@@ -1,3 +1,4 @@
+#if DEBUG
 namespace iSukces.DrawingPanel.Paths
 {
     internal class TinyExpr
@@ -34,13 +35,27 @@ namespace iSukces.DrawingPanel.Paths
             var bb = new TinyExpr(b);
             return bb * a;
         }
+        public static TinyExpr operator /(TinyExpr a, TinyExpr b)
+        {
+            return new TinyExpr(a._code + " / " + b._code);
+        }
 
-        public static TinyExpr operator -(TinyExpr a, TinyExpr b) { return new TinyExpr($"{a} - {b}"); }
-
+        public static TinyExpr operator -(TinyExpr a, TinyExpr b)
+        {
+            return new TinyExpr($"{a} - {b}");
+        }
+        
         public static TinyExpr operator -(TinyExpr a, double b)
         {
-            var bb = new TinyExpr(b);
-            return a - bb;
+            return new TinyExpr($"{a} - {b.ToExpr()}");
+        }
+
+      
+        
+        public static TinyExpr operator -(TinyExpr a)
+        {
+            a = a.Brackets();
+            return new TinyExpr($"-{a}");
         }
 
 
@@ -49,5 +64,63 @@ namespace iSukces.DrawingPanel.Paths
         public override string ToString() { return _code; }
 
         private readonly string _code;
+
+        public TinyExpr Negate()
+        {
+            return new TinyExpr("-" + _code);
+        }
+
+        public static TinyExpr Square(TinyExpr a, TinyExpr b, TinyExpr c, TinyExpr expr)
+        {
+            a = a.Brackets();
+            b = b.Brackets();
+            c = c.Brackets();
+            return a * a * expr * expr + b * expr + c;
+        }
+
+        public static TinyExpr SquareDelta(TinyExpr a, TinyExpr b, TinyExpr c)
+        {
+            a = a.Brackets();
+            b = b.Brackets();
+            c = c.Brackets();
+            return b * b - 4 * a * c;
+        }
+
+        public TinyExpr Plot(string varName, double min, double max)
+        {
+            var code = "plot2d([" + this+"], ["+varName+","+min.ToExpr()+","+max.ToExpr()+"])";
+            return new TinyExpr(code);
+
+        }
+
+        public TinyExpr Sqrt()
+        {
+            return new TinyExpr("sqrt" + Brackets()._code);
+        }
+        
+        public static TinyExpr SquareSolve1(TinyExpr a, TinyExpr b, TinyExpr c)
+        {
+            TinyExpr deltaExpr = SquareDelta(a, b, c);
+            var      licznik   = -(b.Brackets()) + deltaExpr.Sqrt();
+            var      mianownik = 2 * a.Brackets();
+            return licznik.Brackets() / mianownik.Brackets();
+        }
+
+        public static TinyExpr SquareSolve2(TinyExpr a, TinyExpr b, TinyExpr c)
+        {
+            TinyExpr deltaExpr = SquareDelta(a, b, c);
+            var      licznik   = -(b.Brackets()) - deltaExpr.Sqrt();
+            var      mianownik = 2 * a.Brackets();
+            licznik   = licznik.Brackets();
+            mianownik = mianownik.Brackets();
+            return licznik / mianownik;
+        }
+
+        public TinyExpr BFloat()
+        {
+            return new TinyExpr("bfloat(" + _code + ")");
+        }
     }
 }
+
+#endif

@@ -61,7 +61,14 @@ namespace iSukces.DrawingPanel.Paths.Test
                 var       a   = Map(c.Center);
                 var       b   = Map(p);
                 using var pen = new Pen(Color.Chocolate, 1);
-                Graph.DrawLine(pen, a.X, a.Y, b.X, b.Y);
+                try
+                {
+                    Graph.DrawLine(pen, a.X, a.Y, b.X, b.Y);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
 
             LineTo(c.Start);
@@ -92,14 +99,27 @@ namespace iSukces.DrawingPanel.Paths.Test
                     var sweep = angle2 - angle1;
                     if (sweep < 0)
                         sweep += 360;
-                    Graph.DrawArc(pen, r, (float)angle1, (float)sweep);
+                    try
+                    {
+                        Graph.DrawArc(pen, r, (float)angle1, (float)sweep);
+                    } catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
                 else
                 {
                     var sweep = angle1 - angle2;
                     if (sweep < 0)
                         sweep += 360;
-                    Graph.DrawArc(pen, r, (float)angle2, (float)sweep);
+                    try
+                    {
+                        Graph.DrawArc(pen, r, (float)angle2, (float)sweep);
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
         }

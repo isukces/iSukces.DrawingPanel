@@ -4,6 +4,8 @@ namespace iSukces.DrawingPanel.Paths.Test
     {
         static TestBaseClass()
         {
+            PathCalculationConfig.CheckRadius = true;
+            
             VariablesDictionary.GetVarName = type =>
             {
                 if (type == typeof(PathRay))

@@ -373,14 +373,15 @@ namespace iSukces.DrawingPanel.Paths.Test
             ResultDrawer.Draw(a, r, MakeTitle(5, "normal config, min radius=4, right"));
             var code = new DpAssertsBuilder().Create(r, nameof(r));
 
-            #region Asserts
 
+            #region Asserts
             AssertEx.Equal(0, 0, r.Start);
             AssertEx.Equal(50, 0, r.End);
             Assert.Equal(4, r.Elements.Count);
             var tmp1 = (ArcDefinition)r.Elements[0];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(74.3867633280261, tmp1.Angle, 6);
+            Assert.Equal(28.131282373654, tmp1.Radius, 6);
             AssertEx.Equal(19.8918205298843, -19.8918205298843, tmp1.Center);
             AssertEx.Equal(0, 0, tmp1.Start);
             AssertEx.Equal(33.6959102649422, 4.61973092188483, tmp1.End);
@@ -388,26 +389,29 @@ namespace iSukces.DrawingPanel.Paths.Test
             tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
             Assert.Equal(29.3867633280261, tmp1.Angle, 6);
+            Assert.Equal(28.131282373654, tmp1.Radius, 6);
             AssertEx.Equal(47.5, 29.131282373654, tmp1.Center);
             AssertEx.Equal(33.6959102649422, 4.61973092188483, tmp1.Start);
             AssertEx.Equal(47.5, 1, tmp1.End);
             AssertEx.Equal(24.5115514517692, -13.8040897350578, tmp1.StartVector);
             tmp1 = (ArcDefinition)r.Elements[2];
-            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
-            Assert.Equal(37.5395871642986, tmp1.Angle, 6);
-            AssertEx.Equal(47.5, -2.24083863505879, tmp1.Center);
+            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
+            Assert.Equal(353.936768191595, tmp1.Angle, 6);
+            Assert.Equal(10.5949406013085, tmp1.Radius, 6);
+            AssertEx.Equal(47.5, 11.5949406013085, tmp1.Center);
             AssertEx.Equal(47.5, 1, tmp1.Start);
-            AssertEx.Equal(49.4746735492099, 0.328927780890423, tmp1.End);
+            AssertEx.Equal(46.3808992597902, 1.05926882023459, tmp1.End);
             AssertEx.Equal(1, 0, tmp1.StartVector);
             tmp1 = (ArcDefinition)r.Elements[3];
-            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
-            Assert.Equal(10.9745359872205, tmp1.Angle, 6);
-            AssertEx.Equal(51.4493470984198, 2.89869419683963, tmp1.Center);
-            AssertEx.Equal(49.4746735492099, 0.328927780890423, tmp1.Start);
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(20.5018193686729, tmp1.Angle, 6);
+            Assert.Equal(10.5949406013085, tmp1.Radius, 6);
+            AssertEx.Equal(45.2617985195804, -9.47640296083929, tmp1.Center);
+            AssertEx.Equal(46.3808992597902, 1.05926882023459, tmp1.Start);
             AssertEx.Equal(50, 0, tmp1.End);
-            AssertEx.Equal(2.56976641594921, -1.97467354920991, tmp1.StartVector);
-
+            AssertEx.Equal(10.5356717810739, -1.11910074020982, tmp1.StartVector);
             #endregion
+
         }
 
 
@@ -658,6 +662,70 @@ namespace iSukces.DrawingPanel.Paths.Test
             #endregion
         }
 
+        
+
+        [Fact]
+        public void T99a_Should_compute_practical_case()
+        {
+            var o = new OneReferencePointPathCalculator
+            {
+                Start = new PathRay(48.426398878846122,
+                    43.73157300192598,
+                    0.96711073366397649,
+                    0.25435571318907962),
+                End = new PathRay(147.16448720645866,
+                    69.700260972482937,
+                    -0.96711073366397649,
+                    -0.25435571318907962),
+                Reference = new PathRay(110.61711161799218, 49.932980045672636, 0, 0)
+            };
+
+            var result = o.Compute(null);
+            new ResultDrawerConfig
+            {
+                Start  = o.Start,
+                End    = o.End,
+                Result = result,
+                Title  = MakeTitle(99, "practical case A"),
+                Flags  = ResultDrawerConfigFlags.ReverseEndMarker
+            }.Draw();
+            var code   = new DpAssertsBuilder().Create(result, nameof(result));
+
+            #region Asserts
+            AssertEx.Equal(48.4263988788461, 43.731573001926, result.Start);
+            AssertEx.Equal(147.164487206459, 69.7002609724829, result.End);
+            Assert.Equal(4, result.Elements.Count);
+            var arc = (ArcDefinition)result.Elements[0];
+            Assert.Equal(ArcDirection.Clockwise, arc.Direction);
+            Assert.Equal(18.0818631776401, arc.Angle, 6);
+            AssertEx.Equal(73.7175574338968, -52.4304144711244, arc.Center);
+            AssertEx.Equal(48.4263988788461, 43.731573001926, arc.Start);
+            AssertEx.Equal(79.5217552484192, 46.8322765237993, arc.End);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.StartVector);
+            arc = (ArcDefinition)result.Elements[1];
+            Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
+            Assert.Equal(18.0818631776401, arc.Angle, 6);
+            AssertEx.Equal(85.3259530629415, 146.094967518723, arc.Center);
+            AssertEx.Equal(79.5217552484192, 46.8322765237993, arc.Start);
+            AssertEx.Equal(110.617111617992, 49.9329800456726, arc.End);
+            AssertEx.Equal(99.2626909949237, -5.80419781452231, arc.StartVector);
+            arc = (ArcDefinition)result.Elements[2];
+            Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
+            Assert.Equal(27.3441904745793, arc.Angle, 6);
+            AssertEx.Equal(99.4388002168958, 92.4351310872041, arc.Center);
+            AssertEx.Equal(110.617111617992, 49.9329800456726, arc.Start);
+            AssertEx.Equal(128.890799412225, 59.8166205090778, arc.End);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.StartVector);
+            arc = (ArcDefinition)result.Elements[3];
+            Assert.Equal(ArcDirection.Clockwise, arc.Direction);
+            Assert.Equal(27.3441904745794, arc.Angle, 6);
+            AssertEx.Equal(158.342798607555, 27.1981099309515, arc.Center);
+            AssertEx.Equal(128.890799412225, 59.8166205090778, arc.Start);
+            AssertEx.Equal(147.164487206459, 69.7002609724829, arc.End);
+            AssertEx.Equal(32.6185105781263, 29.4519991953296, arc.StartVector);
+            #endregion
+
+        }
 
         [Fact]
         public void T11_Should_create_below()

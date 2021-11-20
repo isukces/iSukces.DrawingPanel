@@ -95,12 +95,22 @@ namespace iSukces.DrawingPanel.Paths
         }
         
         
-        internal static TinyExpr X(this double d)
+#if DEBUG && USE_TINYEXPR
+        internal static TinyExpr ToExpr(this double d)
         {
             return new TinyExpr(d);
         }
-        
-        
+
+
+
+        public static string DebugCreate(PathRay start, string name)
+        {
+            var p = start.Point;
+            var v = start.Vector;
+            return $"{name} = new {nameof(PathRay)}({p.X.ToExpr()}, {p.Y.ToExpr()}, {v.X.ToExpr()}, {v.Y.ToExpr()});";
+        }
+
+#endif
     }
     
 }

@@ -226,12 +226,27 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         private void ScanRange()
         {
+            IEnumerable<Point> scan()
+            {
+                foreach (var i in GetPoints(_cfg.Result))
+                {
+                    yield return i;
+                }
+
+                yield return _cfg.Start.Point;
+                yield return _cfg.End.Point;
+            }
             XRange = new MinMax();
             YRange = new MinMax();
-            foreach (var i in GetPoints(_cfg.Result))
+            foreach (var i in scan())
             {
-                XRange.Add(i.X);
-                YRange.Add(i.Y);
+                var x = i.X;
+                if (Math.Abs(x) < 1e5)
+                    XRange.Add(x);
+
+                x = i.Y;
+                if (Math.Abs(x) < 1e5)
+                    YRange.Add(x);
             }
 
             Grow(ref XRange);
