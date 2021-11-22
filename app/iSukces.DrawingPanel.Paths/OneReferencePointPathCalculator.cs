@@ -47,8 +47,32 @@ namespace iSukces.DrawingPanel.Paths
                 var l2 = End.GetLine();
                 var l  = Reference.GetLine();
 
-                var startCrossNullable = MathUtils.CrossNormalized(l, l1);
-                var endCrossNullable   = MathUtils.CrossNormalized(l, l2);
+
+                Point? startCrossNullable, endCrossNullable;
+                {
+                    var dist = PathCalculationConfig.UseLineWhenDistanceLowerThan;
+                    {
+                        var d1 = Math.Abs(l1.DistanceNotNormalized(Reference.Point));
+                        var d2 = Math.Abs(l.DistanceNotNormalized(Start.Point));
+                        if (d1 < dist && d2 < dist)
+                            startCrossNullable = null;
+                        else
+                            startCrossNullable = MathUtils.CrossNormalized(l, l1);
+                    }
+                    {
+                        var d1 = Math.Abs(l2.DistanceNotNormalized(Reference.Point));
+                        var d2 = Math.Abs(l.DistanceNotNormalized(End.Point));
+                        if (d1 < dist && d2 < dist)
+                            endCrossNullable = null;
+                        else
+                            endCrossNullable = MathUtils.CrossNormalized(l, l1);
+                    }
+                }
+                
+                
+                
+
+                
                 //var startCrossNullable = Start.Cross(Reference);
                 //var endCrossNullable   = End.Cross(Reference);
                 /*{

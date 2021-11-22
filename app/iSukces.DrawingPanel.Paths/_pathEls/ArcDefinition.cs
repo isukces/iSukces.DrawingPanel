@@ -227,7 +227,7 @@ namespace iSukces.DrawingPanel.Paths
         public void UseRadius(double radius)
         {
             _flags  |= ArcFlags.HasRadius;
-            _radius =  RadiusStart.Length;
+            _radius =  radius;
         }
 
         public double Radius
