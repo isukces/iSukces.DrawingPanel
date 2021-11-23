@@ -54,7 +54,7 @@ namespace iSukces.DrawingPanel.Benchmark
         [Benchmark(Description = "IsAngleBetweenSmallEnoughtBasedOnH")]
         public bool IsAngleBetweenSmallEnoughtBasedOnH()
         {
-            return MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(_v1, _v2, 0.001);
+            return PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(_v1, _v2, 0.001);
         }
 
         [Benchmark(Description = "AngleBetween", Baseline = true)]

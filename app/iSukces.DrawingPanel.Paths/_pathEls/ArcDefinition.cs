@@ -64,19 +64,19 @@ namespace iSukces.DrawingPanel.Paths
             if (Direction == ArcDirection.CounterClockwise)
             {
                 var angleMinusStart = a - StartAngle;
-                var isInside        = MathUtils.IsAngleInRegion(angleMinusStart, sweepAngle);
+                var isInside        = PathsMathUtils.IsAngleInRegion(angleMinusStart, sweepAngle);
                 switch (isInside)
                 {
                     case Three.Below:
                         distanceFromStart = 0;
                         return (point - Start).Length;
                     case Three.Above:
-                        distanceFromStart = sweepAngle * MathUtils.DegreesToRadians * Radius;
+                        distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
                         return (point - End).Length;
                     default:
                         var vLength = v.Length;
 
-                        distanceFromStart = angleMinusStart * MathUtils.DegreesToRadians * Radius;
+                        distanceFromStart = angleMinusStart * PathsMathUtils.DegreesToRadians * Radius;
 
                         var dist = vLength - Radius;
                         if (dist < 0)
@@ -87,16 +87,16 @@ namespace iSukces.DrawingPanel.Paths
             else
             {
                 var min = StartAngle - sweepAngle;
-                min = MathUtils.NormalizeAngleDeg(min);
+                min = PathsMathUtils.NormalizeAngleDeg(min);
 
                 var angleMinusMinAngle = a - min;
                 if (angleMinusMinAngle < 0)
                     angleMinusMinAngle += 360;
-                var isInside = MathUtils.IsAngleInRegion(angleMinusMinAngle, sweepAngle);
+                var isInside = PathsMathUtils.IsAngleInRegion(angleMinusMinAngle, sweepAngle);
                 switch (isInside)
                 {
                     case Three.Below:
-                        distanceFromStart = sweepAngle * MathUtils.DegreesToRadians * Radius;
+                        distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
                         return (point - End).Length;
                     case Three.Above:
                         distanceFromStart = 0;
@@ -104,7 +104,7 @@ namespace iSukces.DrawingPanel.Paths
                     default:
                         var vLength = v.Length;
 
-                        distanceFromStart = (sweepAngle - angleMinusMinAngle) * MathUtils.DegreesToRadians * Radius;
+                        distanceFromStart = (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * Radius;
 
                         var dist = vLength - Radius;
                         if (dist < 0)

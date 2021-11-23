@@ -17,15 +17,15 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T01_ShouldNormalizeAngles(double src)
         {
             const int decimals = 10;
-            var       res      = MathUtils.NormalizeAngleDeg(src);
+            var       res      = PathsMathUtils.NormalizeAngleDeg(src);
             Assert.Equal(src, res, decimals);
-            res = MathUtils.NormalizeAngleDeg(src + 360);
+            res = PathsMathUtils.NormalizeAngleDeg(src + 360);
             Assert.Equal(src, res, decimals);
-            res = MathUtils.NormalizeAngleDeg(src + 360 * 2);
+            res = PathsMathUtils.NormalizeAngleDeg(src + 360 * 2);
             Assert.Equal(src, res, decimals);
-            res = MathUtils.NormalizeAngleDeg(src - 360);
+            res = PathsMathUtils.NormalizeAngleDeg(src - 360);
             Assert.Equal(src, res, decimals);
-            res = MathUtils.NormalizeAngleDeg(src - 360 * 2);
+            res = PathsMathUtils.NormalizeAngleDeg(src - 360 * 2);
             Assert.Equal(src, res, decimals);
         }
 
@@ -39,13 +39,13 @@ namespace iSukces.DrawingPanel.Paths.Test
             for (var i = 0; i < 360; i++)
             {
                 var expected = GetExpected(i);
-                var q        = MathUtils.IsAngleInRegion(i, min, max);
+                var q        = PathsMathUtils.IsAngleInRegion(i, min, max);
                 if (expected != q)
                     _testOutputHelper.WriteLine("angle=" + i);
                 Assert.Equal(expected, q);
-                q = MathUtils.IsAngleInRegion(i - 360, min, max);
+                q = PathsMathUtils.IsAngleInRegion(i - 360, min, max);
                 Assert.Equal(expected, q);
-                q = MathUtils.IsAngleInRegion(i + 360, min, max);
+                q = PathsMathUtils.IsAngleInRegion(i + 360, min, max);
                 Assert.Equal(expected, q);
             }
 
@@ -70,13 +70,13 @@ namespace iSukces.DrawingPanel.Paths.Test
             for (var i = 0; i < 360; i++)
             {
                 var expected = GetExpected(i);
-                var q        = MathUtils.IsAngleInRegion(i, min, max);
+                var q        = PathsMathUtils.IsAngleInRegion(i, min, max);
                 if (expected != q)
                     _testOutputHelper.WriteLine("angle=" + i);
                 Assert.Equal(expected, q);
-                q = MathUtils.IsAngleInRegion(i - 360, min, max);
+                q = PathsMathUtils.IsAngleInRegion(i - 360, min, max);
                 Assert.Equal(expected, q);
-                q = MathUtils.IsAngleInRegion(i + 360, min, max);
+                q = PathsMathUtils.IsAngleInRegion(i + 360, min, max);
                 Assert.Equal(expected, q);
             }
 

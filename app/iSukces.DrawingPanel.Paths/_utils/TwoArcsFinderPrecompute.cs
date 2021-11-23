@@ -43,7 +43,7 @@ namespace iSukces.DrawingPanel.Paths
                 // (c1 + c2) / 2 = (p1 + p2) / 2 + (v1 + v2) / 2 * radius
                 // sometimes radius is very big and (v1 + v2) is very small or even zero 
                 // so { (c1 + c2) / 2 } can have errors 
-                cross = MathUtils.Average(_owner_StartCenterSearch.Point, _owner_EndCenterSearch.Point);
+                cross = PathsMathUtils.Average(_owner_StartCenterSearch.Point, _owner_EndCenterSearch.Point);
                 if (!AIsZero)
                 {
                     var ve   = new Vector(SumX, SumY);

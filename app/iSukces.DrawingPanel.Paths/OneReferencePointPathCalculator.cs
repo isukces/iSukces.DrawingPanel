@@ -57,7 +57,7 @@ namespace iSukces.DrawingPanel.Paths
                         if (d1 < dist && d2 < dist)
                             startCrossNullable = null;
                         else
-                            startCrossNullable = MathUtils.CrossNormalized(l, l1);
+                            startCrossNullable = PathsMathUtils.CrossNormalized(l, l1);
                     }
                     {
                         var d1 = Math.Abs(l2.DistanceNotNormalized(Reference.Point));
@@ -65,7 +65,7 @@ namespace iSukces.DrawingPanel.Paths
                         if (d1 < dist && d2 < dist)
                             endCrossNullable = null;
                         else
-                            endCrossNullable = MathUtils.CrossNormalized(l, l1);
+                            endCrossNullable = PathsMathUtils.CrossNormalized(l, l1);
                     }
                 }
                 

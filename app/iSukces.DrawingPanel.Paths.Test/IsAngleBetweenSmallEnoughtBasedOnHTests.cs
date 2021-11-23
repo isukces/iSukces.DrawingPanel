@@ -13,7 +13,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var vector2 = new Vector(10, 10);
             var h       = 0.1;
 
-            MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(vector1, vector2, h);
+            PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(vector1, vector2, h);
             
             var result  = new CodeCopy().Update(vector1, vector2, h);
             var code    = Codemaker.Make(result, nameof(result));
@@ -36,7 +36,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var vector2 = new Vector(10, -10);
             var h       = 0.1;
 
-            MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(vector1, vector2, h);
+            PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(vector1, vector2, h);
             
             var result  = new CodeCopy().Update(vector1, vector2, h);
             var code    = Codemaker.Make(result, nameof(result));

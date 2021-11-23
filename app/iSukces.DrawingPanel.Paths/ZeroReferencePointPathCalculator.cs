@@ -53,7 +53,7 @@ namespace iSukces.DrawingPanel.Paths
             End   = End.Normalize();
             var l1    = Start.GetLine();
             var l2    = End.GetLine();
-            var cross = MathUtils.CrossNormalized(l1, l2);
+            var cross = PathsMathUtils.CrossNormalized(l1, l2);
             // var cross = Start.Cross(End);
             if (cross is null)
             {
@@ -69,7 +69,7 @@ namespace iSukces.DrawingPanel.Paths
                 }
 
                 var isSmall =
-                    MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.MaximumSagitta);
+                    PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.MaximumSagitta);
 
                 if (isSmall)
                     return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);

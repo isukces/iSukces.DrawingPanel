@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    public static class MathUtils
+    public static class PathsMathUtils
     {
         public const double DegreesToRadians =
             0.017453292519943295769236907684886127134428718885417254560971914401710091146034494;
