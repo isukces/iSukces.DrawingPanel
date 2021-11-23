@@ -54,6 +54,129 @@ namespace iSukces.DrawingPanel.Paths.Test
             #endregion
         }
 
+        [Fact]
+        public void T01a_Should_create_simple_with_rotated_ref1()
+        {
+            var calc = new TwoReferencePointsPathCalculator
+            {
+                Start      = new PathRay(-20, 0, 200, 100),
+                End        = new PathRay(100, 0, -100, 100),
+                Reference1 = new PathRay(40, 20, 1, 0.2),
+                Reference2 = new PathRay(60, 20, 0, 0)
+            };
+            var r = calc.Compute(validator);
+            new ResultDrawerConfig
+            {
+                Start  = calc.Start,
+                End    = calc.End,
+                Result = r,
+                Title  = MakeTitle(1, "simple, rotated ref1"),
+            }.With(calc).Draw();
+
+            var code = new DpAssertsBuilder().Create(r, nameof(r));
+
+            #region Asserts
+
+            AssertEx.Equal(-20, 0, r.Start);
+            AssertEx.Equal(100, 0, r.End);
+            Assert.Equal(6, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(15.2551187030578, tmp1.Angle, 6);
+            Assert.Equal(222.630423646496, tmp1.Radius, 6);
+            AssertEx.Equal(79.5633522266283, -199.126704453257, tmp1.Center);
+            AssertEx.Equal(-20, 0, tmp1.Start);
+            AssertEx.Equal(35.901933976901, 19.1803867953802, tmp1.End);
+            AssertEx.Equal(200, 100, tmp1.StartVector);
+            var tmp2 = (LinePathElement)r.Elements[1];
+            AssertEx.Equal(35.901933976901, 19.1803867953802, 40, 20, tmp2, 6);
+            tmp1 = (ArcDefinition)r.Elements[2];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(19.3007593447894, tmp1.Angle, 6);
+            Assert.Equal(42.1811673189484, tmp1.Radius, 6);
+            AssertEx.Equal(48.2724075102092, -21.3620375510462, tmp1.Center);
+            AssertEx.Equal(40, 20, tmp1.Start);
+            AssertEx.Equal(54.1362037551046, 20.4095648839511, tmp1.End);
+            AssertEx.Equal(0.98058067569092, 0.196116135138184, tmp1.StartVector);
+            tmp1 = (ArcDefinition)r.Elements[3];
+            Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
+            Assert.Equal(7.99082687076918, tmp1.Angle, 6);
+            Assert.Equal(42.1811673189484, tmp1.Radius, 6);
+            AssertEx.Equal(60, 62.1811673189484, tmp1.Center);
+            AssertEx.Equal(54.1362037551046, 20.4095648839511, tmp1.Start);
+            AssertEx.Equal(60, 20, tmp1.End);
+            AssertEx.Equal(41.7716024349973, -5.86379624489538, tmp1.StartVector);
+            tmp1 = (ArcDefinition)r.Elements[4];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(45, tmp1.Angle, 6);
+            Assert.Equal(48.2842712474619, tmp1.Radius, 6);
+            AssertEx.Equal(60, -28.2842712474619, tmp1.Center);
+            AssertEx.Equal(60, 20, tmp1.Start);
+            AssertEx.Equal(94.142135623731, 5.85786437626905, tmp1.End);
+            AssertEx.Equal(20, 0, tmp1.StartVector);
+            tmp2 = (LinePathElement)r.Elements[5];
+            AssertEx.Equal(94.142135623731, 5.85786437626905, 100, 0, tmp2, 6);
+
+            #endregion
+        }
+
+        [Fact]
+        public void T01b_Should_create_simple_with_rotated_both()
+        {
+            var calc = new TwoReferencePointsPathCalculator
+            {
+                Start      = new PathRay(-20, 0, 200, 100),
+                End        = new PathRay(100, 0, -100, 100),
+                Reference1 = new PathRay(40, 20, 1, 0.2),
+                Reference2 = new PathRay(60, 20, 1, -0.2)
+            };
+            var r = calc.Compute(validator);
+            new ResultDrawerConfig
+            {
+                Start  = calc.Start,
+                End    = calc.End,
+                Result = r,
+                Title  = MakeTitle(1, "simple, rotated both"),
+            }.With(calc).Draw();
+
+            var code = new DpAssertsBuilder().Create(r, nameof(r));
+
+            #region Asserts
+
+            AssertEx.Equal(-20, 0, r.Start);
+            AssertEx.Equal(100, 0, r.End);
+            Assert.Equal(5, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(15.2551187030578, tmp1.Angle, 6);
+            Assert.Equal(222.630423646496, tmp1.Radius, 6);
+            AssertEx.Equal(79.5633522266283, -199.126704453257, tmp1.Center);
+            AssertEx.Equal(-20, 0, tmp1.Start);
+            AssertEx.Equal(35.901933976901, 19.1803867953802, tmp1.End);
+            AssertEx.Equal(200, 100, tmp1.StartVector);
+            var tmp2 = (LinePathElement)r.Elements[1];
+            AssertEx.Equal(35.901933976901, 19.1803867953802, 40, 20, tmp2, 6);
+            tmp1 = (ArcDefinition)r.Elements[2];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(22.6198649480404, tmp1.Angle, 6);
+            Assert.Equal(50.9901951359278, tmp1.Radius, 6);
+            AssertEx.Equal(50, -30, tmp1.Center);
+            AssertEx.Equal(40, 20, tmp1.Start);
+            AssertEx.Equal(60, 20, tmp1.End);
+            AssertEx.Equal(1, 0.2, tmp1.StartVector);
+            tmp2 = (LinePathElement)r.Elements[3];
+            AssertEx.Equal(60, 20, 64.1987426415539, 19.1602514716892, tmp2, 6);
+            tmp1 = (ArcDefinition)r.Elements[4];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(33.6900675259798, tmp1.Angle, 6);
+            Assert.Equal(70.0624515053405, tmp1.Radius, 6);
+            AssertEx.Equal(50.4583654340201, -49.5416345659799, tmp1.Center);
+            AssertEx.Equal(64.1987426415539, 19.1602514716892, tmp1.Start);
+            AssertEx.Equal(100, 0, tmp1.End);
+            AssertEx.Equal(1, -0.2, tmp1.StartVector);
+
+            #endregion
+        }
 
         [Fact]
         public void T02_Should_create_left_too_close()

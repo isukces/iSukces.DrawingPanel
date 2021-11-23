@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
@@ -11,14 +12,13 @@ namespace iSukces.DrawingPanel.Paths
 {
     public struct PathRay
     {
-        
         [JsonConstructor]
         public PathRay(Point point, Vector vector)
         {
             Point  = point;
             Vector = vector;
         }
-        
+
         public PathRay(double x, double y, double vx, double vy)
             : this(new Point(x, y), new Vector(vx, vy))
         {
@@ -58,7 +58,6 @@ namespace iSukces.DrawingPanel.Paths
 
         public Point Point { get; }
 
- 
 
         public LineEquationNotNormalized GetLine()
         {
@@ -87,7 +86,7 @@ namespace iSukces.DrawingPanel.Paths
         public PathRay Normalize()
         {
             var v = Vector;
-            v=v.NormalizeFast();
+            v = v.NormalizeFast();
             return new PathRay(Point, v);
         }
 
@@ -96,5 +95,22 @@ namespace iSukces.DrawingPanel.Paths
         public Point Get(double distance) { return Point + Vector * distance; }
 
         public PathRay WithPoint(Point point) { return new PathRay(point, Vector); }
+
+        public bool HasValidVector()
+        {
+            var vector = Vector;
+            var x      = vector.X;
+            if (double.IsNaN(x))
+                return false;
+            var y = vector.Y;
+            if (double.IsNaN(y))
+                return false;
+            if (y != 0)
+                return true;
+
+            if (x != 0)
+                return true;
+            return false;
+        }
     }
 }

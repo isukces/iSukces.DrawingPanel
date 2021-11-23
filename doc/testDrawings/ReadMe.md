@@ -25,6 +25,8 @@
 ![](One10_too_high_left.png)
 ![](One11_below.png)
 ![](One99_practical_case_A.png)
+![](Two01_simple,rotated_both.png)
+![](Two01_simple,rotated_ref1.png)
 ![](Two01_simple.png)
 ![](Two02_left_to_close.png)
 ![](Two03_left_little_out.png)

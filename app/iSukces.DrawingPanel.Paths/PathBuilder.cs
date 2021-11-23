@@ -45,6 +45,7 @@ namespace iSukces.DrawingPanel.Paths
                 if (CheckDot(res))
                 {
                     ArcTo(res);
+                    LineTo(end.Point);
                     return;
                 }
             }
@@ -83,10 +84,14 @@ namespace iSukces.DrawingPanel.Paths
             switch (result)
             {
                 case null:
+                    LineTo(start.Point);
                     _list.Add(new InvalidPathElement(start, end, ArcValidationResult.UnableToConstructArc));
+                    CurrentPoint = end.Point;
                     return;
                 case ZeroReferencePointPathCalculatorLineResult:
-                    _list.Add(new LinePathElement(start.Point, end.Point));
+                    LineTo(start.Point);
+                    LineTo(end.Point);
+                    // _list.Add(new LinePathElement(start.Point, end.Point));
                     return;
                 case ZeroReferencePointPathCalculatorResult r2:
                     ArcTo(r2.Arc1);

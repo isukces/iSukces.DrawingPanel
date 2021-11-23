@@ -19,23 +19,30 @@ namespace iSukces.DrawingPanel.Paths
 
         private IPathResult ComputeInternal(IPathValidator validator, out ArcValidationResult result)
         {
+            var firstValid = !Reference1.HasValidVector();
+            var secondValid = !Reference2.HasValidVector();
             validator ??= EverythingOkPathValidator.Instance;
 
-            var refVector            = Reference2.Point - Reference1.Point;
-            var lineValidationResult = validator.ValidateLine(refVector);
-
-            if (lineValidationResult != LineValidationResult.Ok)
+            if (secondValid || firstValid)
             {
-                result = ArcValidationResult.NoCrossPoints;
-                return null;
-            }
+                var refVector            = Reference2.Point - Reference1.Point;
+                var lineValidationResult = validator.ValidateLine(refVector);
 
-            Reference1 = Reference1.With(refVector);
-            Reference2 = Reference2.With(refVector);
+                if (lineValidationResult != LineValidationResult.Ok)
+                {
+                    result = ArcValidationResult.NoCrossPoints;
+                    return null;
+                }
+
+                if (firstValid)
+                    Reference1 = Reference1.With(refVector);
+                if (secondValid)
+                    Reference2 = Reference2.With(refVector);
+            }
 
             var builder = new PathBuilder(Start.Point, validator);
             builder.AddConnectionAutomatic(Start, Reference1);
-            builder.LineTo(Reference2.Point);
+            builder.AddConnectionAutomatic(Reference1, Reference2);
             builder.AddConnectionAutomatic(Reference2, End.WithInvertedVector());
 
             result = ArcValidationResult.Ok;

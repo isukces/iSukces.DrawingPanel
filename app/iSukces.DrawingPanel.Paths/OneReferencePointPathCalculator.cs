@@ -16,7 +16,7 @@ namespace iSukces.DrawingPanel.Paths
     {
         public IPathResult Compute(IPathValidator validator)
         {
-            if (Reference.Vector.LengthSquared <= 0)
+            if (!Reference.HasValidVector())
             {
                 var vector = End.Point - Start.Point;
                 if (vector.LengthSquared < LengthEpsilonSquare)
