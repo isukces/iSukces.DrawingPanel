@@ -16,14 +16,20 @@ namespace iSukces.DrawingPanel.Paths
     {
         public IPathResult Compute(IPathValidator validator)
         {
-            var vector = End.Point - Start.Point;
-            if (vector.LengthSquared < LengthEpsilonSquare)
-                return CreateResultLine();
-            
-            Reference = Reference.With(vector).Normalize();
-            Start     = Start.Normalize();
-            End       = End.Normalize();
-            
+            if (Reference.Vector.LengthSquared <= 0)
+            {
+                var vector = End.Point - Start.Point;
+                if (vector.LengthSquared < LengthEpsilonSquare)
+                    return CreateResultLine();
+
+                Reference = Reference.With(vector);
+            }
+
+            Reference = Reference.Normalize();
+
+            Start = Start.Normalize();
+            End   = End.Normalize();
+
 
             var list = Find();
             if (list.Count == 0)
@@ -68,20 +74,7 @@ namespace iSukces.DrawingPanel.Paths
                             endCrossNullable = PathsMathUtils.CrossNormalized(l, l1);
                     }
                 }
-                
-                
-                
 
-                
-                //var startCrossNullable = Start.Cross(Reference);
-                //var endCrossNullable   = End.Cross(Reference);
-                /*{
-                    var a1 = Start.Vector * Reference.Vector;
-                    var a2 = End.Vector * Reference.Vector;
-
-                    var b1 = Vector.CrossProduct(Start.Vector, Reference.Vector);
-                    var b2 = Vector.CrossProduct(End.Vector, Reference.Vector);
-                }*/
 
                 if (startCrossNullable is null)
                 {
@@ -125,7 +118,7 @@ namespace iSukces.DrawingPanel.Paths
 
                 if (builder.List.Count == 0)
                     builder.AddLine(Start.Point, End.Point);
-                    // return FlexiS();
+                // return FlexiS();
 
                 return builder.List;
             }

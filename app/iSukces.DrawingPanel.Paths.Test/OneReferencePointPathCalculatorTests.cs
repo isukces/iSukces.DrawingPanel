@@ -320,6 +320,49 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         }
 
+        
+        [Fact]
+        public void T04a_Should_create_normal_configuration()
+        {
+            var a = new OneReferencePointPathCalculator
+            {
+                Start     = new PathRay(0, 0, 1, 1),
+                End       = new PathRay(50, 0, -2, 1),
+                Reference = new PathRay(13, 4, 1, 0.1)
+            };
+            var r = a.Compute(null);
+            ResultDrawer.Draw(a, r, MakeTitle(4, "normal config, rotated ref"));
+            var code = new DpAssertsBuilder().Create(r, nameof(r));
+
+            #region Asserts
+            AssertEx.Equal(0, 0, r.Start);
+            AssertEx.Equal(50, 0, r.End);
+            Assert.Equal(4, r.Elements.Count);
+            var tmp1 = (ArcDefinition)r.Elements[0];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(39.2894068625004, tmp1.Angle, 6);
+            Assert.Equal(11.8853668094486, tmp1.Radius, 6);
+            AssertEx.Equal(8.40422346785063, -8.40422346785063, tmp1.Center);
+            AssertEx.Equal(0, 0, tmp1.Start);
+            AssertEx.Equal(7.22158526838175, 3.42215852683817, tmp1.End);
+            AssertEx.Equal(0.707106781186547, 0.707106781186547, tmp1.StartVector);
+            var tmp2 = (LinePathElement)r.Elements[1];
+            AssertEx.Equal(7.22158526838175, 3.42215852683817, 13, 4, tmp2, 6);
+            tmp2 = (LinePathElement)r.Elements[2];
+            AssertEx.Equal(13, 4, 22.889770716363, 4.9889770716363, tmp2, 6);
+            tmp1 = (ArcDefinition)r.Elements[3];
+            Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
+            Assert.Equal(32.2756443145776, tmp1.Angle, 6);
+            Assert.Equal(49.5872886473176, tmp1.Radius, 6);
+            AssertEx.Equal(27.8238903529388, -44.3522192941223, tmp1.Center);
+            AssertEx.Equal(22.889770716363, 4.9889770716363, tmp1.Start);
+            AssertEx.Equal(50, 0, tmp1.End);
+            AssertEx.Equal(0.995037190209989, 0.0995037190209989, tmp1.StartVector);
+            #endregion
+            
+        }
+
+        
         [Fact]
         public void T05_Should_create_normal_configuration_with_min_radius_left()
         {

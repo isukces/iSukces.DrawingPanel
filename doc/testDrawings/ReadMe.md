@@ -14,6 +14,7 @@
 ![](One03_too_small_radius,x=26.png)
 ![](One03_too_small_radius,x=29.png)
 ![](One03_too_small_radius,x=6.png)
+![](One04_normal_config,rotated_ref.png)
 ![](One04_normal_config.png)
 ![](One05_normal_config,min_radius=4,left.png)
 ![](One05_normal_config,min_radius=4,right.png)
