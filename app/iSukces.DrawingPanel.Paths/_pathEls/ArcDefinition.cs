@@ -57,7 +57,7 @@ namespace iSukces.DrawingPanel.Paths
             return c;
         }
 
-        public double DistanceFromElement(Point point, out double distanceFromStart)
+        public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
         {
             var v          = point - Center;
             var a          = v.Angle();
@@ -70,9 +70,11 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     case Three.Below:
                         distanceFromStart = 0;
+                        direction         = StartVector;
                         return (point - Start).Length;
                     case Three.Above:
                         distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
+                        direction         = EndVector;
                         return (point - End).Length;
                     default:
                         var vLength = v.Length;
@@ -82,6 +84,7 @@ namespace iSukces.DrawingPanel.Paths
                         var dist = vLength - radius;
                         if (dist < 0)
                             dist = -dist;
+                        direction = v.GetPrependicular(true);
                         return dist;
                 }
             }
@@ -98,20 +101,21 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     case Three.Below:
                         distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
+                        direction         = EndVector;
                         return (point - End).Length;
                     case Three.Above:
                         distanceFromStart = 0;
+                        direction         = StartVector;
                         return (point - Start).Length;
                     default:
                         var vLength = v.Length;
                         var radius  = Radius;
-
-                        distanceFromStart =
-                            (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * radius;
+                        distanceFromStart = (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * radius;
 
                         var dist = vLength - radius;
                         if (dist < 0)
                             dist = -dist;
+                        direction = v.GetPrependicular(false);
                         return dist;
                 }
             }
@@ -300,10 +304,10 @@ namespace iSukces.DrawingPanel.Paths
 
         public Vector StartVector
         {
-            get => _startVector;
+            get => _startVectorVector;
             set
             {
-                _startVector =  value;
+                _startVectorVector =  value;
                 _flags       &= ChangedStartVector;
             }
         }
@@ -447,7 +451,7 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
-        private Vector _startVector;
+        private Vector _startVectorVector;
 
         [Flags]
         private enum ArcFlags : byte

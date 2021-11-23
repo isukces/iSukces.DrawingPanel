@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using iSukces.Mathematics;
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
@@ -153,9 +155,14 @@ namespace iSukces.DrawingPanel.Paths.Test
                 new Vector(0, 1),
                 new Point(10, 25));
             var point = new Point(x, y);
-            var d     = arc.DistanceFromElement(point, out var loc);
+            var d     = arc.DistanceFromElement(point, out var loc, out var direction);
             Assert.Equal(dist, d, 10);
             Assert.Equal(locExpected, loc, 10);
+
+            var angle = locExpected / arc.Radius;
+            direction = direction.NormalizeFast().GetPrependicularVector();
+            Assert.Equal(Math.Sin(angle), direction.Y, 5);
+            Assert.Equal(Math.Cos(angle), direction.X, 5);
         }
 
         [Theory]
@@ -176,9 +183,15 @@ namespace iSukces.DrawingPanel.Paths.Test
                 new Vector(0, -1),
                 new Point(10, 15));
             var point = new Point(x, y);
-            var d     = arc.DistanceFromElement(point, out var loc);
+            var d     = arc.DistanceFromElement(point, out var loc, out var direction);
             Assert.Equal(dist, d, 10);
             Assert.Equal(locExpected, loc, 10);
+            
+            
+            var angle = -locExpected / arc.Radius;
+            direction = direction.NormalizeFast().GetPrependicular(true);
+            Assert.Equal(Math.Sin(angle), direction.Y, 5);
+            Assert.Equal(Math.Cos(angle), direction.X, 5);
         }
 
 

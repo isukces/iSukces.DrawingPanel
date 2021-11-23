@@ -22,7 +22,7 @@ namespace iSukces.DrawingPanel.Paths
             return new PathResult(new InvalidPathElement(start, end, status));
         }
 
-        public double DistanceFromElement(Point point, out double distanceFromStart)
+        public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
         {
             throw new System.NotImplementedException();
         }

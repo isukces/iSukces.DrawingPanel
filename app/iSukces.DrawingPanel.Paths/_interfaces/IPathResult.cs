@@ -24,12 +24,14 @@ namespace iSukces.DrawingPanel.Paths
 
     public static class PathResultExtensions
     {
-        public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint, out double distance)
+        public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint, 
+            out double distance, out Vector direction)
         {
             var elements = segment?.Elements;
             if (elements is null)
             {
                 distance = 0;
+                direction = default;
                 return false;
             }
 
@@ -37,18 +39,20 @@ namespace iSukces.DrawingPanel.Paths
             switch (cnt)
             {
                 case 0:
-                    distance = 0;
+                    distance  = 0;
+                    direction = default;
                     return false;
                 case 1:
                 {
                     var element = elements[0];
                     if (element is InvalidPathElement)
                     {
-                        distance = 0;
+                        distance  = 0;
+                        direction = default;
                         return false;
                     }
 
-                    element.DistanceFromElement(aPoint, out distance);
+                    element.DistanceFromElement(aPoint, out distance, out direction);
                     return true;
                 }
                 default:
@@ -57,6 +61,7 @@ namespace iSukces.DrawingPanel.Paths
                     var first  = true;
                     distance = 0;
                     var bestDistance = 0d;
+                    direction = default;
 
                     for (var index = 0; index < cnt; index++)
                     {
@@ -67,17 +72,19 @@ namespace iSukces.DrawingPanel.Paths
                             continue;
                         }
 
-                        var currentDistance = element.DistanceFromElement(aPoint, out var distanceFromStart);
+                        var currentDistance = element.DistanceFromElement(aPoint, out var distanceFromStart, out var newDirection);
                         if (first)
                         {
                             bestDistance = currentDistance;
                             distance     = offset + distanceFromStart;
+                            direction    = newDirection;
                             first        = false;
                         }
                         else if (currentDistance < bestDistance)
                         {
                             bestDistance = currentDistance;
                             distance     = offset + distanceFromStart;
+                            direction    = newDirection;
                         }
 
                         offset += element.GetLength();

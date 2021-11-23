@@ -47,7 +47,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T04_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
         {
             var line = new LinePathElement(new Point(2, 3), new Point(12, 3));
-            var d    = line.DistanceFromElement(new Point(x, y), out var loc);
+            var d    = line.DistanceFromElement(new Point(x, y), out var loc, out _);
             Assert.Equal(dist, d, 10);
             Assert.Equal(locExpected, loc, 10);
         }
@@ -58,7 +58,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         public void T05_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
         {
             var line = new LinePathElement(new Point(2, 3), new Point(12, 8));
-            var d    = line.DistanceFromElement(new Point(x, y), out var loc);
+            var d    = line.DistanceFromElement(new Point(x, y), out var loc, out _);
             Assert.Equal(dist, d, 10);
             Assert.Equal(locExpected, loc, 10);
         }

@@ -9,7 +9,7 @@ namespace iSukces.DrawingPanel.Paths
 {
     public interface IPathElement : ILineCollider
     {
-        double DistanceFromElement(Point point, out double distanceFromStart);
+        double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction);
         Point GetEndPoint();
         Vector GetEndVector();
         double GetLength();

@@ -19,10 +19,10 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        public double DistanceFromElement(Point point, out double distanceFromStart)
+        public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
         {
             var v = _vector.NormalizeFast();
-
+            direction = _unitVector;
             var vToBegin = point - _start;
             var loc      = v * vToBegin;
             if (loc <= 0)
