@@ -49,7 +49,7 @@ namespace iSukces.DrawingPanel.Paths
                 Center      = center.Value,
                 Start       = a,
                 End         = b,
-                StartVector = va,
+                StartVector = va
             };
             c.RadiusStart = c.Start - c.Center;
             c.RadiusEnd   = c.End - c.Center;
@@ -277,8 +277,16 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
-        public Vector StartVector { get; set; }
-
+        public Vector StartVector
+        {
+            get => _startVector;
+            set
+            {
+                const ArcFlags arcFlags = ~ArcFlags.HasDirection;
+                _startVector =  value;
+                _flags       &= arcFlags;
+            }
+        }
 
         public Point Start
         {
@@ -286,7 +294,7 @@ namespace iSukces.DrawingPanel.Paths
             set
             {
                 _start = value;
-                const ArcFlags arcFlags = ~(ArcFlags.HasChord);
+                const ArcFlags arcFlags = ~ArcFlags.HasChord;
                 _flags &= arcFlags;
             }
         }
@@ -421,6 +429,7 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
+        private Vector _startVector;
 
         [Flags]
         private enum ArcFlags : byte
