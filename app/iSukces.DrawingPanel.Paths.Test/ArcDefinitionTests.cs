@@ -17,7 +17,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 Center      = center,
                 Start       = center + new Vector(50, 0),
-                StartVector = new Vector(0, yOfStart),
+                DirectionStart = new Vector(0, yOfStart),
                 End         = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
@@ -42,12 +42,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 Center      = center,
                 Start       = center + new Vector(50, 0),
-                StartVector = new Vector(0, yOfStart),
+                DirectionStart = new Vector(0, yOfStart),
                 End         = center + v
             };
             arc.UpdateRadiusVectors();
 
-            var end = arc.EndVector;
+            var end = arc.DirectionEnd;
             Assert.Equal(expectedX, end.X, 6);
             Assert.Equal(expectedY, end.Y, 6);
         }
@@ -80,7 +80,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 Center      = center,
                 Start       = center + new Vector(50, 0),
-                StartVector = new Vector(0, yOfStart),
+                DirectionStart = new Vector(0, yOfStart),
                 End         = center + v
             };
             arc.UpdateRadiusVectors();
@@ -96,7 +96,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 Center      = center,
                 Start       = center + new Vector(50, 0),
-                StartVector = new Vector(0, 0),
+                DirectionStart = new Vector(0, 0),
                 End         = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
@@ -112,7 +112,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 Center      = center,
                 Start       = center + new Vector(50, 0),
-                StartVector = new Vector(0, 0),
+                DirectionStart = new Vector(0, 0),
                 End         = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
@@ -128,7 +128,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 Center      = center,
                 Start       = center + new Vector(50, 0),
-                StartVector = new Vector(0, 0),
+                DirectionStart = new Vector(0, 0),
                 End         = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();

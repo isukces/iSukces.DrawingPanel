@@ -19,7 +19,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 Center      = center,
                 Start       = start,
-                StartVector = startV,
+                DirectionStart = startV,
                 End         = end,
                 RadiusStart = start - center,
                 RadiusEnd   = end - center
@@ -50,7 +50,7 @@ namespace iSukces.DrawingPanel.Paths
                 Center      = center.Value,
                 Start       = a,
                 End         = b,
-                StartVector = va
+                DirectionStart = va
             };
             c.RadiusStart = c.Start - c.Center;
             c.RadiusEnd   = c.End - c.Center;
@@ -70,11 +70,11 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     case Three.Below:
                         distanceFromStart = 0;
-                        direction         = StartVector;
+                        direction         = DirectionStart;
                         return (point - Start).Length;
                     case Three.Above:
                         distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
-                        direction         = EndVector;
+                        direction         = DirectionEnd;
                         return (point - End).Length;
                     default:
                         var vLength = v.Length;
@@ -101,11 +101,11 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     case Three.Below:
                         distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
-                        direction         = EndVector;
+                        direction         = DirectionEnd;
                         return (point - End).Length;
                     case Three.Above:
                         distanceFromStart = 0;
-                        direction         = StartVector;
+                        direction         = DirectionStart;
                         return (point - Start).Length;
                     default:
                         var vLength = v.Length;
@@ -132,7 +132,7 @@ namespace iSukces.DrawingPanel.Paths
                 Center       = Center,
                 RadiusStart  = RadiusEnd,
                 RadiusEnd    = RadiusStart,
-                StartVector  = EndVector,
+                DirectionStart  = DirectionEnd,
                 Start        = End,
                 End          = Start,
                 _flags       = _flags & mask,
@@ -151,7 +151,7 @@ namespace iSukces.DrawingPanel.Paths
 
         Point IPathElement.GetEndPoint() { return End; }
 
-        Vector IPathElement.GetEndVector() { return EndVector; }
+        Vector IPathElement.GetEndVector() { return DirectionEnd; }
 
         public double GetLength() { return Radius * Angle * MathEx.DEGTORAD; }
 
@@ -177,7 +177,7 @@ namespace iSukces.DrawingPanel.Paths
 
         Point IPathElement.GetStartPoint() { return Start; }
 
-        Vector IPathElement.GetStartVector() { return StartVector; }
+        Vector IPathElement.GetStartVector() { return DirectionStart; }
 
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
@@ -292,7 +292,7 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
-        public Vector EndVector
+        public Vector DirectionEnd
         {
             get
             {
@@ -302,12 +302,12 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
-        public Vector StartVector
+        public Vector DirectionStart
         {
-            get => _startVectorVector;
+            get => _directionStart;
             set
             {
-                _startVectorVector =  value;
+                _directionStart =  value;
                 _flags       &= ChangedStartVector;
             }
         }
@@ -375,7 +375,7 @@ namespace iSukces.DrawingPanel.Paths
 
                 _flags |= ArcFlags.HasDirection;
 
-                var dotStart = Vector.CrossProduct(RadiusStart, StartVector);
+                var dotStart = Vector.CrossProduct(RadiusStart, DirectionStart);
                 if (dotStart < 0)
                 {
                     //_direction= ArcDirection.Clockwise; // MathematicalMinus
@@ -451,7 +451,7 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
-        private Vector _startVectorVector;
+        private Vector _directionStart;
 
         [Flags]
         private enum ArcFlags : byte

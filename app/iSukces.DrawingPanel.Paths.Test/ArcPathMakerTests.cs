@@ -104,14 +104,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(182.157302401683, 0, arc.Center);
             AssertEx.Equal(0, 0, arc.Start);
             AssertEx.Equal(14.5149272916306, 71.2552937382106, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(9.53186739891266, arc.Angle, 6);
             AssertEx.Equal(-153.127447818422, 142.510587476421, arc.Center);
             AssertEx.Equal(14.5149272916306, 71.2552937382106, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(71.2552937382106, 167.642375110052, arc.StartVector);
+            AssertEx.Equal(71.2552937382106, 167.642375110052, arc.DirectionStart);
 
             #endregion
         }
@@ -148,14 +148,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(177.127447818422, -42.5105874764212, arc.Center);
             AssertEx.Equal(0, 0, arc.Start);
             AssertEx.Equal(9.48507270836939, 28.7447062617894, arc.End);
-            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.StartVector);
+            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(23.0276006797085, arc.Angle, 6);
             AssertEx.Equal(-158.157302401683, 100, arc.Center);
             AssertEx.Equal(9.48507270836939, 28.7447062617894, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(71.2552937382106, 167.642375110052, arc.StartVector);
+            AssertEx.Equal(71.2552937382106, 167.642375110052, arc.DirectionStart);
 
             #endregion
         }
@@ -192,14 +192,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(110.166666666667, 0, arc.Center);
             AssertEx.Equal(0, 0, arc.Start);
             AssertEx.Equal(12, 50, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(26.9914665615916, arc.Angle, 6);
             AssertEx.Equal(-86.1666666666667, 100, arc.Center);
             AssertEx.Equal(12, 50, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(50, 98.1666666666667, arc.StartVector);
+            AssertEx.Equal(50, 98.1666666666667, arc.DirectionStart);
 
             #endregion
         }
@@ -238,14 +238,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(55.59375, 8, arc.Center);
             AssertEx.Equal(0, 8, arc.Start);
             AssertEx.Equal(12, 42.5, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(38.3580160516214, arc.Angle, 6);
             AssertEx.Equal(-31.59375, 77, arc.Center);
             AssertEx.Equal(12, 42.5, arc.Start);
             AssertEx.Equal(24, 77, arc.End);
-            AssertEx.Equal(34.5, 43.59375, arc.StartVector);
+            AssertEx.Equal(34.5, 43.59375, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[3];
             AssertEx.Equal(24, 77, 24, 100, line, 6);
 
@@ -288,21 +288,21 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(108.645667217427, 24.6450398678176, arc.Center);
             AssertEx.Equal(0, 24.6450398678176, arc.Start);
             AssertEx.Equal(3, 50, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(26.648817803621, arc.Angle, 6);
             AssertEx.Equal(49.0382984801056, 38.9508083647747, arc.Center);
             AssertEx.Equal(3, 50, arc.Start);
             AssertEx.Equal(12.8463295794419, 69.4754041823873, arc.End);
-            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.StartVector);
+            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[3];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(40.1445510844168, arc.Angle, 6);
             AssertEx.Equal(-23.3456393212218, 100, arc.Center);
             AssertEx.Equal(12.8463295794419, 69.4754041823873, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(30.5245958176127, 36.1919689006637, arc.StartVector);
+            AssertEx.Equal(30.5245958176127, 36.1919689006637, arc.DirectionStart);
 
             #endregion
         }
@@ -342,7 +342,7 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(108.645667217427, 24.6450398678176, arc.Center);
             AssertEx.Equal(0, 24.6450398678176, arc.Start);
             AssertEx.Equal(3, 50, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[2];
             AssertEx.Equal(3, 50, 8.2495358548225, 71.8730660617604, line, 6);
             arc = (ArcDefinition)pathResult.Elements[3];
@@ -351,7 +351,7 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(65.9829543856344, 58.0170456143655, arc.Center);
             AssertEx.Equal(8.2495358548225, 71.8730660617604, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.StartVector);
+            AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.DirectionStart);
             #endregion
 
         }
@@ -390,28 +390,28 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(-44.3392850337163, 8, arc.Center);
             AssertEx.Equal(0, 8, arc.Start);
             AssertEx.Equal(-2.45727541086164, 22.5557365753935, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(36.0631097587287, arc.Angle, 6);
             AssertEx.Equal(39.424734211993, 37.1114731507869, arc.Center);
             AssertEx.Equal(-2.45727541086164, 22.5557365753935, arc.Start);
             AssertEx.Equal(-3, 50, arc.End);
-            AssertEx.Equal(-14.5557365753935, 41.8820096228546, arc.StartVector);
+            AssertEx.Equal(-14.5557365753935, 41.8820096228546, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[3];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(48.0542648883617, arc.Angle, 6);
             AssertEx.Equal(20.2720279459373, 42.9300168265507, arc.Center);
             AssertEx.Equal(-3, 50, arc.Start);
             AssertEx.Equal(9.97488792735364, 64.9650084132753, arc.End);
-            AssertEx.Equal(0.290679627319485, 0.956820439926638, arc.StartVector);
+            AssertEx.Equal(0.290679627319485, 0.956820439926638, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[4];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(64.9529135823999, arc.Angle, 6);
             AssertEx.Equal(-0.322252091230002, 87, arc.Center);
             AssertEx.Equal(9.97488792735364, 64.9650084132753, arc.Start);
             AssertEx.Equal(24, 87, arc.End);
-            AssertEx.Equal(22.0349915867246, 10.2971400185836, arc.StartVector);
+            AssertEx.Equal(22.0349915867246, 10.2971400185836, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[5];
             AssertEx.Equal(24, 87, 24, 100, line, 6);
 
@@ -451,14 +451,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(-127.5625, 0, arc.Center);
             AssertEx.Equal(0, 0, arc.Start);
             AssertEx.Equal(-2, 22.5, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(10.1592157200291, arc.Angle, 6);
             AssertEx.Equal(123.5625, 45, arc.Center);
             AssertEx.Equal(-2, 22.5, arc.Start);
             AssertEx.Equal(-4, 45, arc.End);
-            AssertEx.Equal(-22.5, 125.5625, arc.StartVector);
+            AssertEx.Equal(-22.5, 125.5625, arc.DirectionStart);
             var line = (LinePathElement)pathResult.Elements[2];
             AssertEx.Equal(-4, 45, -4, 55, line, 6);
             arc = (ArcDefinition)pathResult.Elements[3];
@@ -467,14 +467,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(21.0803571428571, 55, arc.Center);
             AssertEx.Equal(-4, 55, arc.Start);
             AssertEx.Equal(10, 77.5, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[4];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(63.7815836036914, arc.Angle, 6);
             AssertEx.Equal(-1.08035714285714, 100, arc.Center);
             AssertEx.Equal(10, 77.5, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(22.5, 11.0803571428571, arc.StartVector);
+            AssertEx.Equal(22.5, 11.0803571428571, arc.DirectionStart);
 
             #endregion
         }
@@ -515,14 +515,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(-86.5625, 8, arc.Center);
             AssertEx.Equal(0, 8, arc.Start);
             AssertEx.Equal(-2, 26.5, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(12.3403501900592, arc.Angle, 6);
             AssertEx.Equal(82.5625, 45, arc.Center);
             AssertEx.Equal(-2, 26.5, arc.Start);
             AssertEx.Equal(-4, 45, arc.End);
-            AssertEx.Equal(-18.5, 84.5625, arc.StartVector);
+            AssertEx.Equal(-18.5, 84.5625, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[3];
             AssertEx.Equal(-4, 45, -4, 55, line, 6);
             arc = (ArcDefinition)pathResult.Elements[4];
@@ -531,14 +531,14 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(12.1428571428571, 55, arc.Center);
             AssertEx.Equal(-4, 55, arc.Start);
             AssertEx.Equal(10, 71, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[5];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(82.3718503314193, arc.Angle, 6);
             AssertEx.Equal(7.85714285714286, 87, arc.Center);
             AssertEx.Equal(10, 71, arc.Start);
             AssertEx.Equal(24, 87, arc.End);
-            AssertEx.Equal(16, 2.14285714285714, arc.StartVector);
+            AssertEx.Equal(16, 2.14285714285714, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[6];
             AssertEx.Equal(24, 87, 24, 100, line, 6);
 
@@ -579,56 +579,56 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(-57.25, 0, arc.Center);
             AssertEx.Equal(0, 0, arc.Start);
             AssertEx.Equal(-2, 15, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(15.1892867371829, arc.Angle, 6);
             AssertEx.Equal(53.25, 30, arc.Center);
             AssertEx.Equal(-2, 15, arc.Start);
             AssertEx.Equal(-4, 30, arc.End);
-            AssertEx.Equal(-15, 55.25, arc.StartVector);
+            AssertEx.Equal(-15, 55.25, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(15.369129137677, arc.Angle, 6);
             AssertEx.Equal(-21.7489076300842, 30, arc.Center);
             AssertEx.Equal(-4, 30, arc.Start);
             AssertEx.Equal(-4.63473030343775, 34.7041105953583, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[3];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(37.1705386240288, arc.Angle, 6);
             AssertEx.Equal(12.4794470232087, 39.4082211907165, arc.Center);
             AssertEx.Equal(-4.63473030343775, 34.7041105953583, arc.Start);
             AssertEx.Equal(-4, 46, arc.End);
-            AssertEx.Equal(-4.70411059535825, 17.1141773266465, arc.StartVector);
+            AssertEx.Equal(-4.70411059535825, 17.1141773266465, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[4];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(37.1705386240288, arc.Angle, 6);
             AssertEx.Equal(-17.3895507063571, 51.3558202825428, arc.Center);
             AssertEx.Equal(-4, 46, arc.Start);
             AssertEx.Equal(-3.48428162845683, 55.1779101412714, arc.End);
-            AssertEx.Equal(0.371390676354104, 0.928476690885259, arc.StartVector);
+            AssertEx.Equal(0.371390676354104, 0.928476690885259, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[5];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(15.369129137677, arc.Angle, 6);
             AssertEx.Equal(10.4209874494435, 59, arc.Center);
             AssertEx.Equal(-3.48428162845683, 55.1779101412714, arc.Start);
             AssertEx.Equal(-4, 59, arc.End);
-            AssertEx.Equal(-3.82208985872858, 13.9052690779003, arc.StartVector);
+            AssertEx.Equal(-3.82208985872858, 13.9052690779003, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[6];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(68.6604343910067, arc.Angle, 6);
             AssertEx.Equal(18.0089285714286, 59, arc.Center);
             AssertEx.Equal(-4, 59, arc.Start);
             AssertEx.Equal(10, 79.5, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[7];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(68.6604343910066, arc.Angle, 6);
             AssertEx.Equal(1.99107142857143, 100, arc.Center);
             AssertEx.Equal(10, 79.5, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
-            AssertEx.Equal(20.5, 8.00892857142857, arc.StartVector);
+            AssertEx.Equal(20.5, 8.00892857142857, arc.DirectionStart);
 
             #endregion
         }
@@ -672,28 +672,28 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(12.4697414496494, 180.445896853598, tmp2.Center);
             AssertEx.Equal(48.6807545920352, 42.764462268262, tmp2.Start);
             AssertEx.Equal(72.4059869199376, 51.3139434834134, tmp2.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, tmp2.StartVector);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, tmp2.DirectionStart);
             tmp2 = (ArcDefinition)pathResult.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, tmp2.Direction);
             Assert.Equal(10.1628320353855, tmp2.Angle, 6);
             AssertEx.Equal(132.342232390226, -77.8180098867709, tmp2.Center);
             AssertEx.Equal(72.4059869199376, 51.3139434834134, tmp2.Start);
             AssertEx.Equal(96.13121924784, 59.8634246985647, tmp2.End);
-            AssertEx.Equal(129.131953370184, 59.9362454702882, tmp2.StartVector);
+            AssertEx.Equal(129.131953370184, 59.9362454702882, tmp2.DirectionStart);
             tmp2 = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.Clockwise, tmp2.Direction);
             Assert.Equal(9.89825381378978, tmp2.Angle, 6);
             AssertEx.Equal(134.298784365829, -85.2572075082957, tmp2.Center);
             AssertEx.Equal(96.13121924784, 59.8634246985647, tmp2.Start);
             AssertEx.Equal(121.645462813705, 64.2642102647222, tmp2.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, tmp2.StartVector);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, tmp2.DirectionStart);
             tmp2 = (ArcDefinition)pathResult.Elements[3];
             Assert.Equal(ArcDirection.CounterClockwise, tmp2.Direction);
             Assert.Equal(9.89825381378978, tmp2.Angle, 6);
             AssertEx.Equal(108.992141261582, 213.78562803774, tmp2.Center);
             AssertEx.Equal(121.645462813705, 64.2642102647222, tmp2.Start);
             AssertEx.Equal(147.159706379571, 68.6649958308797, tmp2.End);
-            AssertEx.Equal(149.521417773018, 12.6533215521237, tmp2.StartVector);
+            AssertEx.Equal(149.521417773018, 12.6533215521237, tmp2.DirectionStart);
 
             pathResult = result.Segments[1];
             AssertEx.Equal(147.159706379571, 68.6649958308797, pathResult.Start);
@@ -748,56 +748,56 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(-31.25, 8, arc.Center);
             AssertEx.Equal(0, 8, arc.Start);
             AssertEx.Equal(-2, 19, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[2];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(20.6096929375321, arc.Angle, 6);
             AssertEx.Equal(27.25, 30, arc.Center);
             AssertEx.Equal(-2, 19, arc.Start);
             AssertEx.Equal(-4, 30, arc.End);
-            AssertEx.Equal(-11, 29.25, arc.StartVector);
+            AssertEx.Equal(-11, 29.25, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[3];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(15.369129137677, arc.Angle, 6);
             AssertEx.Equal(-21.7489076300842, 30, arc.Center);
             AssertEx.Equal(-4, 30, arc.Start);
             AssertEx.Equal(-4.63473030343775, 34.7041105953583, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[4];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(37.1705386240288, arc.Angle, 6);
             AssertEx.Equal(12.4794470232087, 39.4082211907165, arc.Center);
             AssertEx.Equal(-4.63473030343775, 34.7041105953583, arc.Start);
             AssertEx.Equal(-4, 46, arc.End);
-            AssertEx.Equal(-4.70411059535825, 17.1141773266465, arc.StartVector);
+            AssertEx.Equal(-4.70411059535825, 17.1141773266465, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[5];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(37.1705386240288, arc.Angle, 6);
             AssertEx.Equal(-17.3895507063571, 51.3558202825428, arc.Center);
             AssertEx.Equal(-4, 46, arc.Start);
             AssertEx.Equal(-3.48428162845683, 55.1779101412714, arc.End);
-            AssertEx.Equal(0.371390676354104, 0.928476690885259, arc.StartVector);
+            AssertEx.Equal(0.371390676354104, 0.928476690885259, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[6];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(15.369129137677, arc.Angle, 6);
             AssertEx.Equal(10.4209874494435, 59, arc.Center);
             AssertEx.Equal(-3.48428162845683, 55.1779101412714, arc.Start);
             AssertEx.Equal(-4, 59, arc.End);
-            AssertEx.Equal(-3.82208985872858, 13.9052690779003, arc.StartVector);
+            AssertEx.Equal(-3.82208985872858, 13.9052690779003, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[7];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(90, arc.Angle, 6);
             AssertEx.Equal(10, 59, arc.Center);
             AssertEx.Equal(-4, 59, arc.Start);
             AssertEx.Equal(10, 73, arc.End);
-            AssertEx.Equal(0, 1, arc.StartVector);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
             arc = (ArcDefinition)pathResult.Elements[8];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(90, arc.Angle, 6);
             AssertEx.Equal(10, 87, arc.Center);
             AssertEx.Equal(10, 73, arc.Start);
             AssertEx.Equal(24, 87, arc.End);
-            AssertEx.Equal(14, 0, arc.StartVector);
+            AssertEx.Equal(14, 0, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[9];
             AssertEx.Equal(24, 87, 24, 100, line, 6);
 

@@ -285,14 +285,14 @@ namespace iSukces.DrawingPanel.Paths
             if (!isOk) return null;
             
             var arc1 = precompute.Arc1;
-            var dot = Start.Vector * arc1.StartVector;
+            var dot = Start.Vector * arc1.DirectionStart;
             if (dot <= 0) return null;
             
             var arc2 = precompute.Arc2;
-            dot = End.Vector * arc2.EndVector;
+            dot = End.Vector * arc2.DirectionEnd;
             if (dot <= 0) return null;
             
-            dot = arc1.EndVector * arc2.StartVector;
+            dot = arc1.DirectionEnd * arc2.DirectionStart;
             if (dot <= 0) return null;
             
             return new ZeroReferencePointPathCalculatorResult(ResultKind.TwoArcs)

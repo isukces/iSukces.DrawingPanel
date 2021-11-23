@@ -81,8 +81,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 var v1 = c.RadiusStart;
                 var v2 = c.RadiusEnd;
 
-                var dot1 = Vector.CrossProduct(v1, c.StartVector);
-                var dot2 = Vector.CrossProduct(v2, c.EndVector);
+                var dot1 = Vector.CrossProduct(v1, c.DirectionStart);
+                var dot2 = Vector.CrossProduct(v2, c.DirectionEnd);
 
                 var angle1 = v1.AngleMinusY();
                 var angle2 = v2.AngleMinusY();

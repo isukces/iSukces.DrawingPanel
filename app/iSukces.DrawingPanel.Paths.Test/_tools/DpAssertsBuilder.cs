@@ -121,7 +121,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Add(c.Center, name + nameof(c.Center));
                 Add(c.Start, name + nameof(c.Start));
                 Add(c.End, name + nameof(c.End));
-                Add(c.StartVector, name + nameof(c.StartVector));
+                Add(c.DirectionStart, name + nameof(c.DirectionStart));
             }
         }
         

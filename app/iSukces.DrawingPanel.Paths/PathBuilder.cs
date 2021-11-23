@@ -20,9 +20,9 @@ namespace iSukces.DrawingPanel.Paths
         {
             bool CheckDot(ArcDefinition arc)
             {
-                var dot = arc.StartVector * start.Vector;
+                var dot = arc.DirectionStart * start.Vector;
                 if (dot <= 0) return false;
-                dot = arc.EndVector * end.Vector;
+                dot = arc.DirectionEnd * end.Vector;
                 if (dot <= 0) return false;
                 return true;
             }

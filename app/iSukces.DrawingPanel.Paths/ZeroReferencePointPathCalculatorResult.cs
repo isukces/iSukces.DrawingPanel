@@ -99,7 +99,7 @@ namespace iSukces.DrawingPanel.Paths
                     case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
                         var line = Arc1.Start - Start;
                         if (line.LengthSquared < PathBase.LengthEpsilonSquare)
-                            return Arc1.StartVector;
+                            return Arc1.DirectionStart;
                         return line;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -118,12 +118,12 @@ namespace iSukces.DrawingPanel.Paths
                     case ZeroReferencePointPathCalculator.ResultKind.OneArc:
                         var line = End - Arc1.End;
                         if (line.LengthSquared < PathBase.LengthEpsilonSquare)
-                            return Arc1.EndVector;
+                            return Arc1.DirectionEnd;
                         return line;
                     case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
                         line = End - Arc2.End;
                         if (line.LengthSquared < PathBase.LengthEpsilonSquare)
-                            return Arc2.EndVector;
+                            return Arc2.DirectionEnd;
                         return line;
                     default:
                         throw new ArgumentOutOfRangeException();

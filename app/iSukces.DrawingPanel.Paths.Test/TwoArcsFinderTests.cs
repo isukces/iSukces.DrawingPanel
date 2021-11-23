@@ -35,7 +35,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(12.2901109624214, 181.128887497343, arc1.Center);
             AssertEx.Equal(48.5777405281936, 43.1561421153959, arc1.Start);
             AssertEx.Equal(72.3288626195387, 51.7124324879845, arc1.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc1.StartVector);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc1.DirectionStart);
 
             #endregion
 
@@ -48,7 +48,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(132.367614276656, -77.7040225213743, arc2.Center);
             AssertEx.Equal(72.3288626195387, 51.7124324879845, arc2.Start);
             AssertEx.Equal(96.0799847108837, 60.2687228605731, arc2.End);
-            AssertEx.Equal(129.416455009359, 60.0387516571173, arc2.StartVector);
+            AssertEx.Equal(129.416455009359, 60.0387516571173, arc2.DirectionStart);
 
             #endregion
         }

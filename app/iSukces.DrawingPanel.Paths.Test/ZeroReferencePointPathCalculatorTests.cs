@@ -38,7 +38,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(33.6452056050077, 6.97638373975939, tmp1.Center);
             AssertEx.Equal(25.7067179799099, 22.853358989955, tmp1.Start);
             AssertEx.Equal(33.6452056050077, 24.7273817080189, tmp1.End);
-            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
+            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.DirectionStart);
 
             #endregion
         }
@@ -70,7 +70,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-7.22810211151334, -25.5437957769733, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(-7.22810211151334, 3.01503610336888, tmp1.End);
-            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
+            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.DirectionStart);
             AssertEx.Equal(-7.22810211151334, 3.01503610336888, 32.3955742033012, 3.01503610336888,
                 (LinePathElement)r.Elements[1], 6);
 
@@ -105,14 +105,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-43.5791698455339, 47.1583396910677, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(1.59358273869592, 19.9681084124149, tmp1.End);
-            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
+            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.DirectionStart);
             tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(58.9555653001939, tmp1.Angle, 6);
             AssertEx.Equal(46.7663353229257, -7.22212286623781, tmp1.Center);
             AssertEx.Equal(1.59358273869592, 19.9681084124149, tmp1.Start);
             AssertEx.Equal(46.7663353229257, 45.5025037613891, tmp1.End);
-            AssertEx.Equal(27.1902312786528, 45.1727525842298, tmp1.StartVector);
+            AssertEx.Equal(27.1902312786528, 45.1727525842298, tmp1.DirectionStart);
 
             #endregion
         }
@@ -145,14 +145,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-6.50490416315376, -26.9901916736925, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(15.8273191869863, -6.69586097598819, tmp1.End);
-            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
+            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.DirectionStart);
             tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
             Assert.Equal(47.7371157374093, tmp1.Angle, 6);
             AssertEx.Equal(38.1595425371264, 13.5984697217161, tmp1.Center);
             AssertEx.Equal(15.8273191869863, -6.69586097598819, tmp1.Start);
             AssertEx.Equal(38.1595425371264, -16.5774819323465, tmp1.End);
-            AssertEx.Equal(20.2943306977043, -22.3322233501401, tmp1.StartVector);
+            AssertEx.Equal(20.2943306977043, -22.3322233501401, tmp1.DirectionStart);
 
             #endregion
         }
@@ -186,14 +186,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(-28.4641809484453, 16.9283618968905, tmp1.Center);
             AssertEx.Equal(-20, 0, tmp1.Start);
             AssertEx.Equal(-10.8533245119608, 23.8615812943749, tmp1.End);
-            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.StartVector);
+            AssertEx.Equal(0.894427190999916, 0.447213595499958, tmp1.DirectionStart);
             tmp1 = (ArcDefinition)r.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, tmp1.Direction);
             Assert.Equal(202.833538562328, tmp1.Angle, 6);
             AssertEx.Equal(6.75753192452358, 30.7948006918593, tmp1.Center);
             AssertEx.Equal(-10.8533245119608, 23.8615812943749, tmp1.Start);
             AssertEx.Equal(25.6788054191289, 30.3507230156981, tmp1.End);
-            AssertEx.Equal(-6.93321939748438, 17.6108564364844, tmp1.StartVector);
+            AssertEx.Equal(-6.93321939748438, 17.6108564364844, tmp1.DirectionStart);
 
             #endregion
         }
@@ -323,14 +323,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(73.7175574338968, -52.4304144711244, arc.Center);
             AssertEx.Equal(48.4263988788461, 43.731573001926, arc.Start);
             AssertEx.Equal(79.5217552484192, 46.8322765237993, arc.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.StartVector);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.DirectionStart);
             arc = (ArcDefinition)result.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
             Assert.Equal(18.0818631776401, arc.Angle, 6);
             AssertEx.Equal(85.3259530629415, 146.094967518723, arc.Center);
             AssertEx.Equal(79.5217552484192, 46.8322765237993, arc.Start);
             AssertEx.Equal(110.617111617992, 49.9329800456726, arc.End);
-            AssertEx.Equal(99.2626909949237, -5.80419781452231, arc.StartVector);
+            AssertEx.Equal(99.2626909949237, -5.80419781452231, arc.DirectionStart);
 
             #endregion
         }
@@ -369,7 +369,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(92.4067468110961, 78.1206826679612, tmp1.Center);
             AssertEx.Equal(92.4060793129459, 78.1644302883346, tmp1.Start);
             AssertEx.Equal(92.4399586788274, 78.1491654993499, tmp1.End);
-            AssertEx.Equal(0.999883618099045, 0.0152561547305979, tmp1.StartVector);
+            AssertEx.Equal(0.999883618099045, 0.0152561547305979, tmp1.DirectionStart);
             var tmp2 = (LinePathElement)result.Elements[1];
             AssertEx.Equal(92.4399586788274, 78.1491654993499, 112.537192869915, 54.7151650444631, tmp2, 6);
 
@@ -411,14 +411,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(92.6525221347156, 62.0126446885604, tmp1.Center);
             AssertEx.Equal(92.4060793129459, 78.1644302883346, tmp1.Start);
             AssertEx.Equal(108.725830597366, 63.6218889801372, tmp1.End);
-            AssertEx.Equal(0.999883618099045, 0.0152561547305979, tmp1.StartVector);
+            AssertEx.Equal(0.999883618099045, 0.0152561547305979, tmp1.DirectionStart);
             tmp1 = (ArcDefinition)result.Elements[1];
             Assert.Equal(ArcDirection.CounterClockwise, tmp1.Direction);
             Assert.Equal(34.8993756995524, tmp1.Angle, 6);
             AssertEx.Equal(124.799139060016, 65.2311332717139, tmp1.Center);
             AssertEx.Equal(108.725830597366, 63.6218889801372, tmp1.Start);
             AssertEx.Equal(112.537192869915, 54.7151650444631, tmp1.End);
-            AssertEx.Equal(1.60924429157672, -16.0733084626502, tmp1.StartVector);
+            AssertEx.Equal(1.60924429157672, -16.0733084626502, tmp1.DirectionStart);
 
             #endregion
         }
@@ -464,7 +464,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(44.2561848497048, 59.5875516182215, arc.Center);
             AssertEx.Equal(48.5777405281936, 43.1561421153959, arc.Start);
             AssertEx.Equal(54.4158283720046, 45.9695964424139, arc.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.StartVector);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.DirectionStart);
             arc = (ArcDefinition)result.Elements[1];
             Assert.Equal(ArcDirection.Clockwise, arc.Direction);
             Assert.Equal(21.988025927212, arc.Angle, 6);
@@ -472,7 +472,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(64.5754718943044, 32.3516412666062, arc.Center);
             AssertEx.Equal(54.4158283720046, 45.9695964424139, arc.Start);
             AssertEx.Equal(60.2535562090918, 48.7829560813658, arc.End);
-            AssertEx.Equal(13.6179551758077, 10.1596435222998, arc.StartVector);
+            AssertEx.Equal(13.6179551758077, 10.1596435222998, arc.DirectionStart);
 
             #endregion
         }
