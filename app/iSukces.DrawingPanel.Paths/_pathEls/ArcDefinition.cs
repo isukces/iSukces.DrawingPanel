@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
@@ -75,10 +76,10 @@ namespace iSukces.DrawingPanel.Paths
                         return (point - End).Length;
                     default:
                         var vLength = v.Length;
+                        var radius = Radius;
 
-                        distanceFromStart = angleMinusStart * PathsMathUtils.DegreesToRadians * Radius;
-
-                        var dist = vLength - Radius;
+                        distanceFromStart = angleMinusStart * PathsMathUtils.DegreesToRadians * radius;
+                        var dist = vLength - radius;
                         if (dist < 0)
                             dist = -dist;
                         return dist;
@@ -103,10 +104,12 @@ namespace iSukces.DrawingPanel.Paths
                         return (point - Start).Length;
                     default:
                         var vLength = v.Length;
+                        var radius  = Radius;
 
-                        distanceFromStart = (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * Radius;
+                        distanceFromStart =
+                            (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * radius;
 
-                        var dist = vLength - Radius;
+                        var dist = vLength - radius;
                         if (dist < 0)
                             dist = -dist;
                         return dist;
@@ -226,9 +229,31 @@ namespace iSukces.DrawingPanel.Paths
         /// <param name="radius"></param>
         public void UseRadius(double radius)
         {
-            _flags  |= ArcFlags.HasRadius;
+            _flags |= ArcFlags.HasRadius;
+            if (_radius.Equals(radius))
+                return;
             _radius =  radius;
+            _flags  &= ~ChangedRadius;
         }
+
+
+        private const ArcFlags ChangedStart = ~ArcFlags.HasChord;
+
+        private const ArcFlags ChangedEnd = ~ArcFlags.HasChord;
+
+        private const ArcFlags ChangedRadius = ~ArcFlags.HasSagitta;
+
+
+        private const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
+                                                | ArcFlags.HasAngle
+                                                | ArcFlags.HasRadius
+                                                | ArcFlags.HasStartAngle);
+
+        private const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasDirection | ArcFlags.HasAngle);
+
+        private const ArcFlags ChangedStartVector = ~(ArcFlags.HasDirection
+                                                | ArcFlags.HasAngle
+                                                | ArcFlags.HasDirection);
 
         public double Radius
         {
@@ -238,6 +263,7 @@ namespace iSukces.DrawingPanel.Paths
                     return _radius;
                 _flags  |= ArcFlags.HasRadius;
                 _radius =  RadiusStart.Length;
+                _flags  &= ~ChangedRadius;
                 return _radius;
             }
         }
@@ -247,9 +273,8 @@ namespace iSukces.DrawingPanel.Paths
             get => _radiusEnd;
             set
             {
-                const ArcFlags flags = ~(ArcFlags.HasDirection | ArcFlags.HasAngle);
                 _radiusEnd =  value;
-                _flags     &= flags;
+                _flags     &= ChangedRadiusEnd;
             }
         }
 
@@ -258,12 +283,8 @@ namespace iSukces.DrawingPanel.Paths
             get => _radiusStart;
             set
             {
-                const ArcFlags arcFlags = ~(ArcFlags.HasDirection
-                                            | ArcFlags.HasAngle
-                                            | ArcFlags.HasRadius
-                                            | ArcFlags.HasStartAngle);
                 _radiusStart =  value;
-                _flags       &= arcFlags;
+                _flags       &= ChangedRadiusStart;
             }
         }
 
@@ -282,9 +303,8 @@ namespace iSukces.DrawingPanel.Paths
             get => _startVector;
             set
             {
-                const ArcFlags arcFlags = ~ArcFlags.HasDirection;
                 _startVector =  value;
-                _flags       &= arcFlags;
+                _flags       &= ChangedStartVector;
             }
         }
 
@@ -293,9 +313,8 @@ namespace iSukces.DrawingPanel.Paths
             get => _start;
             set
             {
-                _start = value;
-                const ArcFlags arcFlags = ~ArcFlags.HasChord;
-                _flags &= arcFlags;
+                _start =  value;
+                _flags &= ChangedStart;
             }
         }
 
@@ -304,9 +323,8 @@ namespace iSukces.DrawingPanel.Paths
             get => _end;
             set
             {
-                _end = value;
-                const ArcFlags arcFlags = ~(ArcFlags.HasChord);
-                _flags &= arcFlags;
+                _end   =  value;
+                _flags &= ChangedEnd;
             }
         }
 
