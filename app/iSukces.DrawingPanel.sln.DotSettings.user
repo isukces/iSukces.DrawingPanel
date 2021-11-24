@@ -9,11 +9,11 @@
     &lt;TestId&gt;xUnit::F4807205-D0D4-46CD-85E7-D43B7A04A20B::.NETFramework,Version=v4.8::iSukces.DrawingPanel.Paths.Test.ZeroReferencePointPathCalculatorTests.T99e_Should_compute_practical_case&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=922be036_002Df2e5_002D4f12_002Dbf70_002Dc4240bfb71c8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="T99e_Should_compute_practical_case #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=922be036_002Df2e5_002D4f12_002Dbf70_002Dc4240bfb71c8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="T99e_Should_compute_practical_case #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::F4807205-D0D4-46CD-85E7-D43B7A04A20B::.NETFramework,Version=v4.8::iSukces.DrawingPanel.Paths.Test.ZeroReferencePointPathCalculatorTests.T99e_Should_compute_practical_case&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c3c19403_002De126_002D4c20_002D88cb_002Da6bb9ca6ca17/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c3c19403_002De126_002D4c20_002D88cb_002Da6bb9ca6ca17/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

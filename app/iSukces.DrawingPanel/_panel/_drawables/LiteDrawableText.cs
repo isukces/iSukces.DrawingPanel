@@ -150,6 +150,8 @@ namespace iSukces.DrawingPanel
             }
         }
 
+        public SizeF GetLastMeasure() { return _measure; }
+
         public bool IsInside(Point point, double tolerance)
         {
             if (_text is null || _areas is null)
