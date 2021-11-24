@@ -1,4 +1,19 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=42922e85_002Da68f_002D4fef_002Db811_002D7ded1ab12262/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="T99e_Should_compute_practical_case" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::F4807205-D0D4-46CD-85E7-D43B7A04A20B::.NETFramework,Version=v4.8::iSukces.DrawingPanel.Paths.Test.ZeroReferencePointPathCalculatorTests.T99e_Should_compute_practical_case&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5036658c_002D8365_002D425e_002D8e7f_002D4ffc76365992/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="T99e_Should_compute_practical_case #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::F4807205-D0D4-46CD-85E7-D43B7A04A20B::.NETFramework,Version=v4.8::iSukces.DrawingPanel.Paths.Test.ZeroReferencePointPathCalculatorTests.T99e_Should_compute_practical_case&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=922be036_002Df2e5_002D4f12_002Dbf70_002Dc4240bfb71c8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="T99e_Should_compute_practical_case #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::F4807205-D0D4-46CD-85E7-D43B7A04A20B::.NETFramework,Version=v4.8::iSukces.DrawingPanel.Paths.Test.ZeroReferencePointPathCalculatorTests.T99e_Should_compute_practical_case&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c3c19403_002De126_002D4c20_002D88cb_002Da6bb9ca6ca17/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

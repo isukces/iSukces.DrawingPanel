@@ -4,6 +4,7 @@
 ![](Zero01_practical_case_B.png)
 ![](Zero01_practical_case_C.png)
 ![](Zero01_practical_case_D.png)
+![](Zero01_practical_case_E.png)
 ![](Zero02_arc_right27+line.png)
 ![](Zero03_two_arcs_left32+right59.png)
 ![](Zero04_two_arcs_right74+left48.png)

@@ -63,7 +63,8 @@ namespace iSukces.DrawingPanel.Paths
 
             var re = new TwoArcsFinderPrecompute(this)
             {
-                AIsZero = aIsZero,
+                AIsZero   = aIsZero,
+                MaxRadius = double.MaxValue
             };
 
             if (aIsZero || a == 0)

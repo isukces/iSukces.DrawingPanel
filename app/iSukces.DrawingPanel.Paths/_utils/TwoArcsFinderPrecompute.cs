@@ -1,10 +1,10 @@
-using System;
-using JetBrains.Annotations;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -23,9 +23,20 @@ namespace iSukces.DrawingPanel.Paths
             _owner_EndDirection      = finder.EndDirection;
         }
 
+
         public bool UpdateCompute(bool useSmallerRadius, [CanBeNull] IMinRadiusPathValidator pathValidator)
         {
             var radius = useSmallerRadius ? Radius1 : Radius2;
+            if (radius > 0)
+            {
+                if (radius > MaxRadius)
+                    return false;
+            }
+            else
+            {
+                if (-radius > MaxRadius)
+                    return false;
+            }
 
             if (pathValidator != null)
             {
@@ -79,21 +90,23 @@ namespace iSukces.DrawingPanel.Paths
             Arc2.UseRadius(radius);
             return true;
         }
- 
+
+        public double MaxRadius { get; set; }
+        
+        private readonly PathRay _owner_EndCenterSearch;
+        private readonly Vector _owner_EndDirection;
+        private readonly PathRay _owner_StartCenterSearch;
+        private readonly Vector _owner_StartDirection;
+        private bool _radiusNotEqual;
 
         public bool AIsZero;
+        public ArcDefinition Arc1;
+        public ArcDefinition Arc2;
 
         public double Radius1;
         public double Radius2;
 
         public double SumX;
         public double SumY;
-        public ArcDefinition Arc1;
-        public ArcDefinition Arc2;
-        private bool _radiusNotEqual;
-        private readonly PathRay _owner_StartCenterSearch;
-        private readonly PathRay _owner_EndCenterSearch;
-        private readonly Vector _owner_StartDirection;
-        private readonly Vector _owner_EndDirection;
     }
 }

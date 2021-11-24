@@ -1,15 +1,16 @@
-﻿using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
-
 #else
 using System.Windows;
 #endif
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
+    [DebuggerDisplay("{GetCreationCode()}")]
     public struct PathRay
     {
         [JsonConstructor]
@@ -53,11 +54,15 @@ namespace iSukces.DrawingPanel.Paths
             var crossPoint = l1.CrossWith(l2);
             return crossPoint;
         }
+        
+        internal string GetCreationCode()
+        {
+            return $"new PathRay({Point.X.Str()}, {Point.Y.Str()}, {Vector.X.Str()}, {Vector.Y.Str()})";
+        }
 
         public Vector Vector { get; }
 
         public Point Point { get; }
-
 
         public LineEquationNotNormalized GetLine()
         {

@@ -476,5 +476,38 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             #endregion
         }
+        
+        [Fact]
+        public void T99e_Should_compute_practical_case()
+        {
+            var start   = new PathRay(210.04500045312099, 51.503293867406498, 1.3164304296921898, 4.8238134365739569);
+            var end = new PathRay(224.71768300472499, 105.268122033596, 14.672682551603998, 53.764828166189503);
+
+            var validator = new MinimumValuesPathValidator(3, 0.001);
+            var result =
+                (ZeroReferencePointPathCalculatorLineResult)ZeroReferencePointPathCalculator.Compute(
+                    start, end, validator);
+
+            new ResultDrawerConfig
+            {
+                Start  = start,
+                End    = end,
+                Result = result,
+                Title  = MakeTitle(1, "practical case E"),
+                Flags  = ResultDrawerConfigFlags.ReverseEndMarker
+            }.Draw();
+
+            var code = new DpAssertsBuilder().Create(result, nameof(result));
+ 
+            #region Asserts
+            AssertEx.Equal(210.045000453121, 51.5032938674065, result.Start);
+            AssertEx.Equal(224.717683004725, 105.268122033596, result.End);
+            Assert.Single(result.Elements);
+            var line = (LinePathElement)result.Elements[0];
+            AssertEx.Equal(210.045000453121, 51.5032938674065, 224.717683004725, 105.268122033596, line, 6);
+            #endregion
+
+        }
+        
     }
 }

@@ -10,5 +10,8 @@ namespace iSukces.DrawingPanel.Paths
 
         public static double UseLineWhenDistanceLowerThan = 1e-5;
         public static bool CheckRadius;
+
+
+        public static double MinimumLinearEquationSystemDeterminantToUseLine = 1e-5;
     }
 }

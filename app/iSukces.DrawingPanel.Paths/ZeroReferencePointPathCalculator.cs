@@ -1,13 +1,15 @@
-﻿using System.Runtime.CompilerServices;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Diagnostics;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
+    [DebuggerDisplay("{GetCreationCode()}")]
     public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalculator
     {
         ZeroReferencePointPathCalculator() { }
@@ -43,7 +45,7 @@ namespace iSukces.DrawingPanel.Paths
                 End       = end,
                 Validator = validator
             };
-            return x.TryTwo(null, true);
+            return x.TryTwo(null, true, double.MaxValue);
         }
 
 
@@ -51,53 +53,57 @@ namespace iSukces.DrawingPanel.Paths
         {
             Start = Start.Normalize();
             End   = End.Normalize();
-            var l1    = Start.GetLine();
-            var l2    = End.GetLine();
-            var cross = PathsMathUtils.CrossNormalized(l1, l2);
+            var lStart   = Start.GetLine();
+            var lEnd     = End.GetLine();
+            var endBegin = (End.Point - Start.Point);
+
+            var endBeginLengthSquared = endBegin.LengthSquared;
+            if (endBeginLengthSquared == 0)
+            {
+                var result = new ZeroReferencePointPathCalculatorResult(ResultKind.Point)
+                {
+                    Start = Start.Point,
+                    End   = End.Point
+                };
+                return result;
+            }
+            var maxRadius = endBeginLengthSquared / (8 * PathCalculationConfig.MaximumSagitta);
+
+            var cross     = PathsMathUtils.CrossNormalized(lStart, lEnd, out var determinant);
+            {
+                var dist = PathCalculationConfig.UseLineWhenDistanceLowerThan;
+                {
+                    var d1 = Math.Abs(lStart.DistanceNotNormalized(End.Point));
+                    var d2 = Math.Abs(lEnd.DistanceNotNormalized(Start.Point));
+                    if (d1 < dist && d2 < dist)
+                    {
+                        return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);
+                    }
+
+                    if (d1 == 0)
+                    {
+                        cross = End.Point;
+                    }
+                    else if (d2 == 0)
+                    {
+                        cross = Start.Point;
+                    }
+                }
+            }
+
+
+
             // var cross = Start.Cross(End);
             if (cross is null)
             {
-                var a = (End.Point - Start.Point);
-                if (a.LengthSquared == 0)
-                {
-                    var result = new ZeroReferencePointPathCalculatorResult(ResultKind.Point)
-                    {
-                        Start = Start.Point,
-                        End   = End.Point
-                    };
-                    return result;
-                }
-
+ 
                 var isSmall =
-                    PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.MaximumSagitta);
+                    PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(endBegin, Start.Vector,
+                        PathCalculationConfig.MaximumSagitta);
 
                 if (isSmall)
                     return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);
-                return TryTwo(null, false);
-            }
-            else
-            {
-                var a = (End.Point - Start.Point);
-                if (a.LengthSquared == 0)
-                {
-                    var result = new ZeroReferencePointPathCalculatorResult(ResultKind.Point)
-                    {
-                        Start = Start.Point,
-                        End   = End.Point
-                    };
-                    return result;
-                }
-
-                /*
-                var startVector = Start.Vector.NormalizeFast();
-                var endVector   = End.Vector.NormalizeFast();
-                var aa          = a.NormalizeFast();
-
-                var isSmall =
-                    MathUtils.IsAngleBetweenSmallEnoughtBasedOnH(a, Start.Vector, PathCalculationConfig.MaximumSagitta);
-                    */
-                
-                
+                return TryTwo(null, false, double.MaxValue); 
             }
 
             var one = TryOne(cross.Value);
@@ -112,7 +118,31 @@ namespace iSukces.DrawingPanel.Paths
                     };
             }
 
-            return TryTwo(null, false);
+            var a=  TryTwo(null, false, maxRadius);
+            if (a is null)
+            {
+                if (determinant.AbsLessThan(PathCalculationConfig.MinimumLinearEquationSystemDeterminantToUseLine))
+                {
+                    return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);
+                }
+            }
+
+            return a;
+        }
+
+        string GetCreationCode()
+        {
+            var    a = Start.GetCreationCode();
+            var    b = End.GetCreationCode();
+            string c;
+            if (Validator is null)
+                c = "null";
+            else if (Validator is MinimumValuesPathValidator minimumValuesPathValidator)
+                c = minimumValuesPathValidator.GetCreationCode();
+            else
+                c = "???";
+
+            return $"new ZeroReferencePointPathCalculator{{ Start = {a}, End = {b}, Validator = {c} }}";
         }
 
         public override void InitDemo()
@@ -121,7 +151,6 @@ namespace iSukces.DrawingPanel.Paths
             End   = new PathRay(new Point(100, 20), new Vector(-100, 100));
         }
 
- 
 
         public override void SetReferencePoint(Point p, int nr) { }
 
@@ -209,13 +238,8 @@ namespace iSukces.DrawingPanel.Paths
             return null;
         }
 
-        private ZeroReferencePointPathCalculatorResult TryTwo(ArcDefinition one, bool normalize)
+        private ZeroReferencePointPathCalculatorResult TryTwo(ArcDefinition one, bool normalize, double maxRadius)
         {
-            /*var toCompare = one;
-            if (toCompare != null)
-                if (toCompare.RadiusStart.Length <= 3) // todo: why 3?
-                    toCompare = null;*/
-
             if (normalize)
             {
                 Start = Start.Normalize();
@@ -239,10 +263,11 @@ namespace iSukces.DrawingPanel.Paths
                     bestResult = r;
                 }
             }
-            
+
             var finder = new TwoArcsFinder();
             finder.UpdateFromPoints(Start, End, false);
             var prec = finder.Compute();
+            prec.MaxRadius = maxRadius;
 
             var sol1 = TryTwoArcsSolution(prec, false);
             CheckAndAdd(sol1);
@@ -252,10 +277,10 @@ namespace iSukces.DrawingPanel.Paths
                 CheckAndAdd(sol2);
             }
 
-
             //finder = new TwoArcsFinder();
             finder.UpdateFromPoints(Start, End, true);
-            prec = finder.Compute();
+            prec           = finder.Compute();
+            prec.MaxRadius = maxRadius;
 
             var sol3 = TryTwoArcsSolution(prec, false);
             CheckAndAdd(sol3);
@@ -281,20 +306,20 @@ namespace iSukces.DrawingPanel.Paths
         private ZeroReferencePointPathCalculatorResult TryTwoArcsSolution(
             TwoArcsFinderPrecompute precompute, bool useSmallerRadius)
         {
-            var isOk =precompute.UpdateCompute(useSmallerRadius, Validator as IMinRadiusPathValidator);
+            var isOk = precompute.UpdateCompute(useSmallerRadius, Validator as IMinRadiusPathValidator);
             if (!isOk) return null;
-            
+
             var arc1 = precompute.Arc1;
-            var dot = Start.Vector * arc1.DirectionStart;
+            var dot  = Start.Vector * arc1.DirectionStart;
             if (dot <= 0) return null;
-            
+
             var arc2 = precompute.Arc2;
             dot = End.Vector * arc2.DirectionEnd;
             if (dot <= 0) return null;
-            
+
             dot = arc1.DirectionEnd * arc2.DirectionStart;
             if (dot <= 0) return null;
-            
+
             return new ZeroReferencePointPathCalculatorResult(ResultKind.TwoArcs)
             {
                 Arc1  = arc1,
@@ -306,8 +331,8 @@ namespace iSukces.DrawingPanel.Paths
 
         public IPathValidator Validator { get; set; }
 
-        
-#if DEBUG && USE_TINYEXPR        
+
+#if DEBUG && USE_TINYEXPR
         public string DebugCreate
         {
             get
