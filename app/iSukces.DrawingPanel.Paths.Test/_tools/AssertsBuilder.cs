@@ -69,9 +69,20 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         protected void AssertEmpty(string name) { Assert("Empty", name); }
 
+
+        protected void AssertEqualBool(bool expected, string expression)
+        {
+            if (expected)
+                AssertTrue(expression);
+            else
+                AssertFalse(expression);
+        }
         protected void AssertEqual(params string[] x) { Assert("Equal", x); }
 
         protected void AssertExEqual(params string[] a) { WriteLine("AssertEx.Equal(" + string.Join(", ", a) + ");"); }
+        protected void AssertTrue(string a) { WriteLine("Assert.True(" + a + ");"); }
+        protected void AssertFalse(string a) { WriteLine("Assert.False(" + a + ");"); }
+        
 
         protected void AssertList<T>(IReadOnlyList<T> a, string name, Action<T, string, Type> itemAssert,
             bool resolveRealType)

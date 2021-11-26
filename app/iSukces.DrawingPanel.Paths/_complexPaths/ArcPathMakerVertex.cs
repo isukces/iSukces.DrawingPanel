@@ -21,19 +21,19 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
-        private static IReadOnlyList<PathRay> DeepClone(IReadOnlyList<PathRay> refs)
+        private static IReadOnlyList<WayPoint> DeepClone(IReadOnlyList<WayPoint> refs)
         {
             if (refs is null)
                 return null;
             if (refs.Count == 0)
-                return Array.Empty<PathRay>();
-            var result = new PathRay[refs.Count];
+                return Array.Empty<WayPoint>();
+            var result = new WayPoint[refs.Count];
             switch (refs)
             {
-                case PathRay[] refsArray:
+                case WayPoint[] refsArray:
                     Array.Copy(refsArray, result, refsArray.Length);
                     break;
-                case ICollection<PathRay> collection: 
+                case ICollection<WayPoint> collection: 
                     collection.CopyTo(result, 0);
                     break;
                 default:
@@ -117,7 +117,7 @@ namespace iSukces.DrawingPanel.Paths
             return WithOutVector(new Vector(x, y));
         }
 
-        public ArcPathMakerVertex WithReferencePoints(params PathRay[] refs)
+        public ArcPathMakerVertex WithReferencePoints(params WayPoint[] refs)
         {
             ReferencePoints = refs;
             return this;
@@ -134,7 +134,7 @@ namespace iSukces.DrawingPanel.Paths
         public double OutArmLength { get; set; }
 
         public FlexiPathMakerItem2Flags Flags           { get; private set; }
-        public IReadOnlyList<PathRay>   ReferencePoints { get; set; }
+        public IReadOnlyList<WayPoint>  ReferencePoints { get; set; }
         private Vector _inVector;
         private Vector _outVector;
     }

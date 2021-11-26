@@ -1,72 +1,79 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
-    internal sealed  class ArcPathSegmentMaker
+    internal sealed class ArcPathSegmentMaker
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IPathResult Handle0()
         {
+            IPathResult ComputeCommon()
+            {
+                var pathResult = ZeroReferencePointPathCalculator.Compute(_start, _end, Validator);
+                if (pathResult is null)
+                    throw new NotImplementedException();
+                return pathResult;
+            }
+
             if (_inArmLengthPlus || _outArmLengthPlus)
             {
                 var builder = new PathBuilder(_start.Point, Validator);
                 NormalizeVectorsAndMovePoints();
-
-                var r = ZeroReferencePointPathCalculator.Compute(_start, _end, Validator);
-                if (r is null)
-                    throw new NotImplementedException();
+                var r = ComputeCommon();
                 ArcPathMaker.Add(builder, r);
                 return builder.LineToAndCreate(Point.Location);
             }
             else
             {
-                var r = ZeroReferencePointPathCalculator.Compute(_start, _end, Validator);
-                if (r is null)
-                    throw new NotImplementedException();
+                var r = ComputeCommon();
                 return r;
             }
         }
 
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IPathResult Handle1()
         {
-            var refs = Point.ReferencePoints;
+            var refs     = Point.ReferencePoints;
+            var wayPoint = refs[0];
+            if (wayPoint.UseInputVector)
+                return Handle3AndMore();
+
+            
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [NotNull]
+            IPathResult ComputeCommon()
+            {
+                var calculator = new OneReferencePointPathCalculator
+                {
+                    Start     = _start,
+                    End       = _end.WithInvertedVector(),
+                    Reference = wayPoint.Ray
+                };
+                var pathResult = calculator.Compute(Validator);
+                if (pathResult is null)
+                    throw new NotImplementedException();
+                return pathResult;
+            }
+
             if (_inArmLengthPlus || _outArmLengthPlus)
             {
                 var builder = new PathBuilder(_start.Point, Validator);
                 NormalizeVectorsAndMovePoints();
-
-                var calculator = new OneReferencePointPathCalculator
-                {
-                    Start     = _start,
-                    End       = _end.WithInvertedVector(),
-                    Reference = refs[0]
-                };
-                var r = calculator.Compute(Validator);
-                if (r is null)
-                    throw new NotImplementedException();
+                var r = ComputeCommon();
                 ArcPathMaker.Add(builder, r);
                 return builder.LineToAndCreate(Point.Location);
             }
-            else
+
             {
-                var calculator = new OneReferencePointPathCalculator
-                {
-                    Start     = _start,
-                    End       = _end.WithInvertedVector(),
-                    Reference = refs[0]
-                };
-                var r = calculator.Compute(Validator);
-                if (r is null)
-                    throw new NotImplementedException();
+                var r = ComputeCommon();
                 return r;
             }
         }
@@ -75,34 +82,40 @@ namespace iSukces.DrawingPanel.Paths
         private IPathResult Handle2()
         {
             var refs = Point.ReferencePoints;
+            var wp0  = refs[0];
+            if (wp0.UseInputVector)
+                return Handle3AndMore();
+            var wp1 = refs[1];
+            if (wp1.UseInputVector)
+                return Handle3AndMore();
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            [NotNull]
+            IPathResult ComputeCommon()
+            {
+                var pathResult = new TwoReferencePointsPathCalculator
+                {
+                    Start      = _start,
+                    End        = _end.WithInvertedVector(),
+                    Reference1 = wp0.Ray,
+                    Reference2 = wp1.Ray
+                }.Compute(Validator);
+                if (pathResult is null)
+                    throw new NotImplementedException();
+                return pathResult;
+            }
+
             if (_inArmLengthPlus || _outArmLengthPlus)
             {
                 var builder = new PathBuilder(_start.Point, Validator);
                 NormalizeVectorsAndMovePoints();
-
-                var r = new TwoReferencePointsPathCalculator
-                {
-                    Start      = _start,
-                    End        = _end.WithInvertedVector(),
-                    Reference1 = refs[0],
-                    Reference2 = refs[1]
-                }.Compute(Validator);
-                if (r is null)
-                    throw new NotImplementedException();
+                var r = ComputeCommon();
                 ArcPathMaker.Add(builder, r);
                 return builder.LineToAndCreate(Point.Location);
             }
             else
             {
-                var r = new TwoReferencePointsPathCalculator
-                {
-                    Start      = _start,
-                    End        = _end.WithInvertedVector(),
-                    Reference1 = refs[0],
-                    Reference2 = refs[1]
-                }.Compute(Validator);
-                if (r is null)
-                    throw new NotImplementedException();
+                var r = ComputeCommon();
                 return r;
             }
         }
@@ -113,21 +126,23 @@ namespace iSukces.DrawingPanel.Paths
             var refs    = Point.ReferencePoints;
             var builder = new PdPathBuilder(_start.Point, Validator);
 
-           
-
             if (_inArmLengthPlus || _outArmLengthPlus)
             {
                 NormalizeVectorsAndMovePoints();
             }
 
-            var last = refs[0];
-            builder.AddFlexi(_start, last);
+            PathRay last;
+            {
+                var wayPoint = refs[0];
+                last = wayPoint.Ray;
+                builder.AddFlexi(_start, wayPoint.GetInputRay());
+            }
 
             for (var index = 1; index < refs.Count; index++)
             {
                 var t = refs[index];
-                builder.AddFlexi(last, t);
-                last = t;
+                builder.AddFlexi(last, t.GetInputRay());
+                last = t.Ray;
             }
 
             builder.AddFlexi(last, _end);
@@ -153,18 +168,18 @@ namespace iSukces.DrawingPanel.Paths
             if ((Flags & SegmentFlags.BothVectors) != SegmentFlags.BothVectors)
             {
                 var dir = Point.Location - PreviousPoint.Location;
-                if (_anyArm)
-                    dir.Normalize();
+                //if (_anyArm)
+                    dir = dir.NormalizeFast();
                 if ((Flags & SegmentFlags.HasStartVector) == 0)
                 {
                     _normalizationFlags &= ~NormalizationFlags.NormalizeStartVector;
-                    _startVector       =  dir;
+                    _startVector        =  dir;
                 }
 
                 if ((Flags & SegmentFlags.HasEndVector) == 0)
                 {
                     _normalizationFlags &= ~NormalizationFlags.NormalizeEndVector;
-                    _endVector         =  dir;
+                    _endVector          =  dir;
                 }
             }
 
@@ -216,11 +231,11 @@ namespace iSukces.DrawingPanel.Paths
         private Vector _endVector;
         private double _inArmLength;
         private bool _inArmLengthPlus;
+        private NormalizationFlags _normalizationFlags;
         private double _outArmLength;
         private bool _outArmLengthPlus;
         private PathRay _start;
         private Vector _startVector;
-        private NormalizationFlags _normalizationFlags;
 
 
         public SegmentFlags Flags;
@@ -235,7 +250,7 @@ namespace iSukces.DrawingPanel.Paths
             : base(currentPoint, validator)
         {
         }
-        
+
         /*[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(PathRay st, PathRay en)
         {

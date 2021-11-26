@@ -93,6 +93,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r    = ArcPathMakerVertexMover.Move(list, 1);
             var code = new DpAssertsBuilder().Create(r, nameof(r));
+            
             #region Asserts
             Assert.Equal(2, r.Count);
             var tmp1 = r[0];
@@ -107,9 +108,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(0, 0, tmp1.OutVector);
             Assert.Equal(FlexiPathMakerItem2Flags.HasInVector, tmp1.Flags);
             Assert.Single(tmp1.ReferencePoints);
-            var ray = tmp1.ReferencePoints[0];
-            AssertEx.Equal(7, 12, 0, 0, ray);
+            var waypoint = tmp1.ReferencePoints[0];
+            AssertEx.Equal(7, 12, 0, 0, waypoint.Ray);
+            Assert.False(waypoint.UseInputVector);
+            AssertEx.Equal(0, 0, waypoint.InputVector);
             #endregion
+
 
 
         }
@@ -125,6 +129,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             };
             var r    = ArcPathMakerVertexMover.Move(list, 1);
             var code = new DpAssertsBuilder().Create(r, nameof(r));
+            
             #region Asserts
             Assert.Equal(3, r.Count);
             var tmp1 = r[0];
@@ -145,9 +150,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(0, 0, tmp1.OutVector);
             Assert.Equal(FlexiPathMakerItem2Flags.HasInVector, tmp1.Flags);
             Assert.Single(tmp1.ReferencePoints);
-            var ray = tmp1.ReferencePoints[0];
-            AssertEx.Equal(7, 11.5, 0, 0, ray);
+            var waypoint = tmp1.ReferencePoints[0];
+            AssertEx.Equal(7, 11.5, 0, 0, waypoint.Ray);
+            Assert.False(waypoint.UseInputVector);
+            AssertEx.Equal(0, 0, waypoint.InputVector);
             #endregion
+
         }
         
         [Fact]

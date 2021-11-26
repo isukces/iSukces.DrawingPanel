@@ -15,6 +15,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                     return "arc";
                 if (type == typeof(LinePathElement))
                     return "line";
+                if (type == typeof(WayPoint))
+                    return "waypoint";
                 
                 
                 

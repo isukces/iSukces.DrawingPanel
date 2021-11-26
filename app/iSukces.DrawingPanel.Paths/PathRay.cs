@@ -1,11 +1,11 @@
-﻿#if NET5_0
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -54,7 +54,7 @@ namespace iSukces.DrawingPanel.Paths
             var crossPoint = l1.CrossWith(l2);
             return crossPoint;
         }
-        
+
         internal string GetCreationCode()
         {
             return $"new PathRay({Point.X.Str()}, {Point.Y.Str()}, {Vector.X.Str()}, {Vector.Y.Str()})";
@@ -101,21 +101,6 @@ namespace iSukces.DrawingPanel.Paths
 
         public PathRay WithPoint(Point point) { return new PathRay(point, Vector); }
 
-        public bool HasValidVector()
-        {
-            var vector = Vector;
-            var x      = vector.X;
-            if (double.IsNaN(x))
-                return false;
-            var y = vector.Y;
-            if (double.IsNaN(y))
-                return false;
-            if (y != 0)
-                return true;
-
-            if (x != 0)
-                return true;
-            return false;
-        }
+        public bool HasValidVector() { return Vector.IsValidVector(); }
     }
 }

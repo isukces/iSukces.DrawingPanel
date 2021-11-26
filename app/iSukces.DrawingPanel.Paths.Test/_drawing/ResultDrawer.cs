@@ -65,6 +65,67 @@ namespace iSukces.DrawingPanel.Paths.Test
             }, path);
         }
 
+        public static void Draw(ArcPathSegmentMaker x, IPathResult r, TestName name,
+            [CallerFilePath] string path = null)
+        {
+            var start = x.PreviousPoint;
+            var end = x.Point;
+            
+            void ExtraDraw2(ResultDrawer g)
+            {
+                /*var crossNullable = x.Start.Cross(x.End);
+                if (!crossNullable.HasValue) return;
+                var cross = crossNullable.Value;
+                var dot   = (cross - x.Start.Point) * x.Start.Vector;
+                if (dot < 0)
+                    return;
+                dot = (cross - x.End.Point) * x.End.Vector;
+                if (dot < 0)
+                    return;
+
+                using var pen = new Pen(Color.Aqua, 1)
+                {
+                    DashStyle = DashStyle.DashDot
+                };
+                var p1 = g.Map(x.Start.Point);
+                var p2 = g.Map(x.End.Point);
+                var p3 = g.Map(cross);
+                g.Graph.DrawPolygon(pen, new[] { p1, p2, p3, p1 });*/
+            }
+
+            void ExtraDraw(ResultDrawer g)
+            {
+                foreach (var i in x.Point.ReferencePoints)
+                {
+                    g.DrawCircleWithVector(i.Ray, true);
+                    // g.DrawCircleWithVector(x.Reference, true);
+                }
+                  
+                ExtraDraw2(g);
+            }
+
+            IEnumerable<Point> ExtraPoints()
+            {
+                yield return start.Location;
+                yield return end.Location;
+                foreach (var i in x.Point.ReferencePoints)
+                {
+                    yield return i.Ray.Point;
+                }
+            }
+
+            // ReSharper disable once ExplicitCallerInfoArgument
+            Draw(new ResultDrawerConfig
+            {
+                Start              = new PathRay(start.Location, start.OutVector),
+                End                = new PathRay(end.Location, -end.InVector),
+                Result             = r,
+                Title              = name,
+                ExtraPoints        = ExtraPoints,
+                ExtraDrawingBottom = ExtraDraw
+            }, path);
+        }
+
         public static void Draw(ResultDrawerConfig cfg, [CallerFilePath] string path = null)
         {
             if (cfg.Result is null)
@@ -236,6 +297,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 yield return _cfg.Start.Point;
                 yield return _cfg.End.Point;
             }
+
             XRange = new MinMax();
             YRange = new MinMax();
             foreach (var i in scan())

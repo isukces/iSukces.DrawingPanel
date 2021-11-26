@@ -34,9 +34,18 @@ namespace iSukces.DrawingPanel.Paths.Test
         
         private void Add(Point p, string name) { AssertExEqual(p.X.ToCs(), p.Y.ToCs(), name); }
 
+     
+        
         private void Add(PathRay p, string name)
         {
             AssertExEqual(p.Point.X.ToCs(), p.Point.Y.ToCs(), p.Vector.X.ToCs(), p.Vector.Y.ToCs(), name);
+        }
+
+        private void Add(WayPoint p, string name)
+        {
+            Add(p.Ray, name+".Ray");
+            AssertEqualBool(p.UseInputVector, name + "." + nameof(p.UseInputVector));
+            Add(p.InputVector, name + "." + nameof(p.InputVector));
         }
 
         private void Add(Vector p, string name) { AssertExEqual(p.X.ToCs(), p.Y.ToCs(), name); }
@@ -249,6 +258,11 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
         private void AssertPoint(PathRay expected, string expression, Type type)
+        {
+            Add(expected, expression);
+        }
+        
+        private void AssertPoint(WayPoint expected, string expression, Type type)
         {
             Add(expected, expression);
         }

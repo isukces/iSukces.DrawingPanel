@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test
@@ -18,7 +19,20 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(FlexiPathMakerItem2Flags.None, r.Flags);
             Assert.Single(r.ReferencePoints);
             var ray = r.ReferencePoints[0];
-            AssertEx.Equal(3, 1, 0, 0, ray);
+            
+            
+            #region Asserts
+            AssertEx.Equal(1, 2, r.Location);
+            AssertEx.Equal(0, 0, r.InVector);
+            AssertEx.Equal(0, 0, r.OutVector);
+            Assert.Equal(FlexiPathMakerItem2Flags.None, r.Flags);
+            Assert.Single(r.ReferencePoints);
+            var tmp1 = r.ReferencePoints[0];
+            AssertEx.Equal(3, 1, 0, 0, tmp1.Ray);
+            Assert.False(tmp1.UseInputVector);
+            AssertEx.Equal(0, 0, tmp1.InputVector);
+            #endregion
+
             #endregion
 
 

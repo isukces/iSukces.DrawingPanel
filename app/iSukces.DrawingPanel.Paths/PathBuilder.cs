@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
@@ -100,6 +101,12 @@ namespace iSukces.DrawingPanel.Paths
                     return;
                 default: throw new NotSupportedException();
             }
+        }
+
+        public void AddZeroReference(PathRay start, PathRay end)
+        {
+            IPathResult z = ZeroReferencePointPathCalculator.Compute(start, end, Validator);
+            AddZ(start, end, z);
         }
 
         public void ArcTo(ArcDefinition arc)

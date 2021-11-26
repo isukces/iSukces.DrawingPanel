@@ -116,6 +116,22 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 #endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsValidVector(this Vector vector)
+        {
+            var x = vector.X;
+            if (double.IsNaN(x))
+                return false;
+            var y = vector.Y;
+            if (double.IsNaN(y))
+                return false;
+            if (y != 0)
+                return true;
+
+            if (x != 0)
+                return true;
+            return false;
+        }
     }
     
 }

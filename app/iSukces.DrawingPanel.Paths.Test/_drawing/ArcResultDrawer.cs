@@ -102,7 +102,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             var drawArrows = refs.Count > 2;
             for (var ii = 0; ii < refs.Count; ii++)
             {
-                var refPoint = refs[ii];
+                var refPoint = refs[ii].Ray;
                 a = Map(refPoint.Point);
                 Graph.FillEllipse(Brushes.Olive, a.X - Radius, a.Y - Radius, Radius * 2, Radius * 2);
                 if (drawArrows)
