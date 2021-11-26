@@ -68,9 +68,22 @@ namespace Sample.Paths
             var strings = doubles.Select(x => x.ToInv());
             var args    = string.Join(", ", strings);
             return $"new PathRay({args})";
+        }    
+        
+        private static string Get(PathRayWithArm ray)
+        {
+            var a1 = $"new Point({Math.Round(ray.Point.X, 5).ToInv()}, {Math.Round(ray.Point.Y, 5).ToInv()})";
+            var a2 = $"new Vector({ray.Vector.X.ToInv()}, {ray.Vector.Y.ToInv()})";
+            var a3 = ray.ArmLength.ToInv();
+            return $"new {nameof(PathRayWithArm)}({a1}, {a2}, {a3})";
         }
 
         private static string GetWithNoVector(PathRay ray)
+        {
+            ray = ray.With(new Vector(0, 0));
+            return Get(ray);
+        }
+        private static string GetWithNoVector(PathRayWithArm ray)
         {
             ray = ray.With(new Vector(0, 0));
             return Get(ray);

@@ -9,7 +9,6 @@ namespace iSukces.DrawingPanel.Paths
         {
             if (result is null)
                 return;
-            // pm.LineTo(result.Start);
             foreach (var i in result.Elements)
             {
                 switch (i)
@@ -33,18 +32,18 @@ namespace iSukces.DrawingPanel.Paths
             if (Vertices is null || Vertices.Count < 2)
                 return null;
             Init();
-            var a = new ArcPathSegmentMaker
+            var sm = new ArcPathSegmentMaker
             {
                 PreviousPoint = Vertices[0]
             };
             for (var idx = 1; idx < Vertices.Count; idx++)
             {
-                a.Point      = Vertices[idx];
-                a.Validator = GetPathValidator?.Invoke(idx);
-                a.Flags = _segmentFlags[idx];
-                var r     = a.MakeItem();
-                _pathResults.Add(r);
-                a.PreviousPoint = a.Point;
+                sm.Point     = Vertices[idx];
+                sm.Validator = GetPathValidator?.Invoke(idx);
+                sm.Flags     = _segmentFlags[idx];
+                var result = sm.MakeItem();
+                _pathResults.Add(result);
+                sm.PreviousPoint = sm.Point;
             }
 
             return new ArcPathMakerResult(_pathResults);

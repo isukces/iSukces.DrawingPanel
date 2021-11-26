@@ -124,6 +124,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
         }
 
+        public void DrawCircleWithVector(PathRayWithArm r, bool isShort = false)
+        {
+            DrawCircleWithVector(r.Point, r.Vector, isShort);
+        }
 
         public void DrawCircleWithVector(PathRay r, bool isShort = false)
         {

@@ -84,7 +84,7 @@ namespace iSukces.DrawingPanel.Paths
                         var dist = vLength - radius;
                         if (dist < 0)
                             dist = -dist;
-                        direction = v.GetPrependicular(true);
+                        direction = v.GetPrependicular();
                         return dist;
                 }
             }

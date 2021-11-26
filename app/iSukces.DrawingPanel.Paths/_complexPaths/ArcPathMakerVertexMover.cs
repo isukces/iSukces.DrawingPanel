@@ -158,7 +158,7 @@ namespace iSukces.DrawingPanel.Paths
                 for (var i = 0; i < rr.Length; i++)
                 {
                     var src                     = rr[i];
-                    var v                       = src.Ray.Point - previous[index - 1];
+                    var v                       = src.Point - previous[index - 1];
                     var vPrependiculatToSegment = Vector.CrossProduct(prevSegmentVector, v);
                     var vAlongSegment           = v * prevSegmentVector2;
 
@@ -167,7 +167,7 @@ namespace iSukces.DrawingPanel.Paths
                     var vvv         = vx + vy;
                     var newLocation = newSegmentBegin + vvv;
 
-                    rr[i] = src.Ray.WithPoint(newLocation);
+                    rr[i] = src.OutputRay.WithPoint(newLocation);
                 }
 
                 vertex.ReferencePoints = rr;

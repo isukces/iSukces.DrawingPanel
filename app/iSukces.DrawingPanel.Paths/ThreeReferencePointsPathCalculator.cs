@@ -19,6 +19,7 @@ namespace iSukces.DrawingPanel.Paths
         {
             var builder = new PathBuilder(Start.Point);
 
+        
             void Add(PathRay st, PathRay en)
             {
                 var s = ZeroReferencePointPathCalculator.Compute(st, en, validator);
@@ -35,17 +36,17 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-            Add(Start, Reference1);
+            Add(Start.GetRay(), Reference1);
             Add(Reference1, Reference2);
             Add(Reference2, Reference3);
-            Add(Reference3, End.WithInvertedVector());
+            Add(Reference3, End.GetRay().WithInvertedVector());
             return builder.LineToAndCreate(End.Point);
         }
 
         public override void InitDemo()
         {
-            Start      = new PathRay(new Point(-20, 0), new Vector(200, 100));
-            End        = new PathRay(new Point(100, 0), new Vector(-100, 100));
+            Start      = new PathRayWithArm(new Point(-20, 0), new Vector(200, 100));
+            End        = new PathRayWithArm(new Point(100, 0), new Vector(-100, 100));
             Reference1 = new PathRay(new Point(40, 20), new Vector(1, 0));
             Reference2 = new PathRay(new Point(50, 20), new Vector(1, 0.1));
             Reference3 = new PathRay(new Point(70, 18), new Vector(1, 0));

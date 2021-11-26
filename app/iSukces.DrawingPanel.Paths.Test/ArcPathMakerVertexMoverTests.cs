@@ -109,7 +109,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(FlexiPathMakerItem2Flags.HasInVector, tmp1.Flags);
             Assert.Single(tmp1.ReferencePoints);
             var waypoint = tmp1.ReferencePoints[0];
-            AssertEx.Equal(7, 12, 0, 0, waypoint.Ray);
+            AssertEx.Equal(7, 12, 0, 0, 0, waypoint.OutputRay);
             Assert.False(waypoint.UseInputVector);
             AssertEx.Equal(0, 0, waypoint.InputVector);
             #endregion
@@ -151,7 +151,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(FlexiPathMakerItem2Flags.HasInVector, tmp1.Flags);
             Assert.Single(tmp1.ReferencePoints);
             var waypoint = tmp1.ReferencePoints[0];
-            AssertEx.Equal(7, 11.5, 0, 0, waypoint.Ray);
+            AssertEx.Equal(7, 11.5, 0, 0, 0, waypoint.OutputRay);
             Assert.False(waypoint.UseInputVector);
             AssertEx.Equal(0, 0, waypoint.InputVector);
             #endregion

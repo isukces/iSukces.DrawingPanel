@@ -171,7 +171,7 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     Cross = point,
                 };
-                calc.SetupReverseEnd(Start, End);
+                calc.SetupReverseEnd(Start.GetMovedRayOutput(), End.GetMovedRayInput());
                 return calc.CalculateArc();
             }
 
@@ -264,8 +264,11 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
+            var s = Start.GetMovedRayOutput();
+            var e = End.GetMovedRayInput();
+
             var finder = new TwoArcsFinder();
-            finder.UpdateFromPoints(Start, End, false);
+            finder.UpdateFromPoints(s, e, false);
             var prec = finder.Compute();
             prec.MaxRadius = maxRadius;
 
@@ -278,7 +281,7 @@ namespace iSukces.DrawingPanel.Paths
             }
 
             //finder = new TwoArcsFinder();
-            finder.UpdateFromPoints(Start, End, true);
+            finder.UpdateFromPoints(s, e, true);
             prec           = finder.Compute();
             prec.MaxRadius = maxRadius;
 
@@ -337,8 +340,8 @@ namespace iSukces.DrawingPanel.Paths
         {
             get
             {
-                var a = PathsExtensions.DebugCreate(Start, "start") + "\r\n";
-                var b = PathsExtensions.DebugCreate(End, "end") + "\r\n";
+                var a = PathsExtensions.DebugCreate(Start.GetRay(), "start") + "\r\n";
+                var b = PathsExtensions.DebugCreate(End.GetRay(), "end") + "\r\n";
                 var c = $"var g = {nameof(ZeroReferencePointPathCalculator)}.Compute(start, end, null)";
                 return a + b + c;
             }

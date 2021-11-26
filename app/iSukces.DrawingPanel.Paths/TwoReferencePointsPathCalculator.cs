@@ -1,5 +1,6 @@
 ﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
@@ -14,16 +15,16 @@ namespace iSukces.DrawingPanel.Paths
             var tmp = ComputeInternal(validator, out var result);
             if (tmp is not null)
                 return tmp;
-            return InvalidPathElement.MakeInvalid(Start, End, result);
+            return InvalidPathElement.MakeInvalid(Start.GetRay(), End.GetRay(), result);
         }
 
         private IPathResult ComputeInternal(IPathValidator validator, out ArcValidationResult result)
         {
-            var firstValid = !Reference1.HasValidVector();
-            var secondValid = !Reference2.HasValidVector();
+            var firstInvalid  = !Reference1.HasValidVector();
+            var secondInvalid = !Reference2.HasValidVector();
             validator ??= EverythingOkPathValidator.Instance;
 
-            if (secondValid || firstValid)
+            if (secondInvalid || firstInvalid)
             {
                 var refVector            = Reference2.Point - Reference1.Point;
                 var lineValidationResult = validator.ValidateLine(refVector);
@@ -34,16 +35,16 @@ namespace iSukces.DrawingPanel.Paths
                     return null;
                 }
 
-                if (firstValid)
+                if (firstInvalid)
                     Reference1 = Reference1.With(refVector);
-                if (secondValid)
+                if (secondInvalid)
                     Reference2 = Reference2.With(refVector);
             }
 
             var builder = new PathBuilder(Start.Point, validator);
-            builder.AddConnectionAutomatic(Start, Reference1);
-            builder.AddConnectionAutomatic(Reference1, Reference2);
-            builder.AddConnectionAutomatic(Reference2, End.WithInvertedVector());
+            builder.AddConnectionAutomatic(Start, Reference1, false);
+            builder.AddConnectionAutomatic(Reference1, Reference2, false);
+            builder.AddConnectionAutomatic(Reference2, End, true);
 
             result = ArcValidationResult.Ok;
             return builder.LineToAndCreate(End.Point);

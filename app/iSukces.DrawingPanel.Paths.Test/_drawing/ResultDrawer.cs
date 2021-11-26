@@ -20,7 +20,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             void ExtraDraw2(ResultDrawer g)
             {
-                var crossNullable = x.Start.Cross(x.End);
+                var crossNullable = x.Start.CrossMeAsBeginWithEnd(x.End);
                 if (!crossNullable.HasValue) return;
                 var cross = crossNullable.Value;
                 var dot   = (cross - x.Start.Point) * x.Start.Vector;
@@ -97,7 +97,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 foreach (var i in x.Point.ReferencePoints)
                 {
-                    g.DrawCircleWithVector(i.Ray, true);
+                    g.DrawCircleWithVector(i.OutputRay, true);
                     // g.DrawCircleWithVector(x.Reference, true);
                 }
                   
@@ -110,7 +110,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 yield return end.Location;
                 foreach (var i in x.Point.ReferencePoints)
                 {
-                    yield return i.Ray.Point;
+                    yield return i.OutputRay.Point;
                 }
             }
 
@@ -201,7 +201,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Graph.FillRectangle(Brushes.White, 0, 0, Bmp.Width, Bmp.Height);
                 DrawCircleWithVector(_cfg.Start);
                 if ((_cfg.Flags & ResultDrawerConfigFlags.ReverseEndMarker) != 0)
-                    DrawCircleWithVector(_cfg.End.WithInvertedVector());
+                    DrawCircleWithVector(_cfg.End.GetMovedRayInput().WithInvertedVector());
                 else
                     DrawCircleWithVector(_cfg.End);
 

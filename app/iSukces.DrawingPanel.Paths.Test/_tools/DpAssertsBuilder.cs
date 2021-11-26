@@ -40,10 +40,16 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             AssertExEqual(p.Point.X.ToCs(), p.Point.Y.ToCs(), p.Vector.X.ToCs(), p.Vector.Y.ToCs(), name);
         }
+        
+        private void Add(PathRayWithArm p, string name)
+        {
+            AssertExEqual(p.Point.X.ToCs(), p.Point.Y.ToCs(), p.Vector.X.ToCs(), p.Vector.Y.ToCs(), p.ArmLength.ToCs(),
+                name);
+        }
 
         private void Add(WayPoint p, string name)
         {
-            Add(p.Ray, name+".Ray");
+            Add(p.OutputRay, name+".Ray");
             AssertEqualBool(p.UseInputVector, name + "." + nameof(p.UseInputVector));
             Add(p.InputVector, name + "." + nameof(p.InputVector));
         }

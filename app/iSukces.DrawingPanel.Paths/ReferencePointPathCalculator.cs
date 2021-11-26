@@ -12,7 +12,15 @@ namespace iSukces.DrawingPanel.Paths
     public abstract class ReferencePointPathCalculator : PathBase
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static bool DotNotPositive(Point p, PathRay ray)
+        protected static bool DotNotPositive(in Point p, in PathRay ray)
+        {
+            var vector = p - ray.Point;
+            var dot    = vector * ray.Vector;
+            return dot <= 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static bool DotNotPositive(in Point p, in PathRayWithArm ray)
         {
             var vector = p - ray.Point;
             var dot    = vector * ray.Vector;
@@ -39,7 +47,9 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected IPathResult CreateInvalid(ArcValidationResult status)
         {
-            return InvalidPathElement.MakeInvalid(Start, End, status);
+            var start   = Start.GetRay();
+            var end = End.GetRay();
+            return InvalidPathElement.MakeInvalid(start, end, status);
         }
 
         [NotNull]
@@ -63,7 +73,7 @@ namespace iSukces.DrawingPanel.Paths
         public abstract void InitDemo();
         public abstract void SetReferencePoint(Point p, int nr);
         public const double Epsilon = 1e-8;
-        public PathRay Start { get; set; }
-        public PathRay End   { get; set; }
+        public PathRayWithArm Start { get; set; }
+        public PathRayWithArm End   { get; set; }
     }
 }

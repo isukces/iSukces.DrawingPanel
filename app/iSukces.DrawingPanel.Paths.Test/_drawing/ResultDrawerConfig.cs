@@ -42,8 +42,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             return this;
         }
 
-        public PathRay                  Start              { get; set; }
-        public PathRay                  End                { get; set; }
+        public PathRayWithArm                  Start              { get; set; }
+        public PathRayWithArm                  End                { get; set; }
         public IPathResult              Result             { get; set; }
         public TestName                 Title              { get; set; }
         public Action<ResultDrawer>     ExtraDrawingBottom { get; set; }

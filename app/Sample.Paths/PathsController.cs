@@ -50,7 +50,8 @@ namespace Sample.Paths
             {
                 var loc = _canvasInfo.Transformation.FromCanvas(e.Location);
 
-                PathRay M(PathRay x) { return x.With(-Calc(x.Point, loc)); }
+                PathRayWithArm M(PathRayWithArm x) { return x.With(-Calc(x.Point, loc)); }
+                // PathRay M(PathRay x) { return x.With(-Calc(x.Point, loc)); }
                 switch (OptionIndex)
                 {
                     case 0:

@@ -15,8 +15,8 @@ namespace Sample.Paths
             var validator = new MinimumValuesPathValidator(5, 4);
 
             DrawBuildings();
-            DrawCircleWithVector(Calculator.Start);
-            DrawCircleWithVector(Calculator.End);
+            DrawCircleWithVector(Calculator.Start.GetRay());
+            DrawCircleWithVector(Calculator.End.GetRay());
 
             switch (Calculator)
             {

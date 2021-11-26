@@ -3,6 +3,11 @@ using iSukces.DrawingPanel.Paths;
 using iSukces.DrawingPanel.Paths.Test;
 using Newtonsoft.Json;
 using Xunit;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
 
 namespace Test.Pd.Common.Geometry
 {
@@ -329,6 +334,7 @@ namespace Test.Pd.Common.Geometry
             var code = new DpAssertsBuilder().Create(result, nameof(result));
 
             #region Asserts
+
             Assert.Single(result.Segments);
             var pathResult = result.Segments[0];
             AssertEx.Equal(0, 0, pathResult.Start);
@@ -352,8 +358,8 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(8.2495358548225, 71.8730660617604, arc.Start);
             AssertEx.Equal(24, 100, arc.End);
             AssertEx.Equal(0.233372952475324, 0.972387301980517, arc.DirectionStart);
-            #endregion
 
+            #endregion
         }
 
         [Fact]
@@ -364,7 +370,8 @@ namespace Test.Pd.Common.Geometry
                 Vertices = new[]
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
-                    new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13).WithReferencePoints(new PathRay(-3, 50, 0, 0))
+                    new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
+                        .WithReferencePoints(new PathRay(-3, 50, 0, 0))
                 }
             };
             var result = maker.Compute();
@@ -555,7 +562,8 @@ namespace Test.Pd.Common.Geometry
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                     new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
-                        .WithReferencePoints(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1), new PathRay(-4, 59, 0, 1))
+                        .WithReferencePoints(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1),
+                            new PathRay(-4, 59, 0, 1))
                 }
             };
             var result = maker.Compute();
@@ -633,88 +641,6 @@ namespace Test.Pd.Common.Geometry
             #endregion
         }
 
-                [Fact]
-        public void T99a_Should_compute_practical_case()
-        {
-            const string Json = @"
-[
-{""Location"":""48.6807545920352,42.764462268262"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
-{""Location"":""147.159706379571,68.6649958308797"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
-{""Location"":""210.045000453121,51.5032938674065"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
-{""Location"":""224.717683004725,105.268122033596"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0}
-]";
-            var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json);
-            var wayPoint = JsonConvert.DeserializeObject<PathRay>(@"{""Vector"":""0,0"",""Point"":""96.13121924784,59.8634246985647""}");
-            input[1].ReferencePoints = new[] { (WayPoint)wayPoint };
-            // 
-
-            var maker = new ArcPathMaker
-            {
-                Vertices = input
-            };
-            var result = maker.Compute();
-            
-            new ArcResultDrawerConfig
-            {
-                Title  = MakeTitle(99, "Practical case A"),
-                Result = result
-            }.Draw(maker);
-
-            var code = new DpAssertsBuilder().Create(result, nameof(result));
-
-            #region Asserts
-
-            Assert.Equal(3, result.Segments.Count);
-            var pathResult = result.Segments[0];
-            AssertEx.Equal(48.6807545920352, 42.764462268262, pathResult.Start);
-            AssertEx.Equal(147.159706379571, 68.6649958308797, pathResult.End);
-            Assert.Equal(4, pathResult.Elements.Count);
-            var tmp2 = (ArcDefinition)pathResult.Elements[0];
-            Assert.Equal(ArcDirection.CounterClockwise, tmp2.Direction);
-            Assert.Equal(10.1628320353855, tmp2.Angle, 6);
-            AssertEx.Equal(12.4697414496494, 180.445896853598, tmp2.Center);
-            AssertEx.Equal(48.6807545920352, 42.764462268262, tmp2.Start);
-            AssertEx.Equal(72.4059869199376, 51.3139434834134, tmp2.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, tmp2.DirectionStart);
-            tmp2 = (ArcDefinition)pathResult.Elements[1];
-            Assert.Equal(ArcDirection.Clockwise, tmp2.Direction);
-            Assert.Equal(10.1628320353855, tmp2.Angle, 6);
-            AssertEx.Equal(132.342232390226, -77.8180098867709, tmp2.Center);
-            AssertEx.Equal(72.4059869199376, 51.3139434834134, tmp2.Start);
-            AssertEx.Equal(96.13121924784, 59.8634246985647, tmp2.End);
-            AssertEx.Equal(129.131953370184, 59.9362454702882, tmp2.DirectionStart);
-            tmp2 = (ArcDefinition)pathResult.Elements[2];
-            Assert.Equal(ArcDirection.Clockwise, tmp2.Direction);
-            Assert.Equal(9.89825381378978, tmp2.Angle, 6);
-            AssertEx.Equal(134.298784365829, -85.2572075082957, tmp2.Center);
-            AssertEx.Equal(96.13121924784, 59.8634246985647, tmp2.Start);
-            AssertEx.Equal(121.645462813705, 64.2642102647222, tmp2.End);
-            AssertEx.Equal(0.967110733663976, 0.25435571318908, tmp2.DirectionStart);
-            tmp2 = (ArcDefinition)pathResult.Elements[3];
-            Assert.Equal(ArcDirection.CounterClockwise, tmp2.Direction);
-            Assert.Equal(9.89825381378978, tmp2.Angle, 6);
-            AssertEx.Equal(108.992141261582, 213.78562803774, tmp2.Center);
-            AssertEx.Equal(121.645462813705, 64.2642102647222, tmp2.Start);
-            AssertEx.Equal(147.159706379571, 68.6649958308797, tmp2.End);
-            AssertEx.Equal(149.521417773018, 12.6533215521237, tmp2.DirectionStart);
-
-            pathResult = result.Segments[1];
-            AssertEx.Equal(147.159706379571, 68.6649958308797, pathResult.Start);
-            AssertEx.Equal(210.045000453121, 51.5032938674065, pathResult.End);
-            Assert.Single(pathResult.Elements);
-            var tmp3 = (LinePathElement)pathResult.Elements[0];
-            AssertEx.Equal(147.159706379571, 68.6649958308797, 210.045000453121, 51.5032938674065, tmp3, 6);
-
-            pathResult = result.Segments[2];
-            AssertEx.Equal(210.045000453121, 51.5032938674065, pathResult.Start);
-            AssertEx.Equal(224.717683004725, 105.268122033596, pathResult.End);
-            Assert.Single(pathResult.Elements);
-            tmp3 = (LinePathElement)pathResult.Elements[0];
-            AssertEx.Equal(210.045000453121, 51.5032938674065, 224.717683004725, 105.268122033596, tmp3, 6);
-
-            #endregion
-        }
-
 
         [Fact]
         public void T23_002_Should_create_arc_with_both_vectors_and_arms()
@@ -725,7 +651,10 @@ namespace Test.Pd.Common.Geometry
                 {
                     new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                     new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
-                        .WithReferencePoints(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1), new PathRay(-4, 59, 0, 1))
+                        .WithReferencePoints(
+                            new PathRay(-4, 30, 0, 1),
+                            new PathRay(-4, 46, 0.4, 1),
+                            new PathRay(-4, 59, 0, 1))
                 }
             };
             var result = maker.Compute();
@@ -803,6 +732,163 @@ namespace Test.Pd.Common.Geometry
             AssertEx.Equal(14, 0, arc.DirectionStart);
             line = (LinePathElement)pathResult.Elements[9];
             AssertEx.Equal(24, 87, 24, 100, line, 6);
+
+            #endregion
+        }
+        
+        
+        [Fact]
+        public void T24_001_Should_compute_with_4_arms()
+        {
+            var wayPoint = new WayPoint(
+                new Point(25, 40),
+                new Vector(1, -1),
+                new Vector(1, 1),
+                13, 3);
+            var maker = new ArcPathMaker
+            {
+                Vertices = new[]
+                {
+                    new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 5),
+                    new ArcPathMakerVertex(50, 5).WithInVector(0, -1, 10)
+                        .WithReferencePoints(
+                            wayPoint)
+                             
+                }
+            };
+            var result = maker.Compute();
+            new ArcResultDrawerConfig
+            {
+                Title  = MakeTitle(24_001, "4 arms"),
+                Result = result
+            }.Draw(maker);
+            var code = new DpAssertsBuilder().Create(result, nameof(result));
+            
+            #region Asserts
+            Assert.Single(result.Segments);
+            var pathResult = result.Segments[0];
+            AssertEx.Equal(0, 0, pathResult.Start);
+            AssertEx.Equal(50, 5, pathResult.End);
+            Assert.Equal(7, pathResult.Elements.Count);
+            var line = (LinePathElement)pathResult.Elements[0];
+            AssertEx.Equal(0, 0, 0, 5, line, 6);
+            var arc = (ArcDefinition)pathResult.Elements[1];
+            Assert.Equal(ArcDirection.Clockwise, arc.Direction);
+            Assert.Equal(45, arc.Angle, 6);
+            Assert.Equal(24.142135623731, arc.Radius, 6);
+            AssertEx.Equal(24.142135623731, 5, arc.Center);
+            AssertEx.Equal(0, 5, arc.Start);
+            AssertEx.Equal(7.07106781186548, 22.0710678118655, arc.End);
+            AssertEx.Equal(0, 1, arc.DirectionStart);
+            line = (LinePathElement)pathResult.Elements[2];
+            AssertEx.Equal(7.07106781186548, 22.0710678118655, 25, 40, line, 6);
+            line = (LinePathElement)pathResult.Elements[3];
+            AssertEx.Equal(25, 40, 27.1213203435596, 37.8786796564404, line, 6);
+            arc = (ArcDefinition)pathResult.Elements[4];
+            Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
+            Assert.Equal(31.3997148099191, arc.Angle, 6);
+            Assert.Equal(18.498092996101, arc.Radius, 6);
+            AssertEx.Equal(40.2014473401221, 50.9588066530028, arc.Center);
+            AssertEx.Equal(27.1213203435596, 37.8786796564404, arc.Start);
+            AssertEx.Equal(35.8516771720105, 32.9794033265014, arc.End);
+            AssertEx.Equal(0.707106781186547, -0.707106781186547, arc.DirectionStart);
+            arc = (ArcDefinition)pathResult.Elements[5];
+            Assert.Equal(ArcDirection.Clockwise, arc.Direction);
+            Assert.Equal(76.399714809919, arc.Angle, 6);
+            Assert.Equal(18.498092996101, arc.Radius, 6);
+            AssertEx.Equal(31.501907003899, 15, arc.Center);
+            AssertEx.Equal(35.8516771720105, 32.9794033265014, arc.Start);
+            AssertEx.Equal(50, 15, arc.End);
+            AssertEx.Equal(17.9794033265014, -4.34977016811156, arc.DirectionStart);
+            line = (LinePathElement)pathResult.Elements[6];
+            AssertEx.Equal(50, 15, 50, 5, line, 6);
+            #endregion
+
+
+        }
+
+        [Fact]
+        public void T99a_Should_compute_practical_case()
+        {
+            const string Json = @"
+[
+{""Location"":""48.6807545920352,42.764462268262"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
+{""Location"":""147.159706379571,68.6649958308797"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
+{""Location"":""210.045000453121,51.5032938674065"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
+{""Location"":""224.717683004725,105.268122033596"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0}
+]";
+            var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json);
+            var wayPoint =
+                JsonConvert.DeserializeObject<PathRay>(
+                    @"{""Vector"":""0,0"",""Point"":""96.13121924784,59.8634246985647""}");
+            input[1].ReferencePoints = new[] { (WayPoint)wayPoint };
+            // 
+
+            var maker = new ArcPathMaker
+            {
+                Vertices = input
+            };
+            var result = maker.Compute();
+
+            new ArcResultDrawerConfig
+            {
+                Title  = MakeTitle(99, "Practical case A"),
+                Result = result
+            }.Draw(maker);
+
+            var code = new DpAssertsBuilder().Create(result, nameof(result));
+
+            #region Asserts
+
+            Assert.Equal(3, result.Segments.Count);
+            var pathResult = result.Segments[0];
+            AssertEx.Equal(48.6807545920352, 42.764462268262, pathResult.Start);
+            AssertEx.Equal(147.159706379571, 68.6649958308797, pathResult.End);
+            Assert.Equal(4, pathResult.Elements.Count);
+            var arc = (ArcDefinition)pathResult.Elements[0];
+            Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
+            Assert.Equal(10.1628320353855, arc.Angle, 6);
+            Assert.Equal(142.363671286863, arc.Radius, 6);
+            AssertEx.Equal(12.4697414496494, 180.445896853598, arc.Center);
+            AssertEx.Equal(48.6807545920352, 42.764462268262, arc.Start);
+            AssertEx.Equal(72.4059869199376, 51.3139434834134, arc.End);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.DirectionStart);
+            arc = (ArcDefinition)pathResult.Elements[1];
+            Assert.Equal(ArcDirection.Clockwise, arc.Direction);
+            Assert.Equal(10.1628320353855, arc.Angle, 6);
+            Assert.Equal(142.363671286863, arc.Radius, 6);
+            AssertEx.Equal(132.342232390226, -77.8180098867709, arc.Center);
+            AssertEx.Equal(72.4059869199376, 51.3139434834134, arc.Start);
+            AssertEx.Equal(96.13121924784, 59.8634246985647, arc.End);
+            AssertEx.Equal(129.131953370184, 59.9362454702882, arc.DirectionStart);
+            arc = (ArcDefinition)pathResult.Elements[2];
+            Assert.Equal(ArcDirection.Clockwise, arc.Direction);
+            Assert.Equal(9.89825381378978, arc.Angle, 6);
+            Assert.Equal(150.055859329634, arc.Radius, 6);
+            AssertEx.Equal(134.298784365829, -85.2572075082957, arc.Center);
+            AssertEx.Equal(96.13121924784, 59.8634246985647, arc.Start);
+            AssertEx.Equal(121.645462813705, 64.2642102647222, arc.End);
+            AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.DirectionStart);
+            arc = (ArcDefinition)pathResult.Elements[3];
+            Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
+            Assert.Equal(9.89825381378978, arc.Angle, 6);
+            Assert.Equal(150.055859329634, arc.Radius, 6);
+            AssertEx.Equal(108.992141261582, 213.78562803774, arc.Center);
+            AssertEx.Equal(121.645462813705, 64.2642102647222, arc.Start);
+            AssertEx.Equal(147.159706379571, 68.6649958308797, arc.End);
+            AssertEx.Equal(149.521417773018, 12.6533215521237, arc.DirectionStart);
+            pathResult = result.Segments[1];
+            AssertEx.Equal(147.159706379571, 68.6649958308797, pathResult.Start);
+            AssertEx.Equal(210.045000453121, 51.5032938674065, pathResult.End);
+            Assert.Single(pathResult.Elements);
+            var line = (LinePathElement)pathResult.Elements[0];
+            AssertEx.Equal(147.159706379571, 68.6649958308797, 210.045000453121, 51.5032938674065, line, 6);
+            pathResult = result.Segments[2];
+            AssertEx.Equal(210.045000453121, 51.5032938674065, pathResult.Start);
+            AssertEx.Equal(224.717683004725, 105.268122033596, pathResult.End);
+            Assert.Single(pathResult.Elements);
+            line = (LinePathElement)pathResult.Elements[0];
+            AssertEx.Equal(210.045000453121, 51.5032938674065, 224.717683004725, 105.268122033596, line, 6);
 
             #endregion
         }

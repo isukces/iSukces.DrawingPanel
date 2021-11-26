@@ -31,6 +31,14 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             Equal(x1, y1, point.Point, decimalPlaces);
             Equal(x2, y2, point.Vector, decimalPlaces);
+        }        
+        public static void Equal(double x1, double y1, double x2, double y2,
+            double armLength,
+            PathRayWithArm point, int decimalPlaces = 6)
+        {
+            Equal(x1, y1, point.Point, decimalPlaces);
+            Equal(x2, y2, point.Vector, decimalPlaces);
+            Assert.Equal(armLength, point.ArmLength, decimalPlaces);
         }
     }
 }

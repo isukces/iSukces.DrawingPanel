@@ -17,21 +17,29 @@ namespace iSukces.DrawingPanel.Paths
             Validator    = validator;
         }
 
-        public void AddConnectionAutomatic(PathRay start, PathRay end)
+        public void AddConnectionAutomatic(PathRayWithArm start, PathRayWithArm end, bool reverseEnd)
         {
+            
+            var start1 = start.GetMovedRayOutput();
+            var end1   = end.GetMovedRayInput();
+            if (reverseEnd)
+                end1 = end1.WithInvertedVector();
+            
             bool CheckDot(ArcDefinition arc)
             {
-                var dot = arc.DirectionStart * start.Vector;
+                var dot = arc.DirectionStart * start1.Vector;
                 if (dot <= 0) return false;
-                dot = arc.DirectionEnd * end.Vector;
+                dot = arc.DirectionEnd * end1.Vector;
                 if (dot <= 0) return false;
                 return true;
             }
 
-            var cross = start.Cross(end);
+        
+
+            var cross = start1.Cross(end1);
             if (cross is null)
             {
-                AddFlexi(start, end);
+                AddFlexi(start, end, reverseEnd);
                 return;
             }
 
@@ -39,7 +47,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 Cross = cross.Value
             };
-            c.Setup(start, end);
+            c.Setup(start1, end1);
             var res = c.CalculateArc();
             if (Validator.IsOk(res))
             {
@@ -51,7 +59,7 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-            AddFlexi(start, end);
+            AddFlexi(start, end, reverseEnd);
         }
 
         /// <summary>
@@ -59,16 +67,21 @@ namespace iSukces.DrawingPanel.Paths
         /// </summary>
         /// <param name="start"></param>
         /// <param name="end"></param>
-        public void AddFlexi(PathRay start, PathRay end)
+        /// <param name="reverseEnd"></param>
+        public void AddFlexi(PathRayWithArm start, PathRayWithArm end, bool reverseEnd = false)
         {
-            var result = ZeroReferencePointPathCalculator.Compute(start, end, Validator);
-            AddZ(start, end, result);
+            var s = start.GetMovedRayOutput();
+            var e = end.GetMovedRayInput();
+            if (reverseEnd)
+                e = e.WithInvertedVector();
+            var result = ZeroReferencePointPathCalculator.Compute(s, e, Validator);
+            AddPathResult(start.GetRay(), end.GetRay(), result);
         }
 
         public void AddFlexiFromPararell(PathRay start, PathRay end, IPathValidator validator)
         {
             var tmp = ZeroReferencePointPathCalculator.ComputeFromPararell(start, end, validator);
-            AddZ(start, end, tmp);
+            AddPathResult(start, end, tmp);
         }
 
 
@@ -80,7 +93,7 @@ namespace iSukces.DrawingPanel.Paths
             CurrentPoint = endPoint;
         }
 
-        public void AddZ(PathRay start, PathRay end, IPathResult result)
+        public void AddPathResult(PathRay start, PathRay end, IPathResult result)
         {
             switch (result)
             {
@@ -92,7 +105,6 @@ namespace iSukces.DrawingPanel.Paths
                 case ZeroReferencePointPathCalculatorLineResult:
                     LineTo(start.Point);
                     LineTo(end.Point);
-                    // _list.Add(new LinePathElement(start.Point, end.Point));
                     return;
                 case ZeroReferencePointPathCalculatorResult r2:
                     ArcTo(r2.Arc1);
@@ -106,7 +118,7 @@ namespace iSukces.DrawingPanel.Paths
         public void AddZeroReference(PathRay start, PathRay end)
         {
             IPathResult z = ZeroReferencePointPathCalculator.Compute(start, end, Validator);
-            AddZ(start, end, z);
+            AddPathResult(start, end, z);
         }
 
         public void ArcTo(ArcDefinition arc)

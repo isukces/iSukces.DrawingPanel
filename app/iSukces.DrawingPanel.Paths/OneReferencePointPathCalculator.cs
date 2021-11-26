@@ -1,13 +1,13 @@
 ﻿#define _OLD_RESULT
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -26,10 +26,8 @@ namespace iSukces.DrawingPanel.Paths
             }
 
             Reference = Reference.Normalize();
-
-            Start = Start.Normalize();
-            End   = End.Normalize();
-
+            Start     = Start.Normalize();
+            End       = End.Normalize();
 
             var list = Find();
             if (list.Count == 0)
@@ -44,37 +42,38 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     builder.Clear();
                     builder.AddFlexi(Start, Reference);
-                    var endInverted = End.WithInvertedVector();
-                    builder.AddFlexi(Reference, endInverted);
+                    var endd = new PathRayWithArm(End.Point, -End.Vector, End.ArmLength);
+                    builder.AddFlexi(Reference, endd);
                     return builder.List;
                 }
-
-                var l1 = Start.GetLine();
-                var l2 = End.GetLine();
-                var l  = Reference.GetLine();
-
 
                 Point? startCrossNullable, endCrossNullable;
                 {
                     var dist = PathCalculationConfig.UseLineWhenDistanceLowerThan;
+                    var l    = Reference.GetLine();
                     {
+                        var sMoved = Start.GetMovedRayOutput();
+                        var l1             = sMoved.GetLine();
+
                         var d1 = Math.Abs(l1.DistanceNotNormalized(Reference.Point));
-                        var d2 = Math.Abs(l.DistanceNotNormalized(Start.Point));
+                        var d2 = Math.Abs(l.DistanceNotNormalized(sMoved.Point));
                         if (d1 < dist && d2 < dist)
                             startCrossNullable = null;
                         else
                             startCrossNullable = PathsMathUtils.CrossNormalized(l, l1);
                     }
                     {
+                        var eMoved = End.GetMovedRayInput();
+                        var l2            = eMoved.GetLine();
+
                         var d1 = Math.Abs(l2.DistanceNotNormalized(Reference.Point));
-                        var d2 = Math.Abs(l.DistanceNotNormalized(End.Point));
+                        var d2 = Math.Abs(l.DistanceNotNormalized(eMoved.Point));
                         if (d1 < dist && d2 < dist)
                             endCrossNullable = null;
                         else
-                            endCrossNullable = PathsMathUtils.CrossNormalized(l, l1);
+                            endCrossNullable = PathsMathUtils.CrossNormalized(l, l2);
                     }
                 }
-
 
                 if (startCrossNullable is null)
                 {
@@ -90,21 +89,35 @@ namespace iSukces.DrawingPanel.Paths
                         }
 
                         {
-                            builder.AddFlexiFromPararell(Start, Reference, validator);
-                            var endInverted = End.WithInvertedVector();
-                            builder.AddFlexiFromPararell(Reference, endInverted, validator);
+                            var s = Start.GetMovedRayOutput();
+                            var r = Reference;
+                            var e = End.GetMovedRayInput().WithInvertedVector();
+
+                            builder.AddFlexiFromPararell(s, r, validator);
+                            builder.LineTo(Reference.Point);
+
+                            builder.AddFlexiFromPararell(r, e, validator);
+                            builder.LineTo(End.Point);
                             return builder.List;
                         }
                     }
 
-                    builder.AddFlexiFromPararell(Start, Reference, validator);
+                    {
+                        var s = Start.GetMovedRayOutput();
+                        var e = Reference;
+
+                        builder.AddFlexiFromPararell(s, e, validator);
+                        builder.LineTo(Reference.Point);
+                    }
                 }
                 else
                 {
                     if (endCrossNullable is null)
                     {
-                        var endInverted = End.WithInvertedVector();
-                        builder.AddFlexiFromPararell(Reference, endInverted, validator);
+                        var s = Reference;
+                        var e = End.GetMovedRayInput().WithInvertedVector();
+                        builder.AddFlexiFromPararell(s, e, validator);
+                        builder.LineTo(End.Point);
                     }
                     else
                     {
@@ -222,7 +235,7 @@ namespace iSukces.DrawingPanel.Paths
             if (ok1)
             {
                 aggregator.ArcTo(arc1);
-                aggregator.AddFlexi(Reference, End.WithInvertedVector());
+                aggregator.AddFlexi(Reference, End, true);
                 aggregator.LineTo(End.Point);
                 return FromTwoCrossesResult.None;
             }
