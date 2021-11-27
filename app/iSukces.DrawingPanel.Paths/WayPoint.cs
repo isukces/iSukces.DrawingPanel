@@ -2,6 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
@@ -40,9 +41,11 @@ namespace iSukces.DrawingPanel.Paths
             InputVector     = inputVector;
             InputArmLength  = inputArmLength;
             OutputArmLength = outputArmLength;
+            Tag             = null;
         }
-  public WayPoint(Point point, Vector vector, Vector inputVector, double inputArmLength,
-      double outputArmLength)
+
+        public WayPoint(Point point, Vector vector, Vector inputVector, double inputArmLength,
+            double outputArmLength)
         {
             switch (inputArmLength)
             {
@@ -71,6 +74,7 @@ namespace iSukces.DrawingPanel.Paths
             InputVector     = inputVector;
             InputArmLength  = inputArmLength;
             OutputArmLength = outputArmLength;
+            Tag             = null;
         }
 
         public WayPoint(PathRay ray, bool useInputVector, Vector inputVector)
@@ -81,6 +85,7 @@ namespace iSukces.DrawingPanel.Paths
             InputVector     = inputVector;
             InputArmLength  = 0;
             OutputArmLength = 0;
+            Tag             = null;
         }
 
         public WayPoint(PathRay ray)
@@ -91,6 +96,7 @@ namespace iSukces.DrawingPanel.Paths
             InputVector     = default;
             InputArmLength  = 0;
             OutputArmLength = 0;
+            Tag             = null;
         }
 
 
@@ -102,6 +108,7 @@ namespace iSukces.DrawingPanel.Paths
             InputVector     = inputVector;
             InputArmLength  = 0;
             OutputArmLength = 0;
+            Tag             = null;
         }
 
         public Vector Vector { get; }
@@ -137,5 +144,7 @@ namespace iSukces.DrawingPanel.Paths
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => new PathRayWithArm(Point, Vector, OutputArmLength);
         }
+
+        public object Tag { get; set; }
     }
 }
