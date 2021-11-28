@@ -196,5 +196,39 @@ namespace iSukces.DrawingPanel.Paths.Test
 
 
         private const double ArcLength = 7.853981633974483;
+
+
+        
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        public void T31_should(int checkCase)
+        {
+            var a = new ArcDefinition
+            {
+                Center         = new Point(33.426090800987062, -100.2953991565369),
+                Start          = new Point(-23.082641561567051, -27.910853525241059),
+                End            = new Point(4.7312421257509243, -13.063725213082051),
+                RadiusEnd      =     new Vector(-28.694848675236138,87.231673943454851),
+                RadiusStart    = new Vector(-56.508732362554113, 72.38454563129585),
+                DirectionStart = new Vector(0.78824459418468384, 0.61536205581642989),
+            };
+            a.UseRadius(91.830056514585252);
+            Assert.Equal(19.769618298603007, a.Angle, 10);
+            if (checkCase == 0)
+            {
+                var result = a.DistanceFromElement(a.Start, out var dist, out var dir);
+                Assert.Equal(0, dist, 10);
+                Assert.Equal(0, result, 10);
+            }
+            else
+            {
+                var result = a.DistanceFromElement(a.End, out var dist, out var dir);
+                Assert.Equal(31.685495529700802, dist, 10);
+                Assert.Equal(0, result, 10);
+            }
+        }
+
+        
     }
 }

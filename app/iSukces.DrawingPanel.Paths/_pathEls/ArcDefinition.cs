@@ -95,7 +95,14 @@ namespace iSukces.DrawingPanel.Paths
 
                 var angleMinusMinAngle = a - min;
                 if (angleMinusMinAngle < 0)
+                {
                     angleMinusMinAngle += 360;
+                    // when angleMinusMinAngle is small negative i.e.-1.4210854715202004E-14
+                    // its possible that angleMinusMinAngle+360 equals 360
+                    if (angleMinusMinAngle >= 360)
+                        angleMinusMinAngle -= 360;
+                }
+
                 var isInside = PathsMathUtils.IsAngleInRegion(angleMinusMinAngle, sweepAngle);
                 switch (isInside)
                 {

@@ -201,7 +201,12 @@ namespace iSukces.DrawingPanel.Paths
             if (angle is >= 0 and < full)
                 return angle;
             var cycles = Math.Floor(angle / full);
-            return angle - cycles * full;
+            var candidate= angle - cycles * full;
+            
+            // fixes rounding errors
+            if (candidate >= 360)
+                return candidate - 360;
+            return candidate;
         }
 
         public static Vector NormalizeFast(this Vector src)

@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -90,6 +91,18 @@ namespace iSukces.DrawingPanel.Paths.Test
                     return Three.Above;
                 return Three.Below;
             }
+        }
+
+
+        [Theory]
+        [InlineData(-1.4210854715202004E-14, 0)]
+        [InlineData(-2.8421709430404E-14, 0)]
+        [InlineData(-2.8421709430405E-14, 359.99999999999994)]
+        public void T04_Should_Normalize_specific_angles(double src, double expected)
+        {
+            const int decimals = 10;
+            var       res      = PathsMathUtils.NormalizeAngleDeg(src);
+            Assert.Equal(expected, res, decimals);
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
