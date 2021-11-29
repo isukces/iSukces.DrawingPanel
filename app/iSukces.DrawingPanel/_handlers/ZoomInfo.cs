@@ -21,10 +21,10 @@ namespace iSukces.DrawingPanel
 
 
         private const double InchMonitorDiameter = 22;
-        private const double MaxScale = PixPerMeter * 5 * 2; // rozmiar rzeczywisty dla ekranu 22 cale
+        public static double MaxScale = PixPerMeter * 5 * 2; // rozmiar rzeczywisty dla ekranu 22 cale
         private const double MilimeterMonitorDiameter = InchMonitorDiameter * 25.4;
 
-        private const double MinScale = 1920 / 20_000.0; // 20 km na 1920 pixeli
+        public static double MinScale = 1920 / 20_000.0; // 20 km na 1920 pixeli
         private const double PixPerMeter = 1000 * PixPerMm;
         private const double PixPerMm = HullHdDiagonalInPixels / MilimeterMonitorDiameter;
 
