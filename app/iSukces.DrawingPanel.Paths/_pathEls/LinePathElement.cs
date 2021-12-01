@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
@@ -86,10 +87,14 @@ namespace iSukces.DrawingPanel.Paths
             return false;
         }
 
+        public LinePathElement WithEndPoint(Point newEnd) { return new LinePathElement(_start, newEnd); }
+
+        public LinePathElement WithStartPoint(Point newStart) { return new LinePathElement(newStart, _end); }
+
         private readonly Point _end;
         private readonly Point _start;
-        private readonly Vector _vector;
         private readonly Vector _unitVector;
-        private double _length;
+        private readonly Vector _vector;
+        private readonly double _length;
     }
 }

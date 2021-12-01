@@ -27,6 +27,19 @@ namespace iSukces.DrawingPanel.Paths
             throw new System.NotImplementedException();
         }
 
+        public InvalidPathElement WithEndPoint(Point newEnd)
+        {
+            var ray = _end.WithPoint(newEnd);
+            return new InvalidPathElement(_start, ray, Status);
+        }
+
+        public InvalidPathElement WithStartPoint(Point newStart)
+        {
+            var ray = _start.WithPoint(newStart);
+            return new InvalidPathElement(ray, _end, Status);
+        }
+
+
         public Point GetEndPoint() { return _end.Point; }
         public Vector GetEndVector() { return _end.Vector; }
 
