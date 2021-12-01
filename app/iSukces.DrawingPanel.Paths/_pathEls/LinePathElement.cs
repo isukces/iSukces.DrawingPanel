@@ -40,7 +40,7 @@ namespace iSukces.DrawingPanel.Paths
                 return g < 0 ? -g : g;
             }
 
-            var l    = LineEquationNotNormalized.FromPointAndDeltas(_start, v);
+            var l    = PathLineEquationNotNormalized.FromPointAndDeltas(_start, v);
             var dist = l.DistanceNotNormalized(point);
             distanceFromStart = loc;
             return dist < 0 ? -dist : dist;
@@ -56,7 +56,7 @@ namespace iSukces.DrawingPanel.Paths
 
         public Point GetNearestPoint(Point point)
         {
-            var line = LineEquationNotNormalized.FromPointAndDeltas(_start, _vector);
+            var line = PathLineEquationNotNormalized.FromPointAndDeltas(_start, _vector);
             return line.GetNearestPoint(point);
         }
 
@@ -69,7 +69,7 @@ namespace iSukces.DrawingPanel.Paths
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
         {
-            var line    = LineEquationNotNormalized.FromPointAndDeltas(_start, _vector);
+            var line    = PathLineEquationNotNormalized.FromPointAndDeltas(_start, _vector);
             var counter = line.DistanceNotNormalized(hitPoint);
             counter *= counter;
 

@@ -39,7 +39,7 @@ namespace iSukces.DrawingPanel.Paths
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
         {
-            var line    = LineEquationNotNormalized.FromPointAndDeltas(_start.Point, _vector);
+            var line    = PathLineEquationNotNormalized.FromPointAndDeltas(_start.Point, _vector);
             var counter = line.DistanceNotNormalized(hitPoint);
             counter *= counter;
 

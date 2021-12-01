@@ -35,8 +35,8 @@ namespace iSukces.DrawingPanel.Paths
 
         public static ArcDefinition Make(Point a, Vector va, Point b, Vector vb)
         {
-            var l1     = LineEquationNotNormalized.FromPointAndDeltas(a, va.GetPrependicularVector());
-            var l2     = LineEquationNotNormalized.FromPointAndDeltas(b, vb.GetPrependicularVector());
+            var l1     = PathLineEquationNotNormalized.FromPointAndDeltas(a, va.GetPrependicularVector());
+            var l2     = PathLineEquationNotNormalized.FromPointAndDeltas(b, vb.GetPrependicularVector());
             var center = l1.CrossWith(l2);
             if (center is null)
                 return null;

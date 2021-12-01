@@ -248,8 +248,8 @@ namespace iSukces.DrawingPanel.Paths
 
         public Point? Get()
         {
-            var l1 = LineEquationNotNormalized.FromPointAndDeltas(Start.Point, Start.Vector);
-            var l2 = LineEquationNotNormalized.FromPointAndDeltas(End.Point, End.Vector);
+            var l1 = PathLineEquationNotNormalized.FromPointAndDeltas(Start.Point, Start.Vector);
+            var l2 = PathLineEquationNotNormalized.FromPointAndDeltas(End.Point, End.Vector);
             return l1.CrossWith(l2);
         }
 

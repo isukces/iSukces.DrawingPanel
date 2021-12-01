@@ -12,38 +12,21 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
-    public interface ILineGeometrySource
-    {
-        LineEquationNotNormalized GetLineEquation();
-    }
 
-    public static class LineSourceExt
-    {
-        public static Point? CrossWith([CanBeNull] this ILineGeometrySource a, [CanBeNull] ILineGeometrySource b)
-        {
-            var lineA = a?.GetLineEquation();
-            if (lineA == null)
-                return null;
-            var lineB = b?.GetLineEquation();
-            if (lineB == null)
-                return null;
-            return LineEquationNotNormalized.Cross(lineA, lineB);
-        }
-    }
 
-    public sealed class LineEquationNotNormalized : ICloneable
+    public sealed class PathLineEquationNotNormalized : ICloneable
     {
         /// <summary>
         ///     Tworzy instancję obiektu
         /// </summary>
-        public LineEquationNotNormalized() { }
+        public PathLineEquationNotNormalized() { }
 
         /// <summary>
         ///     Tworzy linię przechodzącą przez punkt a i b
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        public LineEquationNotNormalized(Point a, Point b)
+        public PathLineEquationNotNormalized(Point a, Point b)
             :
             this(a.X, a.Y, b.X, b.Y)
         {
@@ -54,7 +37,7 @@ namespace iSukces.DrawingPanel.Paths
         /// </summary>
         /// <param name="tangent"></param>
         /// <param name="y0"></param>
-        public LineEquationNotNormalized(double tangent, double y0)
+        public PathLineEquationNotNormalized(double tangent, double y0)
         {
             A = tangent;
             B = -1;
@@ -67,14 +50,14 @@ namespace iSukces.DrawingPanel.Paths
         ///     <param name="b">wsp. B</param>
         ///     <param name="c">wsp. C</param>
         /// </summary>
-        public LineEquationNotNormalized(double a, double b, double c)
+        public PathLineEquationNotNormalized(double a, double b, double c)
         {
             A = a;
             B = b;
             C = c;
         }
 
-        public LineEquationNotNormalized(double x1, double y1, double x2, double y2)
+        public PathLineEquationNotNormalized(double x1, double y1, double x2, double y2)
         {
             var dx = x2 - x1;
             var dy = y2 - y1;
@@ -94,7 +77,7 @@ namespace iSukces.DrawingPanel.Paths
             C = -(A * x1 + B * y1);
         }
 
-        public static Point? Cross(LineEquationNotNormalized p1, LineEquationNotNormalized p2)
+        public static Point? Cross(PathLineEquationNotNormalized p1, PathLineEquationNotNormalized p2)
         {
             // źródło http://www.math.edu.pl/punkt-przeciecia-dwoch-prostych
             if (p1 == null)
@@ -122,8 +105,8 @@ namespace iSukces.DrawingPanel.Paths
         /// </summary>
         public static Point? CrossLineSegment(Point p1, Point p2, Point p3, Point p4)
         {
-            var line1 = new LineEquationNotNormalized(p1, p2);
-            var line2 = new LineEquationNotNormalized(p3, p4);
+            var line1 = new PathLineEquationNotNormalized(p1, p2);
+            var line2 = new PathLineEquationNotNormalized(p3, p4);
             var c     = Cross(line1, line2);
             if (c == null) return null;
             var cc = c.Value;
@@ -160,48 +143,48 @@ namespace iSukces.DrawingPanel.Paths
             return null;
         }
 
-        public static LineEquationNotNormalized From2Points(Point p1, Point p2)
+        public static PathLineEquationNotNormalized From2Points(Point p1, Point p2)
         {
             return FromPointAndDeltas(p1.X, p1.Y, p2.X - p1.X, p2.Y - p1.Y);
         }
 
-        public static LineEquationNotNormalized From2Points(double x1, double y1, double x2, double y2)
+        public static PathLineEquationNotNormalized From2Points(double x1, double y1, double x2, double y2)
         {
             return FromPointAndDeltas(x1, y1, x2 - x1, y2 - y1);
         }
 
 
-        public static LineEquationNotNormalized FromPointAndDeltas(double x, double y, double dx, double dy)
+        public static PathLineEquationNotNormalized FromPointAndDeltas(double x, double y, double dx, double dy)
         {
             //double a = -dy;
             // double b = dx;
             // LineEquation2 r = new LineEquation2(-dy, dx, -a * x - b * y);
-            var r = new LineEquationNotNormalized(-dy, dx, dy * x - dx * y);
+            var r = new PathLineEquationNotNormalized(-dy, dx, dy * x - dx * y);
             return r;
         }
 
-        public static LineEquationNotNormalized FromPointAndDeltas(Point x, Vector v)
+        public static PathLineEquationNotNormalized FromPointAndDeltas(Point x, Vector v)
         {
             var dx = v.X;
             var dy = v.Y;
-            var r  = new LineEquationNotNormalized(-dy, dx, dy * x.X - dx * x.Y);
+            var r  = new PathLineEquationNotNormalized(-dy, dx, dy * x.X - dx * x.Y);
             return r;
         }
 
-        public static explicit operator LineEquationNotNormalized(LinearFunc a)
+        public static explicit operator PathLineEquationNotNormalized(LinearFunc a)
         {
-            return new LineEquationNotNormalized(a.A, -1, a.B);
+            return new PathLineEquationNotNormalized(a.A, -1, a.B);
         }
 
 
-        public static LineEquationNotNormalized operator -(LineEquationNotNormalized a)
+        public static PathLineEquationNotNormalized operator -(PathLineEquationNotNormalized a)
         {
-            return new LineEquationNotNormalized(-a.A, -a.B, -a.C);
+            return new PathLineEquationNotNormalized(-a.A, -a.B, -a.C);
         }
 
         public object Clone() { return MemberwiseClone(); }
 
-        public Point? CrossWith(LineEquationNotNormalized line) { return Cross(this, line); }
+        public Point? CrossWith(PathLineEquationNotNormalized line) { return Cross(this, line); }
 
         public double DistanceNotNormalized(Point p) { return A * p.X + B * p.Y + C; }
 

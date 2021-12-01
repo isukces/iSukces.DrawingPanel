@@ -42,7 +42,7 @@ namespace iSukces.DrawingPanel.Paths
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public static Point? CrossNormalized(LineEquationNotNormalized p1, LineEquationNotNormalized p2)
+        public static Point? CrossNormalized(PathLineEquationNotNormalized p1, PathLineEquationNotNormalized p2)
         {
             // var epsilon = 5.5511151231257827E-17
             const double epsilon = 1E-16;
@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths
         /// <param name="p2"></param>
         /// <param name="determinant"></param>
         /// <returns></returns>
-        public static Point? CrossNormalized(LineEquationNotNormalized p1, LineEquationNotNormalized p2,
+        public static Point? CrossNormalized(PathLineEquationNotNormalized p1, PathLineEquationNotNormalized p2,
             out double determinant)
         {
             // var epsilon = 5.5511151231257827E-17
@@ -118,8 +118,8 @@ namespace iSukces.DrawingPanel.Paths
 
         public static Point? GetCrossPoint(Point start, Vector vStart, Point end, Vector vEnd)
         {
-            var l1         = LineEquationNotNormalized.FromPointAndDeltas(start, vStart);
-            var l2         = LineEquationNotNormalized.FromPointAndDeltas(end, vEnd);
+            var l1         = PathLineEquationNotNormalized.FromPointAndDeltas(start, vStart);
+            var l2         = PathLineEquationNotNormalized.FromPointAndDeltas(end, vEnd);
             var crossPoint = l1.CrossWith(l2);
             return crossPoint;
         }

@@ -111,14 +111,14 @@ namespace iSukces.DrawingPanel.Paths
                 var v      = vertex.InVector;
                 var loc1   = vertex.Location + v.GetPrependicular(false) * movement;
 
-                var line1 = LineEquationNotNormalized.FromPointAndDeltas(loc1, v);
+                var line1 = PathLineEquationNotNormalized.FromPointAndDeltas(loc1, v);
 
                 movement = _movementBySegmentIndex(index);
                 v        = vertex.OutVector;
                 var loc2  = vertex.Location + v.GetPrependicular(false) * movement;
-                var line2 = LineEquationNotNormalized.FromPointAndDeltas(loc2, v);
+                var line2 = PathLineEquationNotNormalized.FromPointAndDeltas(loc2, v);
 
-                var   cross            = LineEquationNotNormalized.Cross(line1, line2);
+                var   cross            = PathLineEquationNotNormalized.Cross(line1, line2);
                 var   originalLocation = vertex.Location;
                 Point movedLocation;
                 if (cross.HasValue)

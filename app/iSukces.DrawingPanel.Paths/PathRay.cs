@@ -50,7 +50,7 @@ namespace iSukces.DrawingPanel.Paths
         public Point? Cross(Point p, Vector v)
         {
             var l1         = GetLine();
-            var l2         = LineEquationNotNormalized.FromPointAndDeltas(p, v);
+            var l2         = PathLineEquationNotNormalized.FromPointAndDeltas(p, v);
             var crossPoint = l1.CrossWith(l2);
             return crossPoint;
         }
@@ -64,9 +64,9 @@ namespace iSukces.DrawingPanel.Paths
 
         public Point Point { get; }
 
-        public LineEquationNotNormalized GetLine()
+        public PathLineEquationNotNormalized GetLine()
         {
-            return LineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
+            return PathLineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
         }
 
         public PathRay With(Point point) { return new PathRay(point, Vector); }

@@ -12,7 +12,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [InlineData(5.2)]
         public void T01_Should_compute_cross_with_horizontal_line(double y)
         {
-            var line = LineEquationNotNormalized.From2Points(1, 2, 10, 2);
+            var line = PathLineEquationNotNormalized.From2Points(1, 2, 10, 2);
             var p    = line.GetNearestPoint(new Point(3, y));
             AssertEx.Equal(3, 2, p);
         }
@@ -23,7 +23,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [InlineData(5.2)]
         public void T02_Should_compute_cross_with_vertical_line(double x)
         {
-            var line = LineEquationNotNormalized.From2Points(7, -55, 7, 2);
+            var line = PathLineEquationNotNormalized.From2Points(7, -55, 7, 2);
             var p    = line.GetNearestPoint(new Point(x, 3));
             AssertEx.Equal(7, 3, p);
         }
@@ -32,7 +32,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [Fact]
         public void T03_Should_compute_cross()
         {
-            var line = LineEquationNotNormalized.From2Points(1, 2, 7, 14);
+            var line = PathLineEquationNotNormalized.From2Points(1, 2, 7, 14);
             var p    = line.GetNearestPoint(new Point(4, 3));
             AssertEx.Equal(2, 4, p);
         }

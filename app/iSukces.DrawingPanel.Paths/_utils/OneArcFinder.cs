@@ -81,9 +81,9 @@ namespace iSukces.DrawingPanel.Paths
 
         public bool UpdateCross()
         {
-            var a     = LineEquationNotNormalized.FromPointAndDeltas(StartPoint, StartVector);
-            var b     = LineEquationNotNormalized.FromPointAndDeltas(EndPoint, EndVector);
-            var cross = LineEquationNotNormalized.Cross(a, b);
+            var a     = PathLineEquationNotNormalized.FromPointAndDeltas(StartPoint, StartVector);
+            var b     = PathLineEquationNotNormalized.FromPointAndDeltas(EndPoint, EndVector);
+            var cross = PathLineEquationNotNormalized.Cross(a, b);
             if (cross.HasValue)
             {
                 Cross = cross.Value;

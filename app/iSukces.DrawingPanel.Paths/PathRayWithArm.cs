@@ -105,9 +105,9 @@ namespace iSukces.DrawingPanel.Paths
             return vector;
         }
 
-        public LineEquationNotNormalized GetLine()
+        public PathLineEquationNotNormalized GetLine()
         {
-            return LineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
+            return PathLineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
         }
 
         public Vector GetPrependicularVector() { return Vector.GetPrependicularVector(); }
