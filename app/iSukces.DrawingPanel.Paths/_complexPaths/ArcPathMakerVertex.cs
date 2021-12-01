@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
@@ -10,6 +11,8 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
+    
+    [DebuggerDisplay("{GetCreationCode()}")]
     public sealed class ArcPathMakerVertex
     {
         public ArcPathMakerVertex() { }
@@ -59,6 +62,11 @@ namespace iSukces.DrawingPanel.Paths
                 ReferencePoints = DeepClone(ReferencePoints)
             };
             return vertex;
+        }
+        
+        internal string GetCreationCode()
+        {
+            return $"ArcPathMakerVertex [{Location.X.Str()}, {Location.Y.Str()}]";
         }
 
         public void NormalizeInVector()
