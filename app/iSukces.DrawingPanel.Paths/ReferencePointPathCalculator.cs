@@ -41,16 +41,7 @@ namespace iSukces.DrawingPanel.Paths
             c.Setup(a, b);
             return c.CalculateArc();
         }
-
-
-        [NotNull]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected IPathResult CreateInvalid(ArcValidationResult status)
-        {
-            var start   = Start.GetRay();
-            var end = End.GetRay();
-            return InvalidPathElement.MakeInvalid(start, end, status);
-        }
+        
 
         [NotNull]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

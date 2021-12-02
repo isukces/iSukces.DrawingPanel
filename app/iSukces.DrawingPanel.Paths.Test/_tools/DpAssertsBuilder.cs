@@ -113,16 +113,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             const string prefix = nameof(ArcValidationResult) + ".";
             AssertEqual(prefix + value, expression);
         }
-
-
-        private void Add(InvalidPathElement x, string name)
-        {
-            name += ".";
-            Add(x.Status, name + "." + nameof(x.Status));
-            AddIPathElementCommon(x, name);
-        }
-
-
+        
         private void Add(ArcDefinition c, string name)
         {
             if (c is null)
@@ -200,13 +191,6 @@ namespace iSukces.DrawingPanel.Paths.Test
                     {
                         Add(arcDefinition, e.Code);
                     });
-                    break;
-                case InvalidPathElement invalidPathElement:
-                    CastAndDoAction(invalidPathElement, knownType, name, e =>
-                    {
-                        Add(invalidPathElement, e.Code);
-                    });
-
                     break;
                 case LinePathElement linePathElement:
                     CastAndDoAction(linePathElement, knownType, name, e =>

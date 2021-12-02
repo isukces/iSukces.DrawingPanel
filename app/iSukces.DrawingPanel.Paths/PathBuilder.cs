@@ -99,8 +99,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 case null:
                     LineTo(start.Point);
-                    _list.Add(new InvalidPathElement(start, end, ArcValidationResult.UnableToConstructArc));
-                    CurrentPoint = end.Point;
+                    LineTo(end.Point);
                     return;
                 case ZeroReferencePointPathCalculatorLineResult:
                     LineTo(start.Point);

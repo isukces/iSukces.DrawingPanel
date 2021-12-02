@@ -218,9 +218,6 @@ namespace iSukces.DrawingPanel.Paths.Test
                             DrawArc(arcDefinition);
                             // throw new NotImplementedException("Drawer");
                             break;
-                        case InvalidPathElement invalidPathElement:
-                            DrawLine(element.GetStartPoint(), element.GetEndPoint(), new Pen(Color.Red, 1));
-                            break;
                         case LinePathElement linePathElement:
                             DrawLine(element.GetStartPoint(), element.GetEndPoint(), new Pen(Color.Blue, 3));
                             break;
@@ -252,7 +249,6 @@ namespace iSukces.DrawingPanel.Paths.Test
                         foreach (var point in GetPoints(arcDefinition))
                             yield return point;
                         break;
-                    case InvalidPathElement:
                     case LinePathElement: break;
                     default: throw new ArgumentOutOfRangeException(nameof(i));
                 }

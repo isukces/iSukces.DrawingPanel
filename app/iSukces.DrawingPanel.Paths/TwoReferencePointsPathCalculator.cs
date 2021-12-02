@@ -15,7 +15,8 @@ namespace iSukces.DrawingPanel.Paths
             var tmp = ComputeInternal(validator, out var result);
             if (tmp is not null)
                 return tmp;
-            return InvalidPathElement.MakeInvalid(Start.GetRay(), End.GetRay(), result);
+            var line = new LinePathElement(Start.Point, End.Point);
+            return new PathResult(Start.Point, End.Point, new[] { line });
         }
 
         private IPathResult ComputeInternal(IPathValidator validator, out ArcValidationResult result)

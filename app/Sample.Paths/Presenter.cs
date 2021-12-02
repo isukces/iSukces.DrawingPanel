@@ -229,8 +229,6 @@ namespace Sample.Paths
                     case ArcDefinition def:
                         DrawArc(def);
                         break;
-                    case InvalidPathElement invalidPathElement:
-                        break;
                     case LinePathElement linePathElement:
                         DrawArcLine(linePathElement.GetStartPoint(), linePathElement.GetEndPoint());
                         break;

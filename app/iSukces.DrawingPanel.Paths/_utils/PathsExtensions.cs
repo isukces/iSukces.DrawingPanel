@@ -76,23 +76,7 @@ namespace iSukces.DrawingPanel.Paths
             return result;
         }
 
-
-        [NotNull]
-        public static IPathElement Validate(this ArcDefinition arc, IPathValidator validator,
-            in PathRay start, in PathRay end)
-        {
-            if (arc is null)
-                return new InvalidPathElement(start, end, ArcValidationResult.UnableToConstructArc);
-            if (validator is null)
-            {
-                return arc;
-            }
-
-            var r = validator.ValidateArc(arc);
-            if (r == ArcValidationResult.Ok)
-                return arc;
-            return new InvalidPathElement(start, end, r);
-        }
+ 
         
         internal static string Str(this double d)
         {

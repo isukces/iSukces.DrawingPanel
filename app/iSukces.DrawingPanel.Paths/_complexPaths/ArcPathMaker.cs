@@ -16,8 +16,6 @@ namespace iSukces.DrawingPanel.Paths
                     case ArcDefinition arcDefinition:
                         pm.ArcTo(arcDefinition);
                         break;
-                    case InvalidPathElement invalidPathElement:
-                        throw new NotSupportedException();
                     case LinePathElement linePathElement:
                         pm.LineTo(linePathElement.GetStartPoint());
                         pm.LineTo(linePathElement.GetEndPoint());

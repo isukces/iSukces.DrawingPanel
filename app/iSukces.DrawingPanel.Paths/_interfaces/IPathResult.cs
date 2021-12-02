@@ -45,13 +45,6 @@ namespace iSukces.DrawingPanel.Paths
                 case 1:
                 {
                     var element = elements[0];
-                    if (element is InvalidPathElement)
-                    {
-                        distance  = 0;
-                        direction = default;
-                        return false;
-                    }
-
                     element.DistanceFromElement(aPoint, out distance, out direction);
                     return true;
                 }
@@ -66,11 +59,6 @@ namespace iSukces.DrawingPanel.Paths
                     for (var index = 0; index < cnt; index++)
                     {
                         var element = elements[index];
-                        if (element is InvalidPathElement)
-                        {
-                            offset += element.GetLength();
-                            continue;
-                        }
 
                         var currentDistance = element.DistanceFromElement(aPoint, out var distanceFromStart, out var newDirection);
                         if (first)
