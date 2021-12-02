@@ -48,12 +48,21 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Point GetEndPoint() { return _end; }
+        public Point GetEndPoint()
+        {
+            return _end;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector GetEndVector() { return _unitVector; }
+        public Vector GetEndVector()
+        {
+            return _unitVector;
+        }
 
-        public double GetLength() { return _length; }
+        public double GetLength()
+        {
+            return _length;
+        }
 
         public Point GetNearestPoint(Point point)
         {
@@ -62,10 +71,16 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Point GetStartPoint() { return _start; }
+        public Point GetStartPoint()
+        {
+            return _start;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector GetStartVector() { return _unitVector; }
+        public Vector GetStartVector()
+        {
+            return _unitVector;
+        }
 
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
@@ -87,14 +102,27 @@ namespace iSukces.DrawingPanel.Paths
             return false;
         }
 
-        public LinePathElement WithEndPoint(Point newEnd) { return new LinePathElement(_start, newEnd); }
+        public LinePathElement WithEndPoint(Point newEnd)
+        {
+            return new LinePathElement(_start, newEnd);
+        }
 
-        public LinePathElement WithStartPoint(Point newStart) { return new LinePathElement(newStart, _end); }
+        public LinePathElement WithStartPoint(Point newStart)
+        {
+            return new LinePathElement(newStart, _end);
+        }
+
+        public object Tag { get; set; }
+
+        public Vector UnitVector => _unitVector;
+        public Point  Start      => _start;
+        public Point  End        => _end;
+        public double Length     => _length;
 
         private readonly Point _end;
+        private readonly double _length;
         private readonly Point _start;
         private readonly Vector _unitVector;
         private readonly Vector _vector;
-        private readonly double _length;
     }
 }

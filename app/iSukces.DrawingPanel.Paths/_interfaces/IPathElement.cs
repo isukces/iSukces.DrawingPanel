@@ -15,5 +15,6 @@ namespace iSukces.DrawingPanel.Paths
         double GetLength();
         Point GetStartPoint();
         Vector GetStartVector();
+        object Tag { get; set; }
     }
 }

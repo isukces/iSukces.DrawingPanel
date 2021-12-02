@@ -17,21 +17,27 @@ namespace iSukces.DrawingPanel.Paths
         {
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = start,
+                Center         = center,
+                Start          = start,
                 DirectionStart = startV,
-                End         = end,
-                RadiusStart = start - center,
-                RadiusEnd   = end - center
+                End            = end,
+                RadiusStart    = start - center,
+                RadiusEnd      = end - center
             };
             return arc;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ArcDefinition Make(PathRay a, Point b, Vector vb) { return Make(a.Point, a.Vector, b, vb); }
+        public static ArcDefinition Make(PathRay a, Point b, Vector vb)
+        {
+            return Make(a.Point, a.Vector, b, vb);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ArcDefinition Make(PathRay a, PathRay b) { return Make(a.Point, a.Vector, b.Point, b.Vector); }
+        public static ArcDefinition Make(PathRay a, PathRay b)
+        {
+            return Make(a.Point, a.Vector, b.Point, b.Vector);
+        }
 
         public static ArcDefinition Make(Point a, Vector va, Point b, Vector vb)
         {
@@ -47,9 +53,9 @@ namespace iSukces.DrawingPanel.Paths
             */
             var c = new ArcDefinition
             {
-                Center      = center.Value,
-                Start       = a,
-                End         = b,
+                Center         = center.Value,
+                Start          = a,
+                End            = b,
                 DirectionStart = va
             };
             c.RadiusStart = c.Start - c.Center;
@@ -78,7 +84,7 @@ namespace iSukces.DrawingPanel.Paths
                         return (point - End).Length;
                     default:
                         var vLength = v.Length;
-                        var radius = Radius;
+                        var radius  = Radius;
 
                         distanceFromStart = angleMinusStart * PathsMathUtils.DegreesToRadians * radius;
                         var dist = vLength - radius;
@@ -117,7 +123,8 @@ namespace iSukces.DrawingPanel.Paths
                     default:
                         var vLength = v.Length;
                         var radius  = Radius;
-                        distanceFromStart = (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * radius;
+                        distanceFromStart =
+                            (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * radius;
 
                         var dist = vLength - radius;
                         if (dist < 0)
@@ -136,15 +143,15 @@ namespace iSukces.DrawingPanel.Paths
                                   | ArcFlags.HasChord;
             var result = new ArcDefinition
             {
-                Center       = Center,
-                RadiusStart  = RadiusEnd,
-                RadiusEnd    = RadiusStart,
-                DirectionStart  = DirectionEnd,
-                Start        = End,
-                End          = Start,
-                _flags       = _flags & mask,
-                _radius      = _radius,
-                _chordCached = _chordCached
+                Center         = Center,
+                RadiusStart    = RadiusEnd,
+                RadiusEnd      = RadiusStart,
+                DirectionStart = DirectionEnd,
+                Start          = End,
+                End            = Start,
+                _flags         = _flags & mask,
+                _radius        = _radius,
+                _chordCached   = _chordCached
             };
             return result;
         }
@@ -156,11 +163,20 @@ namespace iSukces.DrawingPanel.Paths
             return isRight ? "Right" : "Left";
         }
 
-        Point IPathElement.GetEndPoint() { return End; }
+        Point IPathElement.GetEndPoint()
+        {
+            return End;
+        }
 
-        Vector IPathElement.GetEndVector() { return DirectionEnd; }
+        Vector IPathElement.GetEndVector()
+        {
+            return DirectionEnd;
+        }
 
-        public double GetLength() { return Radius * Angle * MathEx.DEGTORAD; }
+        public double GetLength()
+        {
+            return Radius * Angle * MathEx.DEGTORAD;
+        }
 
 
         public Point GetNearestPointOnCircle(Point point)
@@ -182,9 +198,15 @@ namespace iSukces.DrawingPanel.Paths
             return res;
         }
 
-        Point IPathElement.GetStartPoint() { return Start; }
+        Point IPathElement.GetStartPoint()
+        {
+            return Start;
+        }
 
-        Vector IPathElement.GetStartVector() { return DirectionStart; }
+        Vector IPathElement.GetStartVector()
+        {
+            return DirectionStart;
+        }
 
         public bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
             out Point correctedPoint)
@@ -225,8 +247,25 @@ namespace iSukces.DrawingPanel.Paths
             return false;
         }
 
-        public override string ToString() { return $"{Angle:N2}°, r={Radius:N2}"; }
+        public override string ToString()
+        {
+            return $"{Angle:N2}°, r={Radius:N2}";
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void UpdateRadiusEnd()
+        {
+            RadiusEnd = End - Center;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void UpdateRadiusStart()
+        {
+            RadiusStart = Start - Center;
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateRadiusVectors()
         {
             RadiusStart = Start - Center;
@@ -247,6 +286,8 @@ namespace iSukces.DrawingPanel.Paths
             _flags  &= ~ChangedRadius;
         }
 
+        public object Tag { get; set; }
+
 
         private const ArcFlags ChangedStart = ~ArcFlags.HasChord;
 
@@ -256,15 +297,15 @@ namespace iSukces.DrawingPanel.Paths
 
 
         private const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
-                                                | ArcFlags.HasAngle
-                                                | ArcFlags.HasRadius
-                                                | ArcFlags.HasStartAngle);
+                                                      | ArcFlags.HasAngle
+                                                      | ArcFlags.HasRadius
+                                                      | ArcFlags.HasStartAngle);
 
         private const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasDirection | ArcFlags.HasAngle);
 
         private const ArcFlags ChangedStartVector = ~(ArcFlags.HasDirection
-                                                | ArcFlags.HasAngle
-                                                | ArcFlags.HasDirection);
+                                                      | ArcFlags.HasAngle
+                                                      | ArcFlags.HasDirection);
 
         public double Radius
         {
@@ -315,7 +356,7 @@ namespace iSukces.DrawingPanel.Paths
             set
             {
                 _directionStart =  value;
-                _flags       &= ChangedStartVector;
+                _flags          &= ChangedStartVector;
             }
         }
 
@@ -450,6 +491,7 @@ namespace iSukces.DrawingPanel.Paths
 
         private double _angleCached;
         private double _chordCached;
+        private Vector _directionStart;
         private Point _end;
         private ArcFlags _flags;
         private double _radius;
@@ -458,7 +500,6 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
-        private Vector _directionStart;
 
         [Flags]
         private enum ArcFlags : byte
