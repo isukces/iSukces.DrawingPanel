@@ -32,7 +32,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             p.DrawInternal();
         }
 
-        private static DirectoryInfo GetDir(string path)
+        internal static DirectoryInfo GetDir(string path)
         {
             if (string.IsNullOrEmpty(path))
                 return null;
@@ -74,7 +74,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
         }
 
-        private static void Grow(ref MinMax range)
+        internal static void Grow(ref MinMax range)
         {
             //range.Grow(1);
             var size = range.Length + Math.Max(4, range.Length * 0.20);

@@ -78,19 +78,19 @@ namespace iSukces.DrawingPanel.Paths
 
  
         
-        internal static string Str(this double d)
+        internal static string CsCode(this double d)
         {
             return d.ToString(CultureInfo.InvariantCulture);
         }
-        
-        
+
+
 #if DEBUG && USE_TINYEXPR
         internal static TinyExpr ToExpr(this double d)
         {
             return new TinyExpr(d);
         }
 
-
+        
 
         public static string DebugCreate(PathRay start, string name)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 #if NET5_0
@@ -11,15 +12,16 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Paths
 {
+    [DebuggerDisplay("{GetDebuggerDisplay()}")]
     public sealed class ArcDefinition : IPathElement, ILineCollider
     {
-        public static ArcDefinition FromCenterAndArms(Point center, Point start, Vector startV, Point end)
+        public static ArcDefinition FromCenterAndArms(Point center, Point start, Vector directionStart, Point end)
         {
             var arc = new ArcDefinition
             {
                 Center         = center,
                 Start          = start,
-                DirectionStart = startV,
+                DirectionStart = directionStart,
                 End            = end,
                 RadiusStart    = start - center,
                 RadiusEnd      = end - center
@@ -156,6 +158,10 @@ namespace iSukces.DrawingPanel.Paths
             return result;
         }
 
+        internal string GetDebuggerDisplay()
+        {
+            return PathDebug.CsCode(this);
+        }
 
         public string GetDirectionAlternative()
         {
@@ -166,6 +172,11 @@ namespace iSukces.DrawingPanel.Paths
         Point IPathElement.GetEndPoint()
         {
             return End;
+        }
+
+        public PathRay GetEndRay()
+        {
+            return new PathRay(End, DirectionEnd);
         }
 
         Vector IPathElement.GetEndVector()
@@ -201,6 +212,11 @@ namespace iSukces.DrawingPanel.Paths
         Point IPathElement.GetStartPoint()
         {
             return Start;
+        }
+
+        public PathRay GetStartRay()
+        {
+            return new PathRay(Start, DirectionStart);
         }
 
         Vector IPathElement.GetStartVector()

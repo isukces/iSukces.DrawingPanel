@@ -194,6 +194,8 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsZero(this Vector v) { return v.X.Equals(0d) && v.Y.Equals(0d); }
 
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double NormalizeAngleDeg(double angle)
         {
             const double full = 360;

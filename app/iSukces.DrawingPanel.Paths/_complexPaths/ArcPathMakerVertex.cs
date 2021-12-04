@@ -66,7 +66,7 @@ namespace iSukces.DrawingPanel.Paths
         
         internal string GetCreationCode()
         {
-            return $"ArcPathMakerVertex [{Location.X.Str()}, {Location.Y.Str()}]";
+            return $"ArcPathMakerVertex [{Location.X.CsCode()}, {Location.Y.CsCode()}]";
         }
 
         public void NormalizeInVector()

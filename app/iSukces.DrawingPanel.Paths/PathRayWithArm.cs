@@ -85,7 +85,7 @@ namespace iSukces.DrawingPanel.Paths
         internal string GetCreationCode()
         {
             return
-                $"new {nameof(PathRayWithArm)}({Point.X.Str()}, {Point.Y.Str()}, {Vector.X.Str()}, {Vector.Y.Str()}, {ArmLength.Str()})";
+                $"new {nameof(PathRayWithArm)}({Point.X.CsCode()}, {Point.Y.CsCode()}, {Vector.X.CsCode()}, {Vector.Y.CsCode()}, {ArmLength.CsCode()})";
         }
 
 

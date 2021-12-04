@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using iSukces.Mathematics;
 using Xunit;
+using Point = System.Windows.Point;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
@@ -15,10 +18,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             var center = new Point(100, 200);
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = center + new Vector(50, 0),
+                Center         = center,
+                Start          = center + new Vector(50, 0),
                 DirectionStart = new Vector(0, yOfStart),
-                End         = center + new Vector(0, 50)
+                End            = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
             Assert.Equal(expected, arc.Direction);
@@ -40,10 +43,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             var center = new Point(100, 200);
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = center + new Vector(50, 0),
+                Center         = center,
+                Start          = center + new Vector(50, 0),
                 DirectionStart = new Vector(0, yOfStart),
-                End         = center + v
+                End            = center + v
             };
             arc.UpdateRadiusVectors();
 
@@ -78,10 +81,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             var center = new Point(100, 200);
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = center + new Vector(50, 0),
+                Center         = center,
+                Start          = center + new Vector(50, 0),
                 DirectionStart = new Vector(0, yOfStart),
-                End         = center + v
+                End            = center + v
             };
             arc.UpdateRadiusVectors();
             Assert.Equal(expected, arc.Angle);
@@ -94,10 +97,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             var center = new Point(100, 200);
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = center + new Vector(50, 0),
+                Center         = center,
+                Start          = center + new Vector(50, 0),
                 DirectionStart = new Vector(0, 0),
-                End         = center + new Vector(0, 50)
+                End            = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
             Assert.Equal(70.710678118654755, arc.Chord);
@@ -110,10 +113,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             var center = new Point(100, 200);
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = center + new Vector(50, 0),
+                Center         = center,
+                Start          = center + new Vector(50, 0),
                 DirectionStart = new Vector(0, 0),
-                End         = center + new Vector(0, 50)
+                End            = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
             Assert.Equal(14.644660940672622, arc.Sagitta);
@@ -126,10 +129,10 @@ namespace iSukces.DrawingPanel.Paths.Test
             var center = new Point(100, 200);
             var arc = new ArcDefinition
             {
-                Center      = center,
-                Start       = center + new Vector(50, 0),
+                Center         = center,
+                Start          = center + new Vector(50, 0),
                 DirectionStart = new Vector(0, 0),
-                End         = center + new Vector(0, 50)
+                End            = center + new Vector(0, 50)
             };
             arc.UpdateRadiusVectors();
             Assert.Equal(14.644660940672622, arc.Sagitta);
@@ -174,7 +177,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [InlineData(10, 12.6, 2.4, ArcLength)]
         [InlineData(10, 17.4, 2.4, ArcLength)]
         [InlineData(9.9, 17.4, 2.40208242989286, ArcLength)]
-        [InlineData(10+7, 20-7, 4.89949493661167, ArcLength/2)]
+        [InlineData(10 + 7, 20 - 7, 4.89949493661167, ArcLength / 2)]
         public void T08_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
         {
             var arc = ArcDefinition.FromCenterAndArms(
@@ -186,19 +189,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             var d     = arc.DistanceFromElement(point, out var loc, out var direction);
             Assert.Equal(dist, d, 10);
             Assert.Equal(locExpected, loc, 10);
-            
-            
+
             var angle = -locExpected / arc.Radius;
-            direction = direction.NormalizeFast().GetPrependicular(true);
+            direction = direction.NormalizeFast().GetPrependicular();
             Assert.Equal(Math.Sin(angle), direction.Y, 5);
             Assert.Equal(Math.Cos(angle), direction.X, 5);
         }
 
 
-        private const double ArcLength = 7.853981633974483;
-
-
-        
         [Theory]
         [InlineData(0)]
         [InlineData(1)]
@@ -209,7 +207,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 Center         = new Point(33.426090800987062, -100.2953991565369),
                 Start          = new Point(-23.082641561567051, -27.910853525241059),
                 End            = new Point(4.7312421257509243, -13.063725213082051),
-                RadiusEnd      =     new Vector(-28.694848675236138,87.231673943454851),
+                RadiusEnd      = new Vector(-28.694848675236138, 87.231673943454851),
                 RadiusStart    = new Vector(-56.508732362554113, 72.38454563129585),
                 DirectionStart = new Vector(0.78824459418468384, 0.61536205581642989),
             };
@@ -229,6 +227,49 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
         }
 
-        
+        [Fact]
+        public void T40_Should_draw_arcs_and_line()
+        {
+            // just make drawing for special situation
+            var drawer = new ResultDrawerBase();
+
+            var arc = ArcDefinition.FromCenterAndArms(new Point(54.8912687238947,91.7723295871598), new Point(29.4845072800563,0.552564737714022), new Vector(0.963332660388057,-0.268309868304668), new Point(146.242441507818,66.8421820293499));
+            var p1 = new Point(30.9478964807321,4.29722988260286);
+            var p2 = new Point(29.7659915108501,0.0537495135934687);
+
+
+            void Draw()
+            {
+                drawer.DrawArc(arc);
+                drawer.DrawLine(new Pen(Color.Blue), p1,p2);
+
+
+                /*
+                drawer.DrawCircleWithVector(big.GetStartRay(), true);                
+                drawer.DrawCircleWithVector(small.GetEndRay(), true);
+                drawer.DrawLine(new Pen(Color.Blue), small.Center, big.Center);
+                drawer.GrayCross(cc);*/
+                drawer.DrawCross(arc.Start, Color.Red, 2);
+                drawer.DrawCross(p2, Color.Red, 2);
+                drawer.DrawCross(p1, Color.Gold, 2);
+
+            }
+
+            IEnumerable<Point> RangePoints()
+            {
+                
+                    // yield return arc.Center;    
+                    //yield return arc.Start;    
+                    yield return arc.Start;
+                    yield return p1;    
+                    yield return p2;    
+                
+            }
+
+            drawer.DrawCustom("ArcDefinition T40 drawing", RangePoints, Draw);
+        }
+
+
+        private const double ArcLength = 7.853981633974483;
     }
 }

@@ -3,7 +3,7 @@ namespace iSukces.DrawingPanel.Paths
 {
     internal class TinyExpr
     {
-        public TinyExpr(double value) { _code = value.Str(); }
+        public TinyExpr(double value) { _code = value.CsCode(); }
 
         public TinyExpr(string code) { _code = code; }
 

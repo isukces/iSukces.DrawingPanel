@@ -25,7 +25,7 @@ namespace iSukces.DrawingPanel.Paths
 
         internal string GetCreationCode()
         {
-            return $"new MinimumValuesPathValidator({_minRadius.Str()}, {_minLineLength.Str()})";
+            return $"new MinimumValuesPathValidator({_minRadius.CsCode()}, {_minLineLength.CsCode()})";
         }
 
         public double GetMinRadius() { return _minRadius; }

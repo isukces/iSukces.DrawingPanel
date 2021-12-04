@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.Mathematics;
 using Point = System.Windows.Point;
@@ -48,7 +52,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             Graph.DrawLine(pen, p2, p4);
         }
 
-        protected void DrawArc(ArcDefinition c)
+        public void DrawArc(ArcDefinition c)
         {
             if (c is null)
                 return;
@@ -179,10 +183,10 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
-        protected void DrawCross(Point point, Color c, int thickbess)
+        public void DrawCross(Point point, Color c, int thickness)
         {
             var         p     = Map(point);
-            using var   pen   = new Pen(c, thickbess);
+            using var   pen   = new Pen(c, thickness);
             const float delta = 8;
             Graph.DrawLine(pen, p.X - delta, p.Y - delta, p.X + delta, p.Y + delta);
             Graph.DrawLine(pen, p.X - delta, p.Y + delta, p.X + delta, p.Y - delta);
@@ -196,6 +200,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             Graph.DrawLine(pen, a.X, a.Y, b.X, b.Y);
         }
 
+        
+        public void GrayCross(double x, double y) { GrayCross( new Point(x,y)); }
         public void GrayCross(Point point) { DrawCross(point, Color.Indigo, 3); }
 
         public PointF Map(Point p)
@@ -231,5 +237,49 @@ namespace iSukces.DrawingPanel.Paths.Test
         protected Graphics Graph;
         protected MinMax XRange;
         protected MinMax YRange;
+
+        public void DrawCustom(string description,
+            Func<IEnumerable<Point>> range, 
+            Action drawAction, [CallerFilePath] string path = null)
+        {
+            
+            var dir = ArcResultDrawer.GetDir(path);
+            if (dir is null)
+                return;
+            {
+
+                XRange = new MinMax();
+                YRange = new MinMax();
+                foreach (var i in range())
+                {
+                    XRange.Add(i.X);
+                    YRange.Add(i.Y);
+                }
+
+                ArcResultDrawer.Grow(ref XRange);
+                ArcResultDrawer.Grow(ref YRange);
+            }
+
+            CreateBitmap();
+
+            Graph               = Graphics.FromImage(Bmp);
+            Graph.SmoothingMode = SmoothingMode.HighQuality;
+            Graph.FillRectangle(Brushes.White, 0, 0, Bmp.Width, Bmp.Height);
+
+            drawAction();
+            Graph.DrawString(description, new Font("Arial", 10), Brushes.Black, 5, 5);
+            Graph.Dispose();
+            var fileInfo = new FileInfo(Path.Combine(dir.FullName, description.ToFileName() + ".png"));
+            fileInfo.Directory?.Create();
+            Bmp.SaveIfDifferent(fileInfo.FullName);
+            Bmp.Dispose();
+        }
+
+        public void DrawLine(Pen pen, Point a, Point b)
+        {
+            var p1 = Map(a);
+            var p2 = Map(b);
+            Graph.DrawLine(pen, p1, p2);
+        }
     }
 }
