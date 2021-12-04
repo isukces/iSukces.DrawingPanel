@@ -233,16 +233,16 @@ namespace iSukces.DrawingPanel.Paths.Test
             // just make drawing for special situation
             var drawer = new ResultDrawerBase();
 
-            var arc = ArcDefinition.FromCenterAndArms(new Point(54.8912687238947,91.7723295871598), new Point(29.4845072800563,0.552564737714022), new Vector(0.963332660388057,-0.268309868304668), new Point(146.242441507818,66.8421820293499));
-            var p1 = new Point(30.9478964807321,4.29722988260286);
-            var p2 = new Point(29.7659915108501,0.0537495135934687);
-
+            var arc = ArcDefinition.FromCenterAndArms(new Point(54.8912687238947, 91.7723295871598),
+                new Point(29.4845072800563, 0.552564737714022), new Vector(0.963332660388057, -0.268309868304668),
+                new Point(146.242441507818, 66.8421820293499));
+            var p1 = new Point(30.9478964807321, 4.29722988260286);
+            var p2 = new Point(29.7659915108501, 0.0537495135934687);
 
             void Draw()
             {
                 drawer.DrawArc(arc);
-                drawer.DrawLine(new Pen(Color.Blue), p1,p2);
-
+                drawer.DrawLine(new Pen(Color.Blue), p1, p2);
 
                 /*
                 drawer.DrawCircleWithVector(big.GetStartRay(), true);                
@@ -252,24 +252,150 @@ namespace iSukces.DrawingPanel.Paths.Test
                 drawer.DrawCross(arc.Start, Color.Red, 2);
                 drawer.DrawCross(p2, Color.Red, 2);
                 drawer.DrawCross(p1, Color.Gold, 2);
-
             }
 
             IEnumerable<Point> RangePoints()
             {
-                
-                    // yield return arc.Center;    
-                    //yield return arc.Start;    
-                    yield return arc.Start;
-                    yield return p1;    
-                    yield return p2;    
-                
+                // yield return arc.Center;    
+                //yield return arc.Start;    
+                yield return arc.Start;
+                yield return p1;
+                yield return p2;
             }
 
             drawer.DrawCustom("ArcDefinition T40 drawing", RangePoints, Draw);
         }
 
 
+        [Theory]
+        [InlineData(ArcDefinitionProperties.DirectionStart, ArcDefinition.ChangedDirectionStart)]
+        [InlineData(ArcDefinitionProperties.RadiusEnd, ArcDefinition.ChangedRadiusEnd)]
+        [InlineData(ArcDefinitionProperties.RadiusStart, ArcDefinition.ChangedRadiusStart)]
+        [InlineData(ArcDefinitionProperties.Start, ArcDefinition.ChangedStart)]
+        [InlineData(ArcDefinitionProperties.End, ArcDefinition.ChangedEnd)]
+        [InlineData(ArcDefinitionProperties.Radius, ArcDefinition.ChangedRadius)]
+        internal void T41_should_have_proper_flags(ArcDefinitionProperties x1, ArcDefinition.ArcFlags d)
+        {
+            var a = new Dictionary<ArcDefinitionProperties, ArcDefinitionProperties>
+            {
+                [ArcDefinitionProperties.Direction]  = ArcDefinitionProperties.RadiusStart | ArcDefinitionProperties.DirectionStart,
+                [ArcDefinitionProperties.Angle]      = ArcDefinitionProperties.RadiusStart | ArcDefinitionProperties.RadiusEnd | ArcDefinitionProperties.Direction,
+                [ArcDefinitionProperties.Sagitta]    = ArcDefinitionProperties.Start | ArcDefinitionProperties.End | ArcDefinitionProperties.Radius,
+                [ArcDefinitionProperties.Chord]      = ArcDefinitionProperties.Start | ArcDefinitionProperties.End,
+                [ArcDefinitionProperties.StartAngle] = ArcDefinitionProperties.RadiusStart,
+                [ArcDefinitionProperties.EndAngle]   = ArcDefinitionProperties.RadiusEnd,
+                [ArcDefinitionProperties.Radius]     = ArcDefinitionProperties.RadiusStart
+            };
+            var all = GetAll();
+
+            ArcDefinitionProperties[] GetAll()
+            {
+                var list   = new List<ArcDefinitionProperties>();
+                var number = 1;
+                while (number <= 2048)
+                {
+                    list.Add((ArcDefinitionProperties)number);
+                    number *= 2;
+                }
+
+                return list.ToArray();
+            }
+
+            ArcDefinitionProperties Dependent(ArcDefinitionProperties property, ArcDefinitionProperties starting = ArcDefinitionProperties.None)
+            {
+                var result = starting;
+                foreach (var i in a)
+                {
+                    if (i.Value.HasFlag(property))
+                        result |= i.Key;
+                }
+
+                while (result != starting)
+                {
+                    starting = result;
+                    foreach (var x in all)
+                        if (starting.HasFlag(x))
+                            result = Dependent(x, result);
+                }
+
+                return result;
+            }
+
+            ArcDefinition.ArcFlags Convert(ArcDefinitionProperties s)
+            {
+                var tmp = ArcDefinition.ArcFlags.None;
+                if ((s & ArcDefinitionProperties.Direction) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasDirection;
+                    s   &= ~ArcDefinitionProperties.Direction;
+                }
+
+                if ((s & ArcDefinitionProperties.Angle) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasAngle;
+                    s   &= ~ArcDefinitionProperties.Angle;
+                }
+
+                if ((s & ArcDefinitionProperties.Sagitta) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasSagitta;
+                    s   &= ~ArcDefinitionProperties.Sagitta;
+                }
+
+                if ((s & ArcDefinitionProperties.Radius) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasRadius;
+                    s   &= ~ArcDefinitionProperties.Radius;
+                }
+
+                if ((s & ArcDefinitionProperties.StartAngle) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasStartAngle;
+                    s   &= ~ArcDefinitionProperties.StartAngle;
+                }
+
+                if ((s & ArcDefinitionProperties.EndAngle) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasEndAngle;
+                    s   &= ~ArcDefinitionProperties.EndAngle;
+                }       
+                if ((s & ArcDefinitionProperties.Chord) != 0)
+                {
+                    tmp |= ArcDefinition.ArcFlags.HasChord;
+                    s   &= ~ArcDefinitionProperties.Chord;
+                }
+
+                Assert.Equal(ArcDefinitionProperties.None, s);
+                return tmp;
+            }
+
+            {
+                var f        = Dependent(x1);
+                var expected = Convert(f);
+                var arcFlags = ~d;
+                Assert.Equal(expected, arcFlags);
+            }
+        }
+
+
         private const double ArcLength = 7.853981633974483;
+
+        [Flags]
+        internal enum ArcDefinitionProperties
+        {
+            None = 0,
+            Direction = 1,
+            RadiusStart = 2,
+            DirectionStart = 4,
+            Angle = 8,
+            RadiusEnd = 16,
+            Sagitta = 32,
+            End = 64,
+            Start = 128,
+            Radius = 256,
+            Chord = 512,
+            StartAngle = 1024,
+            EndAngle = 2048
+        }
     }
 }

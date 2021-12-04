@@ -160,7 +160,7 @@ namespace iSukces.DrawingPanel.Paths
 
         internal string GetDebuggerDisplay()
         {
-            return PathDebug.CsCode(this);
+            return this.CsCode();
         }
 
         public string GetDirectionAlternative()
@@ -305,36 +305,25 @@ namespace iSukces.DrawingPanel.Paths
         public object Tag { get; set; }
 
 
-        private const ArcFlags ChangedStart = ~ArcFlags.HasChord;
+        internal const ArcFlags ChangedStart = ~(ArcFlags.HasChord | ArcFlags.HasSagitta);
 
-        private const ArcFlags ChangedEnd = ~ArcFlags.HasChord;
+        internal const ArcFlags ChangedEnd = ~(ArcFlags.HasChord | ArcFlags.HasSagitta);
 
-        private const ArcFlags ChangedRadius = ~ArcFlags.HasSagitta;
+        internal const ArcFlags ChangedRadius = ~ArcFlags.HasSagitta;
 
 
-        private const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
-                                                      | ArcFlags.HasAngle
-                                                      | ArcFlags.HasRadius
-                                                      | ArcFlags.HasStartAngle);
+        internal const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
+                                                       | ArcFlags.HasAngle
+                                                       | ArcFlags.HasRadius 
+                                                       | ArcFlags.HasSagitta
+                                                       | ArcFlags.HasStartAngle);
 
-        private const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasDirection | ArcFlags.HasAngle);
+        internal const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasAngle
+                                                     | ArcFlags.HasEndAngle);
 
-        private const ArcFlags ChangedStartVector = ~(ArcFlags.HasDirection
-                                                      | ArcFlags.HasAngle
-                                                      | ArcFlags.HasDirection);
+        internal const ArcFlags ChangedDirectionStart = ~(ArcFlags.HasDirection 
+                                                          | ArcFlags.HasAngle);
 
-        public double Radius
-        {
-            get
-            {
-                if ((_flags & ArcFlags.HasRadius) != 0)
-                    return _radius;
-                _flags  |= ArcFlags.HasRadius;
-                _radius =  RadiusStart.Length;
-                _flags  &= ~ChangedRadius;
-                return _radius;
-            }
-        }
 
         public Vector RadiusEnd
         {
@@ -372,7 +361,7 @@ namespace iSukces.DrawingPanel.Paths
             set
             {
                 _directionStart =  value;
-                _flags          &= ChangedStartVector;
+                _flags          &= ChangedDirectionStart;
             }
         }
 
@@ -397,6 +386,20 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         public Point Center { get; set; }
+        
+        public double Radius
+        {
+            get
+            {
+                if ((_flags & ArcFlags.HasRadius) != 0)
+                    return _radius;
+                _flags  |= ArcFlags.HasRadius;
+                _radius =  RadiusStart.Length;
+                _flags  &= ~ChangedRadius;
+                return _radius;
+            }
+        }
+
 
         public double Angle
         {
@@ -504,6 +507,18 @@ namespace iSukces.DrawingPanel.Paths
                 return _startAngleCached;
             }
         }
+        public double EndAngle
+        {
+            get
+            {
+                if ((_flags & ArcFlags.HasEndAngle) != 0)
+                    return _endAngleCached;
+                _flags          |= ArcFlags.HasStartAngle;
+                _endAngleCached =  RadiusEnd.Angle();
+                return _endAngleCached;
+            }
+        }
+        
 
         private double _angleCached;
         private double _chordCached;
@@ -516,9 +531,10 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
+        private double _endAngleCached;
 
         [Flags]
-        private enum ArcFlags : byte
+        internal enum ArcFlags : byte
         {
             None = 0,
             HasDirection = 1,
@@ -527,7 +543,8 @@ namespace iSukces.DrawingPanel.Paths
             HasRadius = 8,
             HasChord = 16,
             HasSagitta = 32,
-            HasStartAngle = 64
+            HasStartAngle = 64,
+            HasEndAngle = 128
         }
     }
 }
