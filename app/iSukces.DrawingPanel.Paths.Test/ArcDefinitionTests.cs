@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows;
 using iSukces.Mathematics;
 using Xunit;
@@ -278,9 +279,12 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var a = new Dictionary<ArcDefinitionProperties, ArcDefinitionProperties>
             {
-                [ArcDefinitionProperties.Direction]  = ArcDefinitionProperties.RadiusStart | ArcDefinitionProperties.DirectionStart,
-                [ArcDefinitionProperties.Angle]      = ArcDefinitionProperties.RadiusStart | ArcDefinitionProperties.RadiusEnd | ArcDefinitionProperties.Direction,
-                [ArcDefinitionProperties.Sagitta]    = ArcDefinitionProperties.Start | ArcDefinitionProperties.End | ArcDefinitionProperties.Radius,
+                [ArcDefinitionProperties.Direction] =
+                    ArcDefinitionProperties.RadiusStart | ArcDefinitionProperties.DirectionStart,
+                [ArcDefinitionProperties.Angle] = ArcDefinitionProperties.RadiusStart |
+                                                  ArcDefinitionProperties.RadiusEnd | ArcDefinitionProperties.Direction,
+                [ArcDefinitionProperties.Sagitta] = ArcDefinitionProperties.Start | ArcDefinitionProperties.End |
+                                                    ArcDefinitionProperties.Radius,
                 [ArcDefinitionProperties.Chord]      = ArcDefinitionProperties.Start | ArcDefinitionProperties.End,
                 [ArcDefinitionProperties.StartAngle] = ArcDefinitionProperties.RadiusStart,
                 [ArcDefinitionProperties.EndAngle]   = ArcDefinitionProperties.RadiusEnd,
@@ -301,7 +305,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 return list.ToArray();
             }
 
-            ArcDefinitionProperties Dependent(ArcDefinitionProperties property, ArcDefinitionProperties starting = ArcDefinitionProperties.None)
+            ArcDefinitionProperties Dependent(ArcDefinitionProperties property,
+                ArcDefinitionProperties starting = ArcDefinitionProperties.None)
             {
                 var result = starting;
                 foreach (var i in a)
@@ -358,7 +363,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 {
                     tmp |= ArcDefinition.ArcFlags.HasEndAngle;
                     s   &= ~ArcDefinitionProperties.EndAngle;
-                }       
+                }
+
                 if ((s & ArcDefinitionProperties.Chord) != 0)
                 {
                     tmp |= ArcDefinition.ArcFlags.HasChord;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
@@ -314,14 +315,14 @@ namespace iSukces.DrawingPanel.Paths
 
         internal const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
                                                        | ArcFlags.HasAngle
-                                                       | ArcFlags.HasRadius 
+                                                       | ArcFlags.HasRadius
                                                        | ArcFlags.HasSagitta
                                                        | ArcFlags.HasStartAngle);
 
         internal const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasAngle
                                                      | ArcFlags.HasEndAngle);
 
-        internal const ArcFlags ChangedDirectionStart = ~(ArcFlags.HasDirection 
+        internal const ArcFlags ChangedDirectionStart = ~(ArcFlags.HasDirection
                                                           | ArcFlags.HasAngle);
 
 
@@ -386,7 +387,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         public Point Center { get; set; }
-        
+
         public double Radius
         {
             get
@@ -507,6 +508,7 @@ namespace iSukces.DrawingPanel.Paths
                 return _startAngleCached;
             }
         }
+
         public double EndAngle
         {
             get
@@ -518,7 +520,7 @@ namespace iSukces.DrawingPanel.Paths
                 return _endAngleCached;
             }
         }
-        
+
 
         private double _angleCached;
         private double _chordCached;

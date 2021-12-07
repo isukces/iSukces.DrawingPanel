@@ -261,6 +261,19 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             return Create(() => { Add(x, name); });
         }
+        
+        public string Create(IReadOnlyList<Point> x, string name)
+        {
+            return Create(() =>
+            {
+                AssertList(x, name, (point, pointName, t) =>
+                {
+                    Add(point, pointName);
+
+                }, false);
+            });
+        }
+        
         public string Create(ArcDefinition x, string name)
         {
             return Create(() => { Add(x, name); });
