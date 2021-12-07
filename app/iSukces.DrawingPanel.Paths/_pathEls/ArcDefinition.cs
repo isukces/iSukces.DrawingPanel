@@ -548,5 +548,52 @@ namespace iSukces.DrawingPanel.Paths
             HasStartAngle = 64,
             HasEndAngle = 128
         }
+
+
+        /// <summary>
+        /// Works for angle less or equal to 180degrees
+        /// </summary>
+        /// <param name="segmentsCount"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public IReadOnlyList<Point> GetSmallAnglePoints(int segmentsCount)
+        {
+            if (segmentsCount < 1)
+                throw new ArgumentException(nameof(segmentsCount) + " must be greater than 0", nameof(segmentsCount));
+            var pointsCount = segmentsCount + 1;
+            var result      = new Point[pointsCount];
+
+           
+            var v      = End - Start;
+            var middle = new Point((_start.X + _end.X) * 0.5, (_start.Y + _end.Y) * 0.5);
+            var chord  = v.Length;
+
+            var factor        = chord / segmentsCount;
+            var chordHalf     = chord * 0.5;
+            var radius        = Radius;
+            var radiusSquared = radius * radius;
+
+            var tmp = radiusSquared - chordHalf * chordHalf;
+            var a   = tmp <= 0 ? 0 : -Math.Sqrt(tmp);
+
+            var xOne = v.NormalizeFast();
+            var yOne = xOne.GetPrependicular(Direction==ArcDirection.Clockwise);
+
+            for (var idx = segmentsCount / 2; idx >= 1; idx--)
+            {
+                var x = idx * factor - chordHalf;
+
+                var underSqrt       = radiusSquared - x * x;
+                var h               = underSqrt <= 0 ? a : (a + Math.Sqrt(underSqrt));
+                var p1              = middle + yOne * h;
+                var plusMinusVector = xOne * x;
+                result[idx]                 = p1 + plusMinusVector;
+                result[segmentsCount - idx] = p1 - plusMinusVector;
+            }
+
+            result[0]             = _start;
+            result[segmentsCount] = _end;
+            return result;
+        }
     }
 }

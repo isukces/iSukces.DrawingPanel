@@ -384,6 +384,232 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
+        [Fact]
+        public void T51a_Should_generate_points()
+        {
+            var v1     = MathEx.GetCosSinV(90 - 20) * 10;
+            var v2     = MathEx.GetCosSinV(90 + 20) * 10;
+            var center = new Point(7, -3);
+            var arc = new ArcDefinition
+            {
+                Center         = center,
+                Start          = center + v1,
+                End            = center + v2,
+                DirectionStart = v1.GetPrependicular().NormalizeFast()
+            };
+            arc.UpdateRadiusVectors();
+
+            var points = arc.GetSmallAnglePoints(10);
+            foreach (var i in points)
+            {
+                var dist = Math.Abs((i - center).Length - 10);
+                // Assert.True(dist < 1e-10);
+            }
+
+            var aaa  = string.Join("\r\n", points.Select(x => x.X + "\t" + x.Y));
+            var code = new DpAssertsBuilder().Create(points, nameof(points));
+
+            #region Asserts
+
+            Assert.Equal(11, points.Count);
+            var tmp1 = points[0];
+            AssertEx.Equal(10.4202014332567, 6.39692620785908, tmp1);
+            tmp1 = points[1];
+            AssertEx.Equal(9.73616114660535, 6.61838979142597, tmp1);
+            tmp1 = points[2];
+            AssertEx.Equal(9.05212085995401, 6.78717528075091, tmp1);
+            tmp1 = points[3];
+            AssertEx.Equal(8.36808057330268, 6.90597574926124, tmp1);
+            tmp1 = points[4];
+            AssertEx.Equal(7.68404028665134, 6.97657701249471, tmp1);
+            tmp1 = points[5];
+            AssertEx.Equal(7, 7, tmp1);
+            tmp1 = points[6];
+            AssertEx.Equal(6.31595971334866, 6.97657701249471, tmp1);
+            tmp1 = points[7];
+            AssertEx.Equal(5.63191942669732, 6.90597574926124, tmp1);
+            tmp1 = points[8];
+            AssertEx.Equal(4.94787914004599, 6.78717528075091, tmp1);
+            tmp1 = points[9];
+            AssertEx.Equal(4.26383885339465, 6.61838979142597, tmp1);
+            tmp1 = points[10];
+            AssertEx.Equal(3.57979856674331, 6.39692620785909, tmp1);
+
+            #endregion
+        }
+
+
+        [Fact]
+        public void T51b_Should_generate_points()
+        {
+            var v1     = MathEx.GetCosSinV(60) * 10;
+            var v2     = MathEx.GetCosSinV(60 + 32) * 10;
+            var center = new Point(7, -3);
+            var arc = new ArcDefinition
+            {
+                Center         = center,
+                Start          = center + v1,
+                End            = center + v2,
+                DirectionStart = v1.GetPrependicular().NormalizeFast()
+            };
+            arc.UpdateRadiusVectors();
+
+            var points = arc.GetSmallAnglePoints(10);
+            foreach (var i in points)
+            {
+                var dist = Math.Abs((i - center).Length - 10);
+                Assert.True(dist < 1e-10);
+            }
+
+            var aaa  = string.Join("\r\n", points.Select(x => x.X + "\t" + x.Y));
+            var code = new DpAssertsBuilder().Create(points, nameof(points));
+
+            #region Asserts
+
+            Assert.Equal(11, points.Count);
+            var tmp1 = points[0];
+            AssertEx.Equal(12, 5.66025403784439, tmp1);
+            tmp1 = points[1];
+            AssertEx.Equal(11.4992672388919, 5.9306547527622, tmp1);
+            tmp1 = points[2];
+            AssertEx.Equal(10.990603629048, 6.16924657078372, tmp1);
+            tmp1 = points[3];
+            AssertEx.Equal(10.4742687920499, 6.3770707771984, tmp1);
+            tmp1 = points[4];
+            AssertEx.Equal(9.95043960627201, 6.55483679241783, tmp1);
+            tmp1 = points[5];
+            AssertEx.Equal(9.41921895599668, 6.70295726275996, tmp1);
+            tmp1 = points[6];
+            AssertEx.Equal(8.88064061286701, 6.82156763888714, tmp1);
+            tmp1 = points[7];
+            AssertEx.Equal(8.33467080523989, 6.91053247013703, tmp1);
+            tmp1 = points[8];
+            AssertEx.Equal(7.78120664883298, 6.96943911019166, tmp1);
+            tmp1 = points[9];
+            AssertEx.Equal(7.22007126527189, 6.99757813863946, tmp1);
+            tmp1 = points[10];
+            AssertEx.Equal(6.65100503297499, 6.99390827019096, tmp1);
+
+            #endregion
+        }
+
+
+        [Fact]
+        public void T51c_Should_generate_points()
+        {
+            var v1     = MathEx.GetCosSinV(60) * 10;
+            var v2     = MathEx.GetCosSinV(60 - 32) * 10;
+            var center = new Point(7, -3);
+            var arc = new ArcDefinition
+            {
+                Center         = center,
+                Start          = center + v1,
+                End            = center + v2,
+                DirectionStart = v1.GetPrependicular(false).NormalizeFast()
+            };
+            arc.UpdateRadiusVectors();
+
+            var points = arc.GetSmallAnglePoints(10);
+            foreach (var i in points)
+            {
+                var dist = Math.Abs((i - center).Length - 10);
+                Assert.True(dist < 1e-10);
+            }
+
+            var aaa  = string.Join("\r\n", points.Select(x => x.X + "\t" + x.Y));
+            var code = new DpAssertsBuilder().Create(points, nameof(points));
+
+            #region Asserts
+
+            Assert.Equal(11, points.Count);
+            var tmp1 = points[0];
+            AssertEx.Equal(12, 5.66025403784439, tmp1);
+            tmp1 = points[1];
+            AssertEx.Equal(12.4845402688744, 5.36180710367655, tmp1);
+            tmp1 = points[2];
+            AssertEx.Equal(12.9454986493381, 5.04058740458179, tmp1);
+            tmp1 = points[3];
+            AssertEx.Equal(13.3836471101136, 4.69734042208988, tmp1);
+            tmp1 = points[4];
+            AssertEx.Equal(13.7995115881121, 4.33257404757224, tmp1);
+            tmp1 = points[5];
+            AssertEx.Equal(14.1933980033865, 3.94658370458997, tmp1);
+            tmp1 = points[6];
+            AssertEx.Equal(14.5654067738299, 3.53946636557514, tmp1);
+            tmp1 = points[7];
+            AssertEx.Equal(14.9154374815493, 3.11112505809569, tmp1);
+            tmp1 = points[8];
+            AssertEx.Equal(15.2431842064916, 2.6612643585905, tmp1);
+            tmp1 = points[9];
+            AssertEx.Equal(15.5481210117458, 2.18937637568817, tmp1);
+            tmp1 = points[10];
+            AssertEx.Equal(15.8294759285893, 1.69471562785891, tmp1);
+
+            #endregion
+        }
+
+
+        [Fact]
+        public void T51d_Should_generate_points()
+        {
+            var v1     = MathEx.GetCosSinV(60) * 10;
+            var v2     = MathEx.GetCosSinV(60 - 32) * 10;
+            var center = new Point(7, -3);
+            var arc = new ArcDefinition
+            {
+                Center         = center,
+                Start          = center + v1,
+                End            = center + v2,
+                DirectionStart = v1.GetPrependicular(false).NormalizeFast()
+            };
+            arc.UpdateRadiusVectors();
+
+            var points = arc.GetSmallAnglePoints(13);
+            foreach (var i in points)
+            {
+                var dist = Math.Abs((i - center).Length - 10);
+                Assert.True(dist < 1e-10);
+            }
+
+            var aaa  = string.Join("\r\n", points.Select(x => x.X + "\t" + x.Y));
+            var code = new DpAssertsBuilder().Create(points, nameof(points));
+
+            #region Asserts
+
+            Assert.Equal(14, points.Count);
+            var tmp1 = points[0];
+            AssertEx.Equal(12, 5.66025403784439, tmp1);
+            tmp1 = points[1];
+            AssertEx.Equal(12.3748499235409, 5.43273314527455, tmp1);
+            tmp1 = points[2];
+            AssertEx.Equal(12.7356236155188, 5.19161899389266, tmp1);
+            tmp1 = points[3];
+            AssertEx.Equal(13.0827140568041, 4.93729108091407, tmp1);
+            tmp1 = points[4];
+            AssertEx.Equal(13.4164226356856, 4.67004045362614, tmp1);
+            tmp1 = points[5];
+            AssertEx.Equal(13.7369681986058, 4.39007844958182, tmp1);
+            tmp1 = points[6];
+            AssertEx.Equal(14.0444933472606, 4.09754277763798, tmp1);
+            tmp1 = points[7];
+            AssertEx.Equal(14.3390684186905, 3.79250136148525, tmp1);
+            tmp1 = points[8];
+            AssertEx.Equal(14.6206934128957, 3.47495420112363, tmp1);
+            tmp1 = points[9];
+            AssertEx.Equal(14.8892979928353, 3.1448333728625, tmp1);
+            tmp1 = points[10];
+            AssertEx.Equal(15.1447395568137, 2.80200116784496, tmp1);
+            tmp1 = points[11];
+            AssertEx.Equal(15.3867992583883, 2.4462462485181, tmp1);
+            tmp1 = points[12];
+            AssertEx.Equal(15.6151757092703, 2.07727756759453, tmp1);
+            tmp1 = points[13];
+            AssertEx.Equal(15.8294759285893, 1.69471562785891, tmp1);
+
+            #endregion
+        }
+
+
         private const double ArcLength = 7.853981633974483;
 
         [Flags]
