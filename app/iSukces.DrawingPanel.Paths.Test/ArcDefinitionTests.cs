@@ -610,6 +610,30 @@ namespace iSukces.DrawingPanel.Paths.Test
         }
 
 
+        [Fact]
+        public void T52()
+        {
+            var a = ArcDefinition.FromCenterAndArms(
+                new Point(-32.3137145786995, -170.936449757157),
+                new Point(-84.2421496951301, -107.606117740329),
+                new Vector(0.77328238112352, 0.634061794341796),
+                new Point(-50.1734159092112, -91.0094555975624));
+            Assert.Equal(ArcDefinition.ArcFlags.None, a.GetFlags());
+            
+            var arc = a.Angle;
+            Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
+
+            a.Start += new Vector(0, 0.000001);
+            Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
+            
+            a.UpdateRadiusStart();
+            Assert.Equal(ArcDefinition.ArcFlags.None, a.GetFlags());
+            
+            arc = a.Angle;
+            Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
+
+        }
+
         private const double ArcLength = 7.853981633974483;
 
         [Flags]

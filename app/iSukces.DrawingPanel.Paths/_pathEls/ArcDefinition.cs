@@ -185,6 +185,11 @@ namespace iSukces.DrawingPanel.Paths
             return DirectionEnd;
         }
 
+        internal ArcFlags GetFlags()
+        {
+            return _flags;
+        }
+
         public double GetLength()
         {
             return Radius * Angle * MathEx.DEGTORAD;
@@ -208,6 +213,52 @@ namespace iSukces.DrawingPanel.Paths
             var radiusSquared = RadiusStart.LengthSquared;
             var res           = Center + v * Math.Sqrt(radiusSquared / lenSquared);
             return res;
+        }
+
+
+        /// <summary>
+        ///     Works for angle less or equal to 180degrees
+        /// </summary>
+        /// <param name="segmentsCount"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public IReadOnlyList<Point> GetSmallAnglePoints(int segmentsCount)
+        {
+            if (segmentsCount < 1)
+                throw new ArgumentException(nameof(segmentsCount) + " must be greater than 0", nameof(segmentsCount));
+            var pointsCount = segmentsCount + 1;
+            var result      = new Point[pointsCount];
+
+            var v      = End - Start;
+            var middle = new Point((_start.X + _end.X) * 0.5, (_start.Y + _end.Y) * 0.5);
+            var chord  = v.Length;
+
+            var factor        = chord / segmentsCount;
+            var chordHalf     = chord * 0.5;
+            var radius        = Radius;
+            var radiusSquared = radius * radius;
+
+            var tmp = radiusSquared - chordHalf * chordHalf;
+            var a   = tmp <= 0 ? 0 : -Math.Sqrt(tmp);
+
+            var xOne = v.NormalizeFast();
+            var yOne = xOne.GetPrependicular(Direction == ArcDirection.Clockwise);
+
+            for (var idx = segmentsCount / 2; idx >= 1; idx--)
+            {
+                var x = idx * factor - chordHalf;
+
+                var underSqrt       = radiusSquared - x * x;
+                var h               = underSqrt <= 0 ? a : (a + Math.Sqrt(underSqrt));
+                var p1              = middle + yOne * h;
+                var plusMinusVector = xOne * x;
+                result[idx]                 = p1 + plusMinusVector;
+                result[segmentsCount - idx] = p1 - plusMinusVector;
+            }
+
+            result[0]             = _start;
+            result[segmentsCount] = _end;
+            return result;
         }
 
         Point IPathElement.GetStartPoint()
@@ -285,8 +336,11 @@ namespace iSukces.DrawingPanel.Paths
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateRadiusVectors()
         {
-            RadiusStart = Start - Center;
-            RadiusEnd   = End - Center;
+            var center = Center;
+            var start  = Start - center;
+            var end    = End - center;
+            RadiusStart = start;
+            RadiusEnd   = end;
         }
 
 
@@ -526,6 +580,7 @@ namespace iSukces.DrawingPanel.Paths
         private double _chordCached;
         private Vector _directionStart;
         private Point _end;
+        private double _endAngleCached;
         private ArcFlags _flags;
         private double _radius;
         private Vector _radiusEnd;
@@ -533,7 +588,6 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
-        private double _endAngleCached;
 
         [Flags]
         internal enum ArcFlags : byte
@@ -547,53 +601,6 @@ namespace iSukces.DrawingPanel.Paths
             HasSagitta = 32,
             HasStartAngle = 64,
             HasEndAngle = 128
-        }
-
-
-        /// <summary>
-        /// Works for angle less or equal to 180degrees
-        /// </summary>
-        /// <param name="segmentsCount"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public IReadOnlyList<Point> GetSmallAnglePoints(int segmentsCount)
-        {
-            if (segmentsCount < 1)
-                throw new ArgumentException(nameof(segmentsCount) + " must be greater than 0", nameof(segmentsCount));
-            var pointsCount = segmentsCount + 1;
-            var result      = new Point[pointsCount];
-
-           
-            var v      = End - Start;
-            var middle = new Point((_start.X + _end.X) * 0.5, (_start.Y + _end.Y) * 0.5);
-            var chord  = v.Length;
-
-            var factor        = chord / segmentsCount;
-            var chordHalf     = chord * 0.5;
-            var radius        = Radius;
-            var radiusSquared = radius * radius;
-
-            var tmp = radiusSquared - chordHalf * chordHalf;
-            var a   = tmp <= 0 ? 0 : -Math.Sqrt(tmp);
-
-            var xOne = v.NormalizeFast();
-            var yOne = xOne.GetPrependicular(Direction==ArcDirection.Clockwise);
-
-            for (var idx = segmentsCount / 2; idx >= 1; idx--)
-            {
-                var x = idx * factor - chordHalf;
-
-                var underSqrt       = radiusSquared - x * x;
-                var h               = underSqrt <= 0 ? a : (a + Math.Sqrt(underSqrt));
-                var p1              = middle + yOne * h;
-                var plusMinusVector = xOne * x;
-                result[idx]                 = p1 + plusMinusVector;
-                result[segmentsCount - idx] = p1 - plusMinusVector;
-            }
-
-            result[0]             = _start;
-            result[segmentsCount] = _end;
-            return result;
         }
     }
 }
