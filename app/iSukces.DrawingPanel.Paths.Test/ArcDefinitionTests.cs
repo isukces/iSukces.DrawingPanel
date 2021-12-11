@@ -619,18 +619,38 @@ namespace iSukces.DrawingPanel.Paths.Test
                 new Vector(0.77328238112352, 0.634061794341796),
                 new Point(-50.1734159092112, -91.0094555975624));
             Assert.Equal(ArcDefinition.ArcFlags.None, a.GetFlags());
-            
-            var arc = a.Angle;
-            Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
 
-            a.Start += new Vector(0, 0.000001);
-            Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
-            
-            a.UpdateRadiusStart();
-            Assert.Equal(ArcDefinition.ArcFlags.None, a.GetFlags());
-            
-            arc = a.Angle;
-            Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
+            {
+                var arc = a.Angle;
+                Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());    
+            }
+
+            {
+                a.Start += new Vector(0, 0.000001);
+                Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
+            }
+
+            {
+                a.UpdateRadiusStart();
+                Assert.Equal(ArcDefinition.ArcFlags.None, a.GetFlags());
+            }
+            {
+                a.ResetFlags();
+                var arc = a.Angle;
+                Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
+            }
+
+            {
+                a.ResetFlags();
+                var q = a.EndAngle;
+                Assert.Equal(ArcDefinition.ArcFlags.HasEndAngle , a.GetFlags());
+            }
+
+            {
+                a.ResetFlags();
+                var q = a.StartAngle;
+                Assert.Equal(ArcDefinition.ArcFlags.HasStartAngle, a.GetFlags());
+            }
 
         }
 

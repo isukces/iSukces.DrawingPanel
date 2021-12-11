@@ -190,6 +190,11 @@ namespace iSukces.DrawingPanel.Paths
             return _flags;
         }
 
+        internal void ResetFlags()
+        {
+            _flags = ArcFlags.None;
+        }
+
         public double GetLength()
         {
             return Radius * Angle * MathEx.DEGTORAD;
@@ -569,7 +574,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 if ((_flags & ArcFlags.HasEndAngle) != 0)
                     return _endAngleCached;
-                _flags          |= ArcFlags.HasStartAngle;
+                _flags          |= ArcFlags.HasEndAngle;
                 _endAngleCached =  RadiusEnd.Angle();
                 return _endAngleCached;
             }
