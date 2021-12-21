@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 

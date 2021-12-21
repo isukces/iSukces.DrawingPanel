@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 using Newtonsoft.Json;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;

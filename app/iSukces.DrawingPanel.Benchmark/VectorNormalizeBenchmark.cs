@@ -1,5 +1,6 @@
 using BenchmarkDotNet.Attributes;
 using iSukces.DrawingPanel.Paths;
+using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
@@ -25,6 +26,7 @@ namespace iSukces.DrawingPanel.Benchmark
 
             return vv;
         }
+        
 
         [Benchmark(Description = "Vector normalize fast EXT")]
         public object Vector_normalize_fast()
@@ -41,6 +43,6 @@ namespace iSukces.DrawingPanel.Benchmark
         }
 
 
-        const int Iterations = 100;
+        const int Iterations = 1000;
     }
 }

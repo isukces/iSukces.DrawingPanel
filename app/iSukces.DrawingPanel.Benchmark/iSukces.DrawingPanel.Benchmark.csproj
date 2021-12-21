@@ -9,7 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
-      <PackageReference Include="iSukces.Math" Version="1.0.21253.118" />
+      <PackageReference Include="iSukces.Math" Version="1.0.21355.119" />
     </ItemGroup>
 
     <ItemGroup>

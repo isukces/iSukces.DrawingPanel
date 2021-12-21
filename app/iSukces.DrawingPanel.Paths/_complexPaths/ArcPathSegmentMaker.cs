@@ -5,6 +5,7 @@ using System.Windows;
 #endif
 using System;
 using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 using JetBrains.Annotations;
 
 
