@@ -35,7 +35,10 @@ namespace iSukces.DrawingPanel
             _behaviorContainer.RegisterHandler(_panAndZoom, NewHandlerOrders.PanAndZoom);
         }
 
-        public void ApplyBounds(Rect bounds) { _zoom.ApplyBounds(bounds, GetDrawingSize()); }
+        public void ApplyBounds(Rect bounds)
+        {
+            _zoom.ApplyBounds(bounds, GetDrawingSize());
+        }
 
         protected override void DisposeInternal()
         {
@@ -48,7 +51,10 @@ namespace iSukces.DrawingPanel
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Size GetDrawingSize() { return _owner.ClientSize; }
+        private Size GetDrawingSize()
+        {
+            return _owner.ClientSize;
+        }
 
         public void SetDrawingSize()
         {
@@ -69,6 +75,14 @@ namespace iSukces.DrawingPanel
         {
             UpdateTransformAndCanvasInfo();
             _owner.TransfromChanged();
+            {
+                var storage = ZoomStorage;
+                if (storage is not null)
+                {
+                    var data = _zoom.ToStorageData();
+                    storage.Write(data);
+                }
+            }
 #if false
             Debug.WriteLine("_zoom.Center = new System.Windows.Point({0}, {1});",
                 _zoom.Center.X.ToInvariantString(), _zoom.Center.Y.ToInvariantString());
@@ -77,17 +91,40 @@ namespace iSukces.DrawingPanel
 #endif
         }
 
-        private const double MouseWheelResponsibility = 800.0;
+        #region properties
 
         public IBehaviorSource   BehaviorSource => _behaviorContainer;
         public DrawingCanvasInfo CanvasInfo     { get; private set; }
 
         public IDpHandlerContainer RootBehaviorContainer => _behaviorContainer;
 
+
+        public IDrawingPanelZoomStorage ZoomStorage
+        {
+            get => _zoomStorage;
+            set
+            {
+                if (ReferenceEquals(_zoomStorage, value))
+                    return;
+                _zoomStorage?.Flush();
+                _zoomStorage = value;
+                _zoom.TryRestore(value);
+            }
+        }
+
+        #endregion
+
+        #region Fields
+
+        private const double MouseWheelResponsibility = 800.0;
+
         private readonly UniversalBehavior _behaviorContainer;
         private readonly ICadControlLogicOwner _owner;
         private readonly PanAndZoomBehavior _panAndZoom;
         private readonly ZoomInfo _zoom;
         private FlippedYDrawingToPixelsTransformation _transform;
+        private IDrawingPanelZoomStorage _zoomStorage;
+
+        #endregion
     }
 }

@@ -31,7 +31,10 @@ namespace iSukces.DrawingPanel
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
-        public void ApplyBounds(Rect bounds) { _logic.ApplyBounds(bounds); }
+        public void ApplyBounds(Rect bounds)
+        {
+            _logic.ApplyBounds(bounds);
+        }
 
         public void ClearAll()
         {
@@ -104,7 +107,10 @@ namespace iSukces.DrawingPanel
         }
 
 
-        EventControls ICadControlLogicOwner.GetEventSourceControl() { return new(this, this, this); }
+        EventControls ICadControlLogicOwner.GetEventSourceControl()
+        {
+            return new(this, this, this);
+        }
 
         private void InvalidateBitmap()
         {
@@ -127,7 +133,10 @@ namespace iSukces.DrawingPanel
             InvalidateRequest();
         }
 
-        protected virtual void OnDrawingTranformChanged() { DrawingTranformChanged?.Invoke(this, EventArgs.Empty); }
+        protected virtual void OnDrawingTranformChanged()
+        {
+            DrawingTranformChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -226,34 +235,58 @@ namespace iSukces.DrawingPanel
             OnDrawingTranformChanged();
         }
 
-        public DrawingCanvasInfo CanvasInfo => _logic.CanvasInfo;
+        #region properties
 
-        public event EventHandler DrawingTranformChanged;
-
-        private static readonly bool cache = true;
-
+        public IDrawingPanelZoomStorage ZoomStorage
+        {
+            get => _logic.ZoomStorage;
+            set => _logic.ZoomStorage = value;
+        }
 
         public IBehaviorSource     BehaviorSource => _logic.BehaviorSource;
         public IDrawingColorScheme ColorScheme    { get; }
 
+        #endregion
+
+        public DrawingCanvasInfo CanvasInfo => _logic.CanvasInfo;
+
+        public event EventHandler DrawingTranformChanged;
+
+        #region Fields
+
+        private static readonly bool cache = true;
+
         private Bitmap _backgroundBitmap;
+
+        #endregion
     }
 
     partial class DrawingLayersContainer : IDrawingLayersContainer
     {
+        #region properties
+
+        public IDpHandlerContainer RootBehaviorContainer => _logic.RootBehaviorContainer;
+
+        #endregion
+
         public IExtendedObservableCollection<IDrawable> Underlay  { get; }
         public IExtendedObservableCollection<IDrawable> Drawables { get; }
         public IExtendedObservableCollection<IDrawable> Overlay   { get; }
 
-        public IDpHandlerContainer RootBehaviorContainer => _logic.RootBehaviorContainer;
+        #region Fields
 
         private readonly IExtendedObservableCollection<IDrawable>[] _layers;
         private readonly CadControlLogic _logic;
+
+        #endregion
     }
 
     partial class DrawingLayersContainer : IInitializeableDrawingLayersContainer
     {
-        public void BeginInit() { _suspendLevel++; }
+        public void BeginInit()
+        {
+            _suspendLevel++;
+        }
 
         public void EndInit()
         {
@@ -279,8 +312,12 @@ namespace iSukces.DrawingPanel
             Invalidate();
         }
 
+        #region Fields
+
         private bool _needInvalidate;
 
         private int _suspendLevel;
+
+        #endregion
     }
 }

@@ -31,5 +31,6 @@ namespace iSukces.DrawingPanel.Interfaces
         public IDrawingToPixelsTransformation Transformation { get; }
 
         public Rectangle DrawingRectangle { get; }
+
     }
 }
