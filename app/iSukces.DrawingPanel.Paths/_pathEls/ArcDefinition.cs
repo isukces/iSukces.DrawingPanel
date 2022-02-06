@@ -1,14 +1,13 @@
-﻿using System;
+﻿#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-#if NET5_0
-using iSukces.Mathematics.Compatibility;
-
-#else
-using System.Windows;
-#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -190,11 +189,6 @@ namespace iSukces.DrawingPanel.Paths
             return _flags;
         }
 
-        internal void ResetFlags()
-        {
-            _flags = ArcFlags.None;
-        }
-
         public double GetLength()
         {
             return Radius * Angle * MathEx.DEGTORAD;
@@ -320,6 +314,11 @@ namespace iSukces.DrawingPanel.Paths
             return false;
         }
 
+        internal void ResetFlags()
+        {
+            _flags = ArcFlags.None;
+        }
+
         public override string ToString()
         {
             return $"{Angle:N2}°, r={Radius:N2}";
@@ -362,28 +361,7 @@ namespace iSukces.DrawingPanel.Paths
             _flags  &= ~ChangedRadius;
         }
 
-        public object Tag { get; set; }
-
-
-        internal const ArcFlags ChangedStart = ~(ArcFlags.HasChord | ArcFlags.HasSagitta);
-
-        internal const ArcFlags ChangedEnd = ~(ArcFlags.HasChord | ArcFlags.HasSagitta);
-
-        internal const ArcFlags ChangedRadius = ~ArcFlags.HasSagitta;
-
-
-        internal const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
-                                                       | ArcFlags.HasAngle
-                                                       | ArcFlags.HasRadius
-                                                       | ArcFlags.HasSagitta
-                                                       | ArcFlags.HasStartAngle);
-
-        internal const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasAngle
-                                                     | ArcFlags.HasEndAngle);
-
-        internal const ArcFlags ChangedDirectionStart = ~(ArcFlags.HasDirection
-                                                          | ArcFlags.HasAngle);
-
+        #region properties
 
         public Vector RadiusEnd
         {
@@ -580,6 +558,31 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        #endregion
+
+        public object Tag { get; set; }
+
+        #region Fields
+
+        internal const ArcFlags ChangedStart = ~(ArcFlags.HasChord | ArcFlags.HasSagitta);
+
+        internal const ArcFlags ChangedEnd = ~(ArcFlags.HasChord | ArcFlags.HasSagitta);
+
+        internal const ArcFlags ChangedRadius = ~ArcFlags.HasSagitta;
+
+
+        internal const ArcFlags ChangedRadiusStart = ~(ArcFlags.HasDirection
+                                                       | ArcFlags.HasAngle
+                                                       | ArcFlags.HasRadius
+                                                       | ArcFlags.HasSagitta
+                                                       | ArcFlags.HasStartAngle);
+
+        internal const ArcFlags ChangedRadiusEnd = ~(ArcFlags.HasAngle
+                                                     | ArcFlags.HasEndAngle);
+
+        internal const ArcFlags ChangedDirectionStart = ~(ArcFlags.HasDirection
+                                                          | ArcFlags.HasAngle);
+
 
         private double _angleCached;
         private double _chordCached;
@@ -593,6 +596,8 @@ namespace iSukces.DrawingPanel.Paths
         private double _sagittaCached;
         private Point _start;
         private double _startAngleCached;
+
+        #endregion
 
         [Flags]
         internal enum ArcFlags : byte

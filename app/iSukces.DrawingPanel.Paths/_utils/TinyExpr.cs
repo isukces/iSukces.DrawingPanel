@@ -3,18 +3,32 @@ namespace iSukces.DrawingPanel.Paths
 {
     internal class TinyExpr
     {
-        public TinyExpr(double value) { _code = value.CsCode(); }
+        public TinyExpr(double value)
+        {
+            _code = value.CsCode();
+        }
 
-        public TinyExpr(string code) { _code = code; }
+        public TinyExpr(string code)
+        {
+            _code = code;
+        }
 
 
-        public static TinyExpr operator +(TinyExpr a, TinyExpr b) { return new TinyExpr($"{a} + {b}"); }
+        public static TinyExpr operator +(TinyExpr a, TinyExpr b)
+        {
+            return new TinyExpr($"{a} + {b}");
+        }
 
 
         public static TinyExpr operator +(TinyExpr a, double b)
         {
             var bb = new TinyExpr(b);
             return a + bb;
+        }
+
+        public static TinyExpr operator /(TinyExpr a, TinyExpr b)
+        {
+            return new TinyExpr(a._code + " / " + b._code);
         }
 
         public static TinyExpr operator *(TinyExpr a, TinyExpr b)
@@ -35,39 +49,22 @@ namespace iSukces.DrawingPanel.Paths
             var bb = new TinyExpr(b);
             return bb * a;
         }
-        public static TinyExpr operator /(TinyExpr a, TinyExpr b)
-        {
-            return new TinyExpr(a._code + " / " + b._code);
-        }
 
         public static TinyExpr operator -(TinyExpr a, TinyExpr b)
         {
             return new TinyExpr($"{a} - {b}");
         }
-        
+
         public static TinyExpr operator -(TinyExpr a, double b)
         {
             return new TinyExpr($"{a} - {b.ToExpr()}");
         }
 
-      
-        
+
         public static TinyExpr operator -(TinyExpr a)
         {
             a = a.Brackets();
             return new TinyExpr($"-{a}");
-        }
-
-
-        public TinyExpr Brackets() { return new TinyExpr("(" + _code + ")"); }
-
-        public override string ToString() { return _code; }
-
-        private readonly string _code;
-
-        public TinyExpr Negate()
-        {
-            return new TinyExpr("-" + _code);
         }
 
         public static TinyExpr Square(TinyExpr a, TinyExpr b, TinyExpr c, TinyExpr expr)
@@ -86,18 +83,6 @@ namespace iSukces.DrawingPanel.Paths
             return b * b - 4 * a * c;
         }
 
-        public TinyExpr Plot(string varName, double min, double max)
-        {
-            var code = "plot2d([" + this+"], ["+varName+","+min.ToExpr()+","+max.ToExpr()+"])";
-            return new TinyExpr(code);
-
-        }
-
-        public TinyExpr Sqrt()
-        {
-            return new TinyExpr("sqrt" + Brackets()._code);
-        }
-        
         public static TinyExpr SquareSolve1(TinyExpr a, TinyExpr b, TinyExpr c)
         {
             TinyExpr deltaExpr = SquareDelta(a, b, c);
@@ -120,6 +105,39 @@ namespace iSukces.DrawingPanel.Paths
         {
             return new TinyExpr("bfloat(" + _code + ")");
         }
+
+
+        public TinyExpr Brackets()
+        {
+            return new TinyExpr("(" + _code + ")");
+        }
+
+        public TinyExpr Negate()
+        {
+            return new TinyExpr("-" + _code);
+        }
+
+        public TinyExpr Plot(string varName, double min, double max)
+        {
+            var code = "plot2d([" + this + "], [" + varName + "," + min.ToExpr() + "," + max.ToExpr() + "])";
+            return new TinyExpr(code);
+        }
+
+        public TinyExpr Sqrt()
+        {
+            return new TinyExpr("sqrt" + Brackets()._code);
+        }
+
+        public override string ToString()
+        {
+            return _code;
+        }
+
+        #region Fields
+
+        private readonly string _code;
+
+        #endregion
     }
 }
 

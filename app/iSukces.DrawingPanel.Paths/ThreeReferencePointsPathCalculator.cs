@@ -19,7 +19,6 @@ namespace iSukces.DrawingPanel.Paths
         {
             var builder = new PathBuilder(Start.Point);
 
-        
             void Add(PathRay st, PathRay en)
             {
                 var s = ZeroReferencePointPathCalculator.Compute(st, en, validator);
@@ -28,8 +27,8 @@ namespace iSukces.DrawingPanel.Paths
                 if (s is ZeroReferencePointPathCalculatorLineResult line)
                 {
                     builder.LineTo(line.End);
-                    
-                } else if (s is ZeroReferencePointPathCalculatorResult r2)
+                }
+                else if (s is ZeroReferencePointPathCalculatorResult r2)
                 {
                     builder.ArcTo(r2.Arc1);
                     builder.ArcTo(r2.Arc2);
@@ -79,8 +78,12 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        #region properties
+
         public PathRay Reference1 { get; set; }
         public PathRay Reference2 { get; set; }
         public PathRay Reference3 { get; set; }
+
+        #endregion
     }
 }

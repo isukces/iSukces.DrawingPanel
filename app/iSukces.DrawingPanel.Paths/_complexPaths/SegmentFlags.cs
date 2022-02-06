@@ -9,8 +9,8 @@ namespace iSukces.DrawingPanel.Paths
         HasStartVector = 1,
         HasEndVector = 2,
         HasReferencePoints = 4,
-        
-        
+
+
         BothVectors = HasStartVector | HasEndVector
     }
 }

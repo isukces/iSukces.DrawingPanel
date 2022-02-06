@@ -47,10 +47,9 @@ namespace iSukces.DrawingPanel.Paths
             if (wayPoint.UseInputVector)
                 return Handle3AndMore();
             var reference = wayPoint.OutputRay;
-            if (reference.ArmLength>0)
+            if (reference.ArmLength > 0)
                 return Handle3AndMore();
 
-            
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             [NotNull]
             IPathResult ComputeCommon()
@@ -87,10 +86,9 @@ namespace iSukces.DrawingPanel.Paths
         {
             var refs = Point.ReferencePoints;
             var wp0  = refs[0];
-            if (wp0.UseInputVector || wp0.OutputArmLength>0)
+            if (wp0.UseInputVector || wp0.OutputArmLength > 0)
                 return Handle3AndMore();
-            
-            
+
             var wp1 = refs[1];
             if (wp1.UseInputVector || wp1.OutputArmLength > 0)
                 return Handle3AndMore();
@@ -135,7 +133,7 @@ namespace iSukces.DrawingPanel.Paths
             var refs    = Point.ReferencePoints;
             var builder = new PdPathBuilder(_start.Point, Validator);
 
-            if (_inArmLengthPlus || _outArmLengthPlus) 
+            if (_inArmLengthPlus || _outArmLengthPlus)
                 NormalizeVectorsAndMovePoints();
 
             PathRayWithArm last;
@@ -178,7 +176,7 @@ namespace iSukces.DrawingPanel.Paths
             if ((Flags & SegmentFlags.BothVectors) != SegmentFlags.BothVectors)
             {
                 var dir = Point.Location - PreviousPoint.Location;
-                    dir = dir.NormalizeFast();
+                dir = dir.NormalizeFast();
                 if ((Flags & SegmentFlags.HasStartVector) == 0)
                 {
                     _normalizationFlags &= ~NormalizationFlags.NormalizeStartVector;
@@ -234,6 +232,7 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        #region Fields
 
         private PathRay _end;
         private Vector _endVector;
@@ -250,6 +249,8 @@ namespace iSukces.DrawingPanel.Paths
         public ArcPathMakerVertex Point;
         public ArcPathMakerVertex PreviousPoint;
         public IPathValidator Validator;
+
+        #endregion
     }
 
     internal sealed class PdPathBuilder : PathBuilder

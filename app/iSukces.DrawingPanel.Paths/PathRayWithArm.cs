@@ -1,14 +1,13 @@
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 using Newtonsoft.Json;
-#if NET5_0
-using iSukces.Mathematics.Compatibility;
-
-#else
-using System.Windows;
-#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -16,7 +15,10 @@ namespace iSukces.DrawingPanel.Paths
     [DebuggerDisplay("{GetCreationCode()}")]
     public struct PathRayWithArm
     {
-        public static implicit operator PathRayWithArm(PathRay ray) { return new PathRayWithArm(ray.Point, ray.Vector); }
+        public static implicit operator PathRayWithArm(PathRay ray)
+        {
+            return new PathRayWithArm(ray.Point, ray.Vector);
+        }
 
         public PathRayWithArm(double pointX, double pointY, double vectorX, double vectorY,
             double armLength = 0)
@@ -73,10 +75,20 @@ namespace iSukces.DrawingPanel.Paths
             return new PathRay(point, Vector);
         }
 
-        public PathRayWithArm With(Point point) { return new PathRayWithArm(point, Vector, ArmLength); }
-        public PathRayWithArm With(Vector vector) { return new PathRayWithArm(Point, vector, ArmLength); }
+        public PathRayWithArm With(Point point)
+        {
+            return new PathRayWithArm(point, Vector, ArmLength);
+        }
 
-        public bool HasValidVector() { return Vector.IsValidVector(); }
+        public PathRayWithArm With(Vector vector)
+        {
+            return new PathRayWithArm(Point, vector, ArmLength);
+        }
+
+        public bool HasValidVector()
+        {
+            return Vector.IsValidVector();
+        }
 
         public WayPoint WithPoint(Point point)
         {
@@ -113,8 +125,14 @@ namespace iSukces.DrawingPanel.Paths
             return PathLineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
         }
 
-        public Vector GetPrependicularVector() { return Vector.GetPrependicularVector(); }
+        public Vector GetPrependicularVector()
+        {
+            return Vector.GetPrependicularVector();
+        }
 
-        public Point? CrossMeAsBeginWithEnd(PathRayWithArm aEnd) { return GetMovedRayOutput().Cross(aEnd.GetMovedRayInput()); }
+        public Point? CrossMeAsBeginWithEnd(PathRayWithArm aEnd)
+        {
+            return GetMovedRayOutput().Cross(aEnd.GetMovedRayInput());
+        }
     }
 }

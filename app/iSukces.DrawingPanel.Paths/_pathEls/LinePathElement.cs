@@ -1,11 +1,10 @@
-﻿using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
-
 #else
 using System.Windows;
 #endif
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -113,17 +112,25 @@ namespace iSukces.DrawingPanel.Paths
             return new LinePathElement(newStart, _end);
         }
 
-        public object Tag { get; set; }
+        #region properties
 
         public Vector UnitVector => _unitVector;
         public Point  Start      => _start;
         public Point  End        => _end;
         public double Length     => _length;
 
+        #endregion
+
+        public object Tag { get; set; }
+
+        #region Fields
+
         private readonly Point _end;
         private readonly double _length;
         private readonly Point _start;
         private readonly Vector _unitVector;
         private readonly Vector _vector;
+
+        #endregion
     }
 }

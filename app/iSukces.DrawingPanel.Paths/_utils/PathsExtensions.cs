@@ -1,14 +1,13 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-using JetBrains.Annotations;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -50,6 +49,12 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
+        internal static string CsCode(this double d)
+        {
+            return d.ToString(CultureInfo.InvariantCulture);
+        }
+
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector GetNormalizedVector(this Vector vvvv)
         {
@@ -58,7 +63,10 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector GetPrependicularVector(this Vector vector) { return vector.GetPrependicular(false); }
+        public static Vector GetPrependicularVector(this Vector vector)
+        {
+            return vector.GetPrependicular(false);
+        }
 
         /*
         public static Vector GetPrependicularVector(this Vector vector, double multiple)
@@ -76,30 +84,6 @@ namespace iSukces.DrawingPanel.Paths
             return result;
         }
 
- 
-        
-        internal static string CsCode(this double d)
-        {
-            return d.ToString(CultureInfo.InvariantCulture);
-        }
-
-
-#if DEBUG && USE_TINYEXPR
-        internal static TinyExpr ToExpr(this double d)
-        {
-            return new TinyExpr(d);
-        }
-
-        
-
-        public static string DebugCreate(PathRay start, string name)
-        {
-            var p = start.Point;
-            var v = start.Vector;
-            return $"{name} = new {nameof(PathRay)}({p.X.ToExpr()}, {p.Y.ToExpr()}, {v.X.ToExpr()}, {v.Y.ToExpr()});";
-        }
-
-#endif
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsValidVector(this Vector vector)
         {
@@ -116,6 +100,22 @@ namespace iSukces.DrawingPanel.Paths
                 return true;
             return false;
         }
+
+
+#if DEBUG && USE_TINYEXPR
+        internal static TinyExpr ToExpr(this double d)
+        {
+            return new TinyExpr(d);
+        }
+
+
+        public static string DebugCreate(PathRay start, string name)
+        {
+            var p = start.Point;
+            var v = start.Vector;
+            return $"{name} = new {nameof(PathRay)}({p.X.ToExpr()}, {p.Y.ToExpr()}, {v.X.ToExpr()}, {v.Y.ToExpr()});";
+        }
+
+#endif
     }
-    
 }

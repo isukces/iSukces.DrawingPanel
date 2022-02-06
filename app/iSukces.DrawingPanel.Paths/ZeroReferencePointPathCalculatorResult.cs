@@ -1,17 +1,20 @@
-using System;
-using System.Collections.Generic;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Collections.Generic;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
     public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
     {
-        public ZeroReferencePointPathCalculatorResult(ZeroReferencePointPathCalculator.ResultKind kind) { Kind = kind; }
+        public ZeroReferencePointPathCalculatorResult(ZeroReferencePointPathCalculator.ResultKind kind)
+        {
+            Kind = kind;
+        }
 
         public double GetLength(Point s, Point e)
         {
@@ -64,6 +67,14 @@ namespace iSukces.DrawingPanel.Paths
                 default: return "Unknown";
             }
         }
+
+        #region properties
+
+        public ZeroReferencePointPathCalculator.ResultKind Kind { get; }
+        public ArcDefinition                               Arc1 { get; set; }
+        public ArcDefinition                               Arc2 { get; set; }
+
+        #endregion
 
         public Point Start { get; set; }
         public Point End   { get; set; }
@@ -130,9 +141,5 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
         }
-
-        public ZeroReferencePointPathCalculator.ResultKind Kind { get; }
-        public ArcDefinition                               Arc1 { get; set; }
-        public ArcDefinition                               Arc2 { get; set; }
     }
 }

@@ -1,25 +1,23 @@
-﻿using System;
-using System.Text;
-using iSukces.Mathematics;
-using JetBrains.Annotations;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-
+using System;
+using System.Text;
+using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
-
-
     public sealed class PathLineEquationNotNormalized : ICloneable
     {
         /// <summary>
         ///     Tworzy instancję obiektu
         /// </summary>
-        public PathLineEquationNotNormalized() { }
+        public PathLineEquationNotNormalized()
+        {
+        }
 
         /// <summary>
         ///     Tworzy linię przechodzącą przez punkt a i b
@@ -182,13 +180,25 @@ namespace iSukces.DrawingPanel.Paths
             return new PathLineEquationNotNormalized(-a.A, -a.B, -a.C);
         }
 
-        public object Clone() { return MemberwiseClone(); }
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
 
-        public Point? CrossWith(PathLineEquationNotNormalized line) { return Cross(this, line); }
+        public Point? CrossWith(PathLineEquationNotNormalized line)
+        {
+            return Cross(this, line);
+        }
 
-        public double DistanceNotNormalized(Point p) { return A * p.X + B * p.Y + C; }
+        public double DistanceNotNormalized(Point p)
+        {
+            return A * p.X + B * p.Y + C;
+        }
 
-        public double DistanceNotNormalized(double x, double y) { return A * x + B * y + C; }
+        public double DistanceNotNormalized(double x, double y)
+        {
+            return A * x + B * y + C;
+        }
 
         public double GetDeterminantSquared()
         {
@@ -224,7 +234,10 @@ namespace iSukces.DrawingPanel.Paths
             return -(B * y + C) / A;
         }
 
-        public Point GetXPoint(double y) { return new Point(GetX(y), y); }
+        public Point GetXPoint(double y)
+        {
+            return new Point(GetX(y), y);
+        }
 
         /// <summary>
         ///     Zwraca współrzędną Y dla podanego X - jeśli linia pionowa (dx=b=0) to będzie NaN
@@ -243,7 +256,10 @@ namespace iSukces.DrawingPanel.Paths
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public Point GetYPoint(double x) { return new Point(x, GetY(x)); }
+        public Point GetYPoint(double x)
+        {
+            return new Point(x, GetY(x));
+        }
 
         public override string ToString()
         {
@@ -290,6 +306,8 @@ namespace iSukces.DrawingPanel.Paths
             sb.Append(" = 0");
             return "Line: " + sb;
         }
+
+        #region properties
 
         public bool MoreVertical => Math.Abs(A) > Math.Abs(B);
 
@@ -357,8 +375,14 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        #endregion
+
+        #region Fields
+
         private double _a;
         private double _b;
         private double _c;
+
+        #endregion
     }
 }

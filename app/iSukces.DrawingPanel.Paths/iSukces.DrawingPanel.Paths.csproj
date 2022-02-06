@@ -1,61 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Title>Drawing panel paths</Title>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
-    <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2021</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <IncludeSource>false</IncludeSource>
-    <IncludeSymbols>true</IncludeSymbols>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.21355.50</AssemblyVersion>
-    <Version>1.0.21355.50</Version>
-    <FileVersion>1.0.21355.50</FileVersion>
-    <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net48;net5.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net50' ">
-    <DefineConstants>COREFX;NET50</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <DefineConstants>COREFX;NETSTANDARD20</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>COREFX;NETSTANDARD16</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <DefineConstants>FULLFRAMEWORK;NET461</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <DefineConstants>FULLFRAMEWORK;NET451</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineConstants>TRACE;USE_TINYEXPR</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="WindowsBase" />
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.0.21355.119" />
-    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="ZeroReferencePointPathCalculatorResult.cs">
-      <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
-    </Compile>
-    <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
-      <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <PropertyGroup>
+        <Title>Drawing panel paths</Title>
+        <Authors>Internet Sukces Piotr Stęclik</Authors>
+        <Company>Internet Sukces Piotr Stęclik</Company>
+        <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2021</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeSource>false</IncludeSource>
+        <IncludeSymbols>true</IncludeSymbols>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <AssemblyVersion>1.0.21355.50</AssemblyVersion>
+        <Version>1.0.21355.50</Version>
+        <FileVersion>1.0.21355.50</FileVersion>
+        <LangVersion>latest</LangVersion>
+        <TargetFrameworks>net48;net5.0</TargetFrameworks>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net50' ">
+        <DefineConstants>COREFX;NET50</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+        <DefineConstants>COREFX;NETSTANDARD20</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+        <DefineConstants>COREFX;NETSTANDARD16</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
+        <DefineConstants>FULLFRAMEWORK;NET461</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+        <DefineConstants>FULLFRAMEWORK;NET451</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+        <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DefineConstants>TRACE;USE_TINYEXPR</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="WindowsBase"/>
+        <Reference Include="System.Windows.Forms"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="iSukces.Math" Version="1.0.21355.119"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2021.3.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="ZeroReferencePointPathCalculatorResult.cs">
+            <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
+            <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.ComponentModel;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Collections.Generic;
+using System.ComponentModel;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -17,9 +17,15 @@ namespace iSukces.DrawingPanel.Paths
             _line = new LinePathElement(start, end);
         }
 
-        public double GetLength() { return _line.GetLength(); }
+        public double GetLength()
+        {
+            return _line.GetLength();
+        }
 
-        public override string ToString() { return $"Line {Start} .. {End}"; }
+        public override string ToString()
+        {
+            return $"Line {Start} .. {End}";
+        }
 
         public Point Start => _line.GetStartPoint();
         public Point End   => _line.GetEndPoint();
@@ -38,6 +44,11 @@ namespace iSukces.DrawingPanel.Paths
         public Vector StartVector => _line.GetStartVector();
 
         public Vector EndVector => _line.GetEndVector();
+
+        #region Fields
+
         private readonly LinePathElement _line;
+
+        #endregion
     }
 }

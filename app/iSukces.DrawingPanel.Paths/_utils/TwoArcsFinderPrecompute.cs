@@ -91,8 +91,14 @@ namespace iSukces.DrawingPanel.Paths
             return true;
         }
 
+        #region properties
+
         public double MaxRadius { get; set; }
-        
+
+        #endregion
+
+        #region Fields
+
         private readonly PathRay _owner_EndCenterSearch;
         private readonly Vector _owner_EndDirection;
         private readonly PathRay _owner_StartCenterSearch;
@@ -108,5 +114,7 @@ namespace iSukces.DrawingPanel.Paths
 
         public double SumX;
         public double SumY;
+
+        #endregion
     }
 }

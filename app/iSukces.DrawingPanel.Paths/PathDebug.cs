@@ -14,7 +14,7 @@ namespace iSukces.DrawingPanel.Paths
             var start  = x.Start.CsCode();
             var dir    = x.DirectionStart.CsCode();
             var end    = x.End.CsCode();
-            var code = $"ArcDefinition.FromCenterAndArms({center}, {start}, {dir}, {end})";
+            var code   = $"ArcDefinition.FromCenterAndArms({center}, {start}, {dir}, {end})";
             return string.IsNullOrEmpty(name) ? code : $"var {name} = {code};\r\n";
         }
 

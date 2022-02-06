@@ -14,11 +14,6 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
-        public CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end, Point cross)
-        {
-            return CircleCrossValidationResult.Ok;
-        }
-
         public ArcValidationResult ValidateArc(ArcDefinition arc)
         {
             return ArcValidationResult.Ok;
@@ -27,6 +22,12 @@ namespace iSukces.DrawingPanel.Paths
         public LineValidationResult ValidateLine(Vector vector)
         {
             return LineValidationResult.Ok;
+        }
+
+        public CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end,
+            Point cross)
+        {
+            return CircleCrossValidationResult.Ok;
         }
 
         #region properties

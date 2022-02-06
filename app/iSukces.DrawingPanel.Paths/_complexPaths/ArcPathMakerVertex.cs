@@ -1,23 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
-    
     [DebuggerDisplay("{GetCreationCode()}")]
     public sealed class ArcPathMakerVertex
     {
-        public ArcPathMakerVertex() { }
+        public ArcPathMakerVertex()
+        {
+        }
 
-        public ArcPathMakerVertex(Point location) { Location = location; }
+        public ArcPathMakerVertex(Point location)
+        {
+            Location = location;
+        }
 
         public ArcPathMakerVertex(double x, double y)
             : this(new Point(x, y))
@@ -36,7 +40,7 @@ namespace iSukces.DrawingPanel.Paths
                 case WayPoint[] refsArray:
                     Array.Copy(refsArray, result, refsArray.Length);
                     break;
-                case ICollection<WayPoint> collection: 
+                case ICollection<WayPoint> collection:
                     collection.CopyTo(result, 0);
                     break;
                 default:
@@ -46,6 +50,7 @@ namespace iSukces.DrawingPanel.Paths
                     break;
                 }
             }
+
             return result;
         }
 
@@ -63,7 +68,7 @@ namespace iSukces.DrawingPanel.Paths
             };
             return vertex;
         }
-        
+
         internal string GetCreationCode()
         {
             return $"ArcPathMakerVertex [{Location.X.CsCode()}, {Location.Y.CsCode()}]";
@@ -82,7 +87,10 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ArcPathMakerVertex WithInVector(double x, double y) { return WithInVector(new Vector(x, y)); }
+        public ArcPathMakerVertex WithInVector(double x, double y)
+        {
+            return WithInVector(new Vector(x, y));
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ArcPathMakerVertex WithInVector(Vector inVector)
@@ -116,7 +124,10 @@ namespace iSukces.DrawingPanel.Paths
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ArcPathMakerVertex WithOutVector(double x, double y) { return WithOutVector(new Vector(x, y)); }
+        public ArcPathMakerVertex WithOutVector(double x, double y)
+        {
+            return WithOutVector(new Vector(x, y));
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ArcPathMakerVertex WithOutVector(double x, double y, double outArmLength)
@@ -131,6 +142,8 @@ namespace iSukces.DrawingPanel.Paths
             return this;
         }
 
+        #region properties
+
         public Point Location { get; set; }
 
         public Vector InVector => _inVector;
@@ -143,8 +156,15 @@ namespace iSukces.DrawingPanel.Paths
 
         public FlexiPathMakerItem2Flags Flags           { get; private set; }
         public IReadOnlyList<WayPoint>  ReferencePoints { get; set; }
+
+        #endregion
+
+        #region Fields
+
         private Vector _inVector;
         private Vector _outVector;
+
+        #endregion
     }
 
     [Flags]

@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
-using JetBrains.Annotations;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths
 {
     public interface IPathResult
     {
+        #region properties
+
         Point Start { get; }
         Point End   { get; }
 
@@ -20,17 +22,19 @@ namespace iSukces.DrawingPanel.Paths
         Vector StartVector { get; }
 
         Vector EndVector { get; }
+
+        #endregion
     }
 
     public static class PathResultExtensions
     {
-        public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint, 
+        public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint,
             out double distance, out Vector direction)
         {
             var elements = segment?.Elements;
             if (elements is null)
             {
-                distance = 0;
+                distance  = 0;
                 direction = default;
                 return false;
             }
@@ -60,7 +64,8 @@ namespace iSukces.DrawingPanel.Paths
                     {
                         var element = elements[index];
 
-                        var currentDistance = element.DistanceFromElement(aPoint, out var distanceFromStart, out var newDirection);
+                        var currentDistance =
+                            element.DistanceFromElement(aPoint, out var distanceFromStart, out var newDirection);
                         if (first)
                         {
                             bestDistance = currentDistance;

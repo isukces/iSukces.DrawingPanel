@@ -70,11 +70,20 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        #region properties
+
         public Func<int, IPathValidator> GetPathValidator { get; set; }
 
         public IReadOnlyList<ArcPathMakerVertex> Vertices { get; set; }
+
+        #endregion
+
+        #region Fields
+
         private readonly List<IPathResult> _pathResults = new();
         private SegmentFlags[] _segmentFlags;
+
+        #endregion
     }
 
     [Flags]

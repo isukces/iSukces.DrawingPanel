@@ -1,12 +1,12 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-using Newtonsoft.Json;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
+using Newtonsoft.Json;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -38,7 +38,10 @@ namespace iSukces.DrawingPanel.Paths
             Vector.Normalize();
         }
 
-        public override string ToString() { return $"{Point} => {Vector}"; }
+        public override string ToString()
+        {
+            return $"{Point} => {Vector}";
+        }
 
         public Point? Cross(PathRay other)
         {
@@ -70,17 +73,32 @@ namespace iSukces.DrawingPanel.Paths
             return PathLineEquationNotNormalized.FromPointAndDeltas(Point, Vector);
         }
 
-        public PathRay With(Point point) { return new PathRay(point, Vector); }
+        public PathRay With(Point point)
+        {
+            return new PathRay(point, Vector);
+        }
 
-        public PathRay With(Vector vector) { return new PathRay(Point, vector); }
+        public PathRay With(Vector vector)
+        {
+            return new PathRay(Point, vector);
+        }
 
-        public Vector GetNormalizedVector() { return Vector.GetNormalizedVector(); }
+        public Vector GetNormalizedVector()
+        {
+            return Vector.GetNormalizedVector();
+        }
 
-        public Vector GetPrependicularVector() { return Vector.GetPrependicularVector(); }
+        public Vector GetPrependicularVector()
+        {
+            return Vector.GetPrependicularVector();
+        }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PathRay WithInvertedVector() { return new PathRay(Point, -Vector); }
+        public PathRay WithInvertedVector()
+        {
+            return new PathRay(Point, -Vector);
+        }
 
         public PathRay WithEnd(Point end, double length)
         {
@@ -96,12 +114,24 @@ namespace iSukces.DrawingPanel.Paths
             return new PathRay(Point, v);
         }
 
-        public Point GetPoint(double d) { return Point + d * Vector; }
+        public Point GetPoint(double d)
+        {
+            return Point + d * Vector;
+        }
 
-        public Point Get(double distance) { return Point + Vector * distance; }
+        public Point Get(double distance)
+        {
+            return Point + Vector * distance;
+        }
 
-        public PathRay WithPoint(Point point) { return new PathRay(point, Vector); }
+        public PathRay WithPoint(Point point)
+        {
+            return new PathRay(point, Vector);
+        }
 
-        public bool HasValidVector() { return Vector.IsValidVector(); }
+        public bool HasValidVector()
+        {
+            return Vector.IsValidVector();
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace iSukces.DrawingPanel.Paths
                 Start     = start,
                 End       = end,
                 Validator = validator,
-                Flags = flags
+                Flags     = flags
             };
             return x.Compute();
         }
@@ -187,7 +187,7 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     var vector = v2 * (l1 / l2);
                     var p      = point + vector;
-                    
+
                     {
                         var calc = new OneArcFinder(point) // VALIDATED
                         {
@@ -327,6 +327,8 @@ namespace iSukces.DrawingPanel.Paths
             };
         }
 
+        #region properties
+
         public IPathValidator                        Validator { get; set; }
         public ZeroReferencePointPathCalculatorFlags Flags     { get; set; }
 
@@ -343,6 +345,8 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 #endif
+
+        #endregion
 
 
         public enum ResultKind
@@ -362,8 +366,9 @@ namespace iSukces.DrawingPanel.Paths
     public enum ZeroReferencePointPathCalculatorFlags
     {
         None = 0,
+
         /// <summary>
-        /// Don't try to find points connection with one arc
+        ///     Don't try to find points connection with one arc
         /// </summary>
         DontUseOneArcSolution = 1
     }

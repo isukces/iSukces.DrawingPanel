@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Paths
 {
@@ -97,7 +97,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 var a             = _list[lastIndex];
                 var prependicular = a.InVector.GetPrependicular(false);
-                var movementLast      = _movementBySegmentIndex(lastIndex - 1);
+                var movementLast  = _movementBySegmentIndex(lastIndex - 1);
                 var vector        = prependicular * movementLast;
                 moveVectors[lastIndex] =  vector;
                 a.Location             += vector;
@@ -176,12 +176,16 @@ namespace iSukces.DrawingPanel.Paths
             return _list;
         }
 
+        #region Fields
+
         private readonly int _count;
 
         private readonly bool[] _exists;
         private readonly ArcPathMakerVertex[] _list;
         private readonly GetMovementBySegmentIndexDelegate _movementBySegmentIndex;
         private readonly Vector[] _vectors;
+
+        #endregion
     }
 
     [Flags]

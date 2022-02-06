@@ -11,7 +11,6 @@ namespace iSukces.DrawingPanel.Paths
 {
     public static class PathsMathUtils
     {
-        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool AbsGreaterThan(this double value, double limit)
         {
@@ -165,7 +164,7 @@ namespace iSukces.DrawingPanel.Paths
 
 
         /// <summary>
-        ///     Assume min<=max and min is <0,360>, angle is <0,360> and max is <0,720>
+        ///     Assume min &lt;=max and min is &lt;0,360>, angle is &lt;0,360> and max is &lt;0,720>
         /// </summary>
         /// <param name="angle"></param>
         /// <param name="min"></param>
@@ -192,9 +191,12 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsZero(this Vector v) { return v.X.Equals(0d) && v.Y.Equals(0d); }
+        public static bool IsZero(this Vector v)
+        {
+            return v.X.Equals(0d) && v.Y.Equals(0d);
+        }
 
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double NormalizeAngleDeg(double angle)
         {
@@ -202,17 +204,21 @@ namespace iSukces.DrawingPanel.Paths
 
             if (angle is >= 0 and < full)
                 return angle;
-            var cycles = Math.Floor(angle / full);
-            var candidate= angle - cycles * full;
-            
+            var cycles    = Math.Floor(angle / full);
+            var candidate = angle - cycles * full;
+
             // fixes rounding errors
             if (candidate >= 360)
                 return candidate - 360;
             return candidate;
         }
 
+        #region Fields
+
         public const double DegreesToRadians =
             0.017453292519943295769236907684886127134428718885417254560971914401710091146034494;
+
+        #endregion
     }
 
     public enum Three : byte

@@ -51,11 +51,15 @@ namespace iSukces.DrawingPanel.Paths
             return result;
         }
 
+        #region properties
+
         public IReadOnlyList<IPathResult> Segments { get; }
 
         public static ArcPathMakerResult Empty => new(Array.Empty<IPathResult>());
 
         public int Count => Segments.Count;
+
+        #endregion
     }
 
 

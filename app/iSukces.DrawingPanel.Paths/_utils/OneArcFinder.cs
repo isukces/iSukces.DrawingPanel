@@ -1,9 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Runtime.CompilerServices;
 
 namespace iSukces.DrawingPanel.Paths
 {
@@ -65,11 +65,15 @@ namespace iSukces.DrawingPanel.Paths
             EndVector   = -end.Vector;
         }
 
+        #region properties
+
         public Point  Cross       { get; set; }
         public Point  StartPoint  { get; set; }
         public Vector StartVector { get; set; }
         public Point  EndPoint    { get; set; }
         public Vector EndVector   { get; set; }
+
+        #endregion
     }
 
 #if DEBUG

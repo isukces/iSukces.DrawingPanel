@@ -1,11 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -58,7 +58,7 @@ namespace iSukces.DrawingPanel.Paths
             var a = (vy * vy) + (vx * vx) - 4; // a<=0
             var b = -2 * (dy * vy + dx * vx); //   b any
             var c = dy * dy + dx * dx; // c >= 0
-            
+
             var delta = b * b - 4 * a * c; // delta alvays >= 0
 
             var re = new TwoArcsFinderPrecompute(this)
@@ -102,9 +102,13 @@ namespace iSukces.DrawingPanel.Paths
             EndCenterSearch   = endRay.With(endSearchVector);
         }
 
+        #region properties
+
         public PathRay StartCenterSearch { get; set; }
         public PathRay EndCenterSearch   { get; set; }
         public Vector  EndDirection      { get; set; }
         public Vector  StartDirection    { get; set; }
+
+        #endregion
     }
 }

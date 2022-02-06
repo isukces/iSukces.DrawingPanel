@@ -75,8 +75,9 @@ namespace iSukces.DrawingPanel.Paths
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="reverseEnd"></param>
-        public void AddFlexi(PathRayWithArm start, PathRayWithArm end, 
-            bool reverseEnd = false, ZeroReferencePointPathCalculatorFlags flags = ZeroReferencePointPathCalculatorFlags.None)
+        public void AddFlexi(PathRayWithArm start, PathRayWithArm end,
+            bool reverseEnd = false,
+            ZeroReferencePointPathCalculatorFlags flags = ZeroReferencePointPathCalculatorFlags.None)
         {
             var s = start.GetMovedRayOutput();
             var e = end.GetMovedRayInput();

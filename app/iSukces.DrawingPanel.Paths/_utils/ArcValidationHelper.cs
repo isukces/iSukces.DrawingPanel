@@ -1,16 +1,15 @@
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel.Paths
 {
     public static class ArcValidationHelper
     {
-        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CircleCrossValidationResult Validate([CanBeNull] IPathValidator validator, PathRay start,
             PathRay end, Point cross)
@@ -41,7 +40,5 @@ namespace iSukces.DrawingPanel.Paths
             var result = Validate(validator, start, end, calc.Cross);
             return result == CircleCrossValidationResult.Ok;
         }
- 
- 
     }
 }

@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Collections.Generic;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -35,7 +34,7 @@ namespace iSukces.DrawingPanel.Paths
             var resultList = new ArcPathMakerVertex[_listCount];
             for (var index = 0; index < _listCount; index++)
             {
-                var src = _list[index];
+                var src    = _list[index];
                 var vertex = src.DeepClone();
 
                 var inZero  = (src.Flags & FlexiPathMakerItem2Flags.HasInVector) == 0;
@@ -45,7 +44,7 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     if (inZero)
                     {
-                        var v = GetSegmentVector(index );
+                        var v = GetSegmentVector(index);
                         if (!double.IsNaN(v.X))
                             vertex.WithInVector(v);
                     }
@@ -57,7 +56,7 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     if (outZero)
                     {
-                        var v = GetSegmentVector(index+1);
+                        var v = GetSegmentVector(index + 1);
                         if (!double.IsNaN(v.X))
                             vertex.WithOutVector(v);
                     }
@@ -88,10 +87,13 @@ namespace iSukces.DrawingPanel.Paths
             return v;
         }
 
+        #region Fields
 
         private readonly bool[] _exists;
         private readonly IReadOnlyList<ArcPathMakerVertex> _list;
         private readonly int _listCount;
         private readonly Vector[] _vectors;
+
+        #endregion
     }
 }

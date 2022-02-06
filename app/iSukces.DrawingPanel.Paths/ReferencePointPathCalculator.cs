@@ -1,10 +1,10 @@
-﻿using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -38,7 +38,7 @@ namespace iSukces.DrawingPanel.Paths
             c.Setup(a, b);
             return c.CalculateArc();
         }
-        
+
 
         [NotNull]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,8 +60,18 @@ namespace iSukces.DrawingPanel.Paths
 
         public abstract void InitDemo();
         public abstract void SetReferencePoint(Point p, int nr);
-        public const double Epsilon = 1e-8;
+
+        #region properties
+
         public PathRayWithArm Start { get; set; }
         public PathRayWithArm End   { get; set; }
+
+        #endregion
+
+        #region Fields
+
+        public const double Epsilon = 1e-8;
+
+        #endregion
     }
 }

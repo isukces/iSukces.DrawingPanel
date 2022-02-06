@@ -21,14 +21,20 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsTooSmall(Vector v, double minLengthSquared) { return v.LengthSquared < minLengthSquared; }
+        private static bool IsTooSmall(Vector v, double minLengthSquared)
+        {
+            return v.LengthSquared < minLengthSquared;
+        }
 
         internal string GetCreationCode()
         {
             return $"new MinimumValuesPathValidator({_minRadius.CsCode()}, {_minLineLength.CsCode()})";
         }
 
-        public double GetMinRadius() { return _minRadius; }
+        public double GetMinRadius()
+        {
+            return _minRadius;
+        }
 
 
         public ArcValidationResult ValidateArc(ArcDefinition arc)
@@ -45,14 +51,19 @@ namespace iSukces.DrawingPanel.Paths
             return LineValidationResult.Ok;
         }
 
-        public virtual CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end, Point cross)
+        public virtual CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end,
+            Point cross)
         {
             return CircleCrossValidationResult.Ok;
         }
+
+        #region Fields
 
         private readonly double _minLineLength;
         private readonly double _minLineLength2;
         private readonly double _minRadius;
         private readonly double _minRadius2;
+
+        #endregion
     }
 }

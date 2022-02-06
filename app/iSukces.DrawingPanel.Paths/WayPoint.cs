@@ -1,12 +1,11 @@
-using System;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
-
 #else
 using System.Windows;
 #endif
+using System;
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Paths
 {
@@ -126,7 +125,10 @@ namespace iSukces.DrawingPanel.Paths
 
         public double OutputArmLength { get; }
 
-        public static implicit operator WayPoint(PathRay ray) { return new WayPoint(ray); }
+        public static implicit operator WayPoint(PathRay ray)
+        {
+            return new WayPoint(ray);
+        }
 
 
         public PathRayWithArm InputRay

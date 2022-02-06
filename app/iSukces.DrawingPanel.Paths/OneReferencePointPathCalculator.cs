@@ -53,7 +53,7 @@ namespace iSukces.DrawingPanel.Paths
                     var l    = Reference.GetLine();
                     {
                         var sMoved = Start.GetMovedRayOutput();
-                        var l1             = sMoved.GetLine();
+                        var l1     = sMoved.GetLine();
 
                         var d1 = Math.Abs(l1.DistanceNotNormalized(Reference.Point));
                         var d2 = Math.Abs(l.DistanceNotNormalized(sMoved.Point));
@@ -64,7 +64,7 @@ namespace iSukces.DrawingPanel.Paths
                     }
                     {
                         var eMoved = End.GetMovedRayInput();
-                        var l2            = eMoved.GetLine();
+                        var l2     = eMoved.GetLine();
 
                         var d1 = Math.Abs(l2.DistanceNotNormalized(Reference.Point));
                         var d2 = Math.Abs(l.DistanceNotNormalized(eMoved.Point));
@@ -301,7 +301,11 @@ namespace iSukces.DrawingPanel.Paths
                 Reference = Reference.With(p);
         }
 
+        #region properties
+
         public PathRay Reference { get; set; }
+
+        #endregion
 
         public enum FromTwoCrossesResult
         {

@@ -72,7 +72,11 @@ namespace iSukces.DrawingPanel.Paths
             }
         }
 
+        #region properties
+
         public PathRay Reference1 { get; set; }
         public PathRay Reference2 { get; set; }
+
+        #endregion
     }
 }
