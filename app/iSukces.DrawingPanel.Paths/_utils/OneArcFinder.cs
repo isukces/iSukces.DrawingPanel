@@ -9,6 +9,11 @@ namespace iSukces.DrawingPanel.Paths
 {
     public partial class OneArcFinder
     {
+        public OneArcFinder(Point cross)
+        {
+            Cross = cross;
+        }
+
         public ArcDefinition CalculateArc()
         {
             var start              = StartPoint;

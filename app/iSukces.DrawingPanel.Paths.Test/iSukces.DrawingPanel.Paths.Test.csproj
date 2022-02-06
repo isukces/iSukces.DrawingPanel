@@ -31,6 +31,12 @@
     <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
         <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
         <PackageReference Include="iSukces.Math" Version="1.0.21355.119" />

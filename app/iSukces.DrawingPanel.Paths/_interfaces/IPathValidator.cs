@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -12,7 +12,9 @@ namespace iSukces.DrawingPanel.Paths
     {
         ArcValidationResult ValidateArc([NotNull] ArcDefinition arc);
         LineValidationResult ValidateLine(Vector vector);
+        CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end, Point cross);
     }
+
     public interface IMinRadiusPathValidator : IPathValidator
     {
         double GetMinRadius();
@@ -31,7 +33,15 @@ namespace iSukces.DrawingPanel.Paths
         ArcLengthTooSmall,
         NoCrossPoints,
         InvalidDirectionVector,
-        UnableToConstructArc
+        UnableToConstructArc,
+        ReplaceByLine
+    }
+
+    public enum CircleCrossValidationResult
+    {
+        Ok,
+        ForceLine,
+        Invalid
     }
 
     public static class PathValidatorExtensions

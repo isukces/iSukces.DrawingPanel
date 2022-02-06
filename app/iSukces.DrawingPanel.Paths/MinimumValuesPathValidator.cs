@@ -45,6 +45,11 @@ namespace iSukces.DrawingPanel.Paths
             return LineValidationResult.Ok;
         }
 
+        public virtual CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end, Point cross)
+        {
+            return CircleCrossValidationResult.Ok;
+        }
+
         private readonly double _minLineLength;
         private readonly double _minLineLength2;
         private readonly double _minRadius;

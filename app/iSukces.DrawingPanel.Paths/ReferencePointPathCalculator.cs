@@ -27,17 +27,14 @@ namespace iSukces.DrawingPanel.Paths
             return dot <= 0;
         }
 
-        protected static ArcDefinition Make(PathRay a, PathRay b, bool invertVector = false)
+        protected static ArcDefinition MakeNotValidated(PathRay a, PathRay b, bool invertVector = false)
         {
             var cross = a.Cross(b);
             if (cross is null)
                 return null;
             if (invertVector)
                 b = b.WithInvertedVector();
-            var c = new OneArcFinder
-            {
-                Cross = cross.Value
-            };
+            var c = new OneArcFinder(cross.Value); // NOT VALIDATED
             c.Setup(a, b);
             return c.CalculateArc();
         }

@@ -11,6 +11,12 @@ namespace iSukces.DrawingPanel.Paths.Test
             Equal(y, point.Y, decimalPlaces);
         }
 
+        public static void Equal(Point ex, Point point, int decimalPlaces = 6)
+        {
+            Equal(ex.X, point.X, decimalPlaces);
+            Equal(ex.Y, point.Y, decimalPlaces);
+        }
+
 
         public static void Equal(double x, double y, Vector point, int decimalPlaces = 6)
         {

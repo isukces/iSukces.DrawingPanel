@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
-
 #else
 using System.Windows;
 #endif
+using System;
+using System.Collections.Generic;
 
 namespace iSukces.DrawingPanel.Paths
 {
@@ -19,12 +18,11 @@ namespace iSukces.DrawingPanel.Paths
 
         public void AddConnectionAutomatic(PathRayWithArm start, PathRayWithArm end, bool reverseEnd)
         {
-            
             var start1 = start.GetMovedRayOutput();
             var end1   = end.GetMovedRayInput();
             if (reverseEnd)
                 end1 = end1.WithInvertedVector();
-            
+
             bool CheckDot(ArcDefinition arc)
             {
                 var dot = arc.DirectionStart * start1.Vector;
@@ -34,8 +32,6 @@ namespace iSukces.DrawingPanel.Paths
                 return true;
             }
 
-        
-
             var cross = start1.Cross(end1);
             if (cross is null)
             {
@@ -43,10 +39,21 @@ namespace iSukces.DrawingPanel.Paths
                 return;
             }
 
-            var c = new OneArcFinder
+            var result = ArcValidationHelper.Validate(Validator, start1, end1, cross.Value, reverseEnd);
+            switch (result)
             {
-                Cross = cross.Value
-            };
+                case CircleCrossValidationResult.ForceLine:
+                    LineTo(end.Point);
+                    return;
+                case CircleCrossValidationResult.Ok:
+                    break;
+                case CircleCrossValidationResult.Invalid:
+                default:
+                    AddFlexi(start, end, reverseEnd, ZeroReferencePointPathCalculatorFlags.DontUseOneArcSolution);
+                    return;
+            }
+
+            var c = new OneArcFinder(cross.Value); // validated cross
             c.Setup(start1, end1);
             var res = c.CalculateArc();
             if (Validator.IsOk(res))
@@ -68,13 +75,14 @@ namespace iSukces.DrawingPanel.Paths
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="reverseEnd"></param>
-        public void AddFlexi(PathRayWithArm start, PathRayWithArm end, bool reverseEnd = false)
+        public void AddFlexi(PathRayWithArm start, PathRayWithArm end, 
+            bool reverseEnd = false, ZeroReferencePointPathCalculatorFlags flags = ZeroReferencePointPathCalculatorFlags.None)
         {
             var s = start.GetMovedRayOutput();
             var e = end.GetMovedRayInput();
             if (reverseEnd)
                 e = e.WithInvertedVector();
-            var result = ZeroReferencePointPathCalculator.Compute(s, e, Validator);
+            var result = ZeroReferencePointPathCalculator.Compute(s, e, Validator, flags);
             AddPathResult(start.GetRay(), end.GetRay(), result);
         }
 
@@ -129,7 +137,10 @@ namespace iSukces.DrawingPanel.Paths
             CurrentPoint = arc.End;
         }
 
-        public void Clear() { _list.Clear(); }
+        public void Clear()
+        {
+            _list.Clear();
+        }
 
         public void LineTo(Point p)
         {
@@ -148,10 +159,18 @@ namespace iSukces.DrawingPanel.Paths
             return new PathResult(_list[0].GetStartPoint(), endPoint, List);
         }
 
+        #region properties
+
         public IReadOnlyList<IPathElement> List      => _list;
         public IPathValidator              Validator { get; set; }
 
+        #endregion
+
+        #region Fields
+
         private readonly List<IPathElement> _list = new List<IPathElement>();
         public Point CurrentPoint;
+
+        #endregion
     }
 }

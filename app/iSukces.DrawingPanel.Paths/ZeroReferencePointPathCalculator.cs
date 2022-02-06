@@ -12,7 +12,9 @@ namespace iSukces.DrawingPanel.Paths
     [DebuggerDisplay("{GetCreationCode()}")]
     public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalculator
     {
-        ZeroReferencePointPathCalculator() { }
+        ZeroReferencePointPathCalculator()
+        {
+        }
 
         private static bool Check(ZeroReferencePointPathCalculatorResult result, ArcDefinition one)
         {
@@ -26,13 +28,15 @@ namespace iSukces.DrawingPanel.Paths
             return true;
         }
 
-        public static IPathResult Compute(PathRay start, PathRay end, IPathValidator validator)
+        public static IPathResult Compute(PathRay start, PathRay end, IPathValidator validator,
+            ZeroReferencePointPathCalculatorFlags flags = ZeroReferencePointPathCalculatorFlags.None)
         {
             var x = new ZeroReferencePointPathCalculator
             {
                 Start     = start,
                 End       = end,
-                Validator = validator
+                Validator = validator,
+                Flags = flags
             };
             return x.Compute();
         }
@@ -67,9 +71,10 @@ namespace iSukces.DrawingPanel.Paths
                 };
                 return result;
             }
+
             var maxRadius = endBeginLengthSquared / (8 * PathCalculationConfig.MaximumSagitta);
 
-            var cross     = PathsMathUtils.CrossNormalized(lStart, lEnd, out var determinant);
+            var cross = PathsMathUtils.CrossNormalized(lStart, lEnd, out var determinant);
             {
                 var dist = PathCalculationConfig.UseLineWhenDistanceLowerThan;
                 {
@@ -91,34 +96,34 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-
-
             // var cross = Start.Cross(End);
             if (cross is null)
             {
- 
                 var isSmall =
                     PathsMathUtils.IsAngleBetweenSmallEnoughtBasedOnH(endBegin, Start.Vector,
                         PathCalculationConfig.MaximumSagitta);
 
                 if (isSmall)
                     return new ZeroReferencePointPathCalculatorLineResult(Start.Point, End.Point);
-                return TryTwo(null, false, double.MaxValue); 
+                return TryTwo(null, false, double.MaxValue);
             }
 
-            var one = TryOne(cross.Value);
-            if (Validator.IsOk(one))
+            if ((Flags & ZeroReferencePointPathCalculatorFlags.DontUseOneArcSolution) == 0)
             {
-                if (one.Angle < 180)
-                    return new ZeroReferencePointPathCalculatorResult(ResultKind.OneArc)
-                    {
-                        Arc1  = one,
-                        Start = Start.Point,
-                        End   = End.Point
-                    };
+                var one = TryOne(cross.Value);
+                if (Validator.IsOk(one))
+                {
+                    if (one.Angle < 180)
+                        return new ZeroReferencePointPathCalculatorResult(ResultKind.OneArc)
+                        {
+                            Arc1  = one,
+                            Start = Start.Point,
+                            End   = End.Point
+                        };
+                }
             }
 
-            var a=  TryTwo(null, false, maxRadius);
+            var a = TryTwo(null, false, maxRadius);
             if (a is null)
             {
                 if (determinant.AbsLessThan(PathCalculationConfig.MinimumLinearEquationSystemDeterminantToUseLine))
@@ -152,7 +157,9 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        public override void SetReferencePoint(Point p, int nr) { }
+        public override void SetReferencePoint(Point p, int nr)
+        {
+        }
 
         private ArcDefinition TryOne(Point point)
         {
@@ -167,12 +174,11 @@ namespace iSukces.DrawingPanel.Paths
 
             if (dot1 > 0 && dot2 > 0)
             {
-                var calc = new OneArcFinder
-                {
-                    Cross = point,
-                };
-                calc.SetupReverseEnd(Start.GetMovedRayOutput(), End.GetMovedRayInput());
-                return calc.CalculateArc();
+                var calc  = new OneArcFinder(point); // VALIDATED
+                var start = Start.GetMovedRayOutput();
+                var end   = End.GetMovedRayInput();
+                calc.SetupReverseEnd(start, end);
+                return ArcValidationHelper.Validate(Validator, calc) ? calc.CalculateArc() : null;
             }
 
             if (dot1 < 0 && dot2 < 0)
@@ -181,42 +187,32 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     var vector = v2 * (l1 / l2);
                     var p      = point + vector;
-
-                    var calc = new OneArcFinder
+                    
                     {
-                        Cross       = point,
-                        StartPoint  = Start.Point,
-                        StartVector = Start.Vector,
-                        EndPoint    = p,
-                        EndVector   = End.Vector
-                    };
-                    return calc.CalculateArc();
+                        var calc = new OneArcFinder(point) // VALIDATED
+                        {
+                            StartPoint  = Start.Point,
+                            StartVector = Start.Vector,
+                            EndPoint    = p,
+                            EndVector   = End.Vector
+                        };
+                        return ArcValidationHelper.Validate(Validator, calc) ? calc.CalculateArc() : null;
+                    }
                 }
                 else
                 {
                     var vector = v1 * (l2 / l1);
                     var p      = point - vector;
 
-                    var calc = new OneArcFinder
+                    var calc = new OneArcFinder(point) // VALIDATED
                     {
-                        Cross       = point,
                         StartPoint  = p,
                         StartVector = Start.Vector,
                         EndPoint    = End.Point,
                         EndVector   = End.Vector
                     };
-                    return calc.CalculateArc();
+                    return ArcValidationHelper.Validate(Validator, calc) ? calc.CalculateArc() : null;
                 }
-
-                /*
-                {
-                    var calc = new ClassX
-                    {
-                        Cross = cross.Value,
-                    };
-                    calc.SetupReverseEnd(Start, End);
-                    return calc.CalculateArc();
-                }*/
             }
 
             if (dot1 < 0 && dot2 >= 0)
@@ -224,15 +220,14 @@ namespace iSukces.DrawingPanel.Paths
                 var vector = v2 * (l1 / l2);
                 var p      = point - vector;
 
-                var calc = new OneArcFinder
+                var calc = new OneArcFinder(point) // VALIDATED
                 {
-                    Cross       = point,
                     StartPoint  = Start.Point,
                     StartVector = Start.Vector,
                     EndPoint    = p,
                     EndVector   = End.Vector
                 };
-                return calc.CalculateArc();
+                return ArcValidationHelper.Validate(Validator, calc) ? calc.CalculateArc() : null;
             }
 
             return null;
@@ -332,7 +327,8 @@ namespace iSukces.DrawingPanel.Paths
             };
         }
 
-        public IPathValidator Validator { get; set; }
+        public IPathValidator                        Validator { get; set; }
+        public ZeroReferencePointPathCalculatorFlags Flags     { get; set; }
 
 
 #if DEBUG && USE_TINYEXPR
@@ -360,5 +356,15 @@ namespace iSukces.DrawingPanel.Paths
             OneArc,
             TwoArcs
         }
+    }
+
+    [Flags]
+    public enum ZeroReferencePointPathCalculatorFlags
+    {
+        None = 0,
+        /// <summary>
+        /// Don't try to find points connection with one arc
+        /// </summary>
+        DontUseOneArcSolution = 1
     }
 }

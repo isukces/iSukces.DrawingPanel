@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
+using Newtonsoft.Json;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 
@@ -23,6 +24,7 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
+        [JsonConstructor]
         public PathRayWithArm(Point point, Vector vector, double armLength = 0)
         {
             if (armLength < 0)
