@@ -196,6 +196,8 @@ namespace iSukces.DrawingPanel
                         graphics.FillRectangle(new SolidBrush(BackColor), ClientRectangle);
                         disposeGraphics = true;
                     }
+                    else
+                        graphics = null;
                 }
                 else
                 {
@@ -206,20 +208,21 @@ namespace iSukces.DrawingPanel
                     }
                 }
 
-                for (var index = 0; index < drawablesCount; index++)
-                {
-                    var drawable = drawables[index];
-                    if (drawable.Visible)
+                if (graphics is not null)
+                    for (var index = 0; index < drawablesCount; index++)
                     {
-                        try
+                        var drawable = drawables[index];
+                        if (drawable.Visible)
                         {
-                            drawable.Draw(graphics);
-                        }
-                        catch
-                        {
+                            try
+                            {
+                                drawable.Draw(graphics);
+                            }
+                            catch
+                            {
+                            }
                         }
                     }
-                }
 
                 if (!isBackgroundLayer) continue;
                 if (disposeGraphics)
