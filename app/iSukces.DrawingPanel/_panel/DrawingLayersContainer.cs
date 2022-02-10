@@ -285,9 +285,10 @@ namespace iSukces.DrawingPanel
             get => _underLayerOpacity;
             set
             {
-                if (!_underLayerOpacity.Equals(value))
-                    SetUnderLayerOpacity(value);
-                Invalidate();
+                if (_underLayerOpacity.Equals(value)) return;
+                SetUnderLayerOpacity(value);
+                InvalidateBitmap();
+                InvalidateRequest();
             }
         }
 
