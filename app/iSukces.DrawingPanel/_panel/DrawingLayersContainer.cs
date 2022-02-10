@@ -5,11 +5,11 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
-using Point = System.Drawing.Point;
 
 namespace iSukces.DrawingPanel
 {
@@ -17,6 +17,7 @@ namespace iSukces.DrawingPanel
     {
         public DrawingLayersContainer()
         {
+            SetUnderLayerOpacity(1);
             ColorScheme = new DrawingColorScheme();
             ((DrawingColorScheme)ColorScheme).Update(BackColor);
 
@@ -29,6 +30,24 @@ namespace iSukces.DrawingPanel
             _layers   = new[] { Overlay, Drawables, Underlay };
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+        }
+
+        private static void DrawBitmapWithAttributes(Graphics graphics, Image bmp, ImageAttributes imageAtt)
+        {
+            var iWidth  = bmp.Width;
+            var iHeight = bmp.Height;
+
+            graphics.DrawImage(
+                bmp,
+                new Rectangle(0, 0, iWidth, iHeight), // Destination rectangle
+                0, // Source rectangle X 
+                0, // Source rectangle Y
+                iWidth, // Source rectangle width
+                iHeight, // Source rectangle height
+                GraphicsUnit.Pixel,
+                imageAtt);
+
+            //   bmp.Save("e:\\temp\\aaaa.png");
         }
 
         public void ApplyBounds(Rect bounds)
@@ -206,7 +225,8 @@ namespace iSukces.DrawingPanel
                 if (disposeGraphics)
                     graphics.Dispose();
                 if (_backgroundBitmap == null) continue;
-                e.Graphics.DrawImage(_backgroundBitmap, Point.Empty);
+
+                DrawBitmapWithAttributes(e.Graphics, _backgroundBitmap, _underLayerAttributes);
                 needDrawBg = false;
             }
 
@@ -214,6 +234,29 @@ namespace iSukces.DrawingPanel
             // w.Stop(); Debug.WriteLine("Elapsed ms " + w.ElapsedMilliseconds);
         }
 
+        private void SetUnderLayerOpacity(double value)
+        {
+            value = value switch
+            {
+                < 0 => 0,
+                > 1 => 1,
+                _ => value
+            };
+            _underLayerOpacity = value;
+
+            var op = (float)value;
+            var colorMatrix = new ColorMatrix(new[]
+            {
+                new[] { 1f, 0f, 0f, 0f, 0f },
+                new[] { 0f, 1f, 0f, 0f, 0f },
+                new[] { 0f, 0f, 1f, 0f, 0f },
+                new[] { 0f, 0f, 0f, op, 0f },
+                new[] { 0f, 0f, 0f, 0f, 1f }
+            });
+
+            _underLayerAttributes = new ImageAttributes();
+            _underLayerAttributes.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+        }
 
         void ICadControlLogicOwner.TransfromChanged()
         {
@@ -237,6 +280,17 @@ namespace iSukces.DrawingPanel
 
         #region properties
 
+        public double UnderLayerOpacity
+        {
+            get => _underLayerOpacity;
+            set
+            {
+                if (!_underLayerOpacity.Equals(value))
+                    SetUnderLayerOpacity(value);
+                Invalidate();
+            }
+        }
+
         public IDrawingPanelZoomStorage ZoomStorage
         {
             get => _logic.ZoomStorage;
@@ -257,6 +311,8 @@ namespace iSukces.DrawingPanel
         private static readonly bool cache = true;
 
         private Bitmap _backgroundBitmap;
+        private double _underLayerOpacity;
+        private ImageAttributes _underLayerAttributes;
 
         #endregion
     }
