@@ -50,7 +50,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             pb.AddConnectionAutomatic(start, reference1, false);
             var list = pb.List;
             Assert.Equal(2, list.Count);
-            var e1 = ArcDefinition.FromCenterAndArms(new Point(-339.270603461039, 1071.58809106537),
+            var e1 = new ArcDefinition(new Point(-339.270603461039, 1071.58809106537),
                 new Point(30.95071298, 39.21376973), new Vector(0.941303233494752, 0.33756217592071),
                 new Point(47.1026330815796, 45.149459239911));
             var a = (ArcDefinition)list[0];
@@ -59,7 +59,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             AssertEx.Equal(e1.End, a.End, 9);
             
             
-            e1 = ArcDefinition.FromCenterAndArms(new Point(433.475869624198, -981.289172585547),
+            e1 = new ArcDefinition(new Point(433.475869624198, -981.289172585547),
                 new Point(47.1026330815796, 45.149459239911), new Vector(1026.43863182546, 386.373236542618),
                 new Point(63.2545531, 51.08514872));
             a = (ArcDefinition)list[1];

@@ -1,13 +1,14 @@
-﻿#if NET5_0
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+
+#else
+using System.Windows;
+#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -15,18 +16,30 @@ namespace iSukces.DrawingPanel.Paths
     [DebuggerDisplay("{GetDebuggerDisplay()}")]
     public sealed class ArcDefinition : IPathElement, ILineCollider
     {
-        public static ArcDefinition FromCenterAndArms(Point center, Point start, Vector directionStart, Point end)
+        public ArcDefinition()
         {
-            var arc = new ArcDefinition
-            {
-                Center         = center,
-                Start          = start,
-                DirectionStart = directionStart,
-                End            = end,
-                RadiusStart    = start - center,
-                RadiusEnd      = end - center
-            };
-            return arc;
+        }
+
+        public ArcDefinition(Point center, Point start, Vector directionStart, Point end)
+        {
+            Center         = center;
+            Start          = start;
+            DirectionStart = directionStart;
+            End            = end;
+            RadiusStart    = start - center;
+            RadiusEnd      = end - center;
+        }
+
+        public ArcDefinition(Point center, Point start, Vector directionStart, Point end,
+            double radius)
+        {
+            Center         = center;
+            Start          = start;
+            DirectionStart = directionStart;
+            End            = end;
+            RadiusStart    = start - center;
+            RadiusEnd      = end - center;
+            UseRadius(radius);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,6 +76,14 @@ namespace iSukces.DrawingPanel.Paths
             c.RadiusStart = c.Start - c.Center;
             c.RadiusEnd   = c.End - c.Center;
             return c;
+        }
+
+
+        public static ArcDefinition operator +(ArcDefinition a, Vector v)
+        {
+            if (a is null)
+                return null;
+            return a.GetMoved(v);
         }
 
         public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
@@ -192,6 +213,15 @@ namespace iSukces.DrawingPanel.Paths
         public double GetLength()
         {
             return Radius * Angle * MathEx.DEGTORAD;
+        }
+
+        private ArcDefinition GetMoved(Vector v)
+        {
+            var clone = (ArcDefinition)MemberwiseClone();
+            clone.Center += v;
+            clone._start += v;
+            clone._end   += v;
+            return clone;
         }
 
 

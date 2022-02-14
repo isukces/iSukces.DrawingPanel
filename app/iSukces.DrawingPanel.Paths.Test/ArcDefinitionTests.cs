@@ -153,7 +153,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [InlineData(-20, 25, 30, ArcLength)]
         public void T07_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
         {
-            var arc = ArcDefinition.FromCenterAndArms(
+            var arc = new ArcDefinition(
                 new Point(10, 20),
                 new Point(15, 20),
                 new Vector(0, 1),
@@ -181,7 +181,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [InlineData(10 + 7, 20 - 7, 4.89949493661167, ArcLength / 2)]
         public void T08_Should_calculate_DistanceFromElement(double x, double y, double dist, double locExpected)
         {
-            var arc = ArcDefinition.FromCenterAndArms(
+            var arc = new ArcDefinition(
                 new Point(10, 20),
                 new Point(15, 20),
                 new Vector(0, -1),
@@ -234,7 +234,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             // just make drawing for special situation
             var drawer = new ResultDrawerBase();
 
-            var arc = ArcDefinition.FromCenterAndArms(new Point(54.8912687238947, 91.7723295871598),
+            var arc = new ArcDefinition(new Point(54.8912687238947, 91.7723295871598),
                 new Point(29.4845072800563, 0.552564737714022), new Vector(0.963332660388057, -0.268309868304668),
                 new Point(146.242441507818, 66.8421820293499));
             var p1 = new Point(30.9478964807321, 4.29722988260286);
@@ -613,7 +613,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [Fact]
         public void T52()
         {
-            var a = ArcDefinition.FromCenterAndArms(
+            var a = new ArcDefinition(
                 new Point(-32.3137145786995, -170.936449757157),
                 new Point(-84.2421496951301, -107.606117740329),
                 new Vector(0.77328238112352, 0.634061794341796),

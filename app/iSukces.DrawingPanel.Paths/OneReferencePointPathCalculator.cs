@@ -182,8 +182,8 @@ namespace iSukces.DrawingPanel.Paths
             }
 
             var xReference = Reference.GetNormalizedVector();
-            var xStart     = Start.Vector.GetNormalizedVector();
-            var xEnd       = End.Vector.GetNormalizedVector();
+            var xStart     = Start.Vector.NormalizeFast();
+            var xEnd       = End.Vector.NormalizeFast();
 
             var brakuje = startLength + endLength - middleLength;
             if (brakuje > 0)

@@ -1,10 +1,10 @@
-﻿#if NET5_0
+﻿using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -17,6 +17,23 @@ namespace iSukces.DrawingPanel.Paths
             _end        = end;
             _vector     = _end - _start;
             _unitVector = _vector.NormalizeFast(out _length);
+        }
+
+        private LinePathElement(Point start, Point end, 
+            double length, Vector vector, Vector unitVector)
+        {
+            _end        = end;
+            _length     = length;
+            _start      = start;
+            _unitVector = unitVector;
+            _vector     = vector;
+        }
+
+        public static LinePathElement operator +(LinePathElement a, Vector v)
+        {
+            if (a is null)
+                return null;
+            return new LinePathElement(a._start + v, a._end + v, a._length, a._vector, a._unitVector);
         }
 
 

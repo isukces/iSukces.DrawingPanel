@@ -51,37 +51,14 @@ namespace iSukces.DrawingPanel.Paths
 
         internal static string CsCode(this double d)
         {
-            return d.ToString(CultureInfo.InvariantCulture);
+            return d.ToString("R", CultureInfo.InvariantCulture);
         }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector GetNormalizedVector(this Vector vvvv)
-        {
-            vvvv.Normalize();
-            return vvvv;
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector GetPrependicularVector(this Vector vector)
         {
             return vector.GetPrependicular(false);
-        }
-
-        /*
-        public static Vector GetPrependicularVector(this Vector vector, double multiple)
-        {
-            return new Vector(vector.Y * multiple, -vector.X * multiple);
-        }
-        */
-
-        public static Vector GetPrependicularVector(this Vector vector, Vector direction)
-        {
-            var result = new Vector(vector.Y, -vector.X);
-            var dot    = result * direction;
-            if (dot < 0)
-                return -result;
-            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

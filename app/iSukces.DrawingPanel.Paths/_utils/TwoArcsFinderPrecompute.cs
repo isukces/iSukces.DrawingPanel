@@ -63,10 +63,10 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
-            Arc1 = ArcDefinition.FromCenterAndArms(center1, _owner_StartCenterSearch.Point, _owner_StartDirection,
+            Arc1 = new ArcDefinition(center1, _owner_StartCenterSearch.Point, _owner_StartDirection,
                 cross);
 
-            var arc3 = ArcDefinition.FromCenterAndArms(center2, _owner_EndCenterSearch.Point, _owner_EndDirection,
+            var arc3 = new ArcDefinition(center2, _owner_EndCenterSearch.Point, _owner_EndDirection,
                 cross);
 
             Arc2 = arc3.GetComplementar();

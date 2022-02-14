@@ -32,7 +32,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             var center = new Point(xCenter, yCenter);
 
-            return ArcDefinition.FromCenterAndArms(center, center + startSinCos * radius, r,
+            return new ArcDefinition(center, center + startSinCos * radius, r,
                 center + endSinCos * radius);
         }
 

@@ -35,7 +35,7 @@ namespace iSukces.DrawingPanel.Paths
         {
             Point  = point;
             Vector = endPoint - point;
-            Vector.Normalize();
+            Vector = Vector.NormalizeFast();
         }
 
         public override string ToString()
@@ -85,7 +85,7 @@ namespace iSukces.DrawingPanel.Paths
 
         public Vector GetNormalizedVector()
         {
-            return Vector.GetNormalizedVector();
+            return Vector.NormalizeFast();
         }
 
         public Vector GetPrependicularVector()
