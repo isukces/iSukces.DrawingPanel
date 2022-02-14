@@ -224,6 +224,32 @@ namespace iSukces.DrawingPanel.Paths
             return clone;
         }
 
+        public Point[] GetPointsOnArc(int segmentsCount)
+        {
+            var p = new Point[segmentsCount + 1];
+            p[0]             = Start;
+            p[segmentsCount] = End;
+            var stepsAngle = Angle / segmentsCount;
+            if (Direction == ArcDirection.Clockwise)
+                stepsAngle = -stepsAngle;
+            for (int i = segmentsCount - 1; i > 0; i--)
+            {
+                var an = StartAngle + stepsAngle * i;
+                MathEx.GetSinCos(an, out var sin, out var cos);
+                p[i] = Center + new Vector(cos * Radius, sin * Radius);
+            }
+
+            return p;
+        }
+
+        
+        public void MoveStartAndUpdateVectors(Point start)
+        {
+            var leftHand = Direction == ArcDirection.CounterClockwise;
+            Start = start;
+            UpdateRadiusStart();
+            DirectionStart = RadiusStart.GetPrependicular(leftHand).NormalizeFast();
+        }
 
         public Point GetNearestPointOnCircle(Point point)
         {
