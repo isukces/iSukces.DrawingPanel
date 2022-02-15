@@ -622,7 +622,7 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             {
                 var arc = a.Angle;
-                Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());    
+                Assert.Equal(ArcDefinition.ArcFlags.HasDirection | ArcDefinition.ArcFlags.HasAngle, a.GetFlags());
             }
 
             {
@@ -643,7 +643,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             {
                 a.ResetFlags();
                 var q = a.EndAngle;
-                Assert.Equal(ArcDefinition.ArcFlags.HasEndAngle , a.GetFlags());
+                Assert.Equal(ArcDefinition.ArcFlags.HasEndAngle, a.GetFlags());
             }
 
             {
@@ -651,10 +651,61 @@ namespace iSukces.DrawingPanel.Paths.Test
                 var q = a.StartAngle;
                 Assert.Equal(ArcDefinition.ArcFlags.HasStartAngle, a.GetFlags());
             }
-
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void T53_Should_find_closest_point_on_arc(bool left)
+        {
+            var center = new Point(12, 14);
+
+            const int radius = 12;
+
+            Point FindPoint(double x, double y, double radius1 = radius)
+            {
+                return center + radius1 * new Vector(x, y).NormalizeFast();
+            }
+
+            var start    = FindPoint(10, 3);
+            var end      = FindPoint(-3, 10);
+            if (!left)
+                (start, end) = (end, start);
+            var dirStart = (start - center).NormalizeFast().GetPrependicular(left);
+            var arc      = new ArcDefinition(center, start, dirStart, end);
+
+            if (!left)
+                (start, end) = (end, start);
+            // na początek
+            var expected = start;
+            for (var r = 11; r <= 13; r++)
+            {
+                var q = arc.FindClosestPointOnElement(FindPoint(1, 0, r));
+                AssertEx.Equal(expected.X, expected.Y, q);
+            }
+
+            // góra
+            expected = center + new Vector(0, radius);
+            for (int r = 11; r <= 13; r++)
+            {
+                var q = arc.FindClosestPointOnElement(FindPoint(0, 1, r));
+                AssertEx.Equal(expected.X, expected.Y, q);
+            }
+            
+            // end
+            expected = end;
+            for (int r = 11; r <= 13; r++)
+            {
+                var q = arc.FindClosestPointOnElement(FindPoint(-1, 1, r));
+                AssertEx.Equal(expected.X, expected.Y, q);
+            }
+        }
+
+        #region Fields
+
         private const double ArcLength = 7.853981633974483;
+
+        #endregion
 
         [Flags]
         internal enum ArcDefinitionProperties

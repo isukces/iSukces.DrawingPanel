@@ -15,6 +15,13 @@ namespace iSukces.DrawingPanel.Paths
         double GetLength();
         Point GetStartPoint();
         Vector GetStartVector();
+        
+        /// <summary>
+        /// Finds closest point on element. It can be point on line, line begin or line end.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        Point FindClosestPointOnElement(Point target);
 
         #region properties
 

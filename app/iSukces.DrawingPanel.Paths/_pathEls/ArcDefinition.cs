@@ -1,14 +1,13 @@
-﻿using System;
+﻿#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-#if NET5_0
-using iSukces.Mathematics.Compatibility;
-
-#else
-using System.Windows;
-#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -89,12 +88,10 @@ namespace iSukces.DrawingPanel.Paths
         public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
         {
             var v          = point - Center;
-            var a          = v.Angle();
             var sweepAngle = Angle;
+            var isInside   = FindAngleLocation(v, out var trackAngle);
             if (Direction == ArcDirection.CounterClockwise)
             {
-                var angleMinusStart = a - StartAngle;
-                var isInside        = PathsMathUtils.IsAngleInRegion(angleMinusStart, sweepAngle);
                 switch (isInside)
                 {
                     case Three.Below:
@@ -109,7 +106,7 @@ namespace iSukces.DrawingPanel.Paths
                         var vLength = v.Length;
                         var radius  = Radius;
 
-                        distanceFromStart = angleMinusStart * PathsMathUtils.DegreesToRadians * radius;
+                        distanceFromStart = trackAngle * PathsMathUtils.DegreesToRadians * radius;
                         var dist = vLength - radius;
                         if (dist < 0)
                             dist = -dist;
@@ -117,45 +114,77 @@ namespace iSukces.DrawingPanel.Paths
                         return dist;
                 }
             }
+
+            switch (isInside)
+            {
+                case Three.Below:
+                    distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
+                    direction         = DirectionEnd;
+                    return (point - End).Length;
+                case Three.Above:
+                    distanceFromStart = 0;
+                    direction         = DirectionStart;
+                    return (point - Start).Length;
+                default:
+                    var vLength = v.Length;
+                    var radius  = Radius;
+                    distanceFromStart =
+                        (sweepAngle - trackAngle) * PathsMathUtils.DegreesToRadians * radius;
+
+                    var dist = vLength - radius;
+                    if (dist < 0)
+                        dist = -dist;
+                    direction = v.GetPrependicular(false);
+                    return dist;
+            }
+        }
+
+        private Three FindAngleLocation(Vector centerToPoint, out double trackAngle)
+        {
+            var vectorAngle = centerToPoint.Angle();
+            var sweepAngle  = Angle;
+            if (Direction == ArcDirection.CounterClockwise)
+            {
+                trackAngle = vectorAngle - StartAngle;
+                var isInside = PathsMathUtils.IsAngleInRegion(trackAngle, sweepAngle);
+                return isInside;
+            }
             else
             {
-                var min = StartAngle - sweepAngle;
+                var min = EndAngle; // StartAngle - sweepAngle;
                 min = PathsMathUtils.NormalizeAngleDeg(min);
 
-                var angleMinusMinAngle = a - min;
-                if (angleMinusMinAngle < 0)
+                trackAngle = vectorAngle - min;
+                if (trackAngle < 0)
                 {
-                    angleMinusMinAngle += 360;
+                    trackAngle += 360;
                     // when angleMinusMinAngle is small negative i.e.-1.4210854715202004E-14
                     // its possible that angleMinusMinAngle+360 equals 360
-                    if (angleMinusMinAngle >= 360)
-                        angleMinusMinAngle -= 360;
+                    if (trackAngle >= 360)
+                        trackAngle -= 360;
                 }
 
-                var isInside = PathsMathUtils.IsAngleInRegion(angleMinusMinAngle, sweepAngle);
-                switch (isInside)
-                {
-                    case Three.Below:
-                        distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
-                        direction         = DirectionEnd;
-                        return (point - End).Length;
-                    case Three.Above:
-                        distanceFromStart = 0;
-                        direction         = DirectionStart;
-                        return (point - Start).Length;
-                    default:
-                        var vLength = v.Length;
-                        var radius  = Radius;
-                        distanceFromStart =
-                            (sweepAngle - angleMinusMinAngle) * PathsMathUtils.DegreesToRadians * radius;
-
-                        var dist = vLength - radius;
-                        if (dist < 0)
-                            dist = -dist;
-                        direction = v.GetPrependicular(false);
-                        return dist;
-                }
+                var isInside = PathsMathUtils.IsAngleInRegion(trackAngle, sweepAngle);
+                return isInside;
             }
+        }
+
+
+        public Point FindClosestPointOnElement(Point target)
+        {
+            var v        = target - Center;
+            var isInside = FindAngleLocation(v, out _);
+
+            if (isInside == Three.Inside)
+            {
+                var radius = Radius - v.Length;
+                var qPoint = target + radius * v.NormalizeFast();
+                return qPoint;
+            }
+
+            var v1 = target - Start;
+            var v2 = target - End;
+            return v1.LengthSquared < v2.LengthSquared ? Start : End;
         }
 
         public ArcDefinition GetComplementar()
@@ -224,33 +253,6 @@ namespace iSukces.DrawingPanel.Paths
             return clone;
         }
 
-        public Point[] GetPointsOnArc(int segmentsCount)
-        {
-            var p = new Point[segmentsCount + 1];
-            p[0]             = Start;
-            p[segmentsCount] = End;
-            var stepsAngle = Angle / segmentsCount;
-            if (Direction == ArcDirection.Clockwise)
-                stepsAngle = -stepsAngle;
-            for (int i = segmentsCount - 1; i > 0; i--)
-            {
-                var an = StartAngle + stepsAngle * i;
-                MathEx.GetSinCos(an, out var sin, out var cos);
-                p[i] = Center + new Vector(cos * Radius, sin * Radius);
-            }
-
-            return p;
-        }
-
-        
-        public void MoveStartAndUpdateVectors(Point start)
-        {
-            var leftHand = Direction == ArcDirection.CounterClockwise;
-            Start = start;
-            UpdateRadiusStart();
-            DirectionStart = RadiusStart.GetPrependicular(leftHand).NormalizeFast();
-        }
-
         public Point GetNearestPointOnCircle(Point point)
         {
             var v = point - Center;
@@ -268,6 +270,24 @@ namespace iSukces.DrawingPanel.Paths
             var radiusSquared = RadiusStart.LengthSquared;
             var res           = Center + v * Math.Sqrt(radiusSquared / lenSquared);
             return res;
+        }
+
+        public Point[] GetPointsOnArc(int segmentsCount)
+        {
+            var p = new Point[segmentsCount + 1];
+            p[0]             = Start;
+            p[segmentsCount] = End;
+            var stepsAngle = Angle / segmentsCount;
+            if (Direction == ArcDirection.Clockwise)
+                stepsAngle = -stepsAngle;
+            for (int i = segmentsCount - 1; i > 0; i--)
+            {
+                var an = StartAngle + stepsAngle * i;
+                MathEx.GetSinCos(an, out var sin, out var cos);
+                p[i] = Center + new Vector(cos * Radius, sin * Radius);
+            }
+
+            return p;
         }
 
 
@@ -368,6 +388,15 @@ namespace iSukces.DrawingPanel.Paths
 
             correctedPoint = default;
             return false;
+        }
+
+
+        public void MoveStartAndUpdateVectors(Point start)
+        {
+            var leftHand = Direction == ArcDirection.CounterClockwise;
+            Start = start;
+            UpdateRadiusStart();
+            DirectionStart = RadiusStart.GetPrependicular(leftHand).NormalizeFast();
         }
 
         internal void ResetFlags()

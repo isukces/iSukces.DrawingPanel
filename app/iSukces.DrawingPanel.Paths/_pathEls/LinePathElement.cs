@@ -1,11 +1,10 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-#if NET5_0
+﻿#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -20,7 +19,7 @@ namespace iSukces.DrawingPanel.Paths
             _unitVector = _vector.NormalizeFast(out _length);
         }
 
-        private LinePathElement(Point start, Point end, 
+        private LinePathElement(Point start, Point end,
             double length, Vector vector, Vector unitVector)
         {
             _end        = end;
@@ -37,12 +36,11 @@ namespace iSukces.DrawingPanel.Paths
             return new LinePathElement(a._start + v, a._end + v, a._length, a._vector, a._unitVector);
         }
 
-
         public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
         {
             direction = _unitVector;
             var vToBegin = point - _start;
-            distanceFromStart      = _unitVector * vToBegin;
+            distanceFromStart = _unitVector * vToBegin;
             if (distanceFromStart <= 0)
             {
                 var g = vToBegin.Length;
@@ -59,6 +57,19 @@ namespace iSukces.DrawingPanel.Paths
 
             var dist2 = Vector.CrossProduct(direction, vToBegin);
             return dist2 < 0 ? -dist2 : dist2;
+        }
+
+        public Point FindClosestPointOnElement(Point target)
+        {
+            var vToBegin          = target - _start;
+            var distanceFromStart = _unitVector * vToBegin;
+            if (distanceFromStart <= 0)
+                return _start;
+
+            if (distanceFromStart >= _length)
+                return _end;
+
+            return _start + distanceFromStart * _unitVector;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -62,5 +62,19 @@ namespace iSukces.DrawingPanel.Paths.Test
             Assert.Equal(dist, d, 10);
             Assert.Equal(locExpected, loc, 10);
         }
+
+        [Theory]
+        [InlineData(-30, 0, 2, 3)] // begin
+        [InlineData(30, 0, 12, 4)] // end
+        [InlineData(5, 0, 4.67326732673267, 3.26732673267327)] // middle
+        [InlineData(-30, 7, 2, 3)] // begin
+        [InlineData(30, 7, 12, 4)] // end
+        [InlineData(5, 7, 5.36633663366337, 3.33663366336634)] // middle
+        public void T06_Should_find_closest_point(double x, double y, double ex, double ey)
+        {
+            var line = new LinePathElement(new Point(2, 3), new Point(12, 4));
+            var d    = line.FindClosestPointOnElement(new Point(x, y));
+            AssertEx.Equal(ex, ey, d);
+        }
     }
 }
