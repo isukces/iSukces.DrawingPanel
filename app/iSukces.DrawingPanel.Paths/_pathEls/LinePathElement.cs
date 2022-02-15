@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
@@ -39,29 +40,25 @@ namespace iSukces.DrawingPanel.Paths
 
         public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
         {
-            var v = _vector.NormalizeFast();
             direction = _unitVector;
             var vToBegin = point - _start;
-            var loc      = v * vToBegin;
-            if (loc <= 0)
+            distanceFromStart      = _unitVector * vToBegin;
+            if (distanceFromStart <= 0)
             {
                 var g = vToBegin.Length;
                 distanceFromStart = 0;
                 return g < 0 ? -g : g;
             }
 
-            var endLoc = v * _vector; // == _vector.Length
-            if (loc >= endLoc)
+            if (distanceFromStart >= _length)
             {
                 var g = (_end - point).Length;
                 distanceFromStart = _length;
                 return g < 0 ? -g : g;
             }
 
-            var l    = PathLineEquationNotNormalized.FromPointAndDeltas(_start, v);
-            var dist = l.DistanceNotNormalized(point);
-            distanceFromStart = loc;
-            return dist < 0 ? -dist : dist;
+            var dist2 = Vector.CrossProduct(direction, vToBegin);
+            return dist2 < 0 ? -dist2 : dist2;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
