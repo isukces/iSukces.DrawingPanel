@@ -7,23 +7,22 @@ using iSukces.DrawingPanel.Interfaces;
 namespace iSukces.DrawingPanel
 {
     internal sealed class ExtendedObservableCollection<T> : ObservableCollection<T>,
-        IExtendedObservableCollection<T>,
-        IBla, ISupportInitialize
+        IExtendedObservableCollection<T>, ISupportInitialize
     {
         public void BeginInit()
         {
             _initializeLevel++;
-            Flags |= BlaFlags.UnderInit;
+            _flags |= InitializationFlags.UnderInit;
         }
 
 
         protected override void ClearItems()
         {
             CheckReentrancy();
-            if ((Flags & BlaFlags.UnderClear) != 0)
+            if ((_flags & InitializationFlags.UnderClear) != 0)
                 throw new InvalidOperationException("Reentry to clear items");
 
-            Flags |= BlaFlags.UnderClear;
+            _flags |= InitializationFlags.UnderClear;
             if (Items.Count > 0)
             {
                 var args = new ExtendedNotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
@@ -32,7 +31,7 @@ namespace iSukces.DrawingPanel
             }
 
             base.ClearItems();
-            Flags &= ~BlaFlags.UnderClear;
+            _flags &= ~InitializationFlags.UnderClear;
         }
 
         public void EndInit()
@@ -41,12 +40,23 @@ namespace iSukces.DrawingPanel
                 throw new InvalidOperationException();
             _initializeLevel--;
             if (_initializeLevel == 0)
-                Flags &= ~BlaFlags.UnderInit;
+                _flags &= ~InitializationFlags.UnderInit;
         }
 
-        public BlaFlags Flags { get; private set; }
-
+        #region Fields
 
         private int _initializeLevel;
+        private InitializationFlags _flags;
+
+        #endregion
+
+
+        [Flags]
+        public enum InitializationFlags
+        {
+            None = 0,
+            UnderClear = 1,
+            UnderInit = 2
+        }
     }
 }

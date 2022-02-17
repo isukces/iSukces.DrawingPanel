@@ -1,41 +1,24 @@
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
+using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel
 {
-    internal static class CollectionFactory
+    public static class CollectionFactory
     {
+        /// <summary>
+        /// Creates instance of IExtendedObservableCollection 
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ExtendedObservableCollection<T> Make<T>(NotifyCollectionChangedEventHandler handler)
+        public static IExtendedObservableCollection<T> Make<T>(NotifyCollectionChangedEventHandler handler)
         {
             var result = new ExtendedObservableCollection<T>();
             if (handler != null)
                 result.CollectionChanged += handler;
             return result;
         }
-
-        /*[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static ObservableCollectionEx<T> Make<T>()
-        {
-            return new ObservableCollectionEx<T>();
-        }*/
-
-        /*[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ObservableCollectionEx<T> Make<T>(params T[] elements)
-        {
-            return new ObservableCollectionEx<T>(elements);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ObservableCollectionEx<T> Make<T>(IEnumerable<T> elements)
-        {
-            return new ObservableCollectionEx<T>(elements);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ObservableCollectionEx<T> Make<T>(List<T> elements)
-        {
-            return new ObservableCollectionEx<T>(elements);
-        }*/
     }
 }

@@ -17,17 +17,4 @@ namespace iSukces.DrawingPanel.Interfaces
     {
     }
 
-
-    public interface IBla
-    {
-        BlaFlags Flags { get; }
-    }
-
-    [Flags]
-    public enum BlaFlags
-    {
-        None = 0,
-        UnderClear = 1,
-        UnderInit = 2
-    }
 }
