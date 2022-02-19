@@ -63,5 +63,11 @@
         <Compile Update="ArcDefinitionTests.Collider.cs">
           <DependentUpon>ArcDefinitionTests.cs</DependentUpon>
         </Compile>
+        <Compile Update="_pathDistanceFinder\PathDistanceFinderTests.Data.T03.cs">
+          <DependentUpon>PathDistanceFinderTests.cs</DependentUpon>
+        </Compile>
+        <Compile Update="_pathDistanceFinder\PathDistanceFinderTests.Data.T02.cs">
+          <DependentUpon>PathDistanceFinderTests.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 </Project>

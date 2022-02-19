@@ -681,7 +681,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             for (var r = 11; r <= 13; r++)
             {
                 var q = arc.FindClosestPointOnElement(FindPoint(1, 0, r));
-                AssertEx.Equal(expected.X, expected.Y, q);
+                AssertEx.Equal(expected.X, expected.Y, q.ClosestPoint);
             }
 
             // góra
@@ -689,7 +689,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             for (int r = 11; r <= 13; r++)
             {
                 var q = arc.FindClosestPointOnElement(FindPoint(0, 1, r));
-                AssertEx.Equal(expected.X, expected.Y, q);
+                AssertEx.Equal(expected.X, expected.Y, q.ClosestPoint);
             }
             
             // end
@@ -697,7 +697,7 @@ namespace iSukces.DrawingPanel.Paths.Test
             for (int r = 11; r <= 13; r++)
             {
                 var q = arc.FindClosestPointOnElement(FindPoint(-1, 1, r));
-                AssertEx.Equal(expected.X, expected.Y, q);
+                AssertEx.Equal(expected.X, expected.Y, q.ClosestPoint);
             }
         }
 

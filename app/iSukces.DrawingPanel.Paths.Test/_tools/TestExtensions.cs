@@ -81,7 +81,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         public static double Square(this double d) { return d * d; }
 
 
-        public static string ToCs(this double x) { return x.ToString(CultureInfo.InvariantCulture); }
+        public static string ToCs(this double x) { return x.ToString("R", CultureInfo.InvariantCulture); }
         public static string ToCs(this int x) { return x.ToString(CultureInfo.InvariantCulture); }
         public static string ToCs(this Point x) { return $"new Point({x.X.ToCs()}, {x.Y.ToCs()})"; }
 

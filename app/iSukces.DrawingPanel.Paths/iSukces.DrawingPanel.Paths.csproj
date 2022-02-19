@@ -57,5 +57,8 @@
     <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
       <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
     </Compile>
+    <Compile Update="_utils\PathDistanceFinderResult.cs">
+      <DependentUpon>PathDistanceFinder.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -1,13 +1,14 @@
-﻿#if NET5_0
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+
+#else
+using System.Windows;
+#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -83,6 +84,12 @@ namespace iSukces.DrawingPanel.Paths
             if (a is null)
                 return null;
             return a.GetMoved(v);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Vector DirectionVectorFromRadius(Vector radiusVector)
+        {
+            return radiusVector.GetPrependicular(Direction == ArcDirection.CounterClockwise);
         }
 
         public double DistanceFromElement(Point point, out double distanceFromStart, out Vector direction)
@@ -170,21 +177,80 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        public Point FindClosestPointOnElement(Point target)
+        public ClosestPointResult FindClosestPointOnElement(Point target)
         {
             var v        = target - Center;
-            var isInside = FindAngleLocation(v, out _);
+            var isInside = FindAngleLocation(v, out var trackAngle);
 
             if (isInside == Three.Inside)
             {
-                var radius = Radius - v.Length;
-                var qPoint = target + radius * v.NormalizeFast();
-                return qPoint;
+                var    radius = Radius - v.Length;
+                var    qPoint = target + radius * v.NormalizeFast();
+                double track  = trackAngle * Radius * MathEx.DEGTORAD;
+#if DEBUG
+                if (track < 0)
+                    throw new Exception("track<0");
+                if (track > GetLength())
+                    throw new Exception("track>GetLength()");
+
+#endif
+                var side = v.Length - Radius;
+                if (Direction == ArcDirection.Clockwise)
+                    side = -side;
+                return new ClosestPointResult(qPoint, isInside, track, side, DirectionVectorFromRadius(v));
             }
 
             var v1 = target - Start;
             var v2 = target - End;
-            return v1.LengthSquared < v2.LengthSquared ? Start : End;
+            if (v1.LengthSquared < v2.LengthSquared)
+            {
+                var versor = DirectionStart.NormalizeFast();
+                var track  = versor * (target - Start);
+#if DEBUG
+                if (track > 0)
+                    throw new Exception("track>0");
+#endif
+                var side = versor.GetPrependicular(false) * v1;
+                return new ClosestPointResult(Start, Three.Below, track, side, versor);
+            }
+            else
+            {
+                var versor = DirectionEnd.NormalizeFast();
+                var track  = versor * (target - Start);
+#if DEBUG
+                if (track < 0)
+                    throw new Exception("track<0");
+#endif
+                var side   = versor.GetPrependicular(false) * v2;
+                var length = GetLength();
+                return new ClosestPointResult(End, Three.Above, track + length, side, versor);
+            }
+        }
+
+        public ArcDefinition FixEndPoint()
+        {
+            var d    = (End - Center);
+            var l    = Radius - d.Length;
+            var unit = d.NormalizeFast();
+            End += l * unit;
+#if DEBUG
+            d = (End - Center);
+            l = Math.Abs(d.Length - Radius);
+            if (l > 1e-8)
+                throw new Exception("Invalid end point");
+#endif
+            return this;
+        }
+
+        public ArcDefinition FixStartDirection()
+        {
+            var dir = DirectionVectorFromRadius(RadiusStart).NormalizeFast();
+#if DEBUG
+            if (dir * DirectionStart < 0)
+                throw new Exception("Invalid direction");
+#endif
+            DirectionStart = dir;
+            return this;
         }
 
         public ArcDefinition GetComplementar()

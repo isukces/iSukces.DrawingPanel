@@ -74,7 +74,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             var line = new LinePathElement(new Point(2, 3), new Point(12, 4));
             var d    = line.FindClosestPointOnElement(new Point(x, y));
-            AssertEx.Equal(ex, ey, d);
+            AssertEx.Equal(ex, ey, d.ClosestPoint);
         }
     }
 }

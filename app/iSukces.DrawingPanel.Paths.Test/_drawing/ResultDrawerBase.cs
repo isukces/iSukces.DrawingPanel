@@ -28,30 +28,6 @@ namespace iSukces.DrawingPanel.Paths.Test
             YRange = MinMax.FromCenterAndSize(YRange.Center, yLength);
         }
 
-        const double arrowHeadLength = 50;
-        const double arrowHeadSize   = 15;
-        protected void DrawArrow(Point point, Vector v, bool arrowStart )
-        {
-            var b = Map(point).ToPoint();
-            v = new Vector(v.X, -v.Y);
-            v.Normalize();
-            if (!arrowStart) 
-                b -= v * arrowHeadLength;
-
-
-
-            var cs = SimpleCoordinateSystem2D.FromPointAndVector(b, v);
-            var p1 = cs.Transform(new Point(arrowHeadLength-15, 4)).ToPointF();
-            var p3 = cs.Transform(new Point(arrowHeadLength-15, -4)).ToPointF();
-            var p2 = cs.Transform(new Point(arrowHeadLength, 0)).ToPointF();
-            Graph.FillPolygon(Brushes.Fuchsia, new[] { p1, p2, p3 });
-            
-            
-            var       p4  = cs.Transform(new Point(0, 0)).ToPointF();
-            using var pen = new Pen(Color.Fuchsia, 2);
-            Graph.DrawLine(pen, p2, p4);
-        }
-
         public void DrawArc(ArcDefinition c)
         {
             if (c is null)
@@ -106,7 +82,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                     try
                     {
                         Graph.DrawArc(pen, r, (float)angle1, (float)sweep);
-                    } catch (Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine(e);
                     }
@@ -122,10 +99,33 @@ namespace iSukces.DrawingPanel.Paths.Test
                     }
                     catch
                     {
-                        
                     }
                 }
             }
+        }
+
+        protected void DrawArrow(Point point, Vector v, bool arrowStart, Color? color = null,
+            double ahl = arrowHeadLength, float linethickness = 2)
+        {
+            var factor = ahl / arrowHeadLength;
+            var b      = Map(point).ToPoint();
+            v = new Vector(v.X, -v.Y);
+            v.Normalize();
+            if (!arrowStart)
+                b -= v * ahl;
+
+            var c  = color ?? Color.Fuchsia;
+            var br = new SolidBrush(c);
+
+            var cs = SimpleCoordinateSystem2D.FromPointAndVector(b, v);
+            var p1 = cs.Transform(new Point(ahl - 15 * factor, 4)).ToPointF();
+            var p3 = cs.Transform(new Point(ahl - 15 * factor, -4)).ToPointF();
+            var p2 = cs.Transform(new Point(ahl, 0)).ToPointF();
+            Graph.FillPolygon(br, new[] { p1, p2, p3 });
+
+            var       p4  = cs.Transform(new Point(0, 0)).ToPointF();
+            using var pen = new Pen(c, linethickness);
+            Graph.DrawLine(pen, p2, p4);
         }
 
         public void DrawCircleWithVector(PathRayWithArm r, bool isShort = false)
@@ -142,7 +142,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         {
             v.Normalize();
             v *= 50;
-            var          a               = Map(point);
+            var a = Map(point);
             {
                 if (isShort)
                 {
@@ -192,62 +192,14 @@ namespace iSukces.DrawingPanel.Paths.Test
             Graph.DrawLine(pen, p.X - delta, p.Y + delta, p.X + delta, p.Y - delta);
         }
 
-
-        protected void DrawLine(Point startPoint, Point endPoint, Pen pen)
-        {
-            var a = Map(startPoint);
-            var b = Map(endPoint);
-            Graph.DrawLine(pen, a.X, a.Y, b.X, b.Y);
-        }
-
-        
-        public void GrayCross(double x, double y) { GrayCross( new Point(x,y)); }
-        public void GrayCross(Point point) { DrawCross(point, Color.Indigo, 3); }
-
-        public PointF Map(Point p)
-        {
-            var x = Map(p.X, XRange);
-            var y = Bmp.Height - Map(p.Y, YRange);
-            return new PointF((float)x, (float)y);
-        }
-
-        private double Map(double value, MinMax range)
-        {
-            var m = (value - range.Min) / Scale;
-            return m;
-        }
-
-        private Point Map2(Point p)
-        {
-            var x = Map(p.X, XRange);
-            var y = Bmp.Height - Map(p.Y, YRange);
-            return new Point(x, y);
-        }
-
-
-        protected const double AngleDelta = 10;
-        protected const int Width = 1200;
-        protected const int Height = 800;
-        protected const float Radius = 4;
-
-        public double Scale { get; set; }
-
-
-        protected Bitmap Bmp;
-        protected Graphics Graph;
-        protected MinMax XRange;
-        protected MinMax YRange;
-
         public void DrawCustom(string description,
-            Func<IEnumerable<Point>> range, 
+            Func<IEnumerable<Point>> range,
             Action drawAction, [CallerFilePath] string path = null)
         {
-            
             var dir = ArcResultDrawer.GetDir(path);
             if (dir is null)
                 return;
             {
-
                 XRange = new MinMax();
                 YRange = new MinMax();
                 foreach (var i in range())
@@ -281,5 +233,83 @@ namespace iSukces.DrawingPanel.Paths.Test
             var p2 = Map(b);
             Graph.DrawLine(pen, p1, p2);
         }
+
+
+        protected void DrawLine(Point startPoint, Point endPoint, Pen pen)
+        {
+            var a = Map(startPoint);
+            var b = Map(endPoint);
+            Graph.DrawLine(pen, a.X, a.Y, b.X, b.Y);
+        }
+
+
+        public void GrayCross(double x, double y)
+        {
+            GrayCross(new Point(x, y));
+        }
+
+        public void GrayCross(Point point)
+        {
+            DrawCross(point, Color.Indigo, 3);
+        }
+
+        public PointF Map(Point p)
+        {
+            var x = Map(p.X, XRange);
+            var y = Bmp.Height - Map(p.Y, YRange);
+            return new PointF((float)x, (float)y);
+        }
+
+
+        private double Map(double value, MinMax range)
+        {
+            var m = (value - range.Min) / Scale;
+            return m;
+        }
+
+
+        private Point Map2(Point p)
+        {
+            var x = Map(p.X, XRange);
+            var y = Bmp.Height - Map(p.Y, YRange);
+            return new Point(x, y);
+        }
+
+        public Point MapRev(Point p)
+        {
+            var x = MapRev(p.X, XRange);
+            var y = MapRev(Bmp.Height - p.Y, YRange);
+            return new Point(x, y);
+        }
+
+        private double MapRev(double value, MinMax range)
+        {
+            return value * Scale + range.Min;
+        }
+
+        #region properties
+
+        public double Scale { get; set; }
+
+        #endregion
+
+        #region Fields
+
+        const double arrowHeadLength = 50;
+        const double arrowHeadSize = 15;
+
+
+        protected const double AngleDelta = 10;
+        protected const int Width = 1200;
+        protected const int Height = 800;
+        protected const float Radius = 4;
+
+
+        protected Bitmap Bmp;
+        protected Graphics Graph;
+        protected MinMax XRange;
+        protected MinMax YRange;
+
+        #endregion
     }
 }

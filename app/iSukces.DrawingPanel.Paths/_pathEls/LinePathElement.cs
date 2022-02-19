@@ -1,10 +1,11 @@
-﻿#if NET5_0
+﻿using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
+
 #else
 using System.Windows;
 #endif
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -59,17 +60,26 @@ namespace iSukces.DrawingPanel.Paths
             return dist2 < 0 ? -dist2 : dist2;
         }
 
-        public Point FindClosestPointOnElement(Point target)
+        public ClosestPointResult FindClosestPointOnElement(Point target)
         {
-            var vToBegin          = target - _start;
-            var distanceFromStart = _unitVector * vToBegin;
-            if (distanceFromStart <= 0)
-                return _start;
+            var vToBegin = target - _start;
+            var track    = _unitVector * vToBegin;
 
-            if (distanceFromStart >= _length)
-                return _end;
+            var prep = _unitVector.GetPrependicular(false);
+            var side = prep * vToBegin;
+            if (track <= 0)
+            {
+                var l = track < 0 ? Three.Below : Three.Inside;
+                return new ClosestPointResult(_start, l, track, side, _unitVector);
+            }
 
-            return _start + distanceFromStart * _unitVector;
+            if (track >= _length)
+            {
+                var l = track > _length ? Three.Above : Three.Inside;
+                return new ClosestPointResult(_end, l, track, side, _unitVector);
+            }
+
+            return new ClosestPointResult(_start + track * _unitVector, Three.Inside, track, side, _unitVector);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
