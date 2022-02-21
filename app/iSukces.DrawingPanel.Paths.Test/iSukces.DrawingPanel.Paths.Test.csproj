@@ -69,5 +69,8 @@
         <Compile Update="_pathDistanceFinder\PathDistanceFinderTests.Data.T02.cs">
           <DependentUpon>PathDistanceFinderTests.cs</DependentUpon>
         </Compile>
+        <Compile Update="ArcPathMakerTests.PracticalCase.cs">
+          <DependentUpon>ArcPathMakerTests.cs</DependentUpon>
+        </Compile>
     </ItemGroup>
 </Project>

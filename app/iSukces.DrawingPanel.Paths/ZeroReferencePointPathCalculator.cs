@@ -1,10 +1,10 @@
-﻿#if NET5_0
+﻿using System;
+using System.Diagnostics;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System;
-using System.Diagnostics;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -16,12 +16,34 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
-        private static bool Check(ZeroReferencePointPathCalculatorResult result, ArcDefinition one)
+        private static bool Check(ZeroReferencePointPathCalculatorResult result, ArcDefinition one,
+            IPathValidator pathValidator)
         {
             if (result is null)
                 return false;
+            {
+                if (pathValidator is not null)
+                {
+                    if (result.Arc1 is not null)
+                    {
+                        var ok = pathValidator.IsOk(result.Arc1);
+                        if (!ok)
+                            return false;
+                    }
+
+                    if (result.Arc2 is not null)
+                    {
+                        var ok = pathValidator.IsOk(result.Arc2);
+                        if (!ok)
+                            return false;
+                    }
+                }
+            }
             if (one is null)
+            {
                 return true;
+            }
+
             var oneAngle = one.Angle;
             if (result.Arc1.Angle > oneAngle) return false;
             if (result.Arc2.Angle > oneAngle) return false;
@@ -248,7 +270,7 @@ namespace iSukces.DrawingPanel.Paths
             {
                 if (r is null)
                     return;
-                if (!Check(r, one))
+                if (!Check(r, one, Validator))
                     return;
 
                 var l = r.GetLength(Start.Point, End.Point);

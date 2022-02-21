@@ -1,13 +1,14 @@
-#if NET5_0
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+
+#else
+using System.Windows;
+#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -17,24 +18,6 @@ namespace iSukces.DrawingPanel.Paths
     {
         public ArcPathMakerVertex()
         {
-        }
-        
-        public static ArcPathMakerVertex  operator+ (ArcPathMakerVertex a, Vector v)
-        {
-            if (a is null)
-                return a;
-
-            var vertex = new ArcPathMakerVertex
-            {
-                _inVector       = a._inVector,
-                _outVector      = a._outVector,
-                InArmLength     = a.InArmLength,
-                OutArmLength    = a.OutArmLength,
-                Location        = a.Location + v,
-                Flags           = a.Flags,
-                ReferencePoints = DeepClone(a.ReferencePoints, v)
-            };
-            return vertex;
         }
 
         public ArcPathMakerVertex(Point location)
@@ -72,7 +55,7 @@ namespace iSukces.DrawingPanel.Paths
 
             return result;
         }
-        
+
         private static IReadOnlyList<WayPoint> DeepClone(IReadOnlyList<WayPoint> refs, Vector v)
         {
             if (refs is null)
@@ -83,8 +66,34 @@ namespace iSukces.DrawingPanel.Paths
 
             for (var i = 0; i < result.Length; i++)
                 result[i] = refs[i] + v;
-           
+
             return result;
+        }
+
+        public static List<ArcPathMakerVertex> Move(List<ArcPathMakerVertex> input, Vector vector)
+        {
+            if (input is null || input.Count == 0)
+                return input;
+            input = input.Select(a => a + vector).ToList();
+            return input;
+        }
+
+        public static ArcPathMakerVertex operator +(ArcPathMakerVertex a, Vector v)
+        {
+            if (a is null)
+                return a;
+
+            var vertex = new ArcPathMakerVertex
+            {
+                _inVector       = a._inVector,
+                _outVector      = a._outVector,
+                InArmLength     = a.InArmLength,
+                OutArmLength    = a.OutArmLength,
+                Location        = a.Location + v,
+                Flags           = a.Flags,
+                ReferencePoints = DeepClone(a.ReferencePoints, v)
+            };
+            return vertex;
         }
 
         public ArcPathMakerVertex DeepClone()
@@ -117,6 +126,36 @@ namespace iSukces.DrawingPanel.Paths
         {
             if ((Flags & FlexiPathMakerItem2Flags.HasOutVector) != 0)
                 _outVector.Normalize();
+        }
+
+
+        public bool ShouldSerializeInArmLength()
+        {
+            return InArmLength != 0d;
+        }
+
+
+        public bool ShouldSerializeInVector()
+        {
+            return InVector.X != 0d || InVector.Y != 0d;
+        }
+
+
+        public bool ShouldSerializeOutArmLength()
+        {
+            return OutArmLength != 0d;
+        }
+
+
+        public bool ShouldSerializeOutVector()
+        {
+            return OutVector.X != 0d || OutVector.Y != 0d;
+        }
+
+
+        public bool ShouldSerializeReferencePoints()
+        {
+            return ReferencePoints != null && ReferencePoints.Count > 0;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -198,14 +237,6 @@ namespace iSukces.DrawingPanel.Paths
         private Vector _outVector;
 
         #endregion
-
-        public static List<ArcPathMakerVertex> Move(List<ArcPathMakerVertex> input, Vector vector)
-        {
-            if (input is null || input.Count == 0)
-                return input;
-            input = input.Select(a => a + vector).ToList();
-            return input;
-        }
     }
 
     [Flags]

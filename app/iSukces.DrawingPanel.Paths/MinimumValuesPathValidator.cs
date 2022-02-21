@@ -37,7 +37,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
 
-        public ArcValidationResult ValidateArc(ArcDefinition arc)
+        public virtual ArcValidationResult ValidateArc(ArcDefinition arc)
         {
             if (arc.Radius < _minRadius)
                 return ArcValidationResult.RadiusTooSmall;

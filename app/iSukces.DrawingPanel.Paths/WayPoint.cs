@@ -135,6 +135,24 @@ namespace iSukces.DrawingPanel.Paths
             return new WayPoint(ray);
         }
 
+
+        public bool ShouldSerializeInputArmLength()
+        {
+            return InputArmLength != 0d;
+        }
+
+
+        public bool ShouldSerializeOutputArmLength()
+        {
+            return OutputArmLength != 0d;
+        }
+
+
+        public bool ShouldSerializeUseInputVector()
+        {
+            return UseInputVector;
+        }
+
         #region properties
 
         public Vector Vector { get; }
