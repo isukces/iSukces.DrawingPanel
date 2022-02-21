@@ -1,14 +1,23 @@
 #define _DO_DRAWINGS
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using iSukces.Mathematics;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
     public partial class PathDistanceFinderTests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public PathDistanceFinderTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         private static IEnumerable<object[]> MakeTestData<T>(IEnumerable<T> src)
         {
             var index = 0;
@@ -226,6 +235,7 @@ namespace iSukces.DrawingPanel.Paths.Test
         [MemberData(nameof(T13_TestData))]
         public void T13_Should_calculate_distance_from_arc_line(int testIndex, PathDistanceFinderTestData expected)
         {
+            _testOutputHelper.WriteLine(testIndex.ToString());
             PathResult Prepare()
             {
 

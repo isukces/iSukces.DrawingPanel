@@ -1,12 +1,12 @@
-﻿#if NET5_0
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
+using Newtonsoft.Json;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-using Newtonsoft.Json;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -14,6 +14,11 @@ namespace iSukces.DrawingPanel.Paths
     [DebuggerDisplay("{GetCreationCode()}")]
     public struct PathRay
     {
+        public static PathRay operator +(PathRay a, Vector v)
+        {
+            return new PathRay(a.Point + v, a.Vector);
+        }
+
         [JsonConstructor]
         public PathRay(Point point, Vector vector)
         {

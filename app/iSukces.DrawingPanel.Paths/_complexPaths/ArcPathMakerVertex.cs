@@ -6,6 +6,7 @@ using System.Windows;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 
@@ -16,6 +17,24 @@ namespace iSukces.DrawingPanel.Paths
     {
         public ArcPathMakerVertex()
         {
+        }
+        
+        public static ArcPathMakerVertex  operator+ (ArcPathMakerVertex a, Vector v)
+        {
+            if (a is null)
+                return a;
+
+            var vertex = new ArcPathMakerVertex
+            {
+                _inVector       = a._inVector,
+                _outVector      = a._outVector,
+                InArmLength     = a.InArmLength,
+                OutArmLength    = a.OutArmLength,
+                Location        = a.Location + v,
+                Flags           = a.Flags,
+                ReferencePoints = DeepClone(a.ReferencePoints, v)
+            };
+            return vertex;
         }
 
         public ArcPathMakerVertex(Point location)
@@ -51,6 +70,20 @@ namespace iSukces.DrawingPanel.Paths
                 }
             }
 
+            return result;
+        }
+        
+        private static IReadOnlyList<WayPoint> DeepClone(IReadOnlyList<WayPoint> refs, Vector v)
+        {
+            if (refs is null)
+                return null;
+            if (refs.Count == 0)
+                return Array.Empty<WayPoint>();
+            var result = new WayPoint[refs.Count];
+
+            for (var i = 0; i < result.Length; i++)
+                result[i] = refs[i] + v;
+           
             return result;
         }
 
@@ -165,6 +198,14 @@ namespace iSukces.DrawingPanel.Paths
         private Vector _outVector;
 
         #endregion
+
+        public static List<ArcPathMakerVertex> Move(List<ArcPathMakerVertex> input, Vector vector)
+        {
+            if (input is null || input.Count == 0)
+                return input;
+            input = input.Select(a => a + vector).ToList();
+            return input;
+        }
     }
 
     [Flags]

@@ -1,13 +1,13 @@
-﻿#if NET5_0
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+#else
+using System.Windows;
+#endif
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -60,6 +60,13 @@ namespace iSukces.DrawingPanel.Paths
                 ? Array.Empty<IPathElement>()
                 : new[] { element };
             return new PathResult(start, end, elements);
+        }
+
+        public static PathResult operator +(PathResult src, Vector v)
+        {
+            if (src is null)
+                return null;
+            return new PathResult(src.Start + v, src.End + v, MoveUtils.TranslateElementList(src.Elements, v));
         }
 
         public Point                       Start    { get; }

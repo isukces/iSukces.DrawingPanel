@@ -26,6 +26,12 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
+
+        public static PathRayWithArm operator +(PathRayWithArm a, Vector v)
+        {
+            return new PathRayWithArm(a.Point + v, a.Vector, a.ArmLength);
+        }
+
         [JsonConstructor]
         public PathRayWithArm(Point point, Vector vector, double armLength = 0)
         {

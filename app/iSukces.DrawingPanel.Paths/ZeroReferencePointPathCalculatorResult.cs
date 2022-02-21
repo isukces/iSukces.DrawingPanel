@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System;
-using System.Collections.Generic;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -14,6 +14,21 @@ namespace iSukces.DrawingPanel.Paths
         public ZeroReferencePointPathCalculatorResult(ZeroReferencePointPathCalculator.ResultKind kind)
         {
             Kind = kind;
+        }
+
+
+        public static ZeroReferencePointPathCalculatorResult operator +(ZeroReferencePointPathCalculatorResult a,
+            Vector v)
+        {
+            if (a is null)
+                return null;
+            return new ZeroReferencePointPathCalculatorResult(a.Kind)
+            {
+                Arc1  = a.Arc1 + v,
+                Arc2  = a.Arc2 + v,
+                Start = a.Start + v,
+                End   = a.End + v,
+            };
         }
 
         public double GetLength(Point s, Point e)

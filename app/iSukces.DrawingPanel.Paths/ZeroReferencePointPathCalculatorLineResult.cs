@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.ComponentModel;
 #if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System.Collections.Generic;
-using System.ComponentModel;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -12,9 +12,24 @@ namespace iSukces.DrawingPanel.Paths
     [ImmutableObject(true)]
     public sealed class ZeroReferencePointPathCalculatorLineResult : IPathResult
     {
+        private ZeroReferencePointPathCalculatorLineResult(LinePathElement line)
+        {
+            _line = line;
+        }
+
         public ZeroReferencePointPathCalculatorLineResult(Point start, Point end)
         {
             _line = new LinePathElement(start, end);
+        }
+
+        public static ZeroReferencePointPathCalculatorLineResult operator +(
+            ZeroReferencePointPathCalculatorLineResult a, Vector v)
+        {
+            if (a is null)
+                return null;
+            var line = a._line;
+            line += v;
+            return new ZeroReferencePointPathCalculatorLineResult(line);
         }
 
         public double GetLength()

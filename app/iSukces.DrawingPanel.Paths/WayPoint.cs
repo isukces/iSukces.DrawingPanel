@@ -1,16 +1,29 @@
-#if NET5_0
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
 using System;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
+using Newtonsoft.Json;
+#if NET5_0
+using iSukces.Mathematics.Compatibility;
+
+#else
+using System.Windows;
+#endif
 
 namespace iSukces.DrawingPanel.Paths
 {
     public struct WayPoint
     {
+        private WayPoint(WayPoint a, Vector v)
+        {
+            Point           = a.Point + v;
+            Vector          = a.Vector;
+            UseInputVector  = a.UseInputVector;
+            InputVector     = a.InputVector;
+            InputArmLength  = a.InputArmLength;
+            OutputArmLength = a.OutputArmLength;
+            Tag             = a.Tag;
+        }
+
         public WayPoint(PathRay ray, bool useInputVector, Vector inputVector, double inputArmLength,
             double outputArmLength)
         {
@@ -44,6 +57,7 @@ namespace iSukces.DrawingPanel.Paths
             Tag             = null;
         }
 
+        [JsonConstructor]
         public WayPoint(Point point, Vector vector, Vector inputVector, double inputArmLength,
             double outputArmLength)
         {
@@ -111,6 +125,18 @@ namespace iSukces.DrawingPanel.Paths
             Tag             = null;
         }
 
+        public static WayPoint operator +(WayPoint a, Vector v)
+        {
+            return new WayPoint(a, v);
+        }
+
+        public static implicit operator WayPoint(PathRay ray)
+        {
+            return new WayPoint(ray);
+        }
+
+        #region properties
+
         public Vector Vector { get; }
 
         public Point Point { get; }
@@ -120,15 +146,9 @@ namespace iSukces.DrawingPanel.Paths
 
         public Vector InputVector { get; }
 
-
         public double InputArmLength { get; }
 
         public double OutputArmLength { get; }
-
-        public static implicit operator WayPoint(PathRay ray)
-        {
-            return new WayPoint(ray);
-        }
 
 
         public PathRayWithArm InputRay
@@ -149,5 +169,7 @@ namespace iSukces.DrawingPanel.Paths
         }
 
         public object Tag { get; set; }
+
+        #endregion
     }
 }

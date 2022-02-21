@@ -16,6 +16,23 @@ namespace iSukces.DrawingPanel.Paths
             Segments = segments;
         }
 
+        public static ArcPathMakerResult operator +(ArcPathMakerResult a, Vector v)
+        {
+            if (a is null)
+                return null;
+            var r = a.Segments;
+            if (r is null || r.Count==0)
+                return a;
+            var s = new IPathResult[r.Count];
+            for (var index = 0; index < r.Count; index++)
+            {
+                var src = r[index];
+                s[index] = src.TranslateResult(v);
+            }
+
+            return new ArcPathMakerResult(s);
+        }
+
         public GetBendVectorsResult GetBendVectors(int index, out Vector inVector, out Vector outVector)
         {
             var result = GetBendVectorsResult.None;
