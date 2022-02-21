@@ -66,9 +66,13 @@ namespace iSukces.DrawingPanel
                 return;
             try
             {
-                var transformation = Panel.CanvasInfo.Transformation;
-                var scale          = transformation.Scale;
-                var mm             = TickConfigutation.FindForScale(scale);
+                var drawingCanvasInfo = Panel.CanvasInfo;
+                if (drawingCanvasInfo is null)
+                    return;
+                
+                var transformation    = drawingCanvasInfo.Transformation;
+                var scale             = transformation.Scale;
+                var mm                = TickConfigutation.FindForScale(scale);
 
                 var topLeftLogical = transformation.FromCanvas(new System.Windows.Point(0, 0));
                 {

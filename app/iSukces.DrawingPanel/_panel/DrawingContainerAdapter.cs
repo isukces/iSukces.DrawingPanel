@@ -79,6 +79,7 @@ namespace iSukces.DrawingPanel
             _children.Clear();
             _children  = null;
             _container = null;
+            _disposed  = true;
         }
 
         public void EndInit()
@@ -88,15 +89,20 @@ namespace iSukces.DrawingPanel
                 supportInitialize.EndInit();
         }
 
-        public DrawingCanvasInfo CanvasInfo => _container.CanvasInfo;
+        public bool IsDisposed => _disposed;
+
+        /// <summary>
+        /// Can be null afterDisposed
+        /// </summary>
+        public DrawingCanvasInfo CanvasInfo => _container?.CanvasInfo;
 
         public IList<TItem> Children => _children;
-
-
+        
         public string Name { get; set; }
         public object Tag  { get; set; }
         private ExtendedObservableCollection<TItem> _children;
 
         private IDrawingLayersContainer _container;
+        private bool _disposed;
     }
 }
