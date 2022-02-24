@@ -4,7 +4,7 @@ using Point = System.Windows.Point;
 
 namespace iSukces.DrawingPanel
 {
-    public sealed class DrawableText : DrawableBase, IDrawableWithLayer, IBlaCollider
+    public sealed class DrawableText : DrawableBase, IDrawableWithLayer, IDrawableCollider
     {
         public DrawableText(Layer drawableLayer = Layer.Normal)
         {

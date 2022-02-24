@@ -14,7 +14,7 @@ namespace iSukces.DrawingPanel.Interfaces
         Overlay
     }
 
-    public interface IBlaCollider
+    public interface IDrawableCollider
     {
         bool IsInside(Point logicPoint, double tolerance);
     }
