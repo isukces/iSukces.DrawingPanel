@@ -256,16 +256,16 @@ namespace iSukces.DrawingPanel.Paths.Test
 
             var pathResult = Prepare();
 
-#if DO_DRAWINGS
             if (testIndex == 0)
             {
+#if DO_DRAWINGS
                 //  picture worth a thousand words
                 var points = T13_TestData().Select(a => ((PathDistanceFinderTestData)a[1]).TestPoint).ToArray();
                 const string name = "DistanceFinder, T13 Point assigment to arc or line";
                 PathElementAssignmetnDrawer.Draw(pathResult, name, points);
+#endif
                 var code = PathDistanceFinderCodeMaker.MakeRandom(pathResult);
             }
-#endif
 
             var actual = PathDistanceFinder.GetDistanceFromLine(pathResult, expected.TestPoint);
             expected.AssertEqual(actual);

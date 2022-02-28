@@ -667,8 +667,8 @@ namespace iSukces.DrawingPanel.Paths.Test
                 return center + radius1 * new Vector(x, y).NormalizeFast();
             }
 
-            var start    = FindPoint(10, 3);
-            var end      = FindPoint(-3, 10);
+            var start = FindPoint(10, 3);
+            var end   = FindPoint(-3, 10);
             if (!left)
                 (start, end) = (end, start);
             var dirStart = (start - center).NormalizeFast().GetPrependicular(left);
@@ -691,13 +691,47 @@ namespace iSukces.DrawingPanel.Paths.Test
                 var q = arc.FindClosestPointOnElement(FindPoint(0, 1, r));
                 AssertEx.Equal(expected.X, expected.Y, q.ClosestPoint);
             }
-            
+
             // end
             expected = end;
             for (int r = 11; r <= 13; r++)
             {
                 var q = arc.FindClosestPointOnElement(FindPoint(-1, 1, r));
                 AssertEx.Equal(expected.X, expected.Y, q.ClosestPoint);
+            }
+        }
+
+        [Fact]
+        public void T54_Should_find_closest_point_on_arc()
+        {
+            // from practical case
+
+            var arc = new ArcDefinition(
+                new Point(6551548.156720737, 5573124.2815031214),
+                new Point(6551146.8467774736, 5573876.2209492614),
+                new Vector(0.882218656029713, 0.47083993347328429),
+                new Point(6551161.5548050478, 5573883.8876905693));
+            var checkPoint = new Point(6551146.7137651928, 5573876.4701760318);
+            var result     = arc.FindClosestPointOnElement(checkPoint);
+            {
+                var toStart = arc.Start - checkPoint;
+                var toEnd   = arc.End - checkPoint;
+                // check point is closer to the beginning of the arc
+                Assert.True(toStart.Length < toEnd.Length);
+            }
+
+            {
+                // .. so track is closer to zero
+                var v = arc.Start - result.ClosestPoint;
+                Assert.True(v.Length < 1e-5);
+                Assert.True(result.ElementTrack < 1e-5);
+            }
+            {
+                // and point calculated from track is close to start
+                var track = TrackFromPathResult.Make(new[] { arc });
+                var back  = track.GetTrackInfo(result.ElementTrack);
+                var v     = back.Location - arc.Start;
+                Assert.True(v.Length < 1e-5);
             }
         }
 

@@ -82,7 +82,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 ClosestPoint       = new Point(60.707138724337646, 3.5763947603186725),
                 Direction          = new Vector(10.928663900608511, 8.466831983302626),
                 SideMovement       = 4.6143669106560061,
-                Track              = 44.757885508181822,
+                Track              = 0.9123847466839673,
                 ElementTrackOffset = 50
             };
             yield return new PathDistanceFinderTestData(61.796889054745073, 8.2185447387672639, 3.3199536846918809,
@@ -91,7 +91,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 ClosestPoint       = new Point(63.35366048085293, 5.2862154265389627),
                 Direction          = new Vector(19.218544738767264, 10.203110945254927),
                 SideMovement       = -3.3199536846918818,
-                Track              = 41.603235825994311,
+                Track              = 4.0670344288714748,
                 ElementTrackOffset = 50
             };
             yield return new PathDistanceFinderTestData(56.202038692961004, 5.6593611370175045, 2.6593611370175045)
@@ -134,7 +134,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 ClosestPoint       = new Point(73.020460428432628, 7.4108299789554044),
                 Direction          = new Vector(23.856375201353785, -1.3222916558704867),
                 SideMovement       = -5.45390363492448,
-                Track              = 31.582865363440884,
+                Track              = 14.087404891424898,
                 ElementTrackOffset = 50
             };
             yield return new PathDistanceFinderTestData(73.438551524022046, 1.980595655394481, 5.3790240580809545,
@@ -143,7 +143,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 ClosestPoint       = new Point(74.031045002540225, 7.3268888848504865),
                 Direction          = new Vector(12.980595655394481, -1.4385515240220457),
                 SideMovement       = 5.3790240580809545,
-                Track              = 30.568672791039766,
+                Track              = 15.101597463826023,
                 ElementTrackOffset = 50
             };
             yield return new PathDistanceFinderTestData(91.879262337271385, -12.754062464905578, 1.5174089295963855,
@@ -152,7 +152,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 ClosestPoint       = new Point(90.367726073750148, -12.620690864933517),
                 Direction          = new Vector(-1.7540624649055783, -19.879262337271385),
                 SideMovement       = -1.5174089295963853,
-                Track              = 2.0170093766771453,
+                Track              = 43.653260878188647,
                 ElementTrackOffset = 50
             };
             yield return new PathDistanceFinderTestData(88.890882345643533, -12.916518322167533, 1.4398257278009898,
@@ -161,7 +161,7 @@ namespace iSukces.DrawingPanel.Paths.Test
                 ClosestPoint       = new Point(90.321528291840977, -13.078846086479341),
                 Direction          = new Vector(-1.9165183221675335, -16.890882345643533),
                 SideMovement       = 1.4398257278009936,
-                Track              = 1.5565189176131766,
+                Track              = 44.113751337252616,
                 ElementTrackOffset = 50
             };
             yield return new PathDistanceFinderTestData(88.194539524101486, -15.888646134283963, 2.2754996942707746,

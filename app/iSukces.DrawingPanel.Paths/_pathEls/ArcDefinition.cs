@@ -124,11 +124,11 @@ namespace iSukces.DrawingPanel.Paths
 
             switch (isInside)
             {
-                case Three.Below:
+                case Three.Above:
                     distanceFromStart = sweepAngle * PathsMathUtils.DegreesToRadians * Radius;
                     direction         = DirectionEnd;
                     return (point - End).Length;
-                case Three.Above:
+                case Three.Below:
                     distanceFromStart = 0;
                     direction         = DirectionStart;
                     return (point - Start).Length;
@@ -136,7 +136,7 @@ namespace iSukces.DrawingPanel.Paths
                     var vLength = v.Length;
                     var radius  = Radius;
                     distanceFromStart =
-                        (sweepAngle - trackAngle) * PathsMathUtils.DegreesToRadians * radius;
+                        (/*sweepAngle -*/ trackAngle) * PathsMathUtils.DegreesToRadians * radius;
 
                     var dist = vLength - radius;
                     if (dist < 0)
@@ -158,10 +158,11 @@ namespace iSukces.DrawingPanel.Paths
             }
             else
             {
-                var min = EndAngle; // StartAngle - sweepAngle;
-                min = PathsMathUtils.NormalizeAngleDeg(min);
-
+                /*var min = EndAngle; // StartAngle - sweepAngle;
+                min        = PathsMathUtils.NormalizeAngleDeg(min);
                 trackAngle = vectorAngle - min;
+                */
+                trackAngle = StartAngle - vectorAngle;
                 if (trackAngle < 0)
                 {
                     trackAngle += 360;
