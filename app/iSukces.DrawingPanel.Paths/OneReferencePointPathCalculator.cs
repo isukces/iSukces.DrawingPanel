@@ -5,6 +5,7 @@ using iSukces.Mathematics.Compatibility;
 using System.Windows;
 #endif
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using iSukces.Mathematics;
@@ -29,12 +30,17 @@ namespace iSukces.DrawingPanel.Paths
             Start     = Start.Normalize();
             End       = End.Normalize();
 
-            var list = Find();
+            var list = FindPathElements();
             if (list.Count == 0)
-                throw new NotImplementedException();
+            {
+                var exception = new NotImplementedException("No path elements found");
+                AppendData(exception.Data);
+                throw exception;
+            }
+
             return new PathResult(list);
 
-            IReadOnlyList<IPathElement> Find()
+            IReadOnlyList<IPathElement> FindPathElements()
             {
                 var builder = new PathBuilder(Start.Point, validator);
 
@@ -135,6 +141,13 @@ namespace iSukces.DrawingPanel.Paths
 
                 return builder.List;
             }
+        }
+
+        internal void AppendData(IDictionary dictionary)
+        {
+            dictionary.Set(nameof(Start), Start);
+            dictionary.Set(nameof(End), End);
+            dictionary.Set(nameof(Reference), Reference);
         }
 
         private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross,

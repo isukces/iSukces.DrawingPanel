@@ -1,12 +1,12 @@
-﻿#if NET5_0
+﻿using System;
+using System.Runtime.CompilerServices;
+using iSukces.Mathematics;
+using JetBrains.Annotations;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using System;
-using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths
@@ -62,7 +62,12 @@ namespace iSukces.DrawingPanel.Paths
                 };
                 var pathResult = calculator.Compute(Validator);
                 if (pathResult is null)
-                    throw new NotImplementedException();
+                {
+                    var ex = new NotImplementedException(nameof(OneReferencePointPathCalculator) + " gives not result");
+                    calculator.AppendData(ex.Data);
+                    throw ex;
+                }
+
                 return pathResult;
             }
 
