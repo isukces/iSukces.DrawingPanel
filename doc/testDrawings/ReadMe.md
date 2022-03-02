@@ -28,6 +28,8 @@
 ![](One11002_below,starting_arm.png)
 ![](One11003_below,ending_arm.png)
 ![](One99_practical_case_A.png)
+![](One99_practical_case_B.png)
+![](One99_practical_case_B_REV.png)
 ![](Two01_simple,rotated_both.png)
 ![](Two01_simple,rotated_ref1.png)
 ![](Two01_simple.png)

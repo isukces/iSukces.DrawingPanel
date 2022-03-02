@@ -102,28 +102,31 @@ namespace iSukces.DrawingPanel.Paths
                             builder.AddFlexiFromPararell(s, r, validator);
                             builder.LineTo(Reference.Point);
 
-                            builder.AddFlexiFromPararell(r, e, validator);
+                            builder.AddFlexiFromPararell(r, e, validator);  
                             builder.LineTo(End.Point);
                             return builder.List;
                         }
                     }
 
                     {
-                        var s = Start.GetMovedRayOutput();
-                        var e = Reference;
-
-                        builder.AddFlexiFromPararell(s, e, validator);
-                        builder.LineTo(Reference.Point);
+                        var start  = Start.GetMovedRayOutput();
+                        var middle = Reference;
+                        var end    = End.GetMovedRayInput();
+                        
+                        builder.AddFlexiFromPararell(start, middle, validator);
+                        builder.AddFlexi(middle, end, true);
                     }
                 }
                 else
                 {
                     if (endCrossNullable is null)
                     {
-                        var s = Reference;
-                        var e = End.GetMovedRayInput().WithInvertedVector();
-                        builder.AddFlexiFromPararell(s, e, validator);
-                        builder.LineTo(End.Point);
+                        var start  = Start.GetMovedRayOutput();
+                        var middle = Reference;
+                        var end    = End.GetMovedRayInput().WithInvertedVector();
+                        
+                        builder.AddFlexi(start, middle);
+                        builder.AddFlexiFromPararell(middle, end, validator);
                     }
                     else
                     {
@@ -137,8 +140,6 @@ namespace iSukces.DrawingPanel.Paths
 
                 if (builder.List.Count == 0)
                     builder.AddLine(Start.Point, End.Point);
-                // return FlexiS();
-
                 return builder.List;
             }
         }
