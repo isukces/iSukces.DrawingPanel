@@ -20,7 +20,14 @@ namespace iSukces.DrawingPanel.Paths
             {
                 var pathResult = ZeroReferencePointPathCalculator.Compute(_start, _end, Validator);
                 if (pathResult is null)
-                    throw new NotImplementedException();
+                {
+                    var ex = new NotImplementedException(nameof(ZeroReferencePointPathCalculator) + " gives not result");
+                    ex.Data.Set(nameof(_start), _start);
+                    ex.Data.Set(nameof(_end), _end);
+                    ex.Data.AddDebug();
+                    throw ex;
+                }
+
                 return pathResult;
             }
 
@@ -65,6 +72,7 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     var ex = new NotImplementedException(nameof(OneReferencePointPathCalculator) + " gives not result");
                     calculator.AppendData(ex.Data);
+                    ex.Data.AddDebug();
                     throw ex;
                 }
 
@@ -113,7 +121,13 @@ namespace iSukces.DrawingPanel.Paths
                 };
                 var pathResult = calculator.Compute(Validator);
                 if (pathResult is null)
-                    throw new NotImplementedException();
+                {
+                    var ex = new NotImplementedException(nameof(TwoReferencePointsPathCalculator) + " gives not result");
+                    calculator.AppendData(ex.Data);
+                    ex.Data.AddDebug();
+                    throw ex;
+                }
+
                 return pathResult;
             }
 

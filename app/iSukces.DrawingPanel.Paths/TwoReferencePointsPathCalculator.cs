@@ -1,4 +1,5 @@
-﻿#if NET5_0
+﻿using System.Collections;
+#if NET5_0
 using iSukces.Mathematics.Compatibility;
 
 #else
@@ -10,6 +11,14 @@ namespace iSukces.DrawingPanel.Paths
 {
     public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalculator
     {
+        internal void AppendData(IDictionary dict)
+        {
+            dict.Set(nameof(Start), Start);
+            dict.Set(nameof(End), End);
+            dict.Set(nameof(Reference1), Reference1);
+            dict.Set(nameof(Reference2), Reference2);
+        }
+
         public IPathResult Compute(IPathValidator validator)
         {
             var tmp = ComputeInternal(validator, out var result);
