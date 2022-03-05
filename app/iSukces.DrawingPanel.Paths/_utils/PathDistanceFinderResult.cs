@@ -46,6 +46,8 @@ namespace iSukces.DrawingPanel.Paths
         public int    ElementIndex       { get; }
         public double ElementTrackOffset { get; }
 
+        public double AbsoluteTrack => ElementTrackOffset + Track;
+
         #endregion
     }
 }
