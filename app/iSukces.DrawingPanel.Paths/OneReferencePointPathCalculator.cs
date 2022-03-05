@@ -227,8 +227,8 @@ namespace iSukces.DrawingPanel.Paths
             if (validator is null)
                 validator = new MinimumValuesPathValidator(Epsilon, 0);
 
-            var result1 = validator.ValidateArc(arc1);
-            var result2 = validator.ValidateArc(arc2);
+            var result1 = validator.ValidateArc(arc1, ArcDestination.OneReferenceTwoArcs);
+            var result2 = validator.ValidateArc(arc2, ArcDestination.OneReferenceTwoArcs);
             var ok1     = result1 == ArcValidationResult.Ok;
             var ok2     = result2 == ArcValidationResult.Ok;
             {

@@ -24,11 +24,11 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         private sealed class PdPathValidator : MinimumValuesPathValidator
         {
-            public override ArcValidationResult ValidateArc(ArcDefinition arc)
+            public override ArcValidationResult ValidateArc(ArcDefinition arc, ArcDestination arcDestination)
             {
                 if (arc.Angle >= 180)
                     return ArcValidationResult.ReplaceByLine;
-                return base.ValidateArc(arc);
+                return base.ValidateArc(arc, arcDestination);
             }
 
             public PdPathValidator()

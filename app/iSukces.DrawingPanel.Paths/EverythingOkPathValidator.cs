@@ -14,7 +14,7 @@ namespace iSukces.DrawingPanel.Paths
         {
         }
 
-        public ArcValidationResult ValidateArc(ArcDefinition arc)
+        public ArcValidationResult ValidateArc(ArcDefinition arc, ArcDestination arcDestination)
         {
             return ArcValidationResult.Ok;
         }

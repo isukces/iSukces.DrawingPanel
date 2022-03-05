@@ -26,14 +26,14 @@ namespace iSukces.DrawingPanel.Paths
                 {
                     if (result.Arc1 is not null)
                     {
-                        var ok = pathValidator.IsOk(result.Arc1);
+                        var ok = pathValidator.IsOk(result.Arc1, ArcDestination.ZeroReferenceTwoArcs);
                         if (!ok)
                             return false;
                     }
 
                     if (result.Arc2 is not null)
                     {
-                        var ok = pathValidator.IsOk(result.Arc2);
+                        var ok = pathValidator.IsOk(result.Arc2, ArcDestination.ZeroReferenceTwoArcs);
                         if (!ok)
                             return false;
                     }
@@ -133,7 +133,7 @@ namespace iSukces.DrawingPanel.Paths
             if ((Flags & ZeroReferencePointPathCalculatorFlags.DontUseOneArcSolution) == 0)
             {
                 var one = TryOne(cross.Value);
-                if (Validator.IsOk(one))
+                if (Validator.IsOk(one, ArcDestination.ZeroReferenceOneArc))
                 {
                     if (one.Angle < 180)
                         return new ZeroReferencePointPathCalculatorResult(ResultKind.OneArc)
@@ -264,7 +264,7 @@ namespace iSukces.DrawingPanel.Paths
             }
 
             var                                    minLength  = double.MaxValue;
-            ZeroReferencePointPathCalculatorResult bestResult = null;
+            var bestResult = (ZeroReferencePointPathCalculatorResult)null;
 
             void CheckAndAdd(ZeroReferencePointPathCalculatorResult r)
             {

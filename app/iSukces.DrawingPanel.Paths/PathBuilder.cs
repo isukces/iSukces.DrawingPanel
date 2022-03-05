@@ -56,7 +56,7 @@ namespace iSukces.DrawingPanel.Paths
             var c = new OneArcFinder(cross.Value); // validated cross
             c.Setup(start1, end1);
             var res = c.CalculateArc();
-            if (Validator.IsOk(res))
+            if (Validator.IsOk(res, ArcDestination.AppendArcToList))
             {
                 if (CheckDot(res))
                 {

@@ -10,7 +10,7 @@ namespace iSukces.DrawingPanel.Paths
 {
     public interface IPathValidator
     {
-        ArcValidationResult ValidateArc([NotNull] ArcDefinition arc);
+        ArcValidationResult ValidateArc([NotNull] ArcDefinition arc, ArcDestination arcDestination);
         LineValidationResult ValidateLine(Vector vector);
         CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end, Point cross);
     }
@@ -46,13 +46,13 @@ namespace iSukces.DrawingPanel.Paths
 
     public static class PathValidatorExtensions
     {
-        public static bool IsOk(this IPathValidator validator, ArcDefinition arc)
+        public static bool IsOk(this IPathValidator validator, ArcDefinition arc, ArcDestination arcDestination)
         {
             if (arc is null)
                 return false;
             if (validator is null)
                 return true;
-            var result = validator.ValidateArc(arc);
+            var result = validator.ValidateArc(arc, arcDestination);
             return result == ArcValidationResult.Ok;
         }
     }

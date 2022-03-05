@@ -283,6 +283,36 @@ namespace iSukces.DrawingPanel.Paths.Test
             }
         }
 
+        [Fact]
+        public void T11_Should_ignore_arc_constraints()
+        {
+            PathRay        start = new PathRay(359.997896754663, 123.094168953927, 52.7533420956723, -18.0940946202125);
+            PathRay        end   = new PathRay(458.631540633808,169.762851856057,4.91594264664815,34.3119867902824);
+            IPathValidator validator = new PathBuilderTest.MyValidator(CircleCrossValidationResult.Invalid, 90);
+            var            result = ZeroReferencePointPathCalculator.Compute(start, end, validator);
+            Assert.NotNull(result);
+            
+            var code = new DpAssertsBuilder().Create(result, nameof(result));
+
+            var zr = (ZeroReferencePointPathCalculatorResult)result;
+            #region Asserts
+            Assert.Equal(ZeroReferencePointPathCalculator.ResultKind.OneArc, zr.Kind);
+            AssertEx.Equal(359.997896754663, 123.094168953927, result.Start);
+            AssertEx.Equal(458.631540633808, 169.762851856057, result.End);
+            Assert.Equal(2, result.Elements.Count);
+            var line = (LinePathElement)result.Elements[0];
+            AssertEx.Equal(359.997896754663, 123.094168953927, 374.31900181549958, 118.18211182649735, line, 6);
+            var arc = (ArcDefinition)result.Elements[1];
+            Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
+            Assert.Equal(100.778286945254, arc.Angle, 6);
+            Assert.Equal(64.1485693523485, arc.Radius, 6);
+            AssertEx.Equal(395.13138909715263, 178.86063756329773, arc.Center);
+            AssertEx.Equal(374.31900181549958, 118.18211182649735, arc.Start);
+            AssertEx.Equal(458.631540633808, 169.762851856057, arc.End);
+            AssertEx.Equal(0.94590614178021326, -0.32444039659461493, arc.DirectionStart);
+            #endregion
+
+        }
 
         [Fact]
         public void T99a_Should_compute_practical_case()

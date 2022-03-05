@@ -70,18 +70,26 @@ namespace iSukces.DrawingPanel.Paths.Test
 
         public class MyValidator : IPathValidator
         {
-            public MyValidator(CircleCrossValidationResult reject)
+            private readonly double _maxArc;
+
+            public MyValidator(CircleCrossValidationResult reject, double maxArc = 370)
             {
-                Reject = reject;
+                _maxArc = maxArc;
+                Reject       = reject;
             }
 
-            public ArcValidationResult ValidateArc(ArcDefinition arc)
+            public ArcValidationResult ValidateArc(ArcDefinition arc, ArcDestination arcDestination)
             {
                 if (arc.Angle > 350)
                 {
                     if (arc.Sagitta < 1e-3)
                         return ArcValidationResult.ReplaceByLine;
                 }
+
+                if (arcDestination.IsOne)
+                    return ArcValidationResult.Ok;
+                if (arc.Angle>_maxArc)
+                    return ArcValidationResult.ReplaceByLine;
 
                 return ArcValidationResult.Ok;
             }
