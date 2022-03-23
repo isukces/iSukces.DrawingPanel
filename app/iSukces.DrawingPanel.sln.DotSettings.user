@@ -2,9 +2,5 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=615e5ea9_002Dc944_002D40ab_002D9167_002D90ad23099e9b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b5d190fd_002Dc140_002D4ea1_002Db88f_002D377fac86b930/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="T11_Should_ignore_arc_constraints" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F4807205-D0D4-46CD-85E7-D43B7A04A20B::.NETFramework,Version=v4.8::iSukces.DrawingPanel.Paths.Test.ZeroReferencePointPathCalculatorTests.T11_Should_ignore_arc_constraints&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
 	</wpf:ResourceDictionary>

@@ -206,7 +206,7 @@ namespace iSukces.DrawingPanel.Paths
             if (v1.LengthSquared < v2.LengthSquared)
             {
                 var versor = DirectionStart.NormalizeFast();
-                var track  = versor * (target - Start);
+                var track  = versor * v1;
 #if DEBUG
                 if (track > 0)
                     throw new Exception("track>0");
@@ -217,7 +217,7 @@ namespace iSukces.DrawingPanel.Paths
             else
             {
                 var versor = DirectionEnd.NormalizeFast();
-                var track  = versor * (target - Start);
+                var track  = versor * v2;
 #if DEBUG
                 if (track < 0)
                     throw new Exception("track<0");
