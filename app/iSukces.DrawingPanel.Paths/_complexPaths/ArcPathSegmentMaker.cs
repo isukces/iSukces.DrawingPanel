@@ -21,7 +21,7 @@ namespace iSukces.DrawingPanel.Paths
                 var pathResult = ZeroReferencePointPathCalculator.Compute(_start, _end, Validator);
                 if (pathResult is null)
                 {
-                    return new ZeroReferencePointPathCalculatorLineResult(_end.Point, _end.Point);
+                    return new ZeroReferencePointPathCalculatorLineResult(_start.Point, _end.Point);
                     /*
                     var ex = new NotImplementedException(nameof(ZeroReferencePointPathCalculator) + " gives not result");
                     ex.Data.Set(nameof(_start), _start);
