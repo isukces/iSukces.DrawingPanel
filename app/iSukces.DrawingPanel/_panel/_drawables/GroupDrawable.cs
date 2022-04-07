@@ -21,7 +21,7 @@ namespace iSukces.DrawingPanel
 
         public void BeginInit() { _suspendLevel++; }
 
-        private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        protected virtual void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action != NotifyCollectionChangedAction.Move)
             {
