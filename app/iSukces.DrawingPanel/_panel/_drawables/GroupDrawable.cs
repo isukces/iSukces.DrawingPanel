@@ -17,7 +17,7 @@ namespace iSukces.DrawingPanel
             _children.CollectionChanged += ChildrenOnCollectionChanged;
         }
 
-        ~GroupDrawable() { DisposeInternal(); }
+        ~GroupDrawable() { Dispose(false); }
 
         public void BeginInit() { _suspendLevel++; }
 
@@ -53,11 +53,11 @@ namespace iSukces.DrawingPanel
 
         public void Dispose()
         {
-            DisposeInternal();
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        private void DisposeInternal()
+        protected virtual void Dispose(bool disposing)
         {
             if (_children is null)
                 return;
@@ -92,7 +92,7 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        private void OnChanged()
+        protected void OnChanged()
         {
             if (_suspendLevel > 0)
             {
