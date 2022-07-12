@@ -32,7 +32,7 @@ namespace iSukces.DrawingPanel
             UpdateTransformAndCanvasInfo();
             // zdarzenia i rejestracje
             zoom.PropertyChanged += ZoomOnPropertyChanged;
-            _behaviorContainer.RegisterHandler(_panAndZoom, NewHandlerOrders.PanAndZoom);
+            _behaviorContainer.RegisterHandler(_panAndZoom, DrawingHandlerOrders.PanAndZoom);
         }
 
         public void ApplyBounds(Rect bounds)

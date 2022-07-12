@@ -66,7 +66,7 @@ namespace Sample.Paths
                 }
             }
             _controller = new PathsController();
-            dp.RootBehaviorContainer.RegisterHandler(_controller, NewHandlerOrders.ElementEditor);
+            dp.RootBehaviorContainer.RegisterHandler(_controller, DrawingHandlerOrders.ElementEditor);
             dp.Panel.Drawables.Add(_controller);
             _controller.OptionIndex =  idx;
             VisibleChanged          += OnVisibleChanged;

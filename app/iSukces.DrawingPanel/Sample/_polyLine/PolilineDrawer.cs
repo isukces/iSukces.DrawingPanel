@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
+using FontStyle = System.Drawing.FontStyle;
 using WinPoint = System.Windows.Point;
 
 namespace iSukces.DrawingPanel.Sample

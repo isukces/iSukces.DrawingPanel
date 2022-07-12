@@ -32,7 +32,7 @@ namespace iSukces.DrawingPanel
             TopLevelCanvas.EndInit();
 
             Model.PropertyChanged     += ModelOnPropertyChanged;
-            _mouseHandlerRegistration =  handlerContainer.RegisterHandler2(this, NewHandlerOrders.ElementEditorTop);
+            _mouseHandlerRegistration =  handlerContainer.RegisterHandler2(this, DrawingHandlerOrders.Decorator);
         }
 
         protected void AddThumb(TThumb thumb)
