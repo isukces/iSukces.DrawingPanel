@@ -60,8 +60,6 @@ namespace iSukces.DrawingPanel
             _canvasInfo = canvasInfo;
         }
 
-        #region properties
-
         public Point Center
         {
             get => _center;
@@ -98,8 +96,6 @@ namespace iSukces.DrawingPanel
         /// </summary>
         public ThumbDraggingContext DraggingContext { get; set; }
 
-        #endregion
-
         public event EventHandler Changed;
         public bool               Visible                => true;
         public bool               PresenterRenderingFlag { get; set; }
@@ -108,14 +104,10 @@ namespace iSukces.DrawingPanel
 
         public event EventHandler IsSelectedChanged;
 
-        #region Fields
-
         private const float Size = 9;
         private const float SizeHalf = Size / 2;
         private DrawingCanvasInfo _canvasInfo;
         private Point _center;
         private bool _isSelected;
-
-        #endregion
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel.Interfaces
 {
     [Flags]
     public enum DraggingTimeDataFlags
