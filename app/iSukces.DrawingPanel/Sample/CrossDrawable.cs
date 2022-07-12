@@ -6,7 +6,7 @@ namespace iSukces.DrawingPanel.Sample
     {
         public override void Draw(Graphics graphics)
         {
-            var       tr  = _canvasInfo.Transformation;
+            var       tr  = CanvasInfo.Transformation;
             var       c   = tr.ToCanvasF(0, 0);
             using var pen = new Pen(Color.Gold, 3);
             graphics.DrawLine(pen, c.X - _size, c.Y, c.X + _size, c.Y);

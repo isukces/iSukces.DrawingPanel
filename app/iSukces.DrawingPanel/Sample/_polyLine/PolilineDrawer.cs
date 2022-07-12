@@ -72,14 +72,14 @@ namespace iSukces.DrawingPanel.Sample
             var src       = _session.Points;
             var lastPoint = src[src.Count - 1];
             var pointsF   = src.MapToArray(a => new PointF((float)a.X, (float)a.Y));
-            var m         = _canvasInfo.Transformation.GetTransform();
+            var m         = CanvasInfo.Transformation.GetTransform();
             m.TransformPoints(pointsF);
             m.Dispose();
 
             using var pen = new Pen(Color.Chartreuse, 3);
             graphics.DrawLines(pen, pointsF);
             // ==========
-            DrawDimension(graphics, src[src.Count - 2], lastPoint, _canvasInfo.Transformation);
+            DrawDimension(graphics, src[src.Count - 2], lastPoint, CanvasInfo.Transformation);
 
             DrawAlignToLines(graphics, pointsF);
         }
@@ -94,7 +94,7 @@ namespace iSukces.DrawingPanel.Sample
             for (var index = ppLength - 1; index >= 0; index--)
             {
                 var p      = pp[index];
-                var transf = _canvasInfo.Transformation;
+                var transf = CanvasInfo.Transformation;
                 var begin  = transf.ToCanvasF(_session.Points[p]);
                 var end    = pointsF[pointsF.Length - 1];
                 graphics.DrawLine(pen, begin, end);
@@ -110,8 +110,8 @@ namespace iSukces.DrawingPanel.Sample
         {
             if (_session is null)
                 return DrawingHandleResult.Continue;
-            var point = _canvasInfo.Transformation.FromCanvas(args.Location);
-            point = _session.ProcessPoint(point, out _session.PointAlign, _canvasInfo.Transformation.Scale);
+            var point = CanvasInfo.Transformation.FromCanvas(args.Location);
+            point = _session.ProcessPoint(point, out _session.PointAlign, CanvasInfo.Transformation.Scale);
             _session.Points[_session.Points.Count - 1] = point;
             OnChanged();
             return DrawingHandleResult.Break;
@@ -122,7 +122,7 @@ namespace iSukces.DrawingPanel.Sample
             if (e.Button != MouseButtons.Left)
                 return DrawingHandleResult.Continue;
 
-            var point = _canvasInfo.Transformation.FromCanvas(e.Location);
+            var point = CanvasInfo.Transformation.FromCanvas(e.Location);
             if (_session is null)
             {
                 _session = new DrawingSession();

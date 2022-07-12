@@ -38,7 +38,7 @@ namespace Sample.Paths
             {
                 Graph          = gr,
                 Calculator     = _bc,
-                Transformation = _canvasInfo.Transformation
+                Transformation = CanvasInfo.Transformation
             };
             gr.SmoothingMode = SmoothingMode.HighQuality;
             p.Draw();
@@ -48,7 +48,7 @@ namespace Sample.Paths
         {
             if (e.Button == MouseButtons.Left)
             {
-                var loc = _canvasInfo.Transformation.FromCanvas(e.Location);
+                var loc = CanvasInfo.Transformation.FromCanvas(e.Location);
 
                 PathRayWithArm M(PathRayWithArm x) { return x.With(-Calc(x.Point, loc)); }
                 // PathRay M(PathRay x) { return x.With(-Calc(x.Point, loc)); }

@@ -15,7 +15,7 @@ namespace iSukces.DrawingPanel
             };
         }
 
-        public override void Draw(Graphics graphics) { _primitive.Draw(graphics, _canvasInfo); }
+        public override void Draw(Graphics graphics) { _primitive.Draw(graphics, CanvasInfo); }
 
         public bool IsInside(Point logicPoint, double tolerance)
         {

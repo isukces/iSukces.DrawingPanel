@@ -14,7 +14,7 @@ namespace iSukces.DrawingPanel
             var savedTransform = graphics.Transform;
             try
             {
-                using var matrix = _canvasInfo.Transformation.GetTransform();
+                using var matrix = CanvasInfo.Transformation.GetTransform();
                 graphics.Transform = matrix;
 
                 graphics.DrawEllipse(pen, 10, 10, 100, 100);

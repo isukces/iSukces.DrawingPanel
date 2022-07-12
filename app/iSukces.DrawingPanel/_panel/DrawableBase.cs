@@ -35,7 +35,7 @@ namespace iSukces.DrawingPanel
             OnChanged();
         }
 
-        public virtual void SetCanvasInfo(DrawingCanvasInfo canvasInfo) { _canvasInfo = canvasInfo; }
+        public virtual void SetCanvasInfo(DrawingCanvasInfo canvasInfo) { CanvasInfo = canvasInfo; }
 
         public event EventHandler Changed;
 
@@ -54,7 +54,7 @@ namespace iSukces.DrawingPanel
 
         public bool PresenterRenderingFlag { get; set; }
 
-        public DrawingCanvasInfo _canvasInfo { get; private set; }
+        public DrawingCanvasInfo CanvasInfo { get; private set; }
 
         private bool _visible = true;
     }
