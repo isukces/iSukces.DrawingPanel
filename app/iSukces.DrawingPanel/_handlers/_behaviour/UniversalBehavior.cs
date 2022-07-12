@@ -4,37 +4,37 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
+using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel
 {
     public interface IBehaviorSource
     {
+        #region properties
+
         Control MouseMoveFrom  { get; set; }
         Control MouseWheelFrom { get; set; }
         Control KeyboardFrom   { get; set; }
+
+        #endregion
     }
 
     public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
     {
-        public UniversalBehavior() { _handlers = new SortableSynchronizedCollection<HolderWrapper>(); }
-
-        [Conditional("DEBUG")]
-        private static void Log(string text)
+        public UniversalBehavior()
         {
-#if LOG
-            Debug.WriteLine("----------UniversalBehavior: " + text);
-#endif
+            _handlers = new SortableSynchronizedCollection<HolderWrapper>();
         }
 
         private bool Handle<THandler>(Func<THandler, DrawingHandleResult> func)
         {
+            // ReSharper disable once InconsistentlySynchronizedField
             var handlersCopy = _handlers.GetSynchronizedArray();
             // ReSharper disable once LoopCanBeConvertedToQuery
             for (var index = 0; index < handlersCopy.Length; index++)
             {
                 var handler = handlersCopy[index].Handler;
-                if (!(handler is THandler)) continue;
-                var myHandler = (THandler)handler;
+                if (handler is not THandler myHandler) continue;
                 var result    = func(myHandler);
                 if (result == DrawingHandleResult.Break)
                     return true;
@@ -57,30 +57,19 @@ namespace iSukces.DrawingPanel
 
         private void HandleMouseWheel(object sender, MouseEventArgs e)
         {
-            //DebugLog.Log("-------------- Wheel");
-            // e.Handled = 
             Handle<IDpMouseWheelHandler>(h => h.HandleMouseWheel(e));
         }
 
         private void HandleOnMouseDown(object sender, MouseEventArgs e)
         {
-#if LOG
-            Log("-------------- Down");
-#endif
             Handle<IDpMouseButtonHandler>(h =>
             {
                 var result = h.HandleOnMouseDown(e);
                 switch (result)
                 {
                     case DrawingHandleResult.Break:
-#if LOG
-                        Log(nameof(HandleOnMouseDown) + " handled with " + h);
-#endif
                         break;
                     case DrawingHandleResult.ContinueAfterAction:
-#if LOG
-                        Log(nameof(HandleOnMouseDown) + " partial handled with " + h);
-#endif
                         break;
                 }
 
@@ -98,30 +87,20 @@ namespace iSukces.DrawingPanel
 
             Handle<IDpMouseButtonHandler>(h =>
             {
-                // PdLog.DebugWriteLine("run UniversalBehavior.HandleOnMouseMove");
                 return h.HandleOnMouseMove(e);
             });
         }
 
         private void HandleOnMouseUp(object sender, MouseEventArgs e)
         {
-#if LOG
-            Log("-------------- Up");
-#endif
             Handle<IDpMouseButtonHandler>(h =>
             {
                 var result = h.HandleOnMouseUp(e);
                 switch (result)
                 {
                     case DrawingHandleResult.Break:
-#if LOG
-                        Log(nameof(HandleOnMouseUp) + " handled with " + h);
-#endif
                         break;
                     case DrawingHandleResult.ContinueAfterAction:
-#if LOG
-                        Log(nameof(HandleOnMouseUp) + " partial with " + h);
-#endif
                         break;
                 }
 
@@ -191,63 +170,6 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        /*protected override void OnAttached()
-        {
-            base.OnAttached();
-
-            var eventControls = Controls;
-            var mouse         = eventControls.MouseEventSource;
-            mouse.MouseWheel += HandleMouseWheel;
-            mouse.MouseDown  += HandleOnMouseDown;
-            mouse.MouseMove  += HandleOnMouseMove;
-            mouse.MouseUp    += HandleOnMouseUp;
-
-#if KEYBOARD_FROM_FORM
-            _mainWindow = Application.OpenForms.OfType<Form>().FirstOrDefault();
-            if (_mainWindow != null)
-            {
-                _mainWindow.KeyDown += HandleKeyDown;
-                _mainWindow.KeyUp += HandleKeyUp;
-            }
-            else
-                throw new Exception("Unable to attach keyboard events");
-
-            mouse.KeyDown += ScrollKeyDown;
-#else
-            var keyboard = eventControls.KeyboardEventSource;
-            keyboard.KeyDown += HandleKeyDown;
-            keyboard.KeyUp   += HandleKeyUp;
-#endif
-        }*/
-
-
-        /*
-        protected override void OnDetached()
-        {
-            var eventControls = Controls;
-            var mouse         = eventControls.MouseEventSource;
-
-            mouse.MouseWheel -= HandleMouseWheel;
-            mouse.MouseDown  -= HandleOnMouseDown;
-            mouse.MouseMove  -= HandleOnMouseMove;
-            mouse.MouseUp    -= HandleOnMouseUp;
-
-#if KEYBOARD_FROM_FORM
-            if (_mainWindow != null)
-            {
-                _mainWindow.KeyDown -= HandleKeyDown;
-                _mainWindow.KeyUp -= HandleKeyUp;
-
-                _mainWindow = null;
-            }
-            scroll.KeyDown -= ScrollKeyDown;
-#else
-            var keyboard = eventControls.KeyboardEventSource;
-            keyboard.KeyDown -= HandleKeyDown;
-            keyboard.KeyUp   -= HandleKeyUp;
-#endif
-            base.OnDetached();
-        }*/
 
         public void RegisterHandler(IDpHandler handler, int order)
         {
@@ -271,6 +193,7 @@ namespace iSukces.DrawingPanel
             }
         }
 
+        [NotNull]
         private readonly SortableSynchronizedCollection<HolderWrapper> _handlers;
         private Control _mouseMoveFrom;
         private Control _mouseWheelFrom;
