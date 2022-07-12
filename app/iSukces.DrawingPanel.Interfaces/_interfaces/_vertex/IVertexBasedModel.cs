@@ -10,10 +10,4 @@ namespace iSukces.DrawingPanel.Interfaces
     {
         void VertexDragDeltaSuspenResume(StartOrStop action);
     }
-    
-    public enum StartOrStop : byte
-    {
-        Start,
-        Stop,
-    }
 }
