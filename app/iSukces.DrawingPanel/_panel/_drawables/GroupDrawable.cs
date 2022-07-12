@@ -9,7 +9,7 @@ using TItem = iSukces.DrawingPanel.Interfaces.IDrawable;
 
 namespace iSukces.DrawingPanel
 {
-    public class GroupDrawable : TItem, ISupportInitialize, IDisposable
+    public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawable
     {
         public GroupDrawable()
         {

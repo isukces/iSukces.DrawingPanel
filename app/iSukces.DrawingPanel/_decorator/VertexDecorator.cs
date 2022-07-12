@@ -14,24 +14,24 @@ namespace iSukces.DrawingPanel
         : PresenterDecorator<TPresenter>, IDpHandler
         //, ITransformationScaleProvider
         where TModel : class, INotifyPropertyChanged, IVertexBasedModel
-        where TThumb : IDrawable
+        where TThumb : DrawableThumb
     {
         protected VertexDecorator([NotNull] TPresenter presenter, ISnapService snap,
             [NotNull] TModel model, IDpHandlerContainer handlerContainer)
             : base(presenter)
         {
-            Model                 = model ?? throw new ArgumentNullException(nameof(model));
-            Snap                  = snap;
-            _thumbs               = new List<TThumb>();
-            _thumbsContainer      = new GroupDrawable { Name = "xcanvasForThumbs" };
-            _belowThumbsContainer = new GroupDrawable { Name = "xcanvasBelowThumbs" };
-            TopLevelCanvas        = new GroupDrawable { Name = "xwrapper" };
+            Model                = model ?? throw new ArgumentNullException(nameof(model));
+            Snap                 = snap;
+            _thumbs              = new List<TThumb>();
+            _thumbsContainer     = new GroupDrawable { Name = "xcanvasForThumbs" };
+            BelowThumbsContainer = new GroupDrawable { Name = "xcanvasBelowThumbs" };
+            TopLevelCanvas       = new GroupDrawable { Name = "xwrapper" };
             TopLevelCanvas.Changed += (a, b) =>
             {
                 OnChanged();
             };
             TopLevelCanvas.BeginInit();
-            TopLevelCanvas.Children.Add(_belowThumbsContainer);
+            TopLevelCanvas.Children.Add(BelowThumbsContainer);
             TopLevelCanvas.Children.Add(_thumbsContainer);
             TopLevelCanvas.EndInit();
 
@@ -39,10 +39,21 @@ namespace iSukces.DrawingPanel
             _mouseHandlerRegistration =  handlerContainer.RegisterHandler2(this, NewHandlerOrders.ElementEditorTop);
         }
 
+
         protected void AddThumb(TThumb thumb)
         {
-            _thumbsContainer.Children.Add(thumb);
-            _thumbs.Add(thumb);
+            _thumbsContainer.BeginInit();
+            try
+            {
+                thumb.SetCanvasInfo(CanvasInfo);
+                _thumbsContainer.Children.Add(thumb);
+                _thumbs.Add(thumb);
+                OnChanged();
+            }
+            finally
+            {
+                _thumbsContainer.EndInit();
+            }
         }
 
         /// <summary>
@@ -52,6 +63,22 @@ namespace iSukces.DrawingPanel
         {
         }
 
+        protected void ClearThumbs()
+        {
+            if (_thumbs.Count == 0)
+                return;
+            TopLevelCanvas.BeginInit();
+            try
+            {
+                _thumbs.Clear();
+                _thumbsContainer.Children.Clear();
+                OnChanged();
+            }
+            finally
+            {
+                TopLevelCanvas.EndInit();
+            }
+        }
 
         protected override void DisposeInternal(bool disposing)
         {
@@ -100,13 +127,25 @@ namespace iSukces.DrawingPanel
             }
         }
 
+        protected void SelectAllThumbs()
+        {
+            TopLevelCanvas.BeginInit();
+            try
+            {
+                for (var index = Thumbs.Count - 1; index >= 0; index--)
+                    Thumbs[index].IsSelected = true;
+            }
+            finally
+            {
+                TopLevelCanvas.EndInit();
+            }
+        }
+
         public override void SetCanvasInfo(DrawingCanvasInfo canvasInfo)
         {
             base.SetCanvasInfo(canvasInfo);
             TopLevelCanvas.SetCanvasInfo(canvasInfo);
         }
-
-        protected abstract bool ThumbDragDelta(TThumb thumb, ref WinPoint worldPoint);
 
         #region properties
 
@@ -114,6 +153,8 @@ namespace iSukces.DrawingPanel
         protected TModel Model { get; }
 
         public IReadOnlyList<TThumb> Thumbs => _thumbs;
+
+        protected IGroupDrawable ThumbsContainer => _thumbsContainer;
 
         #endregion
 
@@ -126,7 +167,11 @@ namespace iSukces.DrawingPanel
         #region Fields
 
         private IDisposable _mouseHandlerRegistration;
-        private readonly GroupDrawable _belowThumbsContainer;
+
+        /// <summary>
+        ///     Add some additional objects here i.e. distance texts
+        /// </summary>
+        protected readonly GroupDrawable BelowThumbsContainer;
 
         private readonly List<TThumb> _thumbs;
         private readonly GroupDrawable _thumbsContainer;
@@ -145,6 +190,7 @@ namespace iSukces.DrawingPanel
 
             #endregion
         }
-        
+
+        // protected abstract bool ThumbDragDelta(TThumb thumb, ref WinPoint worldPoint);
     }
 }
