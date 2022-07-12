@@ -9,23 +9,19 @@ using WinPoint = System.Windows.Point;
 
 namespace iSukces.DrawingPanel
 {
-    //   [UmlDiagram(UmlDiagrams.CadBusUiControls)]
-    public abstract class VertexDecorator<TModel, TThumb, TPresenter>
-        : PresenterDecorator<TPresenter>, IDpHandler
-        //, ITransformationScaleProvider
-        where TModel : class, INotifyPropertyChanged, IVertexBasedModel
+    public abstract class VertexDecorator<TModel, TThumb> : PresenterDecorator, IDpHandler
+        where TModel : class, INotifyPropertyChanged
         where TThumb : DrawableThumb
     {
-        protected VertexDecorator([NotNull] TPresenter presenter, ISnapService snap,
-            [NotNull] TModel model, IDpHandlerContainer handlerContainer)
-            : base(presenter)
+        protected VertexDecorator([NotNull] TModel model, ISnapService snap,
+            IDpHandlerContainer handlerContainer)
         {
             Model                = model ?? throw new ArgumentNullException(nameof(model));
             Snap                 = snap;
             _thumbs              = new List<TThumb>();
-            _thumbsContainer     = new GroupDrawable { Name = "xcanvasForThumbs" };
-            BelowThumbsContainer = new GroupDrawable { Name = "xcanvasBelowThumbs" };
-            TopLevelCanvas       = new GroupDrawable { Name = "xwrapper" };
+            _thumbsContainer     = new GroupDrawable { Name = "x_thumbsContainer" };
+            BelowThumbsContainer = new GroupDrawable { Name = "xBelowThumbsContainer" };
+            TopLevelCanvas       = new GroupDrawable { Name = "xTopLevelCanvas" };
             TopLevelCanvas.Changed += (a, b) =>
             {
                 OnChanged();
@@ -38,7 +34,6 @@ namespace iSukces.DrawingPanel
             Model.PropertyChanged     += ModelOnPropertyChanged;
             _mouseHandlerRegistration =  handlerContainer.RegisterHandler2(this, NewHandlerOrders.ElementEditorTop);
         }
-
 
         protected void AddThumb(TThumb thumb)
         {
@@ -107,6 +102,48 @@ namespace iSukces.DrawingPanel
         protected virtual void ModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
         }
+
+        protected virtual void OnHandleMouseMoveWhileDragging(StartOrStop stage)
+        {
+        }
+
+        protected virtual void OnSuspendModelPresenter(StartOrStop stage)
+        {
+        }
+
+
+        protected void PerformActionOnSuspendedModel(Action action)
+        {
+            TopLevelCanvas.BeginInit();
+            ThumbsContainer.BeginInit();
+            try
+            {
+                OnHandleMouseMoveWhileDragging(StartOrStop.Start);
+                try
+                {
+                    OnSuspendModelPresenter(StartOrStop.Start);
+
+                    try
+                    {
+                        action();
+                    }
+                    finally
+                    {
+                        OnSuspendModelPresenter(StartOrStop.Stop);
+                    }
+                }
+                finally
+                {
+                    OnHandleMouseMoveWhileDragging(StartOrStop.Stop);
+                }
+            }
+            finally
+            {
+                ThumbsContainer.EndInit();
+                TopLevelCanvas.EndInit();
+            }
+        }
+
 
         protected void ReduceThumbsCount(int max)
         {
@@ -178,7 +215,6 @@ namespace iSukces.DrawingPanel
         protected readonly GroupDrawable TopLevelCanvas;
 
         protected readonly ISnapService Snap;
-        private MouseEventArgs _suspendedMouseEventArgs;
 
         #endregion
 

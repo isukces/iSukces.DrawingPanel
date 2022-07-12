@@ -5,13 +5,8 @@ using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel
 {
-    public abstract class PresenterDecorator<TPresenter> : IDrawable, ISupportInitialize, IDisposable
+    public abstract class PresenterDecorator : IDrawable, ISupportInitialize, IDisposable
     {
-        protected PresenterDecorator(TPresenter presenter)
-        {
-            Presenter = presenter;
-        }
-
         ~PresenterDecorator()
         {
             DisposeInternal(false);
@@ -64,6 +59,12 @@ namespace iSukces.DrawingPanel
             CanvasInfo = canvasInfo;
         }
 
+        #region properties
+
+        protected DrawingCanvasInfo CanvasInfo { get; private set; }
+
+        #endregion
+
         public event EventHandler Changed;
 
         public bool Visible
@@ -78,12 +79,14 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        public    bool              PresenterRenderingFlag { get; set; }
-        protected DrawingCanvasInfo CanvasInfo             { get; private set; }
-        protected TPresenter        Presenter              { get; }
+        public bool PresenterRenderingFlag { get; set; }
+
+        #region Fields
 
         private bool _needNotifyOnChanged;
         private int _suspendLevel;
         private bool _visible = true;
+
+        #endregion
     }
 }
