@@ -4,7 +4,7 @@
         <Title>Sample paths</Title>
         <Authors>Internet Sukces Piotr Stęclik</Authors>
         <Company>Internet Sukces Piotr Stęclik</Company>
-        <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2021</Copyright>
+        <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2022</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
         <TargetFramework>net48</TargetFramework>
