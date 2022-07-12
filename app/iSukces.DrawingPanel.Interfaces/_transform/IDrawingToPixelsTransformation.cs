@@ -1,23 +1,25 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using Point = System.Windows.Point;
+using WinPoint = System.Windows.Point;
 
 namespace iSukces.DrawingPanel.Interfaces
 {
     public interface IDrawingToPixelsTransformation
     {
-        Point FromCanvas(Point point);
+        WinPoint FromCanvas(WinPoint point);
 
-        Point FromCanvas(System.Drawing.Point point);
+        WinPoint FromCanvas(Point point);
 
         Matrix GetTransform();
-        Point ToCanvas(Point point);
+        
+        WinPoint ToCanvas(WinPoint point);
 
-        Point ToCanvas(double pointX, double pointY);
+        WinPoint ToCanvas(double pointX, double pointY);
 
-        PointF ToCanvasF(Point point);
+        PointF ToCanvasF(WinPoint point);
 
         PointF ToCanvasF(double pointX, double pointY);
+
         double Scale { get; }
     }
 }
