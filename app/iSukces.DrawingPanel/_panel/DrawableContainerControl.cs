@@ -11,9 +11,9 @@ using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel
 {
-    public partial class DrawingLayersContainer : Control, ICadControlLogicOwner
+    public partial class DrawableContainerControl : Control, ICadControlLogicOwner
     {
-        public DrawingLayersContainer()
+        public DrawableContainerControl()
         {
             SetUnderLayerOpacity(1);
             ColorScheme = new DrawingColorScheme();
@@ -288,11 +288,11 @@ namespace iSukces.DrawingPanel
         #endregion
     }
 
-    partial class DrawingLayersContainer : IDrawingLayersContainer
+    partial class DrawableContainerControl : IDrawingLayersContainer
     {
         #region properties
 
-        public IDpHandlerContainer RootBehaviorContainer => _logic.RootBehaviorContainer;
+        public IDpHandlerContainer BehaviorContainer => _logic.BehaviorContainer;
 
         #endregion
 
@@ -308,7 +308,7 @@ namespace iSukces.DrawingPanel
         #endregion
     }
 
-    partial class DrawingLayersContainer : IInitializeableDrawingLayersContainer
+    partial class DrawableContainerControl : IInitializeableDrawingLayersContainer
     {
         public void BeginInit()
         {

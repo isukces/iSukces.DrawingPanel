@@ -5,6 +5,9 @@ using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel
 {
+    /// <summary>
+    /// Drawing panel with rullers
+    /// </summary>
     public partial class DrawingControl : UserControl
     {
         public DrawingControl()
@@ -13,7 +16,7 @@ namespace iSukces.DrawingPanel
 
             const int rullerLeft = 65;
             const int rullerTop  = 25;
-            Panel = new DrawingLayersContainer
+            MainPanel = new DrawableContainerControl
             {
                 Name     = "drawingPanel",
                 Location = new Point(rullerLeft, rullerTop),
@@ -25,7 +28,7 @@ namespace iSukces.DrawingPanel
                 Name          = "horizontalRuller",
                 RulerAutoSize = true,
                 Location      = new Point(rullerLeft, 0),
-                Size          = new Size(Panel.Size.Width, rullerTop),
+                Size          = new Size(MainPanel.Size.Width, rullerTop),
                 Anchor        = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
                 AxisLocation  = AxisLocation.Down
             };
@@ -34,15 +37,15 @@ namespace iSukces.DrawingPanel
                 Name          = "verticalRuller",
                 RulerAutoSize = true,
                 Location      = new Point(0, rullerTop),
-                Size          = new Size(rullerLeft, Panel.Size.Height),
+                Size          = new Size(rullerLeft, MainPanel.Size.Height),
                 Anchor        = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
                 AxisLocation  = AxisLocation.Right
             };
 
-            Controls.Add(Panel);
+            Controls.Add(MainPanel);
             Controls.Add(_horizontalRuler);
             Controls.Add(_verticalRuler);
-            Panel.DrawingTranformChanged += UpdateRulers;
+            MainPanel.DrawingTranformChanged += UpdateRulers;
             UpdateRulers(null, null);
         }
 
@@ -66,7 +69,7 @@ namespace iSukces.DrawingPanel
                 return;
             try
             {
-                var drawingCanvasInfo = Panel.CanvasInfo;
+                var drawingCanvasInfo = MainPanel.CanvasInfo;
                 if (drawingCanvasInfo is null)
                     return;
                 
@@ -91,13 +94,6 @@ namespace iSukces.DrawingPanel
                 }
 
                 _horizontalRuler.Visible = _verticalRuler.Visible = true;
-                {
-                    /*AfterRullerUpdate?.Invoke(this, new AfterRullerUpdateEventArgs
-                    {
-                        HorizontalRulerDimension = _horizontalRuler.Dimension,
-                        VerticalRulerDimension   = _verticalRuler.Dimension
-                    });*/
-                }
             }
             catch
             {
@@ -105,9 +101,9 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        public DrawingLayersContainer Panel { get; }
+        public DrawableContainerControl MainPanel { get; }
 
-        public IDpHandlerContainer RootBehaviorContainer => Panel.RootBehaviorContainer;
+        public IDpHandlerContainer BehaviorContainer => MainPanel.BehaviorContainer;
 
 
         private readonly Ruler _horizontalRuler;

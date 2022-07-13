@@ -12,9 +12,9 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22193.18</AssemblyVersion>
-    <Version>1.0.22193.18</Version>
-    <FileVersion>1.0.22193.18</FileVersion>
+    <AssemblyVersion>1.0.22194.19</AssemblyVersion>
+    <Version>1.0.22194.19</Version>
+    <FileVersion>1.0.22194.19</FileVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

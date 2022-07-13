@@ -19,9 +19,9 @@ namespace Sample.Paths
                 Size     = new Size(ClientSize.Width - LeftPanelWidth, ClientSize.Height),
                 Anchor   = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
-            dp.Panel.BackColor = Color.Black;
+            dp.MainPanel.BackColor = Color.Black;
 
-            var behaviorSource = dp.Panel.BehaviorSource;
+            var behaviorSource = dp.MainPanel.BehaviorSource;
             behaviorSource.KeyboardFrom   = this;
             behaviorSource.MouseWheelFrom = this;
             Controls.Add(dp);
@@ -66,8 +66,8 @@ namespace Sample.Paths
                 }
             }
             _controller = new PathsController();
-            dp.RootBehaviorContainer.RegisterHandler(_controller, DrawingHandlerOrders.ElementEditor);
-            dp.Panel.Drawables.Add(_controller);
+            dp.BehaviorContainer.RegisterHandler(_controller, DrawingHandlerOrders.ElementEditor);
+            dp.MainPanel.Drawables.Add(_controller);
             _controller.OptionIndex =  idx;
             VisibleChanged          += OnVisibleChanged;
         }

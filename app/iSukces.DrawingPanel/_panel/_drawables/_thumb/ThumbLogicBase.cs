@@ -114,12 +114,11 @@ namespace iSukces.DrawingPanel
         {
         }
 
-
         protected void UpdateThumbsSelection()
         {
             var draggedThumb = DraggingSession.Thumb;
             draggedThumb.IsSelected = !draggedThumb.IsSelected;
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.LeftShift))
+            if (Keyboard.IsKeyDown(Key.LeftShift))
                 return;
             for (var index = Thumbs.Count - 1; index >= 0; index--)
             {

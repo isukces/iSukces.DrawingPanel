@@ -93,10 +93,9 @@ namespace iSukces.DrawingPanel
 
         #region properties
 
-        public IBehaviorSource   BehaviorSource => _behaviorContainer;
-        public DrawingCanvasInfo CanvasInfo     { get; private set; }
-
-        public IDpHandlerContainer RootBehaviorContainer => _behaviorContainer;
+        public IBehaviorSource     BehaviorSource    => _behaviorContainer;
+        public DrawingCanvasInfo   CanvasInfo        { get; private set; }
+        public IDpHandlerContainer BehaviorContainer => _behaviorContainer;
 
 
         public IDrawingPanelZoomStorage ZoomStorage
