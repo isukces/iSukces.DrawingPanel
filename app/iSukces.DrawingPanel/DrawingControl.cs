@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Windows.Forms.Layout;
 using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel
 {
     /// <summary>
-    /// Drawing panel with rullers
+    ///     Drawing panel with rullers
     /// </summary>
     public partial class DrawingControl : UserControl
     {
@@ -14,37 +16,31 @@ namespace iSukces.DrawingPanel
         {
             InitializeComponent();
 
-            const int rullerLeft = 65;
-            const int rullerTop  = 25;
             MainPanel = new DrawableContainerControl
             {
-                Name     = "drawingPanel",
-                Location = new Point(rullerLeft, rullerTop),
-                Size     = new Size(ClientSize.Width - rullerLeft, ClientSize.Height - rullerTop),
-                Anchor   = (AnchorStyles)15
+                Name   = "drawingPanel",
+                Anchor = AnchorStyles.None
             };
             _horizontalRuler = new Ruler
             {
                 Name          = "horizontalRuller",
                 RulerAutoSize = true,
-                Location      = new Point(rullerLeft, 0),
-                Size          = new Size(MainPanel.Size.Width, rullerTop),
-                Anchor        = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                Anchor        = AnchorStyles.None,
                 AxisLocation  = AxisLocation.Down
             };
             _verticalRuler = new Ruler
             {
                 Name          = "verticalRuller",
                 RulerAutoSize = true,
-                Location      = new Point(0, rullerTop),
-                Size          = new Size(rullerLeft, MainPanel.Size.Height),
-                Anchor        = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
+                Anchor        = AnchorStyles.None,
                 AxisLocation  = AxisLocation.Right
             };
 
+            SuspendLayout();
             Controls.Add(MainPanel);
             Controls.Add(_horizontalRuler);
             Controls.Add(_verticalRuler);
+            ResumeLayout();
             MainPanel.DrawingTranformChanged += UpdateRulers;
             UpdateRulers(null, null);
         }
@@ -72,10 +68,10 @@ namespace iSukces.DrawingPanel
                 var drawingCanvasInfo = MainPanel.CanvasInfo;
                 if (drawingCanvasInfo is null)
                     return;
-                
-                var transformation    = drawingCanvasInfo.Transformation;
-                var scale             = transformation.Scale;
-                var mm                = TickConfigutation.FindForScale(scale);
+
+                var transformation = drawingCanvasInfo.Transformation;
+                var scale          = transformation.Scale;
+                var mm             = TickConfigutation.FindForScale(scale);
 
                 var topLeftLogical = transformation.FromCanvas(new System.Windows.Point(0, 0));
                 {
@@ -101,16 +97,73 @@ namespace iSukces.DrawingPanel
             }
         }
 
+        public override LayoutEngine LayoutEngine
+        {
+            get
+            {
+                if (_layoutEngine is null)
+                {
+                    _layoutEngine = new DrawingControlLayoutEngine(this);
+                }
+
+                return _layoutEngine;
+            }
+        }
+
         public DrawableContainerControl MainPanel { get; }
 
         public IDpHandlerContainer BehaviorContainer => MainPanel.BehaviorContainer;
+
+        const int rullerLeft = 65;
+        const int rullerTop = 25;
 
 
         private readonly Ruler _horizontalRuler;
 
         private readonly Ruler _verticalRuler;
+
+        private sealed class DrawingControlLayoutEngine : LayoutEngine
+        {
+            public DrawingControlLayoutEngine(DrawingControl owner)
+            {
+                _owner = owner;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            private static void Setup(Control control, int x,
+                int y, int width,
+                int height)
+            {
+                if (control is null) return;
+                var c = new BoundsUpdater(control)
+                {
+                    Width  = width,
+                    Height = height,
+                    X      = x,
+                    Y      = y
+                };
+                c.Update();
+            }
+
+            public override bool Layout(object container, LayoutEventArgs layoutEventArgs)
+            {
+                // return base.Layout(container, layoutEventArgs);
+                var cs       = _owner.ClientSize;
+                var csWidth  = cs.Width - rullerLeft;
+                var csHeight = cs.Height - rullerTop;
+
+                Setup(_owner.MainPanel, rullerLeft, rullerTop, csWidth, csHeight);
+                Setup(_owner._horizontalRuler, rullerLeft, 0, csWidth, rullerTop);
+                Setup(_owner._verticalRuler, 0, rullerTop, rullerLeft, csHeight);
+
+                return false;
+            }
+
+            private readonly DrawingControl _owner;
+        }
 #pragma warning disable 649
         private bool _underUpdateRenderTransform;
+        private DrawingControlLayoutEngine _layoutEngine;
 #pragma warning restore 649
     }
 }
