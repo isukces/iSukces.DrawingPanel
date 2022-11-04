@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
-      <PackageReference Include="iSukces.Math" Version="1.0.21355.119" />
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+      <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
     </ItemGroup>
 
     <ItemGroup>

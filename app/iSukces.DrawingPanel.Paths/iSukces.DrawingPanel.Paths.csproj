@@ -42,7 +42,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.0.21355.119" />
+    <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
     <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
