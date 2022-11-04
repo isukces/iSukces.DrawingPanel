@@ -6,7 +6,7 @@ using Point = System.Windows.Point;
 
 namespace iSukces.DrawingPanel
 {
-    public sealed class LiteDrawableText : ILiteDrawable
+    public class LiteDrawableText : ILiteDrawable
     {
         public void Draw(Graphics graphics, DrawingCanvasInfo canvasInfo)
         {
@@ -18,21 +18,20 @@ namespace iSukces.DrawingPanel
             var          fontSize      = fontSizeLogic * scale;
             const string familyName    = "Arial";
 
-            const int    fontSizeForMeasure = 10;
-            const double fontMeasureScale2  = 1.0 / (fontSizeForMeasure * 2);
-
-            double nonScaledMeasure = fontMeasureScale2 * fontSizeLogic;
-
-            var scaledMeasure = scale * nonScaledMeasure;
+            var fontSizeForMeasure = GetFontSizeForTextMeasure(fontSize, _lastFontSizeUsedForTextMeasure);
+            var fontMeasureScale2  = 1.0d / (fontSizeForMeasure * 2);
+            var nonScaledMeasure   = fontMeasureScale2 * fontSizeLogic;
+            var scaledMeasure      = scale * nonScaledMeasure;
 
             using var format = new StringFormat();
-            if (!_isMeasured)
+            if (!_isMeasured || !_lastFontSizeUsedForTextMeasure.Equals(fontSizeForMeasure))
             {
+                _lastFontSizeUsedForTextMeasure = fontSizeForMeasure;
                 //System.Drawing.Drawing2D.Matrix
                 // https://www.codeproject.com/Articles/2118/Bypass-Graphics-MeasureString-limitations
                 _lines = _text.Split('\n');
-                var font1 = new Font(familyName, fontSizeForMeasure);
-                _measure = graphics.MeasureString(Text, font1, new PointF(), format);
+                var measureFont = new Font(familyName, fontSizeForMeasure);
+                _measure = graphics.MeasureString(Text, measureFont, new PointF(), format);
                 var dy1 = (int)_verticalAlignment * _measure.Height * nonScaledMeasure;
                 if (_lines.Length == 1)
                 {
@@ -56,7 +55,7 @@ namespace iSukces.DrawingPanel
                     for (var index = 0; index < _lines.Length; index++)
                     {
                         var t             = _lines[index];
-                        var measureString = graphics.MeasureString(t, font1, new PointF(), format);
+                        var measureString = graphics.MeasureString(t, measureFont, new PointF(), format);
                         _measures[index] = measureString;
                         if (index == 0)
                         {
@@ -66,7 +65,7 @@ namespace iSukces.DrawingPanel
                         else
                         {
                             t2            += "\n" + t;
-                            measureString =  graphics.MeasureString(t2, font1, new PointF(), format);
+                            measureString =  graphics.MeasureString(t2, measureFont, new PointF(), format);
                             _h[index]     =  measureString.Height;
                         }
                     }
@@ -102,8 +101,8 @@ namespace iSukces.DrawingPanel
 
             try
             {
-                var font = new Font(familyName, (float)fontSize);
-                var dy   = (int)_verticalAlignment * _measure.Height * scaledMeasure;
+                using var font = new Font(familyName, (float)fontSize);
+                var       dy   = (int)_verticalAlignment * _measure.Height * scaledMeasure;
                 if (_lines.Length == 1)
                 {
                     var dx = (float)((int)_horizontalAlignment * _measure.Width * scaledMeasure);
@@ -150,7 +149,15 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        public SizeF GetLastMeasure() { return _measure; }
+        protected virtual float GetFontSizeForTextMeasure(double drawFontSize, float lastFontSizeUsedForTextMeasure)
+        {
+            return 10;
+        }
+
+        public SizeF GetLastMeasure()
+        {
+            return _measure;
+        }
 
         public bool IsInside(Point point, double tolerance)
         {
@@ -174,8 +181,7 @@ namespace iSukces.DrawingPanel
             Changed?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler Changed;
-
+        #region properties
 
         public double FontSize
         {
@@ -215,6 +221,13 @@ namespace iSukces.DrawingPanel
         }
 
         public double Angle { get; set; }
+
+        #endregion
+
+        public event EventHandler Changed;
+
+        #region Fields
+
         private TwoCorners[] _areas;
 
         private Brush _fontBrush = Brushes.White;
@@ -230,6 +243,9 @@ namespace iSukces.DrawingPanel
         private Point _point;
         private string _text;
         private VerticalDrawableTextAlignment _verticalAlignment;
+        private float _lastFontSizeUsedForTextMeasure = -1;
+
+        #endregion
     }
 
     public enum HorizontalDrawableTextAlignment

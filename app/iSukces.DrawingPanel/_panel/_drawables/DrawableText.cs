@@ -4,29 +4,40 @@ using Point = System.Windows.Point;
 
 namespace iSukces.DrawingPanel
 {
-    public sealed class DrawableText : DrawableBase, IDrawableWithLayer, IDrawableCollider
+    public class DrawableText : DrawableBase, IDrawableWithLayer, IDrawableCollider
     {
         public DrawableText(Layer drawableLayer = Layer.Normal)
         {
             DrawableLayer = drawableLayer;
+            _primitive    = new LiteDrawableText();
+            _primitive.Changed += (a, b) =>
+            {
+                OnChanged();
+            };
+        }
+        
+        protected DrawableText(LiteDrawableText primitive, Layer drawableLayer = Layer.Normal)
+        {
+            DrawableLayer = drawableLayer;
+            _primitive    = primitive ?? new LiteDrawableText();
             _primitive.Changed += (a, b) =>
             {
                 OnChanged();
             };
         }
 
-        public override void Draw(Graphics graphics) { _primitive.Draw(graphics, CanvasInfo); }
+
+        public override void Draw(Graphics graphics)
+        {
+            _primitive.Draw(graphics, CanvasInfo);
+        }
 
         public bool IsInside(Point logicPoint, double tolerance)
         {
-            // var transformation = _canvasInfo.Transformation;
-            //var canvasPoint                   = transformation.ToCanvas(logicPoint);
-            //tolerance *= transformation.Scale; 
             return _primitive.IsInside(logicPoint, tolerance);
         }
 
-
-        public Layer DrawableLayer { get; }
+        #region properties
 
         public string Text
         {
@@ -72,6 +83,15 @@ namespace iSukces.DrawingPanel
             set => _primitive.Angle = value;
         }
 
-        private readonly LiteDrawableText _primitive = new();
+        #endregion
+
+
+        public Layer DrawableLayer { get; }
+
+        #region Fields
+
+        private readonly LiteDrawableText _primitive;
+
+        #endregion
     }
 }
