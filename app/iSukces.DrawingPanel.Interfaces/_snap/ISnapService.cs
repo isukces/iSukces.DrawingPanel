@@ -1,11 +1,13 @@
-﻿#if COREFX
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using System;
-using System.Collections.Generic;
+﻿using System;
 using JetBrains.Annotations;
+
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+#else
+using Point=System.Windows.Point;
+using System.Collections.Generic;
+#endif
+
 
 
 namespace iSukces.DrawingPanel.Interfaces

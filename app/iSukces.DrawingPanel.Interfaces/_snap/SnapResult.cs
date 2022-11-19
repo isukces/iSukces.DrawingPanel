@@ -1,9 +1,8 @@
 ﻿#if COREFX
-using iSukces.Mathematics.Compatibility;
+using Point=iSukces.Mathematics.Compatibility.Point;
 #else
-using System.Windows;
+using Point=System.Windows.Point;
 #endif
-
 
 namespace iSukces.DrawingPanel.Interfaces
 {

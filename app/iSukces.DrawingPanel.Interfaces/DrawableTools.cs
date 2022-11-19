@@ -1,6 +1,14 @@
 ﻿using System;
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+#else
+using Point=System.Windows.Point;
 using System.Drawing;
-using Point = System.Windows.Point;
+#endif
+
+
+
+
 
 namespace iSukces.DrawingPanel.Interfaces
 {

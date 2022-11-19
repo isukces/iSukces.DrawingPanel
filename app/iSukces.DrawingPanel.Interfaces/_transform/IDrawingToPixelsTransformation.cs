@@ -1,6 +1,10 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using WinPoint = System.Windows.Point;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+#else
+using WinPoint=System.Windows.Point;
+#endif
 
 namespace iSukces.DrawingPanel.Interfaces
 {

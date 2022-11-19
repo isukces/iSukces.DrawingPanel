@@ -1,7 +1,9 @@
 ﻿#if COREFX
-using iSukces.Mathematics.Compatibility;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+using Point=iSukces.Mathematics.Compatibility.Point;
 #else
-using System.Windows;
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
 #endif
 
 
