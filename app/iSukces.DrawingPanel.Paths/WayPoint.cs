@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 using Newtonsoft.Json;
-#if NET5_0
+#if COREFX
 using iSukces.Mathematics.Compatibility;
 
 #else

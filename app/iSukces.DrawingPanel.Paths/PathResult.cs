@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-#if NET5_0
+#if COREFX
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

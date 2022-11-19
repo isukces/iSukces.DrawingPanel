@@ -1,5 +1,5 @@
 ﻿#define _OLD_RESULT
-#if NET5_0
+#if COREFX
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

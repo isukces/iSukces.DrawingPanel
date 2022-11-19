@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFrameworks>net48;net5.0;net6.0</TargetFrameworks>
         <LangVersion>default</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -12,8 +12,8 @@
       <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="WindowsBase" />
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+        <Reference Include="WindowsBase" />
     </ItemGroup>
 
     <ItemGroup>

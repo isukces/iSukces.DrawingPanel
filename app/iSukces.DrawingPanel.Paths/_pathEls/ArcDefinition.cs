@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-#if NET5_0
+#if COREFX
 using iSukces.Mathematics.Compatibility;
 
 #else

@@ -15,30 +15,28 @@
     <Version>1.0.22308.65</Version>
     <FileVersion>1.0.22308.65</FileVersion>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net48;net5.0</TargetFrameworks>
+    <TargetFrameworks>net48;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net50' ">
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net5.0' or '$(TargetFramework)' == 'net5.0-windows'">
     <DefineConstants>COREFX;NET50</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <DefineConstants>COREFX;NETSTANDARD20</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net6.0-windows'">
+    <DefineConstants>COREFX;NET60</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <DefineConstants>COREFX;NETSTANDARD16</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <DefineConstants>FULLFRAMEWORK;NET48</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <DefineConstants>FULLFRAMEWORK;NET461</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <DefineConstants>FULLFRAMEWORK;NET451</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <DefineConstants>FULLFRAMEWORK;NET45</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineConstants>TRACE;USE_TINYEXPR</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
+  
+ 
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
