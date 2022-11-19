@@ -1,6 +1,12 @@
 ﻿using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;
-using Point = System.Windows.Point;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel
 {
@@ -32,7 +38,7 @@ namespace iSukces.DrawingPanel
             _primitive.Draw(graphics, CanvasInfo);
         }
 
-        public bool IsInside(Point logicPoint, double tolerance)
+        public bool IsInside(WinPoint logicPoint, double tolerance)
         {
             return _primitive.IsInside(logicPoint, tolerance);
         }
@@ -45,7 +51,7 @@ namespace iSukces.DrawingPanel
             set => _primitive.Text = value;
         }
 
-        public Point Point
+        public WinPoint Point
         {
             get => _primitive.Point;
             set => _primitive.Point = value;

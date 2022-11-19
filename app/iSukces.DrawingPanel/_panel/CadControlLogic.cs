@@ -3,7 +3,13 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
-using Point = System.Windows.Point;
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Rect=iSukces.Mathematics.Compatibility.Rect;
+#else
+using Point=System.Windows.Point;
+using Rect=System.Windows.Rect;
+#endif
 using Size = System.Drawing.Size;
 
 namespace iSukces.DrawingPanel

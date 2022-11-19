@@ -3,7 +3,13 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
-using Point = System.Windows.Point;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel
 {
@@ -28,7 +34,7 @@ namespace iSukces.DrawingPanel
             graphics.DrawRectangle(pen, (float)x, (float)y, Size, Size);
         }
 
-        public Point GetScreenLocation()
+        public WinPoint GetScreenLocation()
         {
             var point = _canvasInfo.Transformation.ToCanvas(Center);
             return point;
@@ -60,7 +66,7 @@ namespace iSukces.DrawingPanel
             _canvasInfo = canvasInfo;
         }
 
-        public Point Center
+        public WinPoint Center
         {
             get => _center;
             set
@@ -107,7 +113,7 @@ namespace iSukces.DrawingPanel
         private const float Size = 9;
         private const float SizeHalf = Size / 2;
         private DrawingCanvasInfo _canvasInfo;
-        private Point _center;
+        private WinPoint _center;
         private bool _isSelected;
     }
 }

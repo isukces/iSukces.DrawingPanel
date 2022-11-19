@@ -1,8 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 using iSukces.DrawingPanel.Interfaces;
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel
 {

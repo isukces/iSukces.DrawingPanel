@@ -1,4 +1,11 @@
 ﻿using System.Windows;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel.Interfaces
 {
@@ -16,6 +23,6 @@ namespace iSukces.DrawingPanel.Interfaces
 
     public interface IDrawableCollider
     {
-        bool IsInside(Point logicPoint, double tolerance);
+        bool IsInside(WinPoint logicPoint, double tolerance);
     }
 }

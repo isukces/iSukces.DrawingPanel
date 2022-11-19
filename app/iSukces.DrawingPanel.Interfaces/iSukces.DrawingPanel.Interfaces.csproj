@@ -30,21 +30,17 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net6.0-windows'">
     <DefineConstants>COREFX;NET60</DefineConstants>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net48'">
-    <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
-  </ItemGroup>
-  
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <DefineConstants>FULLFRAMEWORK;NET48</DefineConstants>
   </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net48'">
+    <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
+  </ItemGroup>
 
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">

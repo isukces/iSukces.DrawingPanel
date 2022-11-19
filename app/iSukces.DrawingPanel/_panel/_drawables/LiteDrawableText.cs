@@ -2,7 +2,13 @@
 using System.Drawing;
 using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
-using Point = System.Windows.Point;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel
 {
@@ -39,7 +45,7 @@ namespace iSukces.DrawingPanel
                     {
                         var dx = (float)((int)_horizontalAlignment * _measure.Width * nonScaledMeasure);
                         var p  = _point;
-                        p = new Point(p.X - dx, p.Y + dy1);
+                        p = new WinPoint(p.X - dx, p.Y + dy1);
                         var p2 = p + new Vector(_measure.Width, -_measure.Height) * (FontSize / fontSizeForMeasure);
                         _areas = new[]
                         {
@@ -74,7 +80,7 @@ namespace iSukces.DrawingPanel
                         // na razie jest jeden obszar, ale możnaby zrobić per-linijka tekstu
                         var dx = (float)((int)_horizontalAlignment * _measure.Width * nonScaledMeasure);
                         var p  = _point;
-                        p = new Point(p.X - dx, p.Y + dy1);
+                        p = new WinPoint(p.X - dx, p.Y + dy1);
                         var p2 = p + new Vector(_measure.Width, -_measure.Height) * (FontSize / fontSizeForMeasure);
                         _areas = new[]
                         {
@@ -107,7 +113,7 @@ namespace iSukces.DrawingPanel
                 {
                     var dx = (float)((int)_horizontalAlignment * _measure.Width * scaledMeasure);
                     var p  = canvasInfo.Transformation.ToCanvas(_point);
-                    p = new Point(p.X - dx, p.Y - dy);
+                    p = new WinPoint(p.X - dx, p.Y - dy);
                     var tmp = scaledMeasure * 2;
                     if (canvasInfo.IsOutside(p.X, p.Y, _measure.Width * tmp, _measure.Height * tmp))
                         return;
@@ -159,7 +165,7 @@ namespace iSukces.DrawingPanel
             return _measure;
         }
 
-        public bool IsInside(Point point, double tolerance)
+        public bool IsInside(WinPoint point, double tolerance)
         {
             if (_text is null || _areas is null)
                 return false;
@@ -196,7 +202,7 @@ namespace iSukces.DrawingPanel
             set => SetAndNotify(ref _text, value.TrimToNull()?.Replace("\r\n", "\n"));
         }
 
-        public Point Point
+        public WinPoint Point
         {
             get => _point;
             set => SetAndNotify(ref _point, value);
@@ -240,12 +246,13 @@ namespace iSukces.DrawingPanel
         private SizeF _measure;
 
         private SizeF[] _measures;
-        private Point _point;
+        private WinPoint _point;
         private string _text;
         private VerticalDrawableTextAlignment _verticalAlignment;
         private float _lastFontSizeUsedForTextMeasure = -1;
 
         #endregion
+  
     }
 
     public enum HorizontalDrawableTextAlignment

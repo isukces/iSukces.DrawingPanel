@@ -3,7 +3,14 @@ using System.Windows;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
 using FontStyle = System.Drawing.FontStyle;
-using WinPoint = System.Windows.Point;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
+
 
 namespace iSukces.DrawingPanel.Sample
 {

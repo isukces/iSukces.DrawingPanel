@@ -2,9 +2,14 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using JetBrains.Annotations;
-using Point = System.Windows.Point;
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel
 {

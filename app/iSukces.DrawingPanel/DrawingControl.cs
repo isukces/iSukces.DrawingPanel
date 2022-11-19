@@ -4,6 +4,13 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 using iSukces.DrawingPanel.Interfaces;
+#if COREFX
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel
 {
@@ -73,7 +80,7 @@ namespace iSukces.DrawingPanel
                 var scale          = transformation.Scale;
                 var mm             = TickConfigutation.FindForScale(scale);
 
-                var topLeftLogical = transformation.FromCanvas(new System.Windows.Point(0, 0));
+                var topLeftLogical = transformation.FromCanvas(new WinPoint(0, 0));
                 {
                     var dim = _horizontalRuler.Dimension;
                     SetupRuller(ref dim, scale, mm,

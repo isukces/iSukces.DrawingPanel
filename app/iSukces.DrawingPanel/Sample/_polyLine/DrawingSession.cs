@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+#if COREFX
+using iSukces.Mathematics.Compatibility;
+using Point=iSukces.Mathematics.Compatibility.Point;
+#else
 using System.Windows;
+#endif
 
 namespace iSukces.DrawingPanel.Sample
 {

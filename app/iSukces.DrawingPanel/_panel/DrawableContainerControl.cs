@@ -3,11 +3,17 @@
 #endif
 using System;
 using System.Collections.Specialized;
-using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows;
-using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Rect=iSukces.Mathematics.Compatibility.Rect;
+#else
+using Point=System.Windows.Point;
+using Rect=System.Windows.Rect;
+using System.Windows.Forms;
+using System.Drawing;
+#endif
 
 namespace iSukces.DrawingPanel
 {

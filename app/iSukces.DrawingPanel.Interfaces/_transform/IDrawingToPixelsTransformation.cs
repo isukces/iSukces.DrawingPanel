@@ -2,9 +2,12 @@
 using System.Drawing.Drawing2D;
 #if COREFX
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
 using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
 #endif
+
 
 namespace iSukces.DrawingPanel.Interfaces
 {

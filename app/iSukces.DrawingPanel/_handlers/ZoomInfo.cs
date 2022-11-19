@@ -1,7 +1,14 @@
 ﻿using System;
-using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
 using Size = System.Drawing.Size;
+#if COREFX
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Rect=iSukces.Mathematics.Compatibility.Rect;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Rect=System.Windows.Rect;
+#endif
 
 namespace iSukces.DrawingPanel
 {
