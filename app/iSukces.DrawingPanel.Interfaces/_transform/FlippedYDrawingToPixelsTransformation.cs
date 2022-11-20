@@ -1,6 +1,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
-#if COREFX
+#if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 #else
 using WinPoint=System.Windows.Point;

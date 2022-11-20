@@ -1,11 +1,13 @@
-﻿#if COREFX
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using iSukces.DrawingPanel.Paths;
+﻿using iSukces.DrawingPanel.Paths;
 using iSukces.DrawingPanel.Paths.Test;
 using Xunit;
+#if COMPATMATH
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel.Paths.Test
 {

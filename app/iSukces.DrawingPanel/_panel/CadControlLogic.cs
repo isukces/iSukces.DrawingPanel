@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
-#if COREFX
+#if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Rect=iSukces.Mathematics.Compatibility.Rect;
 #else

@@ -1,17 +1,23 @@
-﻿using System.Windows;
-using Xunit;
+﻿using Xunit;
+#if COMPATMATH
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
     internal class AssertEx : Assert
     {
-        public static void Equal(double x, double y, Point point, int decimalPlaces = 6)
+        public static void Equal(double x, double y, WinPoint point, int decimalPlaces = 6)
         {
             Equal(x, point.X, decimalPlaces);
             Equal(y, point.Y, decimalPlaces);
         }
 
-        public static void Equal(Point ex, Point point, int decimalPlaces = 6)
+        public static void Equal(WinPoint ex, WinPoint point, int decimalPlaces = 6)
         {
             Equal(ex.X, point.X, decimalPlaces);
             Equal(ex.Y, point.Y, decimalPlaces);

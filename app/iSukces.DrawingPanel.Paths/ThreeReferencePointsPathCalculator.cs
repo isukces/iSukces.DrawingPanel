@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 #endif
 
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

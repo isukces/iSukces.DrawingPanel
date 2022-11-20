@@ -1,10 +1,12 @@
-#if COREFX
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
 using System;
 using System.Collections.Generic;
+#if COMPATMATH
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 
 namespace iSukces.DrawingPanel.Paths

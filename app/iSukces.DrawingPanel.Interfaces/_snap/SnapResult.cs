@@ -1,4 +1,4 @@
-﻿#if COREFX
+﻿#if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 #else
 using Point=System.Windows.Point;

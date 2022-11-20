@@ -1,5 +1,5 @@
 ﻿#define _OLD_RESULT
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-using Point = System.Windows.Point;
+#if COMPATMATH
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel.Paths.Test
 {

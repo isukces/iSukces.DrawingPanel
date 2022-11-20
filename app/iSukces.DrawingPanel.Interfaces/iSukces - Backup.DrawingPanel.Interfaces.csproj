@@ -19,23 +19,17 @@
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+  <PropertyGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' != 'net' ">
+    <DefineConstants>COREFX</DefineConstants>
     <UseWindowsForms>true</UseWindowsForms>
-    <UseWpf>true</UseWpf>
-    <ImplicitUsings>true</ImplicitUsings>
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <DefineConstants>$(DefineConstants);COMPATMATH</DefineConstants>
-  </PropertyGroup>
-  
+
   <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' == 'net' ">
     <Reference Include="WindowsBase" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
   </ItemGroup>

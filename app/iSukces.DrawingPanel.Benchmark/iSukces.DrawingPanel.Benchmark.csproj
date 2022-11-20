@@ -2,16 +2,23 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net48;net5.0;net6.0</TargetFrameworks>
         <LangVersion>default</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <TargetFramework>net48</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
-      <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
+      <PackageReference Include="iSukces.Math" Version="1.0.22324.122" />
+      <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
     </ItemGroup>
 
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWpf>true</UseWpf>
+        <ImplicitUsings>true</ImplicitUsings>
+        <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    </PropertyGroup>
     <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
         <Reference Include="WindowsBase" />
     </ItemGroup>

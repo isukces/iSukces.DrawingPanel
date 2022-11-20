@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-#if COREFX
-using iSukces.Mathematics.Compatibility;
-using Point=iSukces.Mathematics.Compatibility.Point;
+#if COMPATMATH
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using System.Windows;
+using WinPoint=System.Windows.Point;
+using Vector=System.Windows.Vector;
 #endif
 
 namespace iSukces.DrawingPanel.Sample
 {
     internal class DrawingSession
     {
-        public Point ProcessPoint(Point point, out AlignInfo ai, double scale)
+        public WinPoint ProcessPoint(WinPoint point, out AlignInfo ai, double scale)
         {
             var delta = 15 / scale;
 
@@ -32,7 +33,7 @@ namespace iSukces.DrawingPanel.Sample
                     ai.IdxY = index != lastIdx ? index : -1;
             }
 
-            point = new Point(x.Value, y.Value);
+            point = new WinPoint(x.Value, y.Value);
             if (x.HasAlignment || y.HasAlignment)
             {
                 if (ai.IdxX < 0 && ai.IdxY < 0)
@@ -45,7 +46,7 @@ namespace iSukces.DrawingPanel.Sample
             return point;
         }
 
-        private Point Snap(Point point, bool snapAngle)
+        private WinPoint Snap(WinPoint point, bool snapAngle)
         {
             var p2             = Points[Points.Count - 2];
             var v              = point - p2;
@@ -72,7 +73,7 @@ namespace iSukces.DrawingPanel.Sample
             return point;
         }
 
-        public List<Point> Points { get; } = new List<Point>();
+        public List<WinPoint> Points { get; } = new List<WinPoint>();
 
         public AlignInfo PointAlign = AlignInfo.Empty;
 

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-#if COREFX
+#if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else

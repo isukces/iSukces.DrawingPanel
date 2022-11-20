@@ -1,7 +1,7 @@
 using BenchmarkDotNet.Attributes;
 using iSukces.DrawingPanel.Paths;
 using iSukces.Mathematics;
-#if NET5_0 || NET6_0
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

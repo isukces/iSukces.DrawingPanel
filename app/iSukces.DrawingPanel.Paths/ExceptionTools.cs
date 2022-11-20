@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 
 #else

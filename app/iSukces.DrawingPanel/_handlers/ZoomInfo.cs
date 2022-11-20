@@ -1,7 +1,7 @@
 ﻿using System;
 using iSukces.DrawingPanel.Interfaces;
 using Size = System.Drawing.Size;
-#if COREFX
+#if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Rect=iSukces.Mathematics.Compatibility.Rect;
 using Vector=iSukces.Mathematics.Compatibility.Vector;

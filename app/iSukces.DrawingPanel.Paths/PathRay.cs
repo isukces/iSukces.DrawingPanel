@@ -2,10 +2,12 @@
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 using Newtonsoft.Json;
-#if COREFX
-using iSukces.Mathematics.Compatibility;
+#if COMPATMATH
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using System.Windows;
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
 #endif
 
 

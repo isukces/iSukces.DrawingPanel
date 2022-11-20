@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 using JetBrains.Annotations;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

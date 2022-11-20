@@ -1,4 +1,4 @@
-﻿#if COREFX
+﻿#if COMPATMATH
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 using Point=iSukces.Mathematics.Compatibility.Point;
 #else

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 
 #else

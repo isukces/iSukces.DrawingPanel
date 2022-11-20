@@ -15,33 +15,30 @@
     <Version>1.0.22308.65</Version>
     <FileVersion>1.0.22308.65</FileVersion>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net48;net5.0;net6.0</TargetFrameworks>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <TargetFrameworks>net48;net6.0;net6.0-windows</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <NoWarn>1701;1702;1591</NoWarn>
+  <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <NoWarn>1701;1702;1591</NoWarn>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+    <UseWpf>true</UseWpf>
+    <ImplicitUsings>true</ImplicitUsings>
+    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net5.0' or '$(TargetFramework)' == 'net5.0-windows'">
-    <DefineConstants>COREFX;NET50</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net6.0-windows'">
-    <DefineConstants>COREFX;NET60</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
-    <DefineConstants>FULLFRAMEWORK;NET48</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <DefineConstants>$(DefineConstants);COMPATMATH</DefineConstants>
   </PropertyGroup>
   
- 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+  <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' == 'net' ">
     <Reference Include="WindowsBase" />
   </ItemGroup>
+  
+
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.0.22201.120" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="iSukces.Math" Version="1.0.22324.122" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>

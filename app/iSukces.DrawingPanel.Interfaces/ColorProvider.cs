@@ -3,13 +3,6 @@ using System.Drawing;
 
 namespace iSukces.DrawingPanel.Interfaces
 {
-    /*
-    public interface IDrawingColorSchemeProvider
-    {
-        [NotNull]
-        IDrawingColorScheme ColorScheme { get; }
-    }
-    */
 
     public interface IDrawingColorScheme
     {

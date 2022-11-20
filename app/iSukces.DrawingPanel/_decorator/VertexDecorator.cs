@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
 using JetBrains.Annotations;
-#if COREFX
+#if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else

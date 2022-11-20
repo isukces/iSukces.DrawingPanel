@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using iSukces.DrawingPanel.Interfaces;
-#if COREFX
-using Point=iSukces.Mathematics.Compatibility.Point;
+#if COMPATMATH
+using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using Point=System.Windows.Point;
+using WinPoint=System.Windows.Point;
 using Vector=System.Windows.Vector;
 #endif
 
@@ -31,7 +31,7 @@ namespace iSukces.DrawingPanel
             return DrawingHandleResult.Break;
         }
 
-        public void MoveOtherThumbsAfterMainMoved(Point newThumbPoint, Point mainThumbCenterBeforeMove, MoveThumbDelegate move)
+        public void MoveOtherThumbsAfterMainMoved(WinPoint newThumbPoint, WinPoint mainThumbCenterBeforeMove, MoveThumbDelegate move)
         {
             var mainThumb          = DraggingSession.Thumb;
             var canMoveOtherThumbs = (mainThumb.Flags & ThumbFlags.MoveExclusively) == 0;
@@ -48,7 +48,7 @@ namespace iSukces.DrawingPanel
                     continue;
                 if ((dtd.Flags & DraggingTimeDataFlags.InvokeLocationMove) == 0) continue;
                 var point = thumb.Center;
-                point = new Point(point.X + moved.X, point.Y + moved.Y);
+                point = new WinPoint(point.X + moved.X, point.Y + moved.Y);
                 move(thumb, point);
             }
         }
@@ -91,7 +91,7 @@ namespace iSukces.DrawingPanel
         /// </summary>
         /// <param name="thumb">clicked thumb</param>
         /// <param name="point">clicked point logic coordinates</param>
-        public void OnDragInit(TThumb thumb, Point point)
+        public void OnDragInit(TThumb thumb, WinPoint point)
         {
             thumb.DraggingContext = new ThumbDraggingContext(DraggingTimeDataFlags.UnderMouse);
             DraggingSession       = new ThumbDraggingSession(thumb, point);
@@ -103,7 +103,7 @@ namespace iSukces.DrawingPanel
         {
         }
 
-        public ThumbStartDragging TryStartRealDragging(double scale, Point currentPoint, TThumb thumb)
+        public ThumbStartDragging TryStartRealDragging(double scale, WinPoint currentPoint, TThumb thumb)
         {
             if (DraggingSession.WasMovement)
                 return ThumbStartDragging.AlreadyStarted;
@@ -135,7 +135,7 @@ namespace iSukces.DrawingPanel
             }
         }
 
-        public delegate void MoveThumbDelegate(TThumb thumb, Point newLocation);
+        public delegate void MoveThumbDelegate(TThumb thumb, WinPoint newLocation);
 
         #region properties
 
@@ -152,7 +152,7 @@ namespace iSukces.DrawingPanel
 
         public sealed class ThumbDraggingSession
         {
-            public ThumbDraggingSession(TThumb thumb, Point mouseStartingPointLogical)
+            public ThumbDraggingSession(TThumb thumb, WinPoint mouseStartingPointLogical)
             {
                 Thumb                     = thumb;
                 ThumbCenter               = thumb.Center;
@@ -168,8 +168,8 @@ namespace iSukces.DrawingPanel
             #region properties
 
             public TThumb Thumb                     { get; }
-            public Point  ThumbCenter               { get; }
-            public Point  MouseStartingPointLogical { get; }
+            public WinPoint  ThumbCenter               { get; }
+            public WinPoint  MouseStartingPointLogical { get; }
             public Vector MouseOffsetToThumbCenter  { get; }
             public bool   WasMovement               { get; private set; }
 

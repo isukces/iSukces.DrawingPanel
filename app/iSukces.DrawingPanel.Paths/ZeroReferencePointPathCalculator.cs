@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

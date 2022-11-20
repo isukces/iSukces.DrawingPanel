@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 using Newtonsoft.Json;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 
 #else

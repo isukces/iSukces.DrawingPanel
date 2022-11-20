@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Windows;
+#if COMPATMATH
+using Point=iSukces.Mathematics.Compatibility.Point;
+using Vector=iSukces.Mathematics.Compatibility.Vector;
+#else
+using Point=System.Windows.Point;
+using Vector=System.Windows.Vector;
+#endif
 
 namespace iSukces.DrawingPanel.Paths.Test
 {
@@ -42,8 +48,8 @@ namespace iSukces.DrawingPanel.Paths.Test
             return this;
         }
 
-        public PathRayWithArm                  Start              { get; set; }
-        public PathRayWithArm                  End                { get; set; }
+        public PathRayWithArm           Start              { get; set; }
+        public PathRayWithArm           End                { get; set; }
         public IPathResult              Result             { get; set; }
         public TestName                 Title              { get; set; }
         public Action<ResultDrawer>     ExtraDrawingBottom { get; set; }

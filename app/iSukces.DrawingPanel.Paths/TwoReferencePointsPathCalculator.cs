@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-#if COREFX
+#if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 
 #else

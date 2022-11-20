@@ -5,7 +5,7 @@ using System;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
 using iSukces.DrawingPanel.Interfaces;
-#if COREFX
+#if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Rect=iSukces.Mathematics.Compatibility.Rect;
 #else

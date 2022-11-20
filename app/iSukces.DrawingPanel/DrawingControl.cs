@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 using iSukces.DrawingPanel.Interfaces;
-#if COREFX
+#if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
