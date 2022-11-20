@@ -12,13 +12,12 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22308.42</AssemblyVersion>
-    <Version>1.0.22308.42</Version>
-    <FileVersion>1.0.22308.42</FileVersion>
+    <AssemblyVersion>1.0.22324.43</AssemblyVersion>
+    <Version>1.0.22324.43</Version>
+    <FileVersion>1.0.22324.43</FileVersion>
     <LangVersion>latest</LangVersion>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
   </PropertyGroup>
@@ -31,12 +30,10 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <DefineConstants>$(DefineConstants);COMPATMATH</DefineConstants>
   </PropertyGroup>
-  
   <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' != 'net' ">
     <PackageReference Include="iSukces.Math" Version="1.0.22324.122" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />
   </ItemGroup>

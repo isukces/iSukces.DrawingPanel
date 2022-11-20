@@ -11,14 +11,13 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22308.20</AssemblyVersion>
-    <Version>1.0.22308.20</Version>
-    <FileVersion>1.0.22308.20</FileVersion>
+    <AssemblyVersion>1.0.22324.21</AssemblyVersion>
+    <Version>1.0.22324.21</Version>
+    <FileVersion>1.0.22324.21</FileVersion>
     <LangVersion>latest</LangVersion>
     <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
   </PropertyGroup>
@@ -31,7 +30,6 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <DefineConstants>$(DefineConstants);COMPATMATH</DefineConstants>
   </PropertyGroup>
-  
   <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' == 'net' ">
     <Reference Include="WindowsBase" />
     <Reference Include="System.Windows.Forms" />
