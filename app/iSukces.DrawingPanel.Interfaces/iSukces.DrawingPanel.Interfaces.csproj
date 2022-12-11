@@ -4,19 +4,21 @@
     <Title>Drawing panel interfaces</Title>
     <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2022</Copyright>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2022</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22324.21</AssemblyVersion>
-    <Version>1.0.22324.21</Version>
-    <FileVersion>1.0.22324.21</FileVersion>
+    <AssemblyVersion>1.0.22345.22</AssemblyVersion>
+    <Version>1.0.22345.22</Version>
+    <FileVersion>1.0.22345.22</FileVersion>
     <LangVersion>latest</LangVersion>
     <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
     <NoWarn>1701;1702;1591</NoWarn>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>c:\programs\narzedzia\sign\iSukcesCodeSign.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>

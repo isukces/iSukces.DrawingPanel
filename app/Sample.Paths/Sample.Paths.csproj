@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <Title>Sample paths</Title>
-        <Authors>Internet Sukces Piotr Stęclik</Authors>
-        <Company>Internet Sukces Piotr Stęclik</Company>
-        <Copyright>Copyright by Internet Sukces Piotr Stęclik 2020-2022</Copyright>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
-        <TargetFramework>net6.0-windows</TargetFramework>
-        <IncludeSource>false</IncludeSource>
-        <IncludeSymbols>true</IncludeSymbols>
-        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <Version>1.0.0.0</Version>
-        <FileVersion>1.0.0.0</FileVersion>
-        <LangVersion>latest</LangVersion>
-        <OutputType>WinExe</OutputType>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
-        <UseWindowsForms>true</UseWindowsForms>
-        <UseWpf>true</UseWpf>
-        <ImplicitUsings>true</ImplicitUsings>
-        <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
-    </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj"/>
-        <ProjectReference Include="..\iSukces.DrawingPanel\iSukces.DrawingPanel.csproj"/>
-        <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj"/>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
-        <Reference Include="WindowsBase"/>
-        <Reference Include="System.Windows.Forms"/>
-        <Reference Include="System.ServiceModel"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <Title>Sample paths</Title>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2022</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <IncludeSource>false</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <LangVersion>latest</LangVersion>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWpf>true</UseWpf>
+    <ImplicitUsings>true</ImplicitUsings>
+    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />
+    <ProjectReference Include="..\iSukces.DrawingPanel\iSukces.DrawingPanel.csproj" />
+    <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.ServiceModel" />
+  </ItemGroup>
 </Project>
