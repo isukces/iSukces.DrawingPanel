@@ -11,9 +11,9 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22345.22</AssemblyVersion>
-    <Version>1.0.22345.22</Version>
-    <FileVersion>1.0.22345.22</FileVersion>
+    <AssemblyVersion>1.0.23089.23</AssemblyVersion>
+    <Version>1.0.23089.23</Version>
+    <FileVersion>1.0.23089.23</FileVersion>
     <LangVersion>latest</LangVersion>
     <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
     <NoWarn>1701;1702;1591</NoWarn>

@@ -12,9 +12,9 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22345.44</AssemblyVersion>
-    <Version>1.0.22345.44</Version>
-    <FileVersion>1.0.22345.44</FileVersion>
+    <AssemblyVersion>1.0.23089.45</AssemblyVersion>
+    <Version>1.0.23089.45</Version>
+    <FileVersion>1.0.23089.45</FileVersion>
     <LangVersion>latest</LangVersion>
     <NoWarn>1701;1702;1591</NoWarn>
     <SignAssembly>true</SignAssembly>
