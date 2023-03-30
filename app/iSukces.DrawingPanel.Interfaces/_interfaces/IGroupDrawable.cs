@@ -6,4 +6,9 @@ namespace iSukces.DrawingPanel.Interfaces
     {
         bool PendingDrawing { get; }
     }
+
+    public interface ICanBeInvalidated
+    {
+        void Invalidate();
+    }
 }

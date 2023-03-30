@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;
 using TItem = iSukces.DrawingPanel.Interfaces.IDrawable;
 
 namespace iSukces.DrawingPanel
 {
-    public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawable
+    public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawable, ICanBeInvalidated
     {
         public GroupDrawable()
         {
@@ -17,9 +16,15 @@ namespace iSukces.DrawingPanel
             _children.CollectionChanged += ChildrenOnCollectionChanged;
         }
 
-        ~GroupDrawable() { Dispose(false); }
+        ~GroupDrawable()
+        {
+            Dispose(false);
+        }
 
-        public void BeginInit() { _suspendLevel++; }
+        public void BeginInit()
+        {
+            _suspendLevel++;
+        }
 
         protected virtual void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -68,17 +73,38 @@ namespace iSukces.DrawingPanel
 
         public void Draw(Graphics graphics)
         {
+            var wasPending = PendingDrawing;
             PendingDrawing = false;
             if (!Visible)
+            {
+                if (wasPending)
+                {
+                    var handler = PendingDrawingFinished;
+                    if (handler is not null)
+                        handler.Invoke(this, EventArgs.Empty);
+                }
+
                 return;
+            }
+
             for (var index = 0; index < _children.Count; index++)
             {
                 var child = _children[index];
                 child.Draw(graphics);
             }
+
+            if (wasPending)
+            {
+                var handler = PendingDrawingFinished;
+                if (handler is not null)
+                    handler.Invoke(this, EventArgs.Empty);
+            }
         }
 
-        private void ElementOnChanged(object sender, EventArgs e) { OnChanged(); }
+        private void ElementOnChanged(object sender, EventArgs e)
+        {
+            OnChanged();
+        }
 
         public void EndInit()
         {
@@ -90,6 +116,11 @@ namespace iSukces.DrawingPanel
                 _needNotifyOnChanged = false;
                 OnChanged();
             }
+        }
+
+        public void Invalidate()
+        {
+            OnChanged();
         }
 
         protected void OnChanged()
@@ -112,6 +143,17 @@ namespace iSukces.DrawingPanel
                 i.SetCanvasInfo(canvasInfo);
             }
         }
+
+        #region Properties
+
+        public IList<TItem> Children => _children;
+
+        public DrawingCanvasInfo CanvasInfo => _canvasInfo;
+
+        public string Name { get; set; }
+        public object Tag  { get; set; }
+
+        #endregion
 
         public event EventHandler Changed
         {
@@ -148,19 +190,17 @@ namespace iSukces.DrawingPanel
         public bool PresenterRenderingFlag { get; set; }
         public bool PendingDrawing         { get; private set; }
 
-        public IList<TItem> Children => _children;
+        public event EventHandler PendingDrawingFinished;
 
-        public DrawingCanvasInfo CanvasInfo => _canvasInfo;
+        #region Fields
 
-        public string Name { get; set; }
-        public object Tag  { get; set; }
         private DrawingCanvasInfo _canvasInfo;
-
         private EventHandler _changed;
         private ExtendedObservableCollection<TItem> _children;
         private bool _needNotifyOnChanged;
-
         private int _suspendLevel;
         private bool _visible = true;
+
+        #endregion
     }
 }
