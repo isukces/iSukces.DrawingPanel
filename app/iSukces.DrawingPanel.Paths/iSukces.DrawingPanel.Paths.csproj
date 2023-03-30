@@ -4,7 +4,7 @@
     <Title>Drawing panel paths</Title>
     <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2022</Copyright>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -35,9 +35,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.0.22324.122" />
+    <PackageReference Include="iSukces.Math" Version="1.0.23077.123" />
     <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />

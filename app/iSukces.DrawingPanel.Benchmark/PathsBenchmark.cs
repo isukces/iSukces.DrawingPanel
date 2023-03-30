@@ -4,7 +4,7 @@ using iSukces.DrawingPanel.Paths;
 
 namespace iSukces.DrawingPanel.Benchmark
 {
-    [SimpleJob(RunStrategy.Throughput, targetCount: 7, launchCount: 1)]
+    [SimpleJob(RunStrategy.Throughput, launchCount: 1)]
     [MemoryDiagnoser]
     public class PathsBenchmark
     {

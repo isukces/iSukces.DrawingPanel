@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Benchmark
 {
-    [SimpleJob(targetCount: 8)]
+    [SimpleJob( 8)]
     // [MemoryDiagnoser]
     public class VectorBenchmark
     {

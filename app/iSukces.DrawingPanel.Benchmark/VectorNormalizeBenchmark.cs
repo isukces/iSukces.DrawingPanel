@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace iSukces.DrawingPanel.Benchmark
 {
-    [SimpleJob(targetCount: 8)]
+    [SimpleJob(8)]
     public class VectorNormalizeBenchmark
     {
         [Benchmark(Description = "Vector normalize", Baseline = true)]

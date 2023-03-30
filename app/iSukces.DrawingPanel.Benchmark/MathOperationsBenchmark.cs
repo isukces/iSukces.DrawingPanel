@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace iSukces.DrawingPanel.Benchmark
 {
-    [SimpleJob(targetCount: 10/*, invocationCount:1_0000_000*/)]
+    [SimpleJob(10/*, invocationCount:1_0000_000*/)]
     public class MathOperationsBenchmark
     {
         [Benchmark(Description = "Sin")]
