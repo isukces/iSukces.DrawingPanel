@@ -1,32 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <LangVersion>default</LangVersion>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFramework>net48</TargetFramework>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>c:\programs\narzedzia\sign\iSukcesCodeSign.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
-      <PackageReference Include="iSukces.Math" Version="1.0.23077.123" />
-      <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-    </ItemGroup>
-
-    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
-        <UseWindowsForms>true</UseWindowsForms>
-        <UseWpf>true</UseWpf>
-        <ImplicitUsings>true</ImplicitUsings>
-        <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
-    </PropertyGroup>
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
-        <Reference Include="WindowsBase" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
-    </ItemGroup>
-
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <LangVersion>default</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>c:\programs\narzedzia\sign\iSukcesCodeSign.snk</AssemblyOriginatorKeyFile>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2023</Copyright>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <UseWpf>true</UseWpf>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageReference Include="iSukces.Math" Version="1.0.23077.123" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWpf>true</UseWpf>
+    <ImplicitUsings>true</ImplicitUsings>
+    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
+  </ItemGroup>
 </Project>

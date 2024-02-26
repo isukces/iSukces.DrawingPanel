@@ -1,6 +1,7 @@
 using System;
 using BenchmarkDotNet.Attributes;
 using iSukces.DrawingPanel.Paths;
+using Point = System.Windows.Point;
 
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
@@ -122,21 +123,13 @@ namespace iSukces.DrawingPanel.Benchmark
             var v = new FastVector(1, 2);
             return v;
         }
-
         
-  
- 
         private readonly Point _p1 = new(1, 2);
         private readonly Point _p2 = new(3, 5);
 
         private readonly Vector _v1 = new(1, 2);
         private readonly Vector _v2 = new(3, 1);
- 
-
-
+        
         const int Iterations = 100;
-
-
-      
     }
 }

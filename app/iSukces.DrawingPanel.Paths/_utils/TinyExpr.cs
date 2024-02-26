@@ -1,4 +1,4 @@
-#if DEBUG
+#if DEBUG && USE_TINYEXPR
 namespace iSukces.DrawingPanel.Paths
 {
     internal class TinyExpr
@@ -12,7 +12,6 @@ namespace iSukces.DrawingPanel.Paths
         {
             _code = code;
         }
-
 
         public static TinyExpr operator +(TinyExpr a, TinyExpr b)
         {
@@ -139,6 +138,22 @@ namespace iSukces.DrawingPanel.Paths
 
         #endregion
     }
-}
 
+
+    internal static partial class PathsExtensions
+    {
+        internal static TinyExpr ToExpr(this double d)
+        {
+            return new TinyExpr(d);
+        }
+
+        public static string DebugCreate(PathRay start, string name)
+        {
+            var p = start.Point;
+            var v = start.Vector;
+            return $"{name} = new {nameof(PathRay)}({p.X.ToExpr()}, {p.Y.ToExpr()}, {v.X.ToExpr()}, {v.Y.ToExpr()});";
+        }
+
+    }
+}
 #endif

@@ -161,7 +161,7 @@ namespace iSukces.DrawingPanel
             {
 #if DEBUG
                 if (GetType().Name == "AutoCadLayersGroup")
-                    Debug.Write("");
+                    System.Diagnostics.Debug.Write("");
 #endif
                 _changed += value;
             }
@@ -169,7 +169,7 @@ namespace iSukces.DrawingPanel
             {
 #if DEBUG
                 if (GetType().Name == "AutoCadLayersGroup")
-                    Debug.Write("");
+                    System.Diagnostics.Debug.Write("");
 #endif
                 _changed -= value;
             }
