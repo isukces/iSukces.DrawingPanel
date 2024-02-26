@@ -1,8 +1,7 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public enum StartOrStop : byte
 {
-    public enum StartOrStop : byte
-    {
-        Start,
-        Stop,
-    }
+    Start,
+    Stop,
 }

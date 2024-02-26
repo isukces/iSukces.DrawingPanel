@@ -1,28 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <LangVersion>default</LangVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2023-2024</Copyright>
+    <ProjectGuid>{21786D6B-C157-4633-8DCC-66B7A4E9DEBE}</ProjectGuid>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>c:\programs\narzedzia\sign\iSukcesCodeSign.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2023</Copyright>
+    <LangVersion>12</LangVersion>
+    <OutputType>Exe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Authors>Internet Sukces Piotr Stęclik</Authors>
     <UseWpf>true</UseWpf>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <ImplicitUsings>true</ImplicitUsings>
+    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    <UseWpf>true</UseWpf>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
     <PackageReference Include="iSukces.Math" Version="1.23.1218.127" />
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
-  </ItemGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWpf>true</UseWpf>
-    <ImplicitUsings>true</ImplicitUsings>
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
   </ItemGroup>
 </Project>

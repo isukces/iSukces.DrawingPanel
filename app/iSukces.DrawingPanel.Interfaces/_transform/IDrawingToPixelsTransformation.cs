@@ -9,24 +9,23 @@ using Vector=System.Windows.Vector;
 #endif
 
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDrawingToPixelsTransformation
 {
-    public interface IDrawingToPixelsTransformation
-    {
-        WinPoint FromCanvas(WinPoint point);
+    WinPoint FromCanvas(WinPoint point);
 
-        WinPoint FromCanvas(Point point);
+    WinPoint FromCanvas(Point point);
 
-        Matrix GetTransform();
+    Matrix GetTransform();
         
-        WinPoint ToCanvas(WinPoint point);
+    WinPoint ToCanvas(WinPoint point);
 
-        WinPoint ToCanvas(double pointX, double pointY);
+    WinPoint ToCanvas(double pointX, double pointY);
 
-        PointF ToCanvasF(WinPoint point);
+    PointF ToCanvasF(WinPoint point);
 
-        PointF ToCanvasF(double pointX, double pointY);
+    PointF ToCanvasF(double pointX, double pointY);
 
-        double Scale { get; }
-    }
+    double Scale { get; }
 }

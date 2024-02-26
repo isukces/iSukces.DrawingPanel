@@ -1,6 +1,5 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDpHandler
 {
-    public interface IDpHandler
-    {
-    }
 }

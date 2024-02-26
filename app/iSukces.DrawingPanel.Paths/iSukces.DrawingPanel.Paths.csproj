@@ -1,56 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Title>Drawing panel paths</Title>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2023</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2024</Copyright>
+    <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <AssemblyVersion>1.0.23089.68</AssemblyVersion>
+    <FileVersion>1.0.23089.68</FileVersion>
+    <Version>1.0.23089.68</Version>
+    <LangVersion>12</LangVersion>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.23089.68</AssemblyVersion>
-    <Version>1.0.23089.68</Version>
-    <FileVersion>1.0.23089.68</FileVersion>
-    <LangVersion>latest</LangVersion>
-    <NoWarn>1701;1702;1591</NoWarn>
-    <TargetFrameworks>net8.0;net8.0-windows</TargetFrameworks>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>c:\programs\narzedzia\sign\iSukcesCodeSign.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+    <Title>Drawing panel paths</Title>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <UseWpf>true</UseWpf>
     <ImplicitUsings>true</ImplicitUsings>
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    <UseWpf>true</UseWpf>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <DefineConstants>$(DefineConstants);COMPATMATH</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' == 'net' ">
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="iSukces.Math" Version="1.23.1218.127" />
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="ZeroReferencePointPathCalculatorResult.cs">
+    <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
       <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
     </Compile>
-    <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
+    <Compile Update="ZeroReferencePointPathCalculatorResult.cs">
       <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
     </Compile>
     <Compile Update="_utils\PathDistanceFinderResult.cs">
       <DependentUpon>PathDistanceFinder.cs</DependentUpon>
     </Compile>
+    <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
   </ItemGroup>
 </Project>

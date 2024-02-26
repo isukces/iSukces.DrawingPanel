@@ -1,12 +1,11 @@
-﻿namespace iSukces.DrawingPanel.Paths
+﻿namespace iSukces.DrawingPanel.Paths;
+
+public class PathBase
 {
-    public class PathBase
-    {
-        #region Fields
+    #region Fields
 
-        private const double LengthEpsilon = 1e-4;
-        public static double LengthEpsilonSquare = LengthEpsilon * LengthEpsilon;
+    private const double LengthEpsilon = 1e-4;
+    public static double LengthEpsilonSquare = LengthEpsilon * LengthEpsilon;
 
-        #endregion
-    }
+    #endregion
 }

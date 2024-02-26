@@ -1,51 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Title>Drawing panel</Title>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2023</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2024</Copyright>
+    <ProjectGuid>{A26B3431-314C-4B71-B75E-D1DEE0A894C2}</ProjectGuid>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <AssemblyVersion>1.0.23089.45</AssemblyVersion>
+    <FileVersion>1.0.23089.45</FileVersion>
+    <Version>1.0.23089.45</Version>
+    <LangVersion>12</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.23089.45</AssemblyVersion>
-    <Version>1.0.23089.45</Version>
-    <FileVersion>1.0.23089.45</FileVersion>
-    <LangVersion>latest</LangVersion>
-    <NoWarn>1701;1702;1591</NoWarn>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>c:\programs\narzedzia\sign\iSukcesCodeSign.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+    <Title>Drawing panel</Title>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWpf>true</UseWpf>
     <ImplicitUsings>true</ImplicitUsings>
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
+    <UseWpf>true</UseWpf>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <DefineConstants>$(DefineConstants);COMPATMATH</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' != 'net' ">
-    <PackageReference Include="iSukces.Math" Version="1.23.1218.127" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework.TrimEnd(`0123456789.`))' == 'net' ">
-    <Reference Include="PresentationCore" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.ServiceModel" />
-  </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="iSukces.Math" Version="1.23.1218.127" />
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
   </ItemGroup>
 </Project>

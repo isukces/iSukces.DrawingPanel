@@ -1,20 +1,19 @@
 ﻿using System;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel;
+
+public class BaseDisposable : IDisposable
 {
-    public class BaseDisposable : IDisposable
+    ~BaseDisposable() { DisposeInternal(); }
+
+    public void Dispose()
     {
-        ~BaseDisposable() { DisposeInternal(); }
+        DisposeInternal();
+        GC.SuppressFinalize(this);
+    }
 
-        public void Dispose()
-        {
-            DisposeInternal();
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void DisposeInternal()
-        {
-            // Release managed resources here
-        }
+    protected virtual void DisposeInternal()
+    {
+        // Release managed resources here
     }
 }

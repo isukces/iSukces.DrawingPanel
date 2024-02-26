@@ -1,9 +1,8 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDrawingPanelZoomStorage 
 {
-    public interface IDrawingPanelZoomStorage 
-    {
-        bool TryRead(out DrawingPanelZoomStorageData data);
-        void Write(DrawingPanelZoomStorageData data);
-        void Flush();
-    }
+    bool TryRead(out DrawingPanelZoomStorageData data);
+    void Write(DrawingPanelZoomStorageData data);
+    void Flush();
 }

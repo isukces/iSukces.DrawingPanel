@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 using JetBrains.Annotations;
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface ILiteDrawable
 {
-    public interface ILiteDrawable
-    {
-        void Draw([NotNull] Graphics graphics, [NotNull] DrawingCanvasInfo canvasInfo);
-    }
+    void Draw([NotNull] Graphics graphics, [NotNull] DrawingCanvasInfo canvasInfo);
 }

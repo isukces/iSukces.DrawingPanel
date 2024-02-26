@@ -1,10 +1,9 @@
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel;
+
+public enum AxisLocation
 {
-    public enum AxisLocation
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
+    Up,
+    Down,
+    Left,
+    Right
 }

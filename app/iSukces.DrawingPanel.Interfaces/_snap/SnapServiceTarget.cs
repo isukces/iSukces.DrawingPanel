@@ -1,9 +1,8 @@
-﻿namespace iSukces.DrawingPanel.Interfaces
+﻿namespace iSukces.DrawingPanel.Interfaces;
+
+public enum SnapServiceTarget
 {
-    public enum SnapServiceTarget
-    {
-        None,
-        OrthoAlignX,
-        OrthoAlignY
-    }
+    None,
+    OrthoAlignX,
+    OrthoAlignY
 }

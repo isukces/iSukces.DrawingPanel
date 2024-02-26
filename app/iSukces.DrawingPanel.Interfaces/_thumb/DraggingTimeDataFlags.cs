@@ -1,19 +1,18 @@
 using System;
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+[Flags]
+public enum DraggingTimeDataFlags
 {
-    [Flags]
-    public enum DraggingTimeDataFlags
-    {
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// Denotes that vertex is under mouse
-        /// </summary>
-        UnderMouse = 1,
+    /// <summary>
+    /// Denotes that vertex is under mouse
+    /// </summary>
+    UnderMouse = 1,
 
-        Arrange = 2,
-        InvokeLocationMove = 4,
-        DontUpdateVector = 8,
-    }
+    Arrange = 2,
+    InvokeLocationMove = 4,
+    DontUpdateVector = 8,
 }

@@ -1,7 +1,6 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDpSizeChangedHandler : IDpHandler
 {
-    public interface IDpSizeChangedHandler : IDpHandler
-    {
-        // HandleResult HandleSizeChanged(SizeChangedEventArgs e);
-    }
+    // HandleResult HandleSizeChanged(SizeChangedEventArgs e);
 }

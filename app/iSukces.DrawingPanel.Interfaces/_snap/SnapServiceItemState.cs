@@ -1,9 +1,8 @@
-﻿namespace iSukces.DrawingPanel.Interfaces
+﻿namespace iSukces.DrawingPanel.Interfaces;
+
+public enum SnapServiceItemState
 {
-    public enum SnapServiceItemState
-    {
-        Normal,
-        JustSelected,
-        MarkedForRemoving
-    }
+    Normal,
+    JustSelected,
+    MarkedForRemoving
 }

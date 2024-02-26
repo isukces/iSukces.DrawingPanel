@@ -1,8 +1,7 @@
-namespace iSukces.DrawingPanel.Paths.Test
+namespace iSukces.DrawingPanel.Paths.Test;
+
+public interface IPathTracker
 {
-    public interface IPathTracker
-    {
-        double GetLength();
-        TrackInfo GetTrackInfo(double x);
-    }
+    double GetLength();
+    TrackInfo GetTrackInfo(double x);
 }

@@ -1,9 +1,8 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public enum DrawingHandleResult
 {
-    public enum DrawingHandleResult
-    {
-        Continue,
-        Break,
-        ContinueAfterAction
-    }
+    Continue,
+    Break,
+    ContinueAfterAction
 }

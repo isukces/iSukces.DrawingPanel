@@ -5,11 +5,10 @@ using System.Windows;
 #endif
 
 
-namespace iSukces.DrawingPanel.Paths
+namespace iSukces.DrawingPanel.Paths;
+
+public interface ILineCollider
 {
-    public interface ILineCollider
-    {
-        bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
-            out Point correctedPoint);
-    }
+    bool IsLineCollision(Point hitPoint, double toleranceSquared, out double distanceSquared,
+        out Point correctedPoint);
 }

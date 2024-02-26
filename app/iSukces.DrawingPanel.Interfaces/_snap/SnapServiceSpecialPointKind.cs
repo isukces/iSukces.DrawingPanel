@@ -1,10 +1,9 @@
-﻿namespace iSukces.DrawingPanel.Interfaces
+﻿namespace iSukces.DrawingPanel.Interfaces;
+
+public enum SnapServiceSpecialPointKind
 {
-    public enum SnapServiceSpecialPointKind
-    {
-        Corner,
-        Middle,
-        Line,
-        StartDragging
-    }
+    Corner,
+    Middle,
+    Line,
+    StartDragging
 }

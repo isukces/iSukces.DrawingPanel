@@ -1,27 +1,26 @@
-namespace iSukces.DrawingPanel.Paths.Test
+namespace iSukces.DrawingPanel.Paths.Test;
+
+public class TestBaseClass
 {
-    public class TestBaseClass
+    static TestBaseClass()
     {
-        static TestBaseClass()
-        {
-            PathCalculationConfig.CheckRadius = true;
+        PathCalculationConfig.CheckRadius = true;
             
-            VariablesDictionary.GetVarName = type =>
-            {
-                if (type == typeof(PathRay))
-                    return "ray";
+        VariablesDictionary.GetVarName = type =>
+        {
+            if (type == typeof(PathRay))
+                return "ray";
                 
-                if (type == typeof(ArcDefinition))
-                    return "arc";
-                if (type == typeof(LinePathElement))
-                    return "line";
-                if (type == typeof(WayPoint))
-                    return "waypoint";
+            if (type == typeof(ArcDefinition))
+                return "arc";
+            if (type == typeof(LinePathElement))
+                return "line";
+            if (type == typeof(WayPoint))
+                return "waypoint";
                 
                 
                 
-                return null;
-            };
-        }
+            return null;
+        };
     }
 }

@@ -2,58 +2,152 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace iSukces.DrawingPanel.Benchmark
+namespace iSukces.DrawingPanel.Benchmark;
+
+[StructLayout(LayoutKind.Auto,Size = 12) ]
+public struct FastVector
 {
-    
-    [StructLayout(LayoutKind.Auto,Size = 12) ]
-    public struct FastVector
+    private readonly double _x;
+    private readonly double _y;
+    private readonly bool _isUnitVector;
+
+    public FastVector(double x, double y)
     {
-        private readonly double _x;
-        private readonly double _y;
-        private readonly bool _isUnitVector;
-
-        public FastVector(double x, double y)
-        {
-            _x            = x;
-            _y            = y;
-            _isUnitVector = false;
-        }
+        _x            = x;
+        _y            = y;
+        _isUnitVector = false;
+    }
  
-        private FastVector(double x, double y, bool isUnitVector) 
+    private FastVector(double x, double y, bool isUnitVector) 
+    {
+        _x            = x;
+        _y            = y;
+        _isUnitVector = isUnitVector;
+    }
+
+    public double X => _x;
+    public double Y => _y;
+
+    public bool IsUnitVector => _isUnitVector;
+
+
+    public double Length
+    {
+        get
         {
-            _x            = x;
-            _y            = y;
-            _isUnitVector = isUnitVector;
+            if (_isUnitVector)
+                return 1;
+            return Math.Sqrt(_x * _x + _y * _y);
         }
+    }
 
-        public double X => _x;
-        public double Y => _y;
-
-        public bool IsUnitVector => _isUnitVector;
-
-
-        public double Length
+    public double LengthSquared
+    {
+        get
         {
-            get
+            if (_isUnitVector)
+                return 1;
+            return _x * _x + _y * _y;
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Normalize(ref double x, ref double y)
+    {
+        var    xMinus = x < 0;
+        var    yMinus = y < 0;
+        double vLength;
+
+        if (yMinus)
+        {
+            var absY = -y;
+
+            if (xMinus)
             {
-                if (_isUnitVector)
-                    return 1;
-                return Math.Sqrt(_x * _x + _y * _y);
+                var absX = -x;
+
+                if (absX > absY)
+                {
+                    y       /= absX;
+                    x       =  -1;
+                    vLength =  Math.Sqrt(y * y - x);
+                }
+                else
+                {
+                    x       /= absY;
+                    y       =  -1;
+                    vLength =  Math.Sqrt(x * x - y);
+                }
+            }
+            else
+            {
+                var absX = x;
+                if (absX > absY)
+                {
+                    y       /= absX;
+                    x       =  1;
+                    vLength =  Math.Sqrt(y * y + x);
+                }
+                else
+                {
+                    x       /= absY;
+                    y       =  -1;
+                    vLength =  Math.Sqrt(x * x - y);
+                }
+            }
+        }
+        else
+        {
+            var absY = y;
+
+            if (xMinus)
+            {
+                var absX = -x;
+
+                if (absX > absY)
+                {
+                    y       /= absX;
+                    x       =  -1;
+                    vLength =  Math.Sqrt(y * y - x);
+                }
+                else
+                {
+                    x       /= absY;
+                    y       =  1;
+                    vLength =  Math.Sqrt(x * x + y);
+                }
+            }
+            else
+            {
+                var absX = x;
+
+                if (absX > absY)
+                {
+                    y       /= absX;
+                    x       =  1;
+                    vLength =  Math.Sqrt(y * y + x);
+                }
+                else
+                {
+                    x       /= absY;
+                    y       =  1;
+                    vLength =  Math.Sqrt(x * x + y);
+                }
             }
         }
 
-        public double LengthSquared
-        {
-            get
-            {
-                if (_isUnitVector)
-                    return 1;
-                return _x * _x + _y * _y;
-            }
-        }
+        x /= vLength;
+        y /= vLength;
+    }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Normalize(ref double x, ref double y)
+    public FastVector Normalize()
+    {
+        if (_isUnitVector)
+            return this;
+
+        var x = _x;
+        var y = _y;
+
         {
             var    xMinus = x < 0;
             var    yMinus = y < 0;
@@ -71,13 +165,13 @@ namespace iSukces.DrawingPanel.Benchmark
                     {
                         y       /= absX;
                         x       =  -1;
-                        vLength =  Math.Sqrt(y * y - x);
+                        vLength =  Math.Sqrt(1 + y * y);
                     }
                     else
                     {
                         x       /= absY;
                         y       =  -1;
-                        vLength =  Math.Sqrt(x * x - y);
+                        vLength =  Math.Sqrt(x * x + 1);
                     }
                 }
                 else
@@ -87,13 +181,13 @@ namespace iSukces.DrawingPanel.Benchmark
                     {
                         y       /= absX;
                         x       =  1;
-                        vLength =  Math.Sqrt(y * y + x);
+                        vLength =  Math.Sqrt(1 + y * y);
                     }
                     else
                     {
                         x       /= absY;
                         y       =  -1;
-                        vLength =  Math.Sqrt(x * x - y);
+                        vLength =  Math.Sqrt(x * x + 1);
                     }
                 }
             }
@@ -109,13 +203,13 @@ namespace iSukces.DrawingPanel.Benchmark
                     {
                         y       /= absX;
                         x       =  -1;
-                        vLength =  Math.Sqrt(y * y - x);
+                        vLength =  Math.Sqrt(1 + y * y);
                     }
                     else
                     {
                         x       /= absY;
                         y       =  1;
-                        vLength =  Math.Sqrt(x * x + y);
+                        vLength =  Math.Sqrt(x * x + 1);
                     }
                 }
                 else
@@ -126,13 +220,13 @@ namespace iSukces.DrawingPanel.Benchmark
                     {
                         y       /= absX;
                         x       =  1;
-                        vLength =  Math.Sqrt(y * y + x);
+                        vLength =  Math.Sqrt(1 + y * y);
                     }
                     else
                     {
                         x       /= absY;
                         y       =  1;
-                        vLength =  Math.Sqrt(x * x + y);
+                        vLength =  Math.Sqrt(x * x + 1);
                     }
                 }
             }
@@ -140,102 +234,6 @@ namespace iSukces.DrawingPanel.Benchmark
             x /= vLength;
             y /= vLength;
         }
-
-        public FastVector Normalize()
-        {
-            if (_isUnitVector)
-                return this;
-
-            var x = _x;
-            var y = _y;
-
-            {
-                var    xMinus = x < 0;
-                var    yMinus = y < 0;
-                double vLength;
-
-                if (yMinus)
-                {
-                    var absY = -y;
-
-                    if (xMinus)
-                    {
-                        var absX = -x;
-
-                        if (absX > absY)
-                        {
-                            y       /= absX;
-                            x       =  -1;
-                            vLength =  Math.Sqrt(1 + y * y);
-                        }
-                        else
-                        {
-                            x       /= absY;
-                            y       =  -1;
-                            vLength =  Math.Sqrt(x * x + 1);
-                        }
-                    }
-                    else
-                    {
-                        var absX = x;
-                        if (absX > absY)
-                        {
-                            y       /= absX;
-                            x       =  1;
-                            vLength =  Math.Sqrt(1 + y * y);
-                        }
-                        else
-                        {
-                            x       /= absY;
-                            y       =  -1;
-                            vLength =  Math.Sqrt(x * x + 1);
-                        }
-                    }
-                }
-                else
-                {
-                    var absY = y;
-
-                    if (xMinus)
-                    {
-                        var absX = -x;
-
-                        if (absX > absY)
-                        {
-                            y       /= absX;
-                            x       =  -1;
-                            vLength =  Math.Sqrt(1 + y * y);
-                        }
-                        else
-                        {
-                            x       /= absY;
-                            y       =  1;
-                            vLength =  Math.Sqrt(x * x + 1);
-                        }
-                    }
-                    else
-                    {
-                        var absX = x;
-
-                        if (absX > absY)
-                        {
-                            y       /= absX;
-                            x       =  1;
-                            vLength =  Math.Sqrt(1 + y * y);
-                        }
-                        else
-                        {
-                            x       /= absY;
-                            y       =  1;
-                            vLength =  Math.Sqrt(x * x + 1);
-                        }
-                    }
-                }
-
-                x /= vLength;
-                y /= vLength;
-            }
-            return new FastVector(x, y, true);
-        }
+        return new FastVector(x, y, true);
     }
 }

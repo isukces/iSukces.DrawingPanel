@@ -1,8 +1,7 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDpHandlerContainer
 {
-    public interface IDpHandlerContainer
-    {
-        void RegisterHandler(IDpHandler handler, int order);
-        void UnregisterHandler(IDpHandler handler);
-    }
+    void RegisterHandler(IDpHandler handler, int order);
+    void UnregisterHandler(IDpHandler handler);
 }

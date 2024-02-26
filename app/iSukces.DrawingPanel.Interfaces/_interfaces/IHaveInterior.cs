@@ -1,7 +1,6 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IHaveInterior
 {
-    public interface IHaveInterior
-    {
-        bool IsInside(double x, double y);
-    }
+    bool IsInside(double x, double y);
 }

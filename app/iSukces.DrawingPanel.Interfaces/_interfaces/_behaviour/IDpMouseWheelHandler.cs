@@ -1,9 +1,8 @@
 using System.Windows.Forms;
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDpMouseWheelHandler : IDpHandler
 {
-    public interface IDpMouseWheelHandler : IDpHandler
-    {
-        DrawingHandleResult HandleMouseWheel(MouseEventArgs args);
-    }
+    DrawingHandleResult HandleMouseWheel(MouseEventArgs args);
 }

@@ -1,9 +1,8 @@
 using System.Windows.Forms;
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface ICursorHolder
 {
-    public interface ICursorHolder
-    {
-        public Cursor Cursor { get; }
-    }
+    public Cursor Cursor { get; }
 }

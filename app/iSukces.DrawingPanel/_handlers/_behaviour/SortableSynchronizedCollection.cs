@@ -1,34 +1,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel;
+
+public sealed class SortableSynchronizedCollection<T> : SynchronizedCollection<T>
 {
-    public sealed class SortableSynchronizedCollection<T> : SynchronizedCollection<T>
+    public T[] GetSynchronizedArray()
     {
-        public T[] GetSynchronizedArray()
+        lock(SyncRoot)
         {
-            lock(SyncRoot)
-            {
-                var result = new T[Count];
-                CopyTo(result, 0);
-                return result;
-            }
+            var result = new T[Count];
+            CopyTo(result, 0);
+            return result;
         }
+    }
 
-        public void Sort(IComparer<T> comparer)
+    public void Sort(IComparer<T> comparer)
+    {
+        lock(SyncRoot)
         {
-            lock(SyncRoot)
-            {
-                Items.Sort(comparer);
-            }
+            Items.Sort(comparer);
         }
+    }
 
-        public void Sort(Comparison<T> comparison)
+    public void Sort(Comparison<T> comparison)
+    {
+        lock(SyncRoot)
         {
-            lock(SyncRoot)
-            {
-                Items.Sort(comparison);
-            }
+            Items.Sort(comparison);
         }
     }
 }

@@ -1,7 +1,6 @@
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface ISnapServiceProvider
 {
-    public interface ISnapServiceProvider
-    {
-        ISnapService GetService(string documentUid);
-    }
+    ISnapService GetService(string documentUid);
 }

@@ -1,18 +1,17 @@
 using iSukces.DrawingPanel.Interfaces;
 
-namespace iSukces.DrawingPanel
+namespace iSukces.DrawingPanel;
+
+internal struct HolderWrapper
 {
-    internal struct HolderWrapper
+    public HolderWrapper(IDpHandler handler, int order)
     {
-        public HolderWrapper(IDpHandler handler, int order)
-        {
-            Handler = handler;
-            Order   = order;
-        }
-
-        public override string ToString() { return Handler?.ToString() ?? base.ToString(); }
-
-        public IDpHandler Handler { get; }
-        public int         Order   { get; }
+        Handler = handler;
+        Order   = order;
     }
+
+    public override string ToString() { return Handler?.ToString() ?? base.ToString(); }
+
+    public IDpHandler Handler { get; }
+    public int        Order   { get; }
 }

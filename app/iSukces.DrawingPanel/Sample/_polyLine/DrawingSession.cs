@@ -8,92 +8,91 @@ using WinPoint=System.Windows.Point;
 using Vector=System.Windows.Vector;
 #endif
 
-namespace iSukces.DrawingPanel.Sample
+namespace iSukces.DrawingPanel.Sample;
+
+internal class DrawingSession
 {
-    internal class DrawingSession
+    public WinPoint ProcessPoint(WinPoint point, out AlignInfo ai, double scale)
     {
-        public WinPoint ProcessPoint(WinPoint point, out AlignInfo ai, double scale)
+        var delta = 15 / scale;
+
+        var x = new AlignToValueAggregator(point.X);
+        var y = new AlignToValueAggregator(point.Y);
+
+        var lastIdx = Points.Count - 2;
+
+        ai = AlignInfo.Empty;
+
+        for (var index = lastIdx; index >= 0; index--)
         {
-            var delta = 15 / scale;
+            var p = Points[index];
+            if (x.TryAccept(p.X, delta))
+                ai.IdxX = index != lastIdx ? index : -1;
 
-            var x = new AlignToValueAggregator(point.X);
-            var y = new AlignToValueAggregator(point.Y);
+            if (y.TryAccept(p.Y, delta))
+                ai.IdxY = index != lastIdx ? index : -1;
+        }
 
-            var lastIdx = Points.Count - 2;
-
-            ai = AlignInfo.Empty;
-
-            for (var index = lastIdx; index >= 0; index--)
-            {
-                var p = Points[index];
-                if (x.TryAccept(p.X, delta))
-                    ai.IdxX = index != lastIdx ? index : -1;
-
-                if (y.TryAccept(p.Y, delta))
-                    ai.IdxY = index != lastIdx ? index : -1;
-            }
-
-            point = new WinPoint(x.Value, y.Value);
-            if (x.HasAlignment || y.HasAlignment)
-            {
-                if (ai.IdxX < 0 && ai.IdxY < 0)
-                    // ortogonalnie do ostatniego punktu
-                    point = Snap(point, false);
-                return point;
-            }
-
-            point = Snap(point, true);
+        point = new WinPoint(x.Value, y.Value);
+        if (x.HasAlignment || y.HasAlignment)
+        {
+            if (ai.IdxX < 0 && ai.IdxY < 0)
+                // ortogonalnie do ostatniego punktu
+                point = Snap(point, false);
             return point;
         }
 
-        private WinPoint Snap(WinPoint point, bool snapAngle)
+        point = Snap(point, true);
+        return point;
+    }
+
+    private WinPoint Snap(WinPoint point, bool snapAngle)
+    {
+        var p2             = Points[Points.Count - 2];
+        var v              = point - p2;
+        var lengthOriginal = v.Length;
+        var lengthDesired  = Math.Round(lengthOriginal);
+
+        if (snapAngle && Points.Count > 2)
         {
-            var p2             = Points[Points.Count - 2];
-            var v              = point - p2;
-            var lengthOriginal = v.Length;
-            var lengthDesired  = Math.Round(lengthOriginal);
+            var p1             = Points[Points.Count - 3];
+            var vReference     = p2 - p1;
+            var angleReference = Math.Atan2(vReference.Y, vReference.X);
+            var angle          = Math.Atan2(v.Y, v.X) * 180 / Math.PI;
+            angle =  angleReference + 15 * Math.Round((angle - angleReference) / 15);
+            angle *= Math.PI / 180;
 
-            if (snapAngle && Points.Count > 2)
-            {
-                var p1             = Points[Points.Count - 3];
-                var vReference     = p2 - p1;
-                var angleReference = Math.Atan2(vReference.Y, vReference.X);
-                var angle          = Math.Atan2(v.Y, v.X) * 180 / Math.PI;
-                angle =  angleReference + 15 * Math.Round((angle - angleReference) / 15);
-                angle *= Math.PI / 180;
-
-                v = new Vector(Math.Cos(angle) * lengthDesired, Math.Sin(angle) * lengthDesired);
-            }
-            else
-            {
-                v *= lengthDesired / lengthOriginal;
-            }
-
-            point = p2 + v;
-            return point;
+            v = new Vector(Math.Cos(angle) * lengthDesired, Math.Sin(angle) * lengthDesired);
+        }
+        else
+        {
+            v *= lengthDesired / lengthOriginal;
         }
 
-        public List<WinPoint> Points { get; } = new List<WinPoint>();
+        point = p2 + v;
+        return point;
+    }
 
-        public AlignInfo PointAlign = AlignInfo.Empty;
+    public List<WinPoint> Points { get; } = [];
 
-        public struct AlignInfo
+    public AlignInfo PointAlign = AlignInfo.Empty;
+
+    public struct AlignInfo
+    {
+        public int IdxX;
+        public int IdxY;
+
+        public static AlignInfo Empty => new AlignInfo { IdxX = -1, IdxY = -1 };
+
+        public int[] GetUnique()
         {
-            public int IdxX;
-            public int IdxY;
-
-            public static AlignInfo Empty => new AlignInfo { IdxX = -1, IdxY = -1 };
-
-            public int[] GetUnique()
-            {
-                return IdxX < 0
-                    ? IdxY < 0
-                        ? new int[0]
-                        : new[] { IdxY }
-                    : IdxY < 0 || IdxY == IdxX
-                        ? new[] { IdxX }
-                        : new[] { IdxX, IdxY };
-            }
+            return IdxX < 0
+                ? IdxY < 0
+                    ? Array.Empty<int>()
+                    : [IdxY]
+                : IdxY < 0 || IdxY == IdxX
+                    ? [IdxX]
+                    : [IdxX, IdxY];
         }
     }
 }

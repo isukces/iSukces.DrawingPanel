@@ -8,41 +8,40 @@ using System.Windows;
 #endif
 
 
-namespace iSukces.DrawingPanel.Benchmark
-{
-    [SimpleJob(8)]
-    public class VectorNormalizeBenchmark
-    {
-        [Benchmark(Description = "Vector normalize", Baseline = true)]
-        public object Vector_normalize()
-        {
-            var vv = new Vector[Iterations];
-            for (var i = 0; i < Iterations; i++)
-            {
-                var v = new Vector(3, 4);
-                v.Normalize();
-                vv[i] = v;
-            }
+namespace iSukces.DrawingPanel.Benchmark;
 
-            return vv;
+[SimpleJob(8)]
+public class VectorNormalizeBenchmark
+{
+    [Benchmark(Description = "Vector normalize", Baseline = true)]
+    public object Vector_normalize()
+    {
+        var vv = new Vector[Iterations];
+        for (var i = 0; i < Iterations; i++)
+        {
+            var v = new Vector(3, 4);
+            v.Normalize();
+            vv[i] = v;
         }
+
+        return vv;
+    }
         
 
-        [Benchmark(Description = "Vector normalize fast EXT")]
-        public object Vector_normalize_fast()
+    [Benchmark(Description = "Vector normalize fast EXT")]
+    public object Vector_normalize_fast()
+    {
+        var vv = new Vector[Iterations];
+        for (var i = 0; i < Iterations; i++)
         {
-            var vv = new Vector[Iterations];
-            for (var i = 0; i < Iterations; i++)
-            {
-                var v = new Vector(3, 4);
-                v     = v.NormalizeFast();
-                vv[i] = v;
-            }
-
-            return vv;
+            var v = new Vector(3, 4);
+            v     = v.NormalizeFast();
+            vv[i] = v;
         }
 
-
-        const int Iterations = 1000;
+        return vv;
     }
+
+
+    const int Iterations = 1000;
 }

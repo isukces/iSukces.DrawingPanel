@@ -7,22 +7,21 @@ using WinPoint=System.Windows.Point;
 using Vector=System.Windows.Vector;
 #endif
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IDrawableWithLayer : IDrawable
 {
-    public interface IDrawableWithLayer : IDrawable
-    {
-        Layer DrawableLayer { get; }
-    }
+    Layer DrawableLayer { get; }
+}
 
-    public enum Layer
-    {
-        Underlay,
-        Normal,
-        Overlay
-    }
+public enum Layer
+{
+    Underlay,
+    Normal,
+    Overlay
+}
 
-    public interface IDrawableCollider
-    {
-        bool IsInside(WinPoint logicPoint, double tolerance);
-    }
+public interface IDrawableCollider
+{
+    bool IsInside(WinPoint logicPoint, double tolerance);
 }

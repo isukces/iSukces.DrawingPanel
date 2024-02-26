@@ -7,98 +7,97 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 
-namespace iSukces.DrawingPanel.Paths
+namespace iSukces.DrawingPanel.Paths;
+
+public interface IPathResult
 {
-    public interface IPathResult
+    #region properties
+
+    Point Start { get; }
+    Point End   { get; }
+
+    [NotNull]
+    IReadOnlyList<IPathElement> Elements { get; }
+
+    Vector StartVector { get; }
+
+    Vector EndVector { get; }
+
+    #endregion
+}
+
+public static class PathResultExtensions
+{
+    public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint,
+        out double distance, out Vector direction)
     {
-        #region properties
-
-        Point Start { get; }
-        Point End   { get; }
-
-        [NotNull]
-        IReadOnlyList<IPathElement> Elements { get; }
-
-        Vector StartVector { get; }
-
-        Vector EndVector { get; }
-
-        #endregion
-    }
-
-    public static class PathResultExtensions
-    {
-        public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint,
-            out double distance, out Vector direction)
+        var elements = segment?.Elements;
+        if (elements is null)
         {
-            var elements = segment?.Elements;
-            if (elements is null)
-            {
+            distance  = 0;
+            direction = default;
+            return false;
+        }
+
+        var cnt = elements.Count;
+        switch (cnt)
+        {
+            case 0:
                 distance  = 0;
                 direction = default;
                 return false;
-            }
-
-            var cnt = elements.Count;
-            switch (cnt)
+            case 1:
             {
-                case 0:
-                    distance  = 0;
-                    direction = default;
-                    return false;
-                case 1:
-                {
-                    var element = elements[0];
-                    element.DistanceFromElement(aPoint, out distance, out direction);
-                    return true;
-                }
-                default:
-                {
-                    var offset = 0d;
-                    var first  = true;
-                    distance = 0;
-                    var bestDistance = 0d;
-                    direction = default;
+                var element = elements[0];
+                element.DistanceFromElement(aPoint, out distance, out direction);
+                return true;
+            }
+            default:
+            {
+                var offset = 0d;
+                var first  = true;
+                distance = 0;
+                var bestDistance = 0d;
+                direction = default;
 
-                    for (var index = 0; index < cnt; index++)
+                for (var index = 0; index < cnt; index++)
+                {
+                    var element = elements[index];
+
+                    var currentDistance =
+                        element.DistanceFromElement(aPoint, out var distanceFromStart, out var newDirection);
+                    if (first)
                     {
-                        var element = elements[index];
-
-                        var currentDistance =
-                            element.DistanceFromElement(aPoint, out var distanceFromStart, out var newDirection);
-                        if (first)
-                        {
-                            bestDistance = currentDistance;
-                            distance     = offset + distanceFromStart;
-                            direction    = newDirection;
-                            first        = false;
-                        }
-                        else if (currentDistance < bestDistance)
-                        {
-                            bestDistance = currentDistance;
-                            distance     = offset + distanceFromStart;
-                            direction    = newDirection;
-                        }
-
-                        offset += element.GetLength();
+                        bestDistance = currentDistance;
+                        distance     = offset + distanceFromStart;
+                        direction    = newDirection;
+                        first        = false;
+                    }
+                    else if (currentDistance < bestDistance)
+                    {
+                        bestDistance = currentDistance;
+                        distance     = offset + distanceFromStart;
+                        direction    = newDirection;
                     }
 
-                    return !first;
+                    offset += element.GetLength();
                 }
+
+                return !first;
             }
         }
+    }
 
-        public static double GetAllElementsLength(this IPathResult path)
+    public static double GetAllElementsLength(this IPathResult path)
+    {
+        var result   = 0d;
+        var elements = path.Elements;
+        for (var index = 0; index < elements.Count; index++)
         {
-            var result   = 0d;
-            var elements = path.Elements;
-            for (var index = 0; index < elements.Count; index++)
-            {
-                var element = elements[index];
-                result += element.GetLength();
-            }
-
-            return result;
+            var element = elements[index];
+            result += element.GetLength();
         }
+
+        return result;
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
 
-namespace iSukces.DrawingPanel.Interfaces
+namespace iSukces.DrawingPanel.Interfaces;
+
+public interface IFilledDrawable
 {
-    public interface IFilledDrawable
-    {
-        Brush Fill { get; set; }
-    }
+    Brush Fill { get; set; }
 }
