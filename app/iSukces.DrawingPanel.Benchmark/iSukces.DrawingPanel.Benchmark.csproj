@@ -20,8 +20,8 @@
     <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
     <PackageReference Include="iSukces.Math" Version="1.23.1218.127" />
-    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
   </ItemGroup>
 </Project>
