@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Company>Internet Sukces Piotr Stęclik</Company>
+        <DefineConstants>$(DefineConstants);USE_TINYEXPR</DefineConstants>
+        <IncludeSource>false</IncludeSource>
+        <IncludeSymbols>true</IncludeSymbols>
+
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+
+        <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/isukces/iSukces.DrawingPanel</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+        <Company>Internet Sukces Piotr Stęclik</Company>
+        <Authors>Internet Sukces Piotr Stęclik</Authors>
+        <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2024</Copyright>
+
+        <LangVersion>12</LangVersion>
+    </PropertyGroup>
+</Project>

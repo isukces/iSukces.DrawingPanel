@@ -1,23 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2024</Copyright>
-    <ProjectGuid>{5E92A822-5DC9-4B3F-9EBC-D352578AB978}</ProjectGuid>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <AssemblyVersion>1.0.23089.23</AssemblyVersion>
-    <FileVersion>1.0.23089.23</FileVersion>
-    <Version>1.0.23089.23</Version>
-    <LangVersion>12</LangVersion>
+    <AssemblyVersion>1.24.927.24</AssemblyVersion>
+    <FileVersion>1.24.927.24</FileVersion>
+    <Version>1.24.927.24</Version>
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>1701;1702;1591</NoWarn>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <IncludeSource>false</IncludeSource>
-    <IncludeSymbols>true</IncludeSymbols>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
     <Title>Drawing panel interfaces</Title>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
@@ -33,4 +23,5 @@
       <DependentUpon>IDrawingPanelZoomInfoStorage.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <Import Project="..\Common.props" />
 </Project>
