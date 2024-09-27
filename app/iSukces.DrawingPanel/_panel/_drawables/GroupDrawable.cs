@@ -70,7 +70,6 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
         _children = null;
     }
 
-
     public void Draw(Graphics graphics)
     {
         var wasPending = PendingDrawing;

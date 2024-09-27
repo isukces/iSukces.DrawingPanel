@@ -2,7 +2,7 @@
 
 namespace iSukces.DrawingPanel;
 
-internal struct IntVector
+public struct IntVector
 {
     private readonly int _x;
     private readonly int _y;
