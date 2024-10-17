@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <AssemblyVersion>1.24.927.69</AssemblyVersion>
-    <FileVersion>1.24.927.69</FileVersion>
-    <Version>1.24.927.69</Version>
+    <AssemblyVersion>1.24.1017.70</AssemblyVersion>
+    <FileVersion>1.24.1017.70</FileVersion>
+    <Version>1.24.1017.70</Version>
     <NoWarn>1701;1702;1591</NoWarn>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Drawing panel paths</Title>
@@ -16,7 +16,7 @@
     <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.23.1218.127" />
+    <PackageReference Include="iSukces.Math" Version="1.24.1016.127" />
     <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

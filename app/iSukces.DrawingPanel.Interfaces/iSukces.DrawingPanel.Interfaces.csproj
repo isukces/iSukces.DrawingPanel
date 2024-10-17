@@ -2,9 +2,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <AssemblyVersion>1.24.927.24</AssemblyVersion>
-    <FileVersion>1.24.927.24</FileVersion>
-    <Version>1.24.927.24</Version>
+    <AssemblyVersion>1.24.1017.25</AssemblyVersion>
+    <FileVersion>1.24.1017.25</FileVersion>
+    <Version>1.24.1017.25</Version>
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>1701;1702;1591</NoWarn>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
