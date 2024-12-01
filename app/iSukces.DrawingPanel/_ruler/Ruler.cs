@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace iSukces.DrawingPanel;
 
@@ -26,7 +27,7 @@ public sealed partial class Ruler : Control
 
     public static bool IsHorizontalRuller(AxisLocation axisLocation)
     {
-        return axisLocation == AxisLocation.Up || axisLocation == AxisLocation.Down;
+        return axisLocation is AxisLocation.Up or AxisLocation.Down;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -154,6 +155,7 @@ public sealed partial class Ruler : Control
     /// <summary>
     ///     Gets or sets where the marks are shown in the ruler.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public AxisLocation AxisLocation
     {
         get => _axisLocation;
@@ -163,6 +165,7 @@ public sealed partial class Ruler : Control
     /// <summary>
     ///     Gets or sets the zoom factor for the ruler. The default value is 1.0.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public RulerDimension Dimension
     {
         get => _dimenison;
@@ -187,6 +190,7 @@ public sealed partial class Ruler : Control
     ///     Gets or sets the length of the ruler. If the <see cref="RulerAutoSize" /> property is set to false (default) this
     ///     is a fixed length. Otherwise the length is calculated based on the actual width of the ruler.
     /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public double Length
     {
         get => RulerAutoSize
@@ -203,6 +207,15 @@ public sealed partial class Ruler : Control
     ///     true				 : the length of the ruler is always adjusted to its actual width. This ensures that the ruler is shown
     ///     for the actual width of the window.
     /// </summary>
+    /// <summary>
+    ///     Gets or sets the AutoSize behavior of the ruler.
+    ///     false (default): the lenght of the ruler results from the <see cref="Length" /> property. If the window size is
+    ///     changed, e.g. wider
+    ///     than the rulers length, free space is shown at the end of the ruler. No rescaling is done.
+    ///     true				 : the length of the ruler is always adjusted to its actual width. This ensures that the ruler is shown
+    ///     for the actual width of the window.
+    /// </summary>
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool RulerAutoSize
     {
         get => _rulerAutoSize;

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Drawing;
+using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
 using iSukces.DrawingPanel.Paths;
 using iSukces.Mathematics;

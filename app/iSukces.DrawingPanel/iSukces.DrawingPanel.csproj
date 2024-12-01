@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2024</Copyright>
     <ProjectGuid>{A26B3431-314C-4B71-B75E-D1DEE0A894C2}</ProjectGuid>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <AssemblyVersion>1.24.1017.47</AssemblyVersion>
-    <FileVersion>1.24.1017.47</FileVersion>
-    <Version>1.24.1017.47</Version>
+    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
+    <AssemblyVersion>1.24.1201.48</AssemblyVersion>
+    <FileVersion>1.24.1201.48</FileVersion>
+    <Version>1.24.1201.48</Version>
+    <LangVersion>13</LangVersion>
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>1701;1702;1591</NoWarn>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Drawing panel</Title>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+  <PropertyGroup Condition="$(TargetFramework.EndsWith('windows'))">
     <ImplicitUsings>true</ImplicitUsings>
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
     <UseWpf>true</UseWpf>
@@ -20,9 +23,9 @@
     <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.24.1016.127" />
-    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="iSukces.Math" Version="1.24.1201.128" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.1.0" />
   </ItemGroup>
   <Import Project="..\Common.props" />
 </Project>

@@ -3,6 +3,7 @@
 #endif
 using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Drawing.Imaging;
 using iSukces.DrawingPanel.Interfaces;
 #if COMPATMATH
@@ -256,6 +257,7 @@ public partial class DrawableContainerControl : Control, ICadControlLogicOwner
 
     #region properties
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public double UnderLayerOpacity
     {
         get => _underLayerOpacity;
@@ -268,6 +270,7 @@ public partial class DrawableContainerControl : Control, ICadControlLogicOwner
         }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public IDrawingPanelZoomStorage ZoomStorage
     {
         get => _logic.ZoomStorage;

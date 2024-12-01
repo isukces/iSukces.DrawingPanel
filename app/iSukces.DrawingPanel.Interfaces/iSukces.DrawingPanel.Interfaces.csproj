@@ -1,22 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <AssemblyVersion>1.24.1017.25</AssemblyVersion>
-    <FileVersion>1.24.1017.25</FileVersion>
-    <Version>1.24.1017.25</Version>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2024</Copyright>
+    <ProjectGuid>{03173AD8-A090-40F9-9DD0-BBEF925D303A}</ProjectGuid>
+    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
+    <AssemblyVersion>1.24.1201.26</AssemblyVersion>
+    <FileVersion>1.24.1201.26</FileVersion>
+    <Version>1.24.1201.26</Version>
+    <LangVersion>13</LangVersion>
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>1701;1702;1591</NoWarn>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Drawing panel interfaces</Title>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+  <PropertyGroup Condition="$(TargetFramework.EndsWith('windows'))">
     <ImplicitUsings>true</ImplicitUsings>
     <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
     <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="_transform\DrawingPanelZoomInfoStorageData.cs">
