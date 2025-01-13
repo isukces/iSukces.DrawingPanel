@@ -1,3 +1,4 @@
+#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else

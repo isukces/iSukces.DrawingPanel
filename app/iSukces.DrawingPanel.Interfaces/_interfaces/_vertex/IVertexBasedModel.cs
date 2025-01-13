@@ -1,3 +1,4 @@
+#nullable disable
 namespace iSukces.DrawingPanel.Interfaces;
 
 /// <summary>

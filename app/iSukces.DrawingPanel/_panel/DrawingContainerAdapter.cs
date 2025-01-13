@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -30,7 +30,7 @@ public sealed class DrawingContainerAdapter : ISupportInitialize, IDisposable, I
         _children?.BeginInit();
     }
 
-    private void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void ChildrenOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         void SayGoodByeToOldItems(IList oldItems)
@@ -105,3 +105,4 @@ public sealed class DrawingContainerAdapter : ISupportInitialize, IDisposable, I
     private IDrawingLayersContainer _container;
     private bool _disposed;
 }
+

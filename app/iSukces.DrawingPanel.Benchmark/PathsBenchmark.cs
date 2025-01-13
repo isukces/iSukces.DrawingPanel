@@ -1,3 +1,4 @@
+#nullable disable
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 using iSukces.DrawingPanel.Paths;

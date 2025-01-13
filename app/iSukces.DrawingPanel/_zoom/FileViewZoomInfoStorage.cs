@@ -56,7 +56,7 @@ namespace iSukces.DrawingPanel
                 Write(_lastNotSaved.Value, true);
         }
 
-        private void Timeout(object sender, ElapsedEventArgs e)
+        private void Timeout(object? sender, ElapsedEventArgs e)
         {
             lock(_lock)
             {
@@ -140,3 +140,4 @@ namespace iSukces.DrawingPanel
 }
 
 #endif
+

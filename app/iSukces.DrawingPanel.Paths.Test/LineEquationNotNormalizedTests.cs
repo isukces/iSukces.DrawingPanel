@@ -1,3 +1,4 @@
+#nullable disable
 using Xunit;
 #if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;

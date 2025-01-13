@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -26,7 +26,7 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
         _suspendLevel++;
     }
 
-    protected virtual void ChildrenOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    protected virtual void ChildrenOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.Action != NotifyCollectionChangedAction.Move)
         {
@@ -100,7 +100,7 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
         }
     }
 
-    private void ElementOnChanged(object sender, EventArgs e)
+    private void ElementOnChanged(object? sender, EventArgs e)
     {
         OnChanged();
     }
@@ -202,3 +202,4 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
 
     #endregion
 }
+

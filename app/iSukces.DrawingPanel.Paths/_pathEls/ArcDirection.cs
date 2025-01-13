@@ -1,4 +1,5 @@
-﻿namespace iSukces.DrawingPanel.Paths;
+#nullable disable
+namespace iSukces.DrawingPanel.Paths;
 
 public enum ArcDirection
 {

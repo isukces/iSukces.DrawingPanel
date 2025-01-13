@@ -1,3 +1,4 @@
+#nullable disable
 #define _DO_DRAWINGS
 using System;
 using System.Collections.Generic;

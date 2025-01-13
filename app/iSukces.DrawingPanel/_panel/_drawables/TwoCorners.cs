@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 #if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;

@@ -1,3 +1,4 @@
+#nullable disable
 namespace iSukces.DrawingPanel;
 
 public static class DrawingHandlerOrders

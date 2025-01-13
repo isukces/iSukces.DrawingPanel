@@ -1,3 +1,4 @@
+#nullable disable
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
 

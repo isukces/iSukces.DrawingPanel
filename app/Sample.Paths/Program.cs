@@ -1,4 +1,5 @@
-﻿namespace Sample.Paths;
+#nullable disable
+namespace Sample.Paths;
 
 internal static class Program
 {

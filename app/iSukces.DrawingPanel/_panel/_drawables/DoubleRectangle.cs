@@ -1,4 +1,4 @@
-﻿#nullable enable
+using System;
 using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel;
@@ -37,3 +37,4 @@ public struct DoubleRectangle
             Math.Abs(b.Y - a.Y));
     }
 }
+

@@ -1,4 +1,5 @@
-﻿using Xunit;
+#nullable disable
+using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test;
 
@@ -97,3 +98,4 @@ public class ThreeReferencePointsPathCalculatorTests
 }
 
 //  var code = new TestMaker().Create(r, nameof(r));
+

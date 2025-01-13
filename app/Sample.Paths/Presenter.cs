@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+#nullable disable
+using System.Drawing;
 using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
 using iSukces.DrawingPanel.Paths;

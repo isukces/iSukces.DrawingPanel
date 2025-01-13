@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+#nullable disable
+using System.Windows.Forms;
 
 namespace iSukces.DrawingPanel.Interfaces;
 

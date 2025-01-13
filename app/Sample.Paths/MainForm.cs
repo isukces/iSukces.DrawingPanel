@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using iSukces.DrawingPanel;
 
@@ -81,7 +81,7 @@ public class MainForm : Form
         }
     }
 
-    private void CheckBoxCheckedChanged(object sender, EventArgs e)
+    private void CheckBoxCheckedChanged(object? sender, EventArgs e)
     {
         if (sender is RadioButton rb)
         {
@@ -105,7 +105,7 @@ public class MainForm : Form
         _leftPanel.Controls.Add(btn);
     }
 
-    private void OnVisibleChanged(object sender, EventArgs e)
+    private void OnVisibleChanged(object? sender, EventArgs e)
     {
         if (!Visible || Disposing)
             return;
@@ -145,3 +145,4 @@ public class MainForm : Form
     private readonly PathsController _controller;
     private readonly Panel _leftPanel = new();
 }
+

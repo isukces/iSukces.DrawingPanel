@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -77,7 +77,7 @@ internal sealed class CadControlLogic : BaseDisposable
     }
 
 
-    private void ZoomOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void ZoomOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         UpdateTransformAndCanvasInfo();
         _owner.TransfromChanged();
@@ -132,3 +132,4 @@ internal sealed class CadControlLogic : BaseDisposable
 
     #endregion
 }
+

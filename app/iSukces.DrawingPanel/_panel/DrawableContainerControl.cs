@@ -1,4 +1,4 @@
-﻿#if DEBUG
+#if DEBUG
 #define __USE_Debug_WriteLine
 #endif
 using System;
@@ -76,7 +76,7 @@ public partial class DrawableContainerControl : Control, ICadControlLogicOwner
         base.Dispose(disposing);
     }
 
-    private void DrawablesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void DrawablesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         void DrawableChanged(object changedDrawable, EventArgs ignore2)
         {
@@ -356,3 +356,4 @@ partial class DrawableContainerControl : IInitializeableDrawingLayersContainer
 
     #endregion
 }
+

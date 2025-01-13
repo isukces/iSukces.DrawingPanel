@@ -1,22 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2024</Copyright>
     <ProjectGuid>{03173AD8-A090-40F9-9DD0-BBEF925D303A}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
-    <AssemblyVersion>1.24.1201.26</AssemblyVersion>
-    <FileVersion>1.24.1201.26</FileVersion>
-    <Version>1.24.1201.26</Version>
+    <AssemblyVersion>1.25.113.27</AssemblyVersion>
+    <FileVersion>1.25.113.27</FileVersion>
+    <Version>1.25.113.27</Version>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <NoWarn>1701;1702;1591</NoWarn>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Drawing panel interfaces</Title>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.EndsWith('windows'))">
-    <ImplicitUsings>true</ImplicitUsings>
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
     <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>

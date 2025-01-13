@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -64,7 +64,7 @@ public partial class DrawingControl : UserControl
         dim.IsReverse          = isReversed;
     }
 
-    private void UpdateRulers(object sender, EventArgs e)
+    private void UpdateRulers(object? sender, EventArgs e)
     {
         var displayValueOffset = new Point(0, 0);
         // _mouseCapturable.DisplayValueOffset = displayValueOffset;
@@ -173,3 +173,4 @@ public partial class DrawingControl : UserControl
     private DrawingControlLayoutEngine _layoutEngine;
 #pragma warning restore 649
 }
+

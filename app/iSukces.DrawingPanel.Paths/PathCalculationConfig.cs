@@ -1,3 +1,4 @@
+#nullable disable
 namespace iSukces.DrawingPanel.Paths;
 
 public class PathCalculationConfig

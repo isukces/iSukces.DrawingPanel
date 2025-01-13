@@ -1,22 +1,16 @@
-﻿#define KEYBOARD_FROM_FORM_
+#define KEYBOARD_FROM_FORM_
 #define _LOG
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
-using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel;
 
 public interface IBehaviorSource
 {
-    #region properties
-
-    Control MouseMoveFrom  { get; set; }
-    Control MouseWheelFrom { get; set; }
-    Control KeyboardFrom   { get; set; }
-
-    #endregion
+    Control? MouseMoveFrom  { get; set; }
+    Control? MouseWheelFrom { get; set; }
+    Control? KeyboardFrom   { get; set; }
 }
 
 public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
@@ -43,24 +37,24 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         return false;
     }
 
-    private void HandleKeyDown(object sender, KeyEventArgs e)
+    private void HandleKeyDown(object? sender, KeyEventArgs e)
     {
         e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyDown(e));
         if (e.Handled)
             e.SuppressKeyPress = true;
     }
 
-    private void HandleKeyUp(object sender, KeyEventArgs e)
+    private void HandleKeyUp(object? sender, KeyEventArgs e)
     {
         e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyUp(e));
     }
 
-    private void HandleMouseWheel(object sender, MouseEventArgs e)
+    private void HandleMouseWheel(object? sender, MouseEventArgs e)
     {
         Handle<IDpMouseWheelHandler>(h => h.HandleMouseWheel(e));
     }
 
-    private void HandleOnMouseDown(object sender, MouseEventArgs e)
+    private void HandleOnMouseDown(object? sender, MouseEventArgs e)
     {
         Handle<IDpMouseButtonHandler>(h =>
         {
@@ -77,7 +71,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         });
     }
 
-    private void HandleOnMouseMove(object sender, MouseEventArgs e)
+    private void HandleOnMouseMove(object? sender, MouseEventArgs e)
     {
         if (KeyboardFrom != null)
         {
@@ -91,7 +85,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         });
     }
 
-    private void HandleOnMouseUp(object sender, MouseEventArgs e)
+    private void HandleOnMouseUp(object? sender, MouseEventArgs e)
     {
         Handle<IDpMouseButtonHandler>(h =>
         {
@@ -109,7 +103,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
     }
 
 
-    public Control MouseMoveFrom
+    public Control? MouseMoveFrom
     {
         get => _mouseMoveFrom;
         set
@@ -133,7 +127,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         }
     }
 
-    public Control MouseWheelFrom
+    public Control? MouseWheelFrom
     {
         get => _mouseWheelFrom;
         set
@@ -148,7 +142,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         }
     }
 
-    public Control KeyboardFrom
+    public Control? KeyboardFrom
     {
         get => _keyboardFrom;
         set
@@ -171,7 +165,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
     }
 
 
-    public void RegisterHandler(IDpHandler handler, int order)
+    public void RegisterHandler(IDpHandler? handler, int order)
     {
         if (handler == null) return;
         lock(_handlers.SyncRoot)
@@ -182,7 +176,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         }
     }
 
-    public void UnregisterHandler(IDpHandler o)
+    public void UnregisterHandler(IDpHandler? o)
     {
         if (o == null) return;
         lock(_handlers.SyncRoot)
@@ -193,11 +187,10 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         }
     }
 
-    [NotNull]
     private readonly SortableSynchronizedCollection<HolderWrapper> _handlers;
-    private Control _mouseMoveFrom;
-    private Control _mouseWheelFrom;
-    private Control _keyboardFrom;
+    private Control? _mouseMoveFrom;
+    private Control? _mouseWheelFrom;
+    private Control? _keyboardFrom;
 #if KEYBOARD_FROM_FORM
         private Form _mainWindow;
 #endif

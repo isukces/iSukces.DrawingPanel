@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 using iSukces.DrawingPanel.Interfaces;
 using Size = System.Drawing.Size;
 #if COMPATMATH

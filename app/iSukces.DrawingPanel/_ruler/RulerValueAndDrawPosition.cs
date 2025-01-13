@@ -1,4 +1,5 @@
-﻿namespace iSukces.DrawingPanel;
+#nullable disable
+namespace iSukces.DrawingPanel;
 
 public struct RulerValueAndDrawPosition
 {

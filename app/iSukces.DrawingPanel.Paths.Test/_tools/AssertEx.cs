@@ -1,4 +1,5 @@
-﻿using Xunit;
+#nullable disable
+using Xunit;
 #if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;

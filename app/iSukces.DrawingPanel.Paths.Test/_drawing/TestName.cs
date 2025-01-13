@@ -1,4 +1,5 @@
-﻿namespace iSukces.DrawingPanel.Paths.Test;
+#nullable disable
+namespace iSukces.DrawingPanel.Paths.Test;
 
 public class TestName
 {

@@ -1,25 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2024</Copyright>
     <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
-    <AssemblyVersion>1.24.1201.71</AssemblyVersion>
-    <FileVersion>1.24.1201.71</FileVersion>
-    <Version>1.24.1201.71</Version>
+    <AssemblyVersion>1.25.113.72</AssemblyVersion>
+    <FileVersion>1.25.113.72</FileVersion>
+    <Version>1.25.113.72</Version>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <NoWarn>1701;1702;1591</NoWarn>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Drawing panel paths</Title>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework.EndsWith('windows'))">
-    <ImplicitUsings>true</ImplicitUsings>
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
-    <UseWpf>true</UseWpf>
-  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.24.1201.128" />
+    <PackageReference Include="iSukces.Math" Version="1.25.113.129" />
     <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

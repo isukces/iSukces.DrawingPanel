@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 using Xunit;
 #if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
@@ -1081,3 +1082,4 @@ public class OneReferencePointPathCalculatorTests : TestBaseClass
     #endregion
 }
 //  var code = new TestMaker().Create(r, nameof(r));
+

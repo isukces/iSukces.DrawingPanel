@@ -1,3 +1,4 @@
+#nullable disable
 #if DEBUG && USE_TINYEXPR
 namespace iSukces.DrawingPanel.Paths
 {
@@ -157,3 +158,4 @@ namespace iSukces.DrawingPanel.Paths
     }
 }
 #endif
+

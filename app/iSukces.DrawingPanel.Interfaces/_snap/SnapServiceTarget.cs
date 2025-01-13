@@ -1,4 +1,4 @@
-﻿namespace iSukces.DrawingPanel.Interfaces;
+namespace iSukces.DrawingPanel.Interfaces;
 
 public enum SnapServiceTarget
 {

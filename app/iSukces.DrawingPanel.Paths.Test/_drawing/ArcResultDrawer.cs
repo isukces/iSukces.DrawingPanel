@@ -1,4 +1,5 @@
-﻿#if COMPATMATH
+#nullable disable
+#if COMPATMATH
 using Point = iSukces.Mathematics.Compatibility.Point;
 using Vector = iSukces.Mathematics.Compatibility.Vector;
 #else
@@ -203,3 +204,4 @@ internal class ArcResultDrawer : ResultDrawerBase
     private readonly ArcResultDrawerConfig _cfg;
     private readonly ArcPathMaker _maker;
 }
+

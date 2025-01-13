@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+#nullable disable
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.Mathematics;

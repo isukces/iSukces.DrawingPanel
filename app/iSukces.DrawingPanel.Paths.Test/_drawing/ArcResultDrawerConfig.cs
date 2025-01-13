@@ -1,4 +1,5 @@
-﻿#if COMPATMATH
+#nullable disable
+#if COMPATMATH
 using Point = iSukces.Mathematics.Compatibility.Point;
 using Vector = iSukces.Mathematics.Compatibility.Vector;
 #else
@@ -59,3 +60,4 @@ internal sealed class ArcResultDrawerConfig
 
     public ResultDrawerConfigFlags Flags { get; set; }
 }
+

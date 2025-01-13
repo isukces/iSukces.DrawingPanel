@@ -1,28 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2020-2024</Copyright>
     <ProjectGuid>{14A2746C-A4A6-4593-AABE-41BA5E201FD3}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Version>1.0.0.0</Version>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Sample paths</Title>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageProjectUrl>https://github.com/isukces/iSukces.DrawingPanel</PackageProjectUrl>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <ImplicitUsings>true</ImplicitUsings>
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
-    <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />

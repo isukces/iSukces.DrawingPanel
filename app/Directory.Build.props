@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2021-2025</Copyright>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
+    <ProjectGuid>{15FE26FE-1C47-4954-BD5E-DD7AEF2EC030}</ProjectGuid>
+    <LangVersion>13</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
 </Project>

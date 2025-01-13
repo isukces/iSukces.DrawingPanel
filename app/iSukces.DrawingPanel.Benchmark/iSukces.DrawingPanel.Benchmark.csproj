@@ -1,19 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2023-2024</Copyright>
     <ProjectGuid>{21786D6B-C157-4633-8DCC-66B7A4E9DEBE}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
-    <UseWpf>true</UseWpf>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <ImplicitUsings>true</ImplicitUsings>
-    <DefineConstants>$(DefineConstants);WPFFEATURES</DefineConstants>
     <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>
@@ -21,7 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
-    <PackageReference Include="iSukces.Math" Version="1.24.1201.128" />
+    <PackageReference Include="iSukces.Math" Version="1.25.113.129" />
     <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
   </ItemGroup>
 </Project>

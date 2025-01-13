@@ -1,7 +1,9 @@
-﻿using System.Runtime.CompilerServices;
+#nullable disable
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 [assembly: Guid("8ABED208-1D5C-4944-9735-942981ABC94E")]
 
 [assembly: InternalsVisibleTo("iSukces.DrawingPanel.Paths.Test, PublicKey=00240000048000009400000006020000002400005253413100040000010001009d454fb1e2ff06502d5f8191c742d0050242d39e63cc474e02df77c84d447cb3d9dbe9908c3d7307f21fdd14f68845545e1ff7c18a71aa441807e6bce333339f44856468956455202cb79c35d9c7fff5c68fd7bf4c09c43b0cfed0619705cfe10c83d2dea45099be0429393927a079c6c1f877dae09084a83c1c327c97608ac7" )]
+

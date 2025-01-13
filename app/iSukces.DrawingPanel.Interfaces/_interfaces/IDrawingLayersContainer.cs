@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+#nullable disable
+using System.ComponentModel;
 
 namespace iSukces.DrawingPanel.Interfaces;
 

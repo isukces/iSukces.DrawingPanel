@@ -1,3 +1,4 @@
+#nullable disable
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using iSukces.DrawingPanel.Interfaces;

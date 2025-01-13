@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+#nullable disable
+using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;

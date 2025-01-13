@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
@@ -48,7 +48,7 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         if (e.Button == MouseButtons.Middle)
         {
             var startPoint = ToLogicalLocation(e.Location);
-            _c = new DragMoveContext
+            _dragMoveContext = new DragMoveContext
             {
                 Start      = startPoint,
                 MouseStart = e.Location
@@ -62,14 +62,14 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
     public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args)
     {
         _lastMouseSeenAt = args.Location;
-        if (_c is null)
+        if (_dragMoveContext is null)
             return DrawingHandleResult.ContinueAfterAction;
 
-        if (args.Location == _c.MouseStart)
+        if (args.Location == _dragMoveContext.MouseStart)
             return DrawingHandleResult.Break;
         var info      = GetDrawingCanvasInfo();
         var toLogical = info.FromCanvas(args.Location);
-        var delta     = toLogical - _c.Start;
+        var delta     = toLogical - _dragMoveContext.Start;
         Zoom.Center -= delta;
 
         return DrawingHandleResult.Break;
@@ -77,9 +77,9 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
 
     public DrawingHandleResult HandleOnMouseUp(MouseEventArgs e)
     {
-        if (_c is null || e.Button != MouseButtons.Middle)
+        if (_dragMoveContext is null || e.Button != MouseButtons.Middle)
             return DrawingHandleResult.Continue;
-        _c = null;
+        _dragMoveContext = null;
         return DrawingHandleResult.Break;
     }
 
@@ -95,7 +95,7 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
 
     private readonly double _mouseWheelResponsibility;
 
-    private DragMoveContext _c;
+    private DragMoveContext? _dragMoveContext;
 
     private Point _lastMouseSeenAt;
 

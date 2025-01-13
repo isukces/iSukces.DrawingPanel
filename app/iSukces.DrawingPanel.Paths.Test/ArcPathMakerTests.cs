@@ -1,4 +1,5 @@
-﻿using iSukces.DrawingPanel.Paths;
+#nullable disable
+using iSukces.DrawingPanel.Paths;
 using iSukces.DrawingPanel.Paths.Test;
 using Xunit;
 #if COMPATMATH

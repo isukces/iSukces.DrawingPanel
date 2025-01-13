@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+#nullable disable
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows;
 using iSukces.DrawingPanel;

@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 using System.Diagnostics;
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;

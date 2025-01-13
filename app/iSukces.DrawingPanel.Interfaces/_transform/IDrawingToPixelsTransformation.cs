@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+#nullable disable
+using System.Drawing;
 using System.Drawing.Drawing2D;
 #if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;

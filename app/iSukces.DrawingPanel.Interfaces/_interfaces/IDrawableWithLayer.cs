@@ -1,5 +1,6 @@
-﻿using System.Windows;
-#if COMPATMATH
+#nullable disable
+using System.Windows;
+#if !WINDOWS
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
-using JetBrains.Annotations;
 #if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
@@ -20,7 +19,7 @@ public abstract class VertexDecorator<TModel, TThumb> : PresenterDecorator, IDpH
     where TModel : class, INotifyPropertyChanged
     where TThumb : DrawableThumb
 {
-    protected VertexDecorator([NotNull] TModel model, ISnapService snap,
+    protected VertexDecorator(TModel model, ISnapService snap,
         IDpHandlerContainer handlerContainer)
     {
         Model                = model ?? throw new ArgumentNullException(nameof(model));
@@ -94,7 +93,7 @@ public abstract class VertexDecorator<TModel, TThumb> : PresenterDecorator, IDpH
         TopLevelCanvas.Draw(graphics);
     }
 
-    protected void HandleThumbIsSelectedChanged(object sender, EventArgs e)
+    protected void HandleThumbIsSelectedChanged(object? sender, EventArgs e)
     {
         var handle = ThumbSelectionChanged;
         if (handle is null)
@@ -106,7 +105,7 @@ public abstract class VertexDecorator<TModel, TThumb> : PresenterDecorator, IDpH
         handle(this, args);
     }
 
-    protected virtual void ModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    protected virtual void ModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
     }
 
@@ -191,24 +190,17 @@ public abstract class VertexDecorator<TModel, TThumb> : PresenterDecorator, IDpH
         TopLevelCanvas.SetCanvasInfo(canvasInfo);
     }
 
-    #region properties
-
-    [NotNull]
     protected TModel Model { get; }
 
     public IReadOnlyList<TThumb> Thumbs => _thumbs;
 
     protected IGroupDrawable ThumbsContainer => _thumbsContainer;
 
-    #endregion
-
 
     /// <summary>
     ///     Odpala się jeśli któryś z thumbów zmienił IsSelected
     /// </summary>
-    public event EventHandler<ThumbSelectionChangedEventArgs> ThumbSelectionChanged;
-
-    #region Fields
+    public event EventHandler<ThumbSelectionChangedEventArgs>? ThumbSelectionChanged;
 
     private IDisposable _mouseHandlerRegistration;
 
@@ -223,15 +215,9 @@ public abstract class VertexDecorator<TModel, TThumb> : PresenterDecorator, IDpH
 
     protected readonly ISnapService Snap;
 
-    #endregion
-
     public sealed class ThumbSelectionChangedEventArgs
     {
-        #region properties
-
         public TThumb Thumb { get; set; }
-
-        #endregion
     }
 
     // protected abstract bool ThumbDragDelta(TThumb thumb, ref WinPoint worldPoint);

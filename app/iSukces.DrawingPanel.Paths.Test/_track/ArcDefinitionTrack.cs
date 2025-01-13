@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 using iSukces.Mathematics;
 #if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;

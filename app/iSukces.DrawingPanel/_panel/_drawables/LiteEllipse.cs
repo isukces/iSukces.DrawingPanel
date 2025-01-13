@@ -1,4 +1,4 @@
-﻿#nullable enable
+using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel;
@@ -22,3 +22,4 @@ public sealed class LiteEllipse : ILiteDrawable
     public Brush  Brush   { get; set; }
     public Color  Stroke  { get; set; }
 }
+
