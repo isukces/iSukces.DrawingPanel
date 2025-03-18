@@ -42,16 +42,13 @@ public class LiteDrawableText : ILiteDrawable
             var dy1 = (int)_verticalAlignment * _measure.Height * nonScaledMeasure;
             if (_lines.Length == 1)
             {
-                _measures = new[] { _measure };
+                _measures = [_measure];
                 {
                     var dx = (float)((int)_horizontalAlignment * _measure.Width * nonScaledMeasure);
                     var p  = _point;
                     p = new WinPoint(p.X - dx, p.Y + dy1);
                     var p2 = p + new Vector(_measure.Width, -_measure.Height) * (FontSize / fontSizeForMeasure);
-                    _areas = new[]
-                    {
-                        new TwoCorners(p, p2)
-                    };
+                    _areas = [new TwoCorners(p, p2)];
                 }
             }
             else

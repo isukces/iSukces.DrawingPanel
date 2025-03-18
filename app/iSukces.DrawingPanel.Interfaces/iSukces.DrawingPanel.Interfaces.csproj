@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{03173AD8-A090-40F9-9DD0-BBEF925D303A}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
-    <AssemblyVersion>1.25.113.27</AssemblyVersion>
-    <FileVersion>1.25.113.27</FileVersion>
-    <Version>1.25.113.27</Version>
+    <AssemblyVersion>1.25.318.28</AssemblyVersion>
+    <FileVersion>1.25.318.28</FileVersion>
+    <Version>1.25.318.28</Version>
     <LangVersion>13</LangVersion>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
