@@ -1,4 +1,3 @@
-#nullable disable
 namespace iSukces.DrawingPanel.Interfaces;
 
 public interface IDpHandlerContainer

@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 
 namespace iSukces.DrawingPanel;
@@ -17,10 +16,10 @@ public struct RulerDimension : IEquatable<RulerDimension>
                Offset.Equals(other.Offset);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return obj is RulerDimension && Equals((RulerDimension)obj);
+        return obj is RulerDimension dimension && Equals(dimension);
     }
 
     public RulerDimensionCalculator GetCalculator()

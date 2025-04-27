@@ -1,4 +1,3 @@
-#nullable disable
 namespace iSukces.DrawingPanel;
 
 public sealed class OrderedLongTuple

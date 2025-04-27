@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Globalization;
 
@@ -16,7 +15,7 @@ public sealed partial class Ruler
                 return "N0";
 
             var txt      = majorTickDistance.ToString(CultureInfo.InvariantCulture);
-            var dotIndex = txt.IndexOf(".", StringComparison.Ordinal);
+            var dotIndex = txt.IndexOf('.');
             if (dotIndex < 0)
                 return "N0";
             dotIndex = txt.Length - dotIndex - 1;

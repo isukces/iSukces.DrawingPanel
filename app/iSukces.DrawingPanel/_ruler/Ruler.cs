@@ -51,11 +51,6 @@ public sealed partial class Ruler : Control
         var axisLocation      = AxisLocation;
         var isHorizontalRuler = IsHorizontalRuller(axisLocation);
 
-        PointF MkPoint(double x, double y)
-        {
-            return isHorizontalRuler ? new PointF((float)x, (float)y) : new PointF((float)y, (float)x);
-        }
-
         var dim = Dimension;
 
         var rullerWidth  = isHorizontalRuler ? ClientSize.Height : ClientSize.Width;
@@ -63,7 +58,7 @@ public sealed partial class Ruler : Control
 
         var lengthTimesZoom = rullerLength * Dimension.Scale;
 
-        var majorTickLength = 12; //rullerWidth - tickMarginForText;
+        const int majorTickLength = 12; //rullerWidth - tickMarginForText;
 
         var minorCount    = Math.Max(1, dim.MinorCount);
         var dimCalculator = dim.GetCalculator();
@@ -74,8 +69,7 @@ public sealed partial class Ruler : Control
         {
             // _textManager.FontName  = FontFamily?.Source;
             _textManager.TextBrush = _textBrush;
-            var textHeight =
-                _textManager.TextHeight; //axisLocation == AxisLocation.Left ? -1 : CalcTextHeight(typeFace);
+            var textHeight = _textManager.TextHeight; 
             var c = new ValueToLabelConverter(dim.Major);
             for (var nr = range.Minimum; nr <= range.Maximum; nr++)
             {
@@ -84,10 +78,10 @@ public sealed partial class Ruler : Control
                 if (x > lengthTimesZoom || x < 0) continue;
                 var    isBig = minorCount < 2 || nr % minorCount == 0;
                 double startHeight, endHeight;
-                if (axisLocation == AxisLocation.Up || axisLocation == AxisLocation.Left)
+                if (axisLocation is AxisLocation.Up or AxisLocation.Left)
                 {
                     startHeight = 0;
-                    endHeight   = isBig ? majorTickLength : majorTickLength / 2;
+                    endHeight   = isBig ? majorTickLength : majorTickLength  * 0.5;
                 }
                 else
                 {
@@ -110,7 +104,7 @@ public sealed partial class Ruler : Control
                         p = NewPointF(x, rullerWidth - majorTickLength - textHeight - 1);
                         break;
                     case AxisLocation.Left:
-                        p = NewPointF(tickMarginForText, x);
+                        p = NewPointF(TickMarginForText, x);
                         break;
                     case AxisLocation.Right:
                         p = NewPointF(rullerWidth - majorTickLength - textHeight / 2 - 3, x);
@@ -124,10 +118,10 @@ public sealed partial class Ruler : Control
                 {
                     var text = c.ValueToText(value);
                     var m    = graphics.MeasureString(text, Font);
-                    p = new PointF(p.X - m.Width * 0.5f, p.Y);
+                    p = p with { X = p.X - m.Width * 0.5f };
 
                     if (isHorizontalRuler)
-                        p = new PointF(p.X - m.Width * 0.5f, p.Y);
+                        p = p with { X = p.X - m.Width * 0.5f };
                     else
                         p = new PointF(Size.Width - m.Width, p.Y - m.Height - 1);
                     using var stringFormat = new StringFormat();
@@ -140,6 +134,12 @@ public sealed partial class Ruler : Control
                 }
             }
         }
+        return;
+
+        PointF MkPoint(double x, double y)
+        {
+            return isHorizontalRuler ? new PointF((float)x, (float)y) : new PointF((float)y, (float)x);
+        }
     }
 
     private void SetAndInvalidate<T>(ref T field, T value)
@@ -151,7 +151,7 @@ public sealed partial class Ruler : Control
     }
 
 
-    private const int tickMarginForText = 13;
+    private const int TickMarginForText = 13;
 
     /// <summary>
     ///     Gets or sets where the marks are shown in the ruler.
