@@ -32,7 +32,7 @@ public struct WayPoint
         {
             case < 0: throw new ArgumentOutOfRangeException(nameof(inputArmLength));
             case > 0:
-                inputVector = inputVector.NormalizeFast();
+                inputVector.Normalize();
                 if (!inputVector.IsValidVector())
                     throw new ArgumentException(nameof(inputVector));
                 break;
@@ -66,7 +66,7 @@ public struct WayPoint
         {
             case < 0: throw new ArgumentOutOfRangeException(nameof(inputArmLength));
             case > 0:
-                inputVector = inputVector.NormalizeFast();
+                inputVector.Normalize();
                 if (!inputVector.IsValidVector())
                     throw new ArgumentException(nameof(inputVector));
                 break;
@@ -77,7 +77,7 @@ public struct WayPoint
             case < 0:
                 throw new ArgumentOutOfRangeException(nameof(outputArmLength));
             case > 0:
-                vector = vector.NormalizeFast();
+                vector.Normalize();
                 if (!vector.IsValidVector())
                     throw new ArgumentException(nameof(vector));
                 break;

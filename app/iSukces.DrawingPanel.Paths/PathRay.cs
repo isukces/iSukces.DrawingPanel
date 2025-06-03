@@ -43,7 +43,7 @@ public struct PathRay
     {
         Point  = point;
         Vector = endPoint - point;
-        Vector = Vector.NormalizeFast();
+        Vector.Normalize();
     }
 
     public override string ToString()
@@ -93,7 +93,7 @@ public struct PathRay
 
     public Vector GetNormalizedVector()
     {
-        return Vector.NormalizeFast();
+        return Vector.GetNormalized();
     }
 
     public Vector GetPrependicularVector()
@@ -118,7 +118,7 @@ public struct PathRay
     public PathRay Normalize()
     {
         var v = Vector;
-        v = v.NormalizeFast();
+        v.Normalize();
         return new PathRay(Point, v);
     }
 

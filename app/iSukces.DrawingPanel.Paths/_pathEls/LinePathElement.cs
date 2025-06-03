@@ -16,9 +16,10 @@ public class LinePathElement : IPathElement, ILineCollider
     public LinePathElement(Point start, Point end)
     {
         _start      = start;
-        _end        = end;
-        _vector     = _end - _start;
-        _unitVector = _vector.NormalizeFast(out _length);
+        _end        = end; 
+        _unitVector = _vector     = _end - _start;
+        _unitVector.Normalize();
+        _length     = _vector.Length;
     }
 
     private LinePathElement(Point start, Point end,

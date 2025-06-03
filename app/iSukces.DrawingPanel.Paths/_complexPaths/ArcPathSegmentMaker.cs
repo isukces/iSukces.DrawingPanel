@@ -199,7 +199,7 @@ internal sealed class ArcPathSegmentMaker
         if ((Flags & SegmentFlags.BothVectors) != SegmentFlags.BothVectors)
         {
             var dir = Point.Location - PreviousPoint.Location;
-            dir = dir.NormalizeFast();
+            dir.Normalize();
             if ((Flags & SegmentFlags.HasStartVector) == 0)
             {
                 _normalizationFlags &= ~NormalizationFlags.NormalizeStartVector;

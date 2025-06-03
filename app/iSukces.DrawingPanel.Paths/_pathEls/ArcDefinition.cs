@@ -187,7 +187,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         if (isInside == Three.Inside)
         {
             var    radius = Radius - v.Length;
-            var    qPoint = target + radius * v.NormalizeFast();
+            var    qPoint = target + radius * v.GetNormalized();
             double track  = trackAngle * Radius * MathEx.DEGTORAD;
 #if DEBUG
             if (track < 0)
@@ -206,7 +206,8 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         var v2 = target - End;
         if (v1.LengthSquared < v2.LengthSquared)
         {
-            var versor = DirectionStart.NormalizeFast();
+            var versor = DirectionStart;
+            versor.Normalize();
             var track  = versor * v1;
 #if DEBUG
             if (track > 0)
@@ -217,7 +218,8 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         }
         else
         {
-            var versor = DirectionEnd.NormalizeFast();
+            var versor = DirectionEnd;
+            versor.Normalize();
             var track  = versor * v2;
 #if DEBUG
             if (track < 0)
@@ -233,7 +235,8 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
     {
         var d    = (End - Center);
         var l    = Radius - d.Length;
-        var unit = d.NormalizeFast();
+        var unit = d;
+        unit.Normalize();
         End += l * unit;
 #if DEBUG
         d = (End - Center);
@@ -246,7 +249,8 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
 
     public ArcDefinition FixStartDirection()
     {
-        var dir = DirectionVectorFromRadius(RadiusStart).NormalizeFast();
+        var dir = DirectionVectorFromRadius(RadiusStart);
+        dir.Normalize();
 #if DEBUG
         if (dir * DirectionStart < 0)
             throw new Exception("Invalid direction");
@@ -384,7 +388,8 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         var tmp = radiusSquared - chordHalf * chordHalf;
         var a   = tmp <= 0 ? 0 : -Math.Sqrt(tmp);
 
-        var xOne = v.NormalizeFast();
+        var xOne = v;
+        xOne.Normalize();
         var yOne = xOne.GetPrependicular(Direction == ArcDirection.Clockwise);
 
         for (var idx = segmentsCount / 2; idx >= 1; idx--)
@@ -464,7 +469,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         var leftHand = Direction == ArcDirection.CounterClockwise;
         Start = start;
         UpdateRadiusStart();
-        DirectionStart = RadiusStart.GetPrependicular(leftHand).NormalizeFast();
+        DirectionStart = RadiusStart.GetPrependicular(leftHand).GetNormalized();
     }
 
     internal void ResetFlags()

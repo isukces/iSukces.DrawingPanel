@@ -167,21 +167,6 @@ public partial class PathDistanceFinderTests
     [MemberData(nameof(T05_TestData))]
     public void T05_Should_calculate_distance_from_line_arc(int testIndex, PathDistanceFinderTestData expected)
     {
-        // if (testIndex != 0) return;
-        PathResult Prepare()
-        {
-            var l1             = new LinePathElement(new Point(10, 3), new Point(60, 3));
-            var center         = l1.End + new Vector(12, -14);
-            var end            = center + new Vector(10, -2);
-            var directionStart = new Vector(1, 0);
-
-            var l2 = new ArcDefinition(center, l1.End, directionStart, end)
-                .FixStartDirection()
-                .FixEndPoint();
-            var lines = new IPathElement[] { l1, l2 };
-            return new PathResult(lines);
-        }
-
         var pathResult = Prepare();
         var actual     = PathDistanceFinder.GetDistanceFromLine(pathResult, expected.TestPoint);
 
@@ -198,6 +183,22 @@ public partial class PathDistanceFinderTests
         }
 
         expected.AssertEqual(actual);
+        return;
+
+        // if (testIndex != 0) return;
+        PathResult Prepare()
+        {
+            var l1             = new LinePathElement(new Point(10, 3), new Point(60, 3));
+            var center         = l1.End + new Vector(12, -14);
+            var end            = center + new Vector(10, -2);
+            var directionStart = new Vector(1, 0);
+
+            var l2 = new ArcDefinition(center, l1.End, directionStart, end)
+                .FixStartDirection()
+                .FixEndPoint();
+            var lines = new IPathElement[] { l1, l2 };
+            return new PathResult(lines);
+        }
     }
 
 

@@ -18,4 +18,6 @@ public class PathCalculationConfig
     public static double MinimumLinearEquationSystemDeterminantToUseLine = 1e-5;
 
     #endregion
+
+    public static double MinimumDistanceToMakeCircle = 1e-30;
 }

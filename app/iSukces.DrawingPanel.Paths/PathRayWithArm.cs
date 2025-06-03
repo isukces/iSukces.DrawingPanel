@@ -30,7 +30,7 @@ public struct PathRayWithArm
             throw new ArgumentOutOfRangeException(nameof(armLength));
         if (armLength > 0)
         {
-            vector = vector.NormalizeFast();
+            vector.Normalize();
             if (!vector.IsValidVector())
                 throw new ArgumentOutOfRangeException(nameof(vector));
         }
@@ -91,7 +91,8 @@ public struct PathRayWithArm
     {
         if (ArmLength > 0)
             return Vector;
-        var vector = Vector.NormalizeFast();
+        var vector = Vector;
+        vector.Normalize();
         return vector;
     }
 
@@ -117,7 +118,8 @@ public struct PathRayWithArm
     {
         if (ArmLength > 0)
             return this;
-        var vector = Vector.NormalizeFast();
+        var vector = Vector;
+        vector.Normalize();
         return new PathRayWithArm(Point, vector, ArmLength);
     }
 

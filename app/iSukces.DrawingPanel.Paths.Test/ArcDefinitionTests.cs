@@ -171,7 +171,8 @@ public partial class ArcDefinitionTests
         Assert.Equal(locExpected, loc, 10);
 
         var angle = locExpected / arc.Radius;
-        direction = direction.NormalizeFast().GetPrependicularVector();
+        direction.Normalize();
+        direction = direction.GetPrependicularVector();
         Assert.Equal(Math.Sin(angle), direction.Y, 5);
         Assert.Equal(Math.Cos(angle), direction.X, 5);
     }
@@ -199,7 +200,8 @@ public partial class ArcDefinitionTests
         Assert.Equal(locExpected, loc, 10);
 
         var angle = -locExpected / arc.Radius;
-        direction = direction.NormalizeFast().GetPrependicular();
+        direction.Normalize();
+        direction = direction.GetPrependicular();
         Assert.Equal(Math.Sin(angle), direction.Y, 5);
         Assert.Equal(Math.Cos(angle), direction.X, 5);
     }
@@ -393,7 +395,7 @@ public partial class ArcDefinitionTests
             Center         = center,
             Start          = center + v1,
             End            = center + v2,
-            DirectionStart = v1.GetPrependicular().NormalizeFast()
+            DirectionStart = v1.GetPrependicular().GetNormalized()
         };
         arc.UpdateRadiusVectors();
 
@@ -447,7 +449,7 @@ public partial class ArcDefinitionTests
             Center         = center,
             Start          = center + v1,
             End            = center + v2,
-            DirectionStart = v1.GetPrependicular().NormalizeFast()
+            DirectionStart = v1.GetPrependicular().GetNormalized()
         };
         arc.UpdateRadiusVectors();
 
@@ -502,7 +504,7 @@ public partial class ArcDefinitionTests
             Center         = center,
             Start          = center + v1,
             End            = center + v2,
-            DirectionStart = v1.GetPrependicular(false).NormalizeFast()
+            DirectionStart = v1.GetPrependicular(false).GetNormalized()
         };
         arc.UpdateRadiusVectors();
 
@@ -557,7 +559,7 @@ public partial class ArcDefinitionTests
             Center         = center,
             Start          = center + v1,
             End            = center + v2,
-            DirectionStart = v1.GetPrependicular(false).NormalizeFast()
+            DirectionStart = v1.GetPrependicular(false).GetNormalized()
         };
         arc.UpdateRadiusVectors();
 
@@ -659,16 +661,12 @@ public partial class ArcDefinitionTests
 
         const int radius = 12;
 
-        Point FindPoint(double x, double y, double radius1 = radius)
-        {
-            return center + radius1 * new Vector(x, y).NormalizeFast();
-        }
-
         var start = FindPoint(10, 3);
         var end   = FindPoint(-3, 10);
         if (!left)
             (start, end) = (end, start);
-        var dirStart = (start - center).NormalizeFast().GetPrependicular(left);
+        var dirStart = (start - center).GetPrependicular(left);
+        dirStart.Normalize();
         var arc      = new ArcDefinition(center, start, dirStart, end);
 
         if (!left)
@@ -692,6 +690,15 @@ public partial class ArcDefinitionTests
         {
             var q = arc.FindClosestPointOnElement(FindPoint(-1, 1, r));
             AssertEx.Equal(expected.X, expected.Y, q.ClosestPoint);
+        }
+
+        return;
+
+        Point FindPoint(double x, double y, double radius1 = radius)
+        {
+            var v = new Vector(x, y);
+            v.Normalize();
+            return center + radius1 * v;
         }
     }
 

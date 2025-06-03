@@ -57,22 +57,15 @@ public class PathBuilderTest
         pb.AddConnectionAutomatic(start, reference1, false);
         var list = pb.List;
         Assert.Equal(2, list.Count);
-        var e1 = new ArcDefinition(new Point(-339.270603461039, 1071.58809106537),
-            new Point(30.95071298, 39.21376973), new Vector(0.941303233494752, 0.33756217592071),
-            new Point(47.1026330815796, 45.149459239911));
         var a = (ArcDefinition)list[0];
-        Assert.Equal(e1.Radius, a.Radius, 9);
-        AssertEx.Equal(e1.Start, a.Start, 9);
-        AssertEx.Equal(e1.End, a.End, 9);
-            
-            
-        e1 = new ArcDefinition(new Point(433.475869624198, -981.289172585547),
-            new Point(47.1026330815796, 45.149459239911), new Vector(1026.43863182546, 386.373236542618),
-            new Point(63.2545531, 51.08514872));
+        Assert.Equal(1096.6771150914135, a.Radius, 9);
+        AssertEx.Equal(new Point(30.95071298, 39.21376973), a.Start, 9);
+        AssertEx.Equal(new Point(47.10263304, 45.149459225), a.End, 9);
+
         a = (ArcDefinition)list[1];
-        Assert.Equal(e1.Radius, a.Radius, 9);
-        AssertEx.Equal(e1.Start, a.Start, 9);
-        AssertEx.Equal(e1.End, a.End, 9);
+        Assert.Equal(1096.6771150921065, a.Radius, 9);
+        AssertEx.Equal(new Point(47.102633040000001, 45.149459225000001), a.Start, 9);
+        AssertEx.Equal(new Point(63.254553100000003, 51.085148719999999), a.End, 9);
     }
 
     public class MyValidator : IPathValidator

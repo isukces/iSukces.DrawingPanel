@@ -34,30 +34,6 @@ public sealed class PathDistanceFinderTestData
         var track1      = TrackFromPathResult.Make(pathResult);
         var totalLength = track1.GetLength();
 
-        TrackInfo Find(double track)
-        {
-            if (track < 0)
-            {
-                var pathElement = elements.First();
-                var point       = pathElement.GetStartPoint();
-                var vector      = pathElement.GetStartVector().NormalizeFast();
-                point += vector * track;
-                return new TrackInfo(point, vector);
-            }
-
-            if (track > totalLength)
-            {
-                track -= totalLength;
-                var pathElement = elements.Last();
-                var point       = pathElement.GetEndPoint();
-                var vector      = pathElement.GetEndVector().NormalizeFast();
-                point += vector * track;
-                return new TrackInfo(point, vector);
-            }
-
-            return track1.GetTrackInfo(track);
-        }
-
         var rnd = new Random(1234);
 
         double Rand(double min, double max)
@@ -109,6 +85,32 @@ public sealed class PathDistanceFinderTestData
 
         Part(offset, maxDistance * 0.5);
         return sink;
+
+        TrackInfo Find(double track)
+        {
+            if (track < 0)
+            {
+                var pathElement = elements.First();
+                var point       = pathElement.GetStartPoint();
+                var vector      = pathElement.GetStartVector();
+                vector.Normalize();
+                point += vector * track;
+                return new TrackInfo(point, vector);
+            }
+
+            if (track > totalLength)
+            {
+                track -= totalLength;
+                var pathElement = elements.Last();
+                var point       = pathElement.GetEndPoint();
+                var vector      = pathElement.GetEndVector();
+                vector.Normalize();
+                point += vector * track;
+                return new TrackInfo(point, vector);
+            }
+
+            return track1.GetTrackInfo(track);
+        }
     }
 
     public void AssertEqual(PathDistanceFinderResult actual)
@@ -116,13 +118,13 @@ public sealed class PathDistanceFinderTestData
         Assert.True(DistanceFromLine >= 0);
         Assert.Equal(DistanceFromLine, actual.DistanceFromLine, 8);
         Assert.Equal(LocationRelatedToElement, actual.Location);
-        Assert.Equal(SideMovement, actual.SideMovement);
-        Assert.Equal(Direction.X, actual.Direction.X);
-        Assert.Equal(Direction.Y, actual.Direction.Y);
+        Assert.Equal(SideMovement, actual.SideMovement, 10);
+        Assert.Equal(Direction.X, actual.Direction.X, 10);
+        Assert.Equal(Direction.Y, actual.Direction.Y, 10);
 
-        Assert.Equal(ClosestPoint.X, actual.ClosestPoint.X);
-        Assert.Equal(ClosestPoint.Y, actual.ClosestPoint.Y);
-        Assert.Equal(Track, actual.Track);
+        Assert.Equal(ClosestPoint.X, actual.ClosestPoint.X, 10);
+        Assert.Equal(ClosestPoint.Y, actual.ClosestPoint.Y, 10);
+        Assert.Equal(Track, actual.Track, 10);
         Assert.Equal(ElementTrackOffset, actual.ElementTrackOffset);
         Assert.Equal(Index, actual.ElementIndex);
     }

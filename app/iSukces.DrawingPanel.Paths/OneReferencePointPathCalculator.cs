@@ -197,8 +197,10 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
         }
 
         var xReference = Reference.GetNormalizedVector();
-        var xStart     = Start.Vector.NormalizeFast();
-        var xEnd       = End.Vector.NormalizeFast();
+        var xStart     = Start.Vector;
+        var xEnd       = End.Vector;
+        xStart.Normalize();
+        xEnd.Normalize();
 
         var brakuje = startLength + endLength - middleLength;
         if (brakuje > 0)

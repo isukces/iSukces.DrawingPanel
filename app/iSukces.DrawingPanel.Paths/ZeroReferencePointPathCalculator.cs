@@ -188,8 +188,18 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
     {
         var v1   = point - Start.Point;
         var dot1 = v1 * Start.Vector;
+        if (v1.LengthSquared < PathCalculationConfig.MinimumDistanceToMakeCircle)
+        {
+            // if the point is too close to start, we cannot use arc
+            return null;
+        }
 
         var v2   = End.Point - point;
+        if (v2.LengthSquared < PathCalculationConfig.MinimumDistanceToMakeCircle)
+        {
+            // if the point is too close to start, we cannot use arc
+            return null;
+        }
         var dot2 = v2 * End.Vector;
 
         var l1 = v1.Length;
