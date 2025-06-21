@@ -1,7 +1,7 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 #if COMPATMATH
@@ -15,7 +15,7 @@ using System.Windows;
 namespace iSukces.DrawingPanel.Paths;
 
 [DebuggerDisplay("{GetCreationCode()}")]
-public sealed class ArcPathMakerVertex
+public class ArcPathMakerVertex
 {
     public ArcPathMakerVertex()
     {
@@ -31,12 +31,13 @@ public sealed class ArcPathMakerVertex
     {
     }
 
-    private static IReadOnlyList<WayPoint> DeepClone(IReadOnlyList<WayPoint> refs)
+    [return: NotNullIfNotNull(nameof(refs))]
+    private static IReadOnlyList<WayPoint>? DeepClone(IReadOnlyList<WayPoint>? refs)
     {
         if (refs is null)
             return null;
         if (refs.Count == 0)
-            return Array.Empty<WayPoint>();
+            return [];
         var result = new WayPoint[refs.Count];
         switch (refs)
         {
@@ -57,12 +58,13 @@ public sealed class ArcPathMakerVertex
         return result;
     }
 
-    private static IReadOnlyList<WayPoint> DeepClone(IReadOnlyList<WayPoint> refs, Vector v)
+    [return: NotNullIfNotNull(nameof(refs))]
+    private static IReadOnlyList<WayPoint>? DeepClone(IReadOnlyList<WayPoint>? refs, Vector v)
     {
         if (refs is null)
             return null;
         if (refs.Count == 0)
-            return Array.Empty<WayPoint>();
+            return [];
         var result = new WayPoint[refs.Count];
 
         for (var i = 0; i < result.Length; i++)
@@ -71,7 +73,8 @@ public sealed class ArcPathMakerVertex
         return result;
     }
 
-    public static List<ArcPathMakerVertex> Move(List<ArcPathMakerVertex> input, Vector vector)
+    [return: NotNullIfNotNull(nameof(input))]
+    public static List<ArcPathMakerVertex>? Move(List<ArcPathMakerVertex>? input, Vector vector)
     {
         if (input is null || input.Count == 0)
             return input;
@@ -79,7 +82,9 @@ public sealed class ArcPathMakerVertex
         return input;
     }
 
-    public static ArcPathMakerVertex operator +(ArcPathMakerVertex a, Vector v)
+    
+    [return: NotNullIfNotNull(nameof(a))]
+    public static ArcPathMakerVertex? operator +(ArcPathMakerVertex? a, Vector v)
     {
         if (a is null)
             return a;
@@ -215,8 +220,6 @@ public sealed class ArcPathMakerVertex
         return this;
     }
 
-    #region properties
-
     public Point Location { get; set; }
 
     public Vector InVector => _inVector;
@@ -228,16 +231,10 @@ public sealed class ArcPathMakerVertex
     public double OutArmLength { get; set; }
 
     public FlexiPathMakerItem2Flags Flags           { get; private set; }
-    public IReadOnlyList<WayPoint>  ReferencePoints { get; set; }
-
-    #endregion
-
-    #region Fields
+    public IReadOnlyList<WayPoint>? ReferencePoints { get; set; }
 
     private Vector _inVector;
     private Vector _outVector;
-
-    #endregion
 }
 
 [Flags]
