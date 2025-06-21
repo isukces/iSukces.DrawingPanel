@@ -50,10 +50,10 @@ public sealed class ZeroReferencePointPathCalculatorLineResult : IPathResult
     {
         get
         {
-            return new[]
-            {
+            return
+            [
                 _line
-            };
+            ];
         }
     }
 

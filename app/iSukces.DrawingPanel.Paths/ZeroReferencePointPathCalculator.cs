@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Diagnostics;
 #if COMPATMATH
@@ -6,7 +5,6 @@ using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-
 
 namespace iSukces.DrawingPanel.Paths;
 
@@ -17,8 +15,8 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
     {
     }
 
-    private static bool Check(ZeroReferencePointPathCalculatorResult result, ArcDefinition one,
-        IPathValidator pathValidator)
+    private static bool Check(ZeroReferencePointPathCalculatorResult? result, ArcDefinition? one,
+        IPathValidator? pathValidator)
     {
         if (result is null)
             return false;
@@ -41,9 +39,7 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
             }
         }
         if (one is null)
-        {
             return true;
-        }
 
         var oneAngle = one.Angle;
         if (result.Arc1.Angle > oneAngle) return false;
@@ -184,7 +180,7 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
     {
     }
 
-    private ArcDefinition TryOne(Point point)
+    private ArcDefinition? TryOne(Point point)
     {
         var v1   = point - Start.Point;
         var dot1 = v1 * Start.Vector;
@@ -266,7 +262,7 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
         return null;
     }
 
-    private ZeroReferencePointPathCalculatorResult TryTwo(ArcDefinition one, bool normalize, double maxRadius)
+    private ZeroReferencePointPathCalculatorResult? TryTwo(ArcDefinition? one, bool normalize, double maxRadius)
     {
         if (normalize)
         {
@@ -274,23 +270,8 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
             End   = End.Normalize();
         }
 
-        var minLength  = double.MaxValue;
-        var bestResult = (ZeroReferencePointPathCalculatorResult)null;
-
-        void CheckAndAdd(ZeroReferencePointPathCalculatorResult r)
-        {
-            if (r is null)
-                return;
-            if (!Check(r, one, Validator))
-                return;
-
-            var l = r.GetLength(Start.Point, End.Point);
-            if (l < minLength)
-            {
-                minLength  = l;
-                bestResult = r;
-            }
-        }
+        var                                     minLength  = double.MaxValue;
+        ZeroReferencePointPathCalculatorResult? bestResult = null;
 
         var s = Start.GetMovedRayOutput();
         var e = End.GetMovedRayInput();
@@ -332,9 +313,24 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
             };
 
         return null;
+
+        void CheckAndAdd(ZeroReferencePointPathCalculatorResult? r)
+        {
+            if (r is null)
+                return;
+            if (!Check(r, one, Validator))
+                return;
+
+            var l = r.GetLength(Start.Point, End.Point);
+            if (l < minLength)
+            {
+                minLength  = l;
+                bestResult = r;
+            }
+        }
     }
 
-    private ZeroReferencePointPathCalculatorResult TryTwoArcsSolution(
+    private ZeroReferencePointPathCalculatorResult? TryTwoArcsSolution(
         TwoArcsFinderPrecompute precompute, bool useSmallerRadius)
     {
         var isOk = precompute.UpdateCompute(useSmallerRadius, Validator as IMinRadiusPathValidator);
@@ -360,8 +356,6 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
         };
     }
 
-    #region properties
-
     public IPathValidator                        Validator { get; set; }
     public ZeroReferencePointPathCalculatorFlags Flags     { get; set; }
 
@@ -378,18 +372,13 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
         }
     }
 #endif
-
-    #endregion
-
-
+    
     public enum ResultKind
     {
         /// <summary>
         ///     Początek i koniec jest jednym punktem
         /// </summary>
         Point,
-
-
         OneArc,
         TwoArcs
     }

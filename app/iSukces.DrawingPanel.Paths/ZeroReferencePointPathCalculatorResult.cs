@@ -101,7 +101,7 @@ public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
         {
             switch (Kind)
             {
-                case ZeroReferencePointPathCalculator.ResultKind.Point: return Array.Empty<IPathElement>();
+                case ZeroReferencePointPathCalculator.ResultKind.Point: return [];
                 case ZeroReferencePointPathCalculator.ResultKind.OneArc:
                 case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
                     var builder = new PathBuilder(Start);

@@ -30,7 +30,7 @@ public static class MoveUtils
         if (src is null)
             return null;
         if (src.Count == 0)
-            return Array.Empty<IPathElement>();
+            return [];
         var result = new IPathElement[src.Count];
         for (var index = 0; index < src.Count; index++)
         {

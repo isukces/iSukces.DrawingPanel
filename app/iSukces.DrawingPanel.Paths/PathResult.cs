@@ -1,48 +1,46 @@
-#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 
 namespace iSukces.DrawingPanel.Paths;
 
 public class PathResult : IPathResult
 {
-    public PathResult(Point start, Point end, IReadOnlyList<IPathElement> arcs)
+    public PathResult(Point start, Point end, IReadOnlyList<IPathElement>? elements)
     {
         Start    = start;
         End      = end;
-        Elements = arcs ?? Array.Empty<IPathElement>();
+        Elements = elements ?? [];
     }
 
     public PathResult(IReadOnlyList<IPathElement> arcs)
     {
         Start    = arcs[0].GetStartPoint();
-        End      = arcs.Last().GetEndPoint();
+        End      = arcs[^1].GetEndPoint();
         Elements = arcs;
     }
 
-    public PathResult([NotNull] IPathElement element)
+    public PathResult(IPathElement element)
     {
         Start    = element.GetStartPoint();
         End      = element.GetEndPoint();
-        Elements = new[] { element };
+        Elements = [element];
     }
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static IReadOnlyList<IPathElement> GetNotNull(IPathElement a, IPathElement b)
+    private static IReadOnlyList<IPathElement> GetNotNull(IPathElement? a, IPathElement? b)
     {
         if (a is null)
             return b is null
-                ? Array.Empty<IPathElement>()
+                ? []
                 : new[] { b };
 
         return b is null
@@ -55,7 +53,7 @@ public class PathResult : IPathResult
         return new PathResult(start, end, GetNotNull(el1, el2));
     }
 
-    public static PathResult Make(Point start, Point end, IPathElement element)
+    public static PathResult Make(Point start, Point end, IPathElement? element)
     {
         var elements = element is null
             ? Array.Empty<IPathElement>()
@@ -63,11 +61,17 @@ public class PathResult : IPathResult
         return new PathResult(start, end, elements);
     }
 
-    public static PathResult operator +(PathResult src, Vector v)
+    [return: NotNullIfNotNull(nameof(src))]
+    public static PathResult? operator +(PathResult? src, Vector v)
     {
         if (src is null)
             return null;
         return new PathResult(src.Start + v, src.End + v, MoveUtils.TranslateElementList(src.Elements, v));
+    }
+
+    public override string ToString()
+    {
+        return $"Start: {Start}, End: {End}, Count: {Elements.Count}";
     }
 
     public Point                       Start    { get; }
@@ -90,7 +94,7 @@ public class PathResult : IPathResult
         {
             if (Elements.Count == 0)
                 return default;
-            return Elements[Elements.Count - 1].GetEndVector();
+            return Elements[^1].GetEndVector();
         }
     }
 }

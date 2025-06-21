@@ -20,6 +20,12 @@ public sealed class ThreeReferencePointsPathCalculator : ReferencePointPathCalcu
     {
         var builder = new PathBuilder(Start.Point);
 
+        Add(Start.GetRay(), Reference1);
+        Add(Reference1, Reference2);
+        Add(Reference2, Reference3);
+        Add(Reference3, End.GetRay().WithInvertedVector());
+        return builder.LineToAndCreate(End.Point);
+
         void Add(PathRay st, PathRay en)
         {
             var s = ZeroReferencePointPathCalculator.Compute(st, en, validator);
@@ -35,12 +41,6 @@ public sealed class ThreeReferencePointsPathCalculator : ReferencePointPathCalcu
                 builder.ArcTo(r2.Arc2);
             }
         }
-
-        Add(Start.GetRay(), Reference1);
-        Add(Reference1, Reference2);
-        Add(Reference2, Reference3);
-        Add(Reference3, End.GetRay().WithInvertedVector());
-        return builder.LineToAndCreate(End.Point);
     }
 
     public override void InitDemo()

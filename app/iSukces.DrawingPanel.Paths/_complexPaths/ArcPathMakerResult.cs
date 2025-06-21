@@ -43,7 +43,7 @@ public class ArcPathMakerResult
         var inSegment = Segments[index - 1]?.Elements;
         if (inSegment is null)
             throw new NullReferenceException($"{nameof(Segments)}[{(index - 1)}]");
-        var inSegmentLast = inSegment.Count > 0 ? inSegment[inSegment.Count - 1] : null;
+        var inSegmentLast = inSegment.Count > 0 ? inSegment[^1] : null;
         if (inSegmentLast is null)
         {
             inVector = default;
@@ -75,7 +75,7 @@ public class ArcPathMakerResult
 
     public IReadOnlyList<IPathResult> Segments { get; }
 
-    public static ArcPathMakerResult Empty => new(Array.Empty<IPathResult>());
+    public static ArcPathMakerResult Empty => new([]);
 
     public int Count => Segments.Count;
 

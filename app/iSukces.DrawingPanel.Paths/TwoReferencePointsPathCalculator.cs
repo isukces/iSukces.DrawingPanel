@@ -26,7 +26,7 @@ public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalcula
         if (tmp is not null)
             return tmp;
         var line = new LinePathElement(Start.Point, End.Point);
-        return new PathResult(Start.Point, End.Point, new[] { line });
+        return new PathResult(Start.Point, End.Point, [line]);
     }
 
     private IPathResult ComputeInternal(IPathValidator validator, out ArcValidationResult result)

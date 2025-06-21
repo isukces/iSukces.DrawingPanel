@@ -1,4 +1,4 @@
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 #if COMPATMATH
@@ -32,7 +32,8 @@ public class LinePathElement : IPathElement, ILineCollider
         _vector     = vector;
     }
 
-    public static LinePathElement operator +(LinePathElement a, Vector v)
+    [return: NotNullIfNotNull(nameof(a))]
+    public static LinePathElement? operator +(LinePathElement? a, Vector v)
     {
         if (a is null)
             return null;
@@ -149,18 +150,12 @@ public class LinePathElement : IPathElement, ILineCollider
         return new LinePathElement(newStart, _end);
     }
 
-    #region properties
-
     public Vector UnitVector => _unitVector;
     public Point  Start      => _start;
     public Point  End        => _end;
     public double Length     => _length;
 
-    #endregion
-
     public object Tag { get; set; }
-
-    #region Fields
 
     private readonly Point _end;
     private readonly double _length;
@@ -168,5 +163,8 @@ public class LinePathElement : IPathElement, ILineCollider
     private readonly Vector _unitVector;
     private readonly Vector _vector;
 
-    #endregion
+    public override string ToString()
+    {
+        return $"LinePathElement: Start={_start}, End={_end}, Length={_length}";
+    }
 }
