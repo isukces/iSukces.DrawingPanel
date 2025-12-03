@@ -34,13 +34,12 @@ public class SmileDrawable : DrawableBase
             var center = new Point(60, 80);
             var v1     = new IntVector(20, 0);
 
-            graphics.DrawPolygon(pen, new[]
-            {
+            graphics.DrawPolygon(pen, [
                 center - v1 + new IntVector(-15, -6),
                 center - v1,
                 center + v1,
                 center + v1 + new IntVector(15, -6)
-            });
+            ]);
         }
         finally
         {

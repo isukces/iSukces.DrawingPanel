@@ -10,7 +10,7 @@ internal static class InternalDrawingPanelExtensions
     public static TOut[] MapToArray<TIn, TOut>(this IList<TIn>? list, Func<TIn, TOut> map)
     {
         if (list is null || list.Count == 0)
-            return Array.Empty<TOut>();
+            return [];
 
         var result = new TOut[list.Count];
         // ReSharper disable once LoopCanBeConvertedToQuery
@@ -25,7 +25,7 @@ internal static class InternalDrawingPanelExtensions
     }
 
     [Pure]
-    public static string? TrimToNull(this string value)
+    public static string? TrimToNull(this string? value)
     {
         value = value?.Trim();
         return string.IsNullOrEmpty(value) ? null : value;

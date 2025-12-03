@@ -127,7 +127,7 @@ internal class ResultDrawerBase
         var p1 = cs.Transform(new Point(ahl - 15 * factor, 4)).ToPointF();
         var p3 = cs.Transform(new Point(ahl - 15 * factor, -4)).ToPointF();
         var p2 = cs.Transform(new Point(ahl, 0)).ToPointF();
-        Graph.FillPolygon(br, new[] { p1, p2, p3 });
+        Graph.FillPolygon(br, [p1, p2, p3]);
 
         var       p4  = cs.Transform(new Point(0, 0)).ToPointF();
         using var pen = new Pen(c, linethickness);
@@ -178,7 +178,7 @@ internal class ResultDrawerBase
                 var p3 = cs.Transform(new Point(15, -4)).ToPointF();
                 var p2 = cs.Transform(new Point(0, 0)).ToPointF();
 
-                Graph.FillPolygon(Brushes.Fuchsia, new[] { p1, p2, p3 });
+                Graph.FillPolygon(Brushes.Fuchsia, [p1, p2, p3]);
             }
         }
 

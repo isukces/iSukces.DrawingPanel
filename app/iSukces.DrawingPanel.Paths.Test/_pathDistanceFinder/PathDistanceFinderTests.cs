@@ -29,7 +29,7 @@ public partial class PathDistanceFinderTests
     {
         var index = 0;
         foreach (var i in src)
-            yield return new object[] { index++, i };
+            yield return [index++, i];
     }
 
     [Theory]

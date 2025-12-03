@@ -20,5 +20,5 @@ public class DpNotifyPropertyChanged : INotifyPropertyChanged
         return true;
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

@@ -68,11 +68,11 @@ internal sealed class PathElementAssignmetnDrawer : ResultDrawerBase
 
         IEnumerable<Point> GetPoints()
         {
-            return new Point[]
-            {
+            return
+            [
                 new(xRange.Min, yRange.Min),
                 new(xRange.Max, yRange.Max)
-            };
+            ];
         }
 
         void DrawInternal()
@@ -162,9 +162,9 @@ internal sealed class PathElementAssignmetnDrawer : ResultDrawerBase
     #region Fields
 
     static readonly Color[] colors =
-    {
+    [
         Color.IndianRed, Color.Gray
-    };
+    ];
 
     private PathResult _pathResult;
 

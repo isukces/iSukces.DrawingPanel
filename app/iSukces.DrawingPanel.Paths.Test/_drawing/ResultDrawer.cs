@@ -68,7 +68,7 @@ internal class ResultDrawer : ResultDrawerBase
             var p1 = g.Map(x.Start.Point);
             var p2 = g.Map(x.End.Point);
             var p3 = g.Map(cross);
-            g.Graph.DrawPolygon(pen, new[] { p1, p2, p3, p1 });
+            g.Graph.DrawPolygon(pen, [p1, p2, p3, p1]);
         }
     }
 

@@ -79,10 +79,10 @@ public class LiteDrawableText : ILiteDrawable
                     var p  = _point;
                     p = new WinPoint(p.X - dx, p.Y + dy1);
                     var p2 = p + new Vector(_measure.Width, -_measure.Height) * (FontSize / fontSizeForMeasure);
-                    _areas = new[]
-                    {
+                    _areas =
+                    [
                         new TwoCorners(p, p2)
-                    };
+                    ];
                 }
             }
 

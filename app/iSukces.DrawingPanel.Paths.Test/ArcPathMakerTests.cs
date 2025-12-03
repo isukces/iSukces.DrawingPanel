@@ -51,11 +51,11 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0),
                 new ArcPathMakerVertex(100, 0)
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -82,11 +82,11 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                 new ArcPathMakerVertex(24, 100)
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -126,11 +126,11 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -170,11 +170,11 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -214,11 +214,11 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 23)
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -262,13 +262,13 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                 new ArcPathMakerVertex(24, 100)
                     .WithInVector(0, 1)
                     .WithReferencePoints(new PathRay(3, 50, 0, 0))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -317,13 +317,13 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                 new ArcPathMakerVertex(24, 100)
                     .WithInVector(1, 1)
                     .WithReferencePoints(new PathRay(3, 50, 0, 0))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -367,12 +367,12 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
                     .WithReferencePoints(new PathRay(-3, 50, 0, 0))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -430,12 +430,12 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
                     .WithReferencePoints(new PathRay(-4, 45, 0, 0), new PathRay(-4, 55, 0, 0))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -492,12 +492,12 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
                     .WithReferencePoints(new PathRay(-4, 45, 0, 0), new PathRay(-4, 55, 0, 0))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -558,13 +558,13 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1)
                     .WithReferencePoints(new PathRay(-4, 30, 0, 1), new PathRay(-4, 46, 0.4, 1),
                         new PathRay(-4, 59, 0, 1))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -647,15 +647,15 @@ public sealed partial class ArcPathMakerTests
     {
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 8),
                 new ArcPathMakerVertex(24, 100).WithInVector(0, 1, 13)
                     .WithReferencePoints(
                         new PathRay(-4, 30, 0, 1),
                         new PathRay(-4, 46, 0.4, 1),
                         new PathRay(-4, 59, 0, 1))
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig
@@ -747,13 +747,13 @@ public sealed partial class ArcPathMakerTests
             13, 3);
         var maker = new ArcPathMaker
         {
-            Vertices = new[]
-            {
+            Vertices =
+            [
                 new ArcPathMakerVertex(0, 0).WithOutVector(0, 1, 5),
                 new ArcPathMakerVertex(50, 5).WithInVector(0, -1, 10)
                     .WithReferencePoints(
                         wayPoint)
-            }
+            ]
         };
         var result = maker.Compute();
         new ArcResultDrawerConfig

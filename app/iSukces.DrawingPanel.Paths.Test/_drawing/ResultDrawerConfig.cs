@@ -43,7 +43,7 @@ internal sealed class ResultDrawerConfig
         };
         ExtraPoints = () =>
         {
-            return new[] { calc.Reference1.Point, calc.Reference2.Point, calc.Reference3.Point };
+            return [calc.Reference1.Point, calc.Reference2.Point, calc.Reference3.Point];
         };
         return this;
     }

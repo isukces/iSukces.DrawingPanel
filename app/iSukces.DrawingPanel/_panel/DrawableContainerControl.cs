@@ -32,7 +32,7 @@ public partial class DrawableContainerControl : Control, ICadControlLogicOwner
         Overlay   = CollectionFactory.Make<IDrawable>(DrawablesCollectionChanged);
         Drawables = CollectionFactory.Make<IDrawable>(DrawablesCollectionChanged);
         Underlay  = CollectionFactory.Make<IDrawable>(DrawablesCollectionChanged);
-        _layers   = new[] { Overlay, Drawables, Underlay };
+        _layers   = [Overlay, Drawables, Underlay];
 
         SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
     }
@@ -222,14 +222,13 @@ public partial class DrawableContainerControl : Control, ICadControlLogicOwner
         _underLayerOpacity = value;
 
         var op = (float)value;
-        var colorMatrix = new ColorMatrix(new[]
-        {
-            new[] { 1f, 0f, 0f, 0f, 0f },
-            new[] { 0f, 1f, 0f, 0f, 0f },
-            new[] { 0f, 0f, 1f, 0f, 0f },
-            new[] { 0f, 0f, 0f, op, 0f },
-            new[] { 0f, 0f, 0f, 0f, 1f }
-        });
+        var colorMatrix = new ColorMatrix([
+            [1f, 0f, 0f, 0f, 0f],
+            [0f, 1f, 0f, 0f, 0f],
+            [0f, 0f, 1f, 0f, 0f],
+            [0f, 0f, 0f, op, 0f],
+            [0f, 0f, 0f, 0f, 1f]
+        ]);
 
         _underLayerAttributes = new ImageAttributes();
         _underLayerAttributes.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);

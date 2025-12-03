@@ -245,12 +245,11 @@ internal class Presenter
             if (cross is null)
                 return;
             var brush = new SolidBrush(Color.FromArgb(40, Color.Yellow));
-            Graph.FillPolygon(brush, new[]
-            {
+            Graph.FillPolygon(brush, [
                 Transformation.ToCanvasF(Calculator.Start.Point),
                 Transformation.ToCanvasF(Calculator.End.Point),
                 Transformation.ToCanvasF(cross.Value)
-            });
+            ]);
             brush.Dispose();
         }
     }

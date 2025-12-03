@@ -27,7 +27,7 @@ public partial class ArcPathMakerTests
         var wayPoint =
             JsonConvert.DeserializeObject<PathRay>(
                 @"{""Vector"":""0,0"",""Point"":""96.13121924784,59.8634246985647""}");
-        input[1].ReferencePoints = new[] { (WayPoint)wayPoint };
+        input[1].ReferencePoints = [(WayPoint)wayPoint];
         // 
 
         var maker = new ArcPathMaker

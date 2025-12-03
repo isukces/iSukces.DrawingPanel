@@ -723,7 +723,7 @@ public partial class ArcDefinitionTests
             Assert.True(result.ElementTrack < 1e-5);
         }
         {
-            var track = TrackFromPathResult.Make(new[] { arc });
+            var track = TrackFromPathResult.Make([arc]);
             var back  = track.GetTrackInfo(result.ElementTrack);
             var v     = back.Location - arc.Start;
             Assert.True(v.Length < 1e-5);
