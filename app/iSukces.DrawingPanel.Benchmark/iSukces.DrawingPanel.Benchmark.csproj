@@ -16,6 +16,5 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
     <PackageReference Include="iSukces.Math" Version="1.25.1203.132" />
-    <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
   </ItemGroup>
 </Project>

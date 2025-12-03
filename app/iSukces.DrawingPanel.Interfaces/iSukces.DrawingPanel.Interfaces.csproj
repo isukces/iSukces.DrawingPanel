@@ -15,9 +15,6 @@
     <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="_transform\DrawingPanelZoomInfoStorageData.cs">
       <DependentUpon>IDrawingPanelZoomInfoStorage.cs</DependentUpon>
     </Compile>

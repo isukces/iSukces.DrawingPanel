@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.Contracts;
 
 namespace iSukces.DrawingPanel;
 
