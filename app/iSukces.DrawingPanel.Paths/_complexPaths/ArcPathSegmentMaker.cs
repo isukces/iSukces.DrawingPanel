@@ -1,8 +1,6 @@
-#nullable disable
 using System;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-using JetBrains.Annotations;
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
@@ -62,7 +60,6 @@ internal sealed class ArcPathSegmentMaker
             return Handle3AndMore();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [NotNull]
         IPathResult ComputeCommon()
         {
             var calculator = new OneReferencePointPathCalculator
@@ -111,7 +108,6 @@ internal sealed class ArcPathSegmentMaker
             return Handle3AndMore();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [NotNull]
         IPathResult ComputeCommon()
         {
             var ref1 = wp0.OutputRay;
@@ -278,7 +274,7 @@ internal sealed class ArcPathSegmentMaker
 
 internal sealed class PdPathBuilder : PathBuilder
 {
-    public PdPathBuilder(Point currentPoint, IPathValidator validator = null)
+    public PdPathBuilder(Point currentPoint, IPathValidator? validator = null)
         : base(currentPoint, validator)
     {
     }

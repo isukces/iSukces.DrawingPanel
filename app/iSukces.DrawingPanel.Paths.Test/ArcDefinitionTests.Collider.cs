@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -194,7 +193,7 @@ public partial class ArcDefinitionTests
         }
 
         public static void Draw(ArcDefinition arc, TestName title, double dist,
-            [CallerFilePath] string path = null)
+            [CallerFilePath] string? path = null)
         {
             var cfg = new ResultDrawerConfig();
 

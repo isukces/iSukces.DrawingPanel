@@ -1,4 +1,3 @@
-#nullable disable
 using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;
 #if COMPATMATH
@@ -23,7 +22,7 @@ public class DrawableText : DrawableBase, IDrawableWithLayer, IDrawableCollider
         };
     }
         
-    protected DrawableText(LiteDrawableText primitive, Layer drawableLayer = Layer.Normal)
+    protected DrawableText(LiteDrawableText? primitive, Layer drawableLayer = Layer.Normal)
     {
         DrawableLayer = drawableLayer;
         _primitive    = primitive ?? new LiteDrawableText();

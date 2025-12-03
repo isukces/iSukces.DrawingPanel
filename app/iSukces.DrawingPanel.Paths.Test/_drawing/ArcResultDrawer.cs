@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using Point = iSukces.Mathematics.Compatibility.Point;
 using Vector = iSukces.Mathematics.Compatibility.Vector;
@@ -20,8 +19,8 @@ internal class ArcResultDrawer : ResultDrawerBase
         _maker = maker;
     }
     
-    public static void Draw(ArcResultDrawerConfig cfg, ArcPathMaker maker = null,
-        [CallerFilePath] string path = null)
+    public static void Draw(ArcResultDrawerConfig cfg, ArcPathMaker? maker = null,
+        [CallerFilePath] string? path = null)
     {
         if (cfg.Result is null)
             return;
@@ -33,7 +32,7 @@ internal class ArcResultDrawer : ResultDrawerBase
         p.DrawInternal();
     }
 
-    internal static DirectoryInfo GetDir(string path)
+    internal static DirectoryInfo? GetDir(string? path)
     {
         if (string.IsNullOrEmpty(path))
             return null;

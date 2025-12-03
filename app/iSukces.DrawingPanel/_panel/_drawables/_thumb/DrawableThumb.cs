@@ -1,4 +1,3 @@
-#nullable disable
 #define _LOG
 using System;
 using System.Drawing;

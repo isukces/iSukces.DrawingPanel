@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -8,7 +7,7 @@ namespace iSukces.DrawingPanel;
 internal static class InternalDrawingPanelExtensions
 {
     [Pure]
-    public static TOut[] MapToArray<TIn, TOut>(this IList<TIn> list, Func<TIn, TOut> map)
+    public static TOut[] MapToArray<TIn, TOut>(this IList<TIn>? list, Func<TIn, TOut> map)
     {
         if (list is null || list.Count == 0)
             return Array.Empty<TOut>();
@@ -25,9 +24,8 @@ internal static class InternalDrawingPanelExtensions
         return result;
     }
 
-    [CanBeNull]
     [Pure]
-    public static string TrimToNull(this string value)
+    public static string? TrimToNull(this string value)
     {
         value = value?.Trim();
         return string.IsNullOrEmpty(value) ? null : value;

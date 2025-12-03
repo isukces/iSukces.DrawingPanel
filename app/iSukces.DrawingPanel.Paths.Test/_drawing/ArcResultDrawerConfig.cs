@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using Point = iSukces.Mathematics.Compatibility.Point;
 using Vector = iSukces.Mathematics.Compatibility.Vector;
@@ -12,7 +11,7 @@ namespace iSukces.DrawingPanel.Paths.Test;
 
 internal sealed class ArcResultDrawerConfig
 {
-    public void Draw(ArcPathMaker maker = null, [CallerFilePath] string path = null)
+    public void Draw(ArcPathMaker? maker = null, [CallerFilePath] string? path = null)
     {
         ArcResultDrawer.Draw(this, maker, path);
     }

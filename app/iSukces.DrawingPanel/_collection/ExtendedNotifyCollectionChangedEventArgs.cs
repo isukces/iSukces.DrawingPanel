@@ -1,9 +1,7 @@
-#nullable disable
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel;
 
@@ -48,14 +46,14 @@ public sealed class ExtendedNotifyCollectionChangedEventArgs : NotifyCollectionC
     {
     }
 
-    public ExtendedNotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, [NotNull] IList newItems,
-        [NotNull] IList oldItems)
+    public ExtendedNotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList newItems,
+        IList oldItems)
         : base(action, newItems, oldItems)
     {
     }
 
-    public ExtendedNotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, [NotNull] IList newItems,
-        [NotNull] IList oldItems, int startingIndex)
+    public ExtendedNotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList newItems,
+        IList oldItems, int startingIndex)
         : base(action, newItems, oldItems, startingIndex)
     {
     }

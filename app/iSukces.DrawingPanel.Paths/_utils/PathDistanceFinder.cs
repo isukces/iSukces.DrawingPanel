@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
@@ -12,7 +11,7 @@ namespace iSukces.DrawingPanel.Paths;
 
 public static class PathDistanceFinder
 {
-    public static PathDistanceFinderResult GetDistanceFromLine(IPathResult path, Point point)
+    public static PathDistanceFinderResult? GetDistanceFromLine(IPathResult? path, Point point)
     {
         if (path is null || path.Elements.Count == 0)
             return null;
@@ -29,7 +28,7 @@ public static class PathDistanceFinder
             _point = point;
         }
 
-        public PathDistanceFinderResult Find()
+        public PathDistanceFinderResult? Find()
         {
             _bestSquaredDistance = double.NaN;
             _best                = default;

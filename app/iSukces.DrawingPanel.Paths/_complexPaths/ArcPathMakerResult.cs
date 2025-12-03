@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 #if COMPATMATH
@@ -19,7 +18,7 @@ public class ArcPathMakerResult
         Segments = segments;
     }
 
-    public static ArcPathMakerResult operator +(ArcPathMakerResult a, Vector v)
+    public static ArcPathMakerResult operator +(ArcPathMakerResult? a, Vector v)
     {
         if (a is null)
             return null;

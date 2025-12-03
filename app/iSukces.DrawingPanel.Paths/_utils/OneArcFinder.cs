@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
@@ -15,7 +14,7 @@ public partial class OneArcFinder
         Cross = cross;
     }
 
-    public ArcDefinition CalculateArc()
+    public ArcDefinition? CalculateArc()
     {
         var start              = StartPoint;
         var end                = EndPoint;

@@ -1,4 +1,3 @@
-#nullable disable
 using System.Collections;
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
@@ -29,7 +28,7 @@ public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalcula
         return new PathResult(Start.Point, End.Point, [line]);
     }
 
-    private IPathResult ComputeInternal(IPathValidator validator, out ArcValidationResult result)
+    private IPathResult? ComputeInternal(IPathValidator validator, out ArcValidationResult result)
     {
         var firstInvalid  = !Reference1.HasValidVector();
         var secondInvalid = !Reference2.HasValidVector();

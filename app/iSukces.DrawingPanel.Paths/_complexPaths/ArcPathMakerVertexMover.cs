@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
@@ -61,7 +60,7 @@ public sealed class ArcPathMakerVertexMover
 
 
     public static IReadOnlyList<ArcPathMakerVertex> Move(
-        IReadOnlyList<ArcPathMakerVertex> list,
+        IReadOnlyList<ArcPathMakerVertex>? list,
         double movement,
         bool vectorsAreValid = false,
         bool canModifyExistingListIfPossible = false)

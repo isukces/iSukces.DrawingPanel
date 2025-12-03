@@ -1,4 +1,3 @@
-#nullable disable
 using BenchmarkDotNet.Attributes;
 using iSukces.DrawingPanel.Paths;
 using iSukces.Mathematics;

@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,7 +22,7 @@ internal class ResultDrawer : ResultDrawerBase
 
 
     public static void Draw(OneReferencePointPathCalculator x, IPathResult r, TestName name,
-        [CallerFilePath] string path = null)
+        [CallerFilePath] string? path = null)
     {
         // ReSharper disable once ExplicitCallerInfoArgument
         Draw(new ResultDrawerConfig
@@ -74,7 +73,7 @@ internal class ResultDrawer : ResultDrawerBase
     }
 
     public static void Draw(ArcPathSegmentMaker x, IPathResult r, TestName name,
-        [CallerFilePath] string path = null)
+        [CallerFilePath] string? path = null)
     {
         var start = x.PreviousPoint;
         var end   = x.Point;
@@ -135,7 +134,7 @@ internal class ResultDrawer : ResultDrawerBase
         }
     }
 
-    public static void Draw(ResultDrawerConfig cfg, [CallerFilePath] string path = null)
+    public static void Draw(ResultDrawerConfig cfg, [CallerFilePath] string? path = null)
     {
         if (cfg.Result is null)
             return;
@@ -147,7 +146,7 @@ internal class ResultDrawer : ResultDrawerBase
         p.DrawInternal();
     }
 
-    protected static DirectoryInfo GetDir(string path, string additional = null)
+    protected static DirectoryInfo? GetDir(string? path, string? additional = null)
     {
         if (string.IsNullOrEmpty(path))
             return null;

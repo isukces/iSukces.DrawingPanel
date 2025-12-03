@@ -1,10 +1,8 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-using JetBrains.Annotations;
 #if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
@@ -18,8 +16,8 @@ namespace iSukces.DrawingPanel.Paths.Test;
 internal sealed class PathElementAssignmetnDrawer : ResultDrawerBase
 {
     public static void Draw(PathResult pathResult, string name,
-        ICollection<Point> extra_points = null,
-        [CallerFilePath] string path = null)
+        ICollection<Point>? extra_points = null,
+        [CallerFilePath] string? path = null)
     {
         new PathElementAssignmetnDrawer
         {
@@ -49,8 +47,8 @@ internal sealed class PathElementAssignmetnDrawer : ResultDrawerBase
     }
 
     void DrawInternal(PathResult pathResult, string name,
-        [CanBeNull]ICollection<Point> extraPoints = null,
-        [CallerFilePath] string path = null)
+        ICollection<Point>? extraPoints = null,
+        [CallerFilePath] string? path = null)
     {
         _pathResult = pathResult;
 

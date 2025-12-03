@@ -1,10 +1,8 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths;
@@ -33,7 +31,6 @@ public sealed class EverythingOkPathValidator : IPathValidator
 
     #region properties
 
-    [NotNull]
     public static EverythingOkPathValidator Instance => EverythingOkPathValidatorHolder.SingleIstance;
 
     #endregion

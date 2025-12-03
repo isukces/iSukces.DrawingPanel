@@ -1,4 +1,3 @@
-#nullable disable
 using System.Collections;
 using System.Runtime.CompilerServices;
 #if COMPATMATH
@@ -44,8 +43,8 @@ internal static class ExceptionTools
 
     public static void AddDebug(this IDictionary dictionary,
         [CallerLineNumber] int line = 0,
-        [CallerFilePath] string file = null,
-        [CallerMemberName] string member = null)
+        [CallerFilePath] string? file = null,
+        [CallerMemberName] string? member = null)
     {
         dictionary["location"] = file + "@" + line + ":" + member;
     }

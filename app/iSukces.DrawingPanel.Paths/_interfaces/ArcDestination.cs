@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 
 namespace iSukces.DrawingPanel.Paths;
@@ -14,7 +13,7 @@ public struct ArcDestination : IEquatable<ArcDestination>
 
     public bool Equals(ArcDestination other) => _value == other._value;
 
-    public override bool Equals(object obj) => obj is ArcDestination other && Equals(other);
+    public override bool Equals(object? obj) => obj is ArcDestination other && Equals(other);
 
     public override int GetHashCode() => _value;
 

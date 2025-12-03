@@ -1,4 +1,3 @@
-#nullable disable
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using iSukces.DrawingPanel.Interfaces;
@@ -14,7 +13,7 @@ public static class CollectionFactory
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IExtendedObservableCollection<T> Make<T>(NotifyCollectionChangedEventHandler handler)
+    public static IExtendedObservableCollection<T> Make<T>(NotifyCollectionChangedEventHandler? handler)
     {
         var result = new ExtendedObservableCollection<T>();
         if (handler != null)

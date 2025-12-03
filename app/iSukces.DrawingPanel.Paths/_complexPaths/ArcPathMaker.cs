@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +5,7 @@ namespace iSukces.DrawingPanel.Paths;
 
 public sealed class ArcPathMaker
 {
-    public static void Add(PathBuilder pm, IPathResult result)
+    public static void Add(PathBuilder pm, IPathResult? result)
     {
         if (result is null)
             return;
@@ -26,7 +25,7 @@ public sealed class ArcPathMaker
         }
     }
 
-    public ArcPathMakerResult Compute()
+    public ArcPathMakerResult? Compute()
     {
         if (Vertices is null || Vertices.Count < 2)
             return null;

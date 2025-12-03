@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
@@ -22,7 +21,7 @@ public sealed class VerticesValidator
         _vectors   = new Vector[_listCount];
     }
 
-    public static IReadOnlyList<ArcPathMakerVertex> FillMissingVectors(IReadOnlyList<ArcPathMakerVertex> list)
+    public static IReadOnlyList<ArcPathMakerVertex> FillMissingVectors(IReadOnlyList<ArcPathMakerVertex>? list)
     {
         if (list is null || list.Count < 2)
             return list;

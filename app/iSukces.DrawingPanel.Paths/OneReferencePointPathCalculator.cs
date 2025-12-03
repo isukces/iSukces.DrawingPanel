@@ -1,4 +1,3 @@
-#nullable disable
 #define _OLD_RESULT
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;

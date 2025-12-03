@@ -1,4 +1,3 @@
-#nullable disable
 using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel;
@@ -11,7 +10,7 @@ internal struct HolderWrapper
         Order   = order;
     }
 
-    public override string ToString() { return Handler?.ToString() ?? base.ToString(); }
+    public override string? ToString() { return Handler?.ToString() ?? base.ToString(); }
 
     public IDpHandler Handler { get; }
     public int        Order   { get; }

@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,18 +43,18 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ArcDefinition Make(PathRay a, Point b, Vector vb)
+    public static ArcDefinition? Make(PathRay a, Point b, Vector vb)
     {
         return Make(a.Point, a.Vector, b, vb);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ArcDefinition Make(PathRay a, PathRay b)
+    public static ArcDefinition? Make(PathRay a, PathRay b)
     {
         return Make(a.Point, a.Vector, b.Point, b.Vector);
     }
 
-    public static ArcDefinition Make(Point a, Vector va, Point b, Vector vb)
+    public static ArcDefinition? Make(Point a, Vector va, Point b, Vector vb)
     {
         var l1     = PathLineEquationNotNormalized.FromPointAndDeltas(a, va.GetPrependicularVector());
         var l2     = PathLineEquationNotNormalized.FromPointAndDeltas(b, vb.GetPrependicularVector());
@@ -80,7 +79,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
     }
 
 
-    public static ArcDefinition operator +(ArcDefinition a, Vector v)
+    public static ArcDefinition operator +(ArcDefinition? a, Vector v)
     {
         if (a is null)
             return null;

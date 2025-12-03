@@ -1,4 +1,3 @@
-#nullable disable
 using System.Collections.Generic;
 using System.ComponentModel;
 #if COMPATMATH
@@ -24,7 +23,7 @@ public sealed class ZeroReferencePointPathCalculatorLineResult : IPathResult
     }
 
     public static ZeroReferencePointPathCalculatorLineResult operator +(
-        ZeroReferencePointPathCalculatorLineResult a, Vector v)
+        ZeroReferencePointPathCalculatorLineResult? a, Vector v)
     {
         if (a is null)
             return null;

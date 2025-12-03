@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +18,14 @@ internal class DpAssertsBuilder : AssertsBuilder
 {
     private static string Create(PathRay tmp) { return $"new PathRay({tmp.Point.ToCs()}, {tmp.Vector.ToCs()})"; }
 
-    private static string FindName(ZeroReferencePointPathCalculatorResult result)
+    private static string FindName(ZeroReferencePointPathCalculatorResult? result)
     {
         if (result is null)
             return "";
         var s = new StringBuilder();
         s.Append(result.Kind);
 
-        void A(ArcDefinition arc)
+        void A(ArcDefinition? arc)
         {
             if (arc is null) return;
             s.Append("_" + arc.GetDirectionAlternative());
@@ -64,7 +63,7 @@ internal class DpAssertsBuilder : AssertsBuilder
 
     private void Add(Vector p, string name) { AssertExEqual(p.X.ToCs(), p.Y.ToCs(), name); }
 
-    private void Add(IPathResult result, string name)
+    private void Add(IPathResult? result, string name)
     {
         if (result is null)
         {
@@ -97,7 +96,7 @@ internal class DpAssertsBuilder : AssertsBuilder
     }
 
 
-    private void Add(ArcPathMakerResult x, string name)
+    private void Add(ArcPathMakerResult? x, string name)
     {
         if (x is null)
         {
@@ -122,7 +121,7 @@ internal class DpAssertsBuilder : AssertsBuilder
         AssertEqual(prefix + value, expression);
     }
         
-    private void Add(ArcDefinition c, string name)
+    private void Add(ArcDefinition? c, string name)
     {
         if (c is null)
             AssertNull(name);
@@ -141,7 +140,7 @@ internal class DpAssertsBuilder : AssertsBuilder
         
         
 
-    private void Add(ArcPathMakerVertex x, string name, Type type)
+    private void Add(ArcPathMakerVertex? x, string name, Type type)
     {
         if (x is null)
         {
@@ -183,7 +182,7 @@ internal class DpAssertsBuilder : AssertsBuilder
     }
 
 
-    private void AddIPathElement(IPathElement x, string name, Type knownType)
+    private void AddIPathElement(IPathElement? x, string name, Type knownType)
     {
         if (x is null)
         {
@@ -241,7 +240,7 @@ internal class DpAssertsBuilder : AssertsBuilder
     }
 
 
-    private void AssertPoint(IPathResult x, string name, Type knownType)
+    private void AssertPoint(IPathResult? x, string name, Type knownType)
     {
         if (x is null)
         {

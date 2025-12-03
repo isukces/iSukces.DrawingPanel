@@ -1,6 +1,4 @@
-#nullable disable
 using System;
-using JetBrains.Annotations;
 
 #if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
@@ -24,7 +22,6 @@ public interface ISnapService : IDisposable
 
     #region properties
 
-    [NotNull]
     IList<SnapServiceItem> Infos { get; }
 
     #endregion

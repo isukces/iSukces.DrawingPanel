@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections;
 using System.Collections.Specialized;
@@ -16,7 +15,7 @@ public static class DrawingLayersContainerHelper
         Action invalidateUnderlayBitmap)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void SayGoodByeToOldItems(IList oldItems)
+        void SayGoodByeToOldItems(IList? oldItems)
         {
             if (oldItems == null) return;
             for (var index = oldItems.Count - 1; index >= 0; index--)
@@ -42,7 +41,7 @@ public static class DrawingLayersContainerHelper
         if (newItems != null)
             for (var index = newItems.Count - 1; index >= 0; index--)
             {
-                var drawable = (IDrawable)newItems[index];
+                var drawable = (IDrawable?)newItems[index];
                 drawable.Changed += drawableChangedHandler;
                 drawable.SetCanvasInfo(canvasInfo);
                 drawable.PresenterRenderingFlag = isBackgroundLayer;

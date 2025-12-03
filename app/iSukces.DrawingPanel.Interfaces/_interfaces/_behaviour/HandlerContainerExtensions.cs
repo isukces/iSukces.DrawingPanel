@@ -1,14 +1,11 @@
-#nullable disable
 using System;
-using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel.Interfaces;
 
 public static class HandlerContainerExtensions
 {
-    [CanBeNull]
-    public static IDisposable RegisterHandler2<T>([NotNull] this IDpHandlerContainer handlerContainer,
-        [NotNull] T handler, int order)
+    public static IDisposable? RegisterHandler2<T>(this IDpHandlerContainer handlerContainer,
+        T handler, int order)
         where T : class, IDpHandler
     {
         if (handlerContainer == null) throw new ArgumentNullException(nameof(handlerContainer));

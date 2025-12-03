@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 #if COMPATMATH
@@ -18,7 +17,7 @@ public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
     }
 
 
-    public static ZeroReferencePointPathCalculatorResult operator +(ZeroReferencePointPathCalculatorResult a,
+    public static ZeroReferencePointPathCalculatorResult operator +(ZeroReferencePointPathCalculatorResult? a,
         Vector v)
     {
         if (a is null)
@@ -37,7 +36,7 @@ public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
         double d = 0;
         Point  p = s;
 
-        void AddArc(ArcDefinition a)
+        void AddArc(ArcDefinition? a)
         {
             if (a is null)
                 return;

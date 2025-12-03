@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -56,7 +55,7 @@ public class ThumbLogicBase<TThumb>
 
     public virtual void OnDragCompleted(Action afterThumbDragWithMoveCompleted)
     {
-        IVertexBasedModel model2 = Model as IVertexBasedModel;
+        IVertexBasedModel? model2 = Model as IVertexBasedModel;
         // using var resumeNotification = ProjectErrorsRecheckNotifierTools.SuspendNotification();
         model2?.VertexDragDeltaSuspenResume(StartOrStop.Start);
         try

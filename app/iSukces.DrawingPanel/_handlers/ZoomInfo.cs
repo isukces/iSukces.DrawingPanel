@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using iSukces.DrawingPanel.Interfaces;
 using Size = System.Drawing.Size;
@@ -45,7 +44,7 @@ public class ZoomInfo : DpNotifyPropertyChanged
         };
     }
 
-    public void TryRestore(IDrawingPanelZoomStorage storage)
+    public void TryRestore(IDrawingPanelZoomStorage? storage)
     {
         if (storage is null || !storage.TryRead(out var data)) return;
         var center = new Point(data.CenterX, data.CenterY);

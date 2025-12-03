@@ -1,8 +1,6 @@
-#nullable disable
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel;
 
@@ -16,8 +14,8 @@ public interface ICadControlLogicOwner
 public sealed class EventControls
 {
     public EventControls(
-        [NotNull] Control mouseEventSource,
-        [NotNull] Control keyboardEventSource,
+        Control mouseEventSource,
+        Control keyboardEventSource,
         Control drawingControl)
     {
         _drawingControl     = drawingControl;
@@ -32,10 +30,8 @@ public sealed class EventControls
         return _drawingControl.PointToClient(pos);
     }
 
-    [NotNull]
     public Control MouseEventSource { get; }
 
-    [NotNull]
     public Control KeyboardEventSource { get; }
 
     private readonly Control _drawingControl;

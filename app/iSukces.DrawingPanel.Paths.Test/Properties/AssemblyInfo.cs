@@ -1,4 +1,3 @@
-#nullable disable
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]

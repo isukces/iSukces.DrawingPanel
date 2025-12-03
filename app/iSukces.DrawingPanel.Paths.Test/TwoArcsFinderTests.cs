@@ -1,4 +1,3 @@
-#nullable disable
 using Newtonsoft.Json;
 using Xunit;
 

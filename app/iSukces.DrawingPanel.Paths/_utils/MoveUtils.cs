@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 #if COMPATMATH
@@ -11,7 +10,7 @@ namespace iSukces.DrawingPanel.Paths;
 
 public static class MoveUtils
 {
-    private static IPathElement TranslateElement(this IPathElement element, Vector vector)
+    private static IPathElement TranslateElement(this IPathElement? element, Vector vector)
     {
         switch (element)
         {
@@ -25,7 +24,7 @@ public static class MoveUtils
         }
     }
 
-    public static IReadOnlyList<IPathElement> TranslateElementList(IReadOnlyList<IPathElement> src, Vector vector)
+    public static IReadOnlyList<IPathElement>? TranslateElementList(IReadOnlyList<IPathElement>? src, Vector vector)
     {
         if (src is null)
             return null;
@@ -42,7 +41,7 @@ public static class MoveUtils
         return result;
     }
 
-    public static IPathResult TranslateResult(this IPathResult src, Vector vector)
+    public static IPathResult TranslateResult(this IPathResult? src, Vector vector)
     {
         switch (src)
         {

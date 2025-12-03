@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -44,7 +43,7 @@ internal class AssertsBuilder
         WriteLine($"Assert.{method}({a});");
     }
 
-    protected bool AssertCount<T>(IReadOnlyList<T> list, string name)
+    protected bool AssertCount<T>(IReadOnlyList<T>? list, string name)
     {
         if (list is null)
         {

@@ -1,4 +1,3 @@
-#nullable disable
 using Xunit;
 
 namespace iSukces.DrawingPanel.Paths.Test;

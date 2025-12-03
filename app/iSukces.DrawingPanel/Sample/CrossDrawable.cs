@@ -1,4 +1,3 @@
-#nullable disable
 using System.Drawing;
 
 namespace iSukces.DrawingPanel.Sample;

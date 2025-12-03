@@ -1,4 +1,3 @@
-#nullable disable
 using System.Windows;
 #if !WINDOWS
 using WinPoint=iSukces.Mathematics.Compatibility.Point;

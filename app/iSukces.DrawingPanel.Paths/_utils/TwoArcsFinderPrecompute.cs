@@ -1,11 +1,9 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
 using System;
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths;
@@ -25,7 +23,7 @@ internal class TwoArcsFinderPrecompute
     }
 
 
-    public bool UpdateCompute(bool useSmallerRadius, [CanBeNull] IMinRadiusPathValidator pathValidator)
+    public bool UpdateCompute(bool useSmallerRadius, IMinRadiusPathValidator? pathValidator)
     {
         var radius = useSmallerRadius ? Radius1 : Radius2;
         if (radius > 0)

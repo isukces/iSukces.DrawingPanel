@@ -1,4 +1,3 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
@@ -11,7 +10,7 @@ namespace iSukces.DrawingPanel.Paths;
 
 public class PathBuilder
 {
-    public PathBuilder(Point currentPoint, IPathValidator validator = null)
+    public PathBuilder(Point currentPoint, IPathValidator? validator = null)
     {
         CurrentPoint = currentPoint;
         Validator    = validator;
@@ -104,7 +103,7 @@ public class PathBuilder
         CurrentPoint = endPoint;
     }
 
-    public void AddPathResult(PathRay start, PathRay end, IPathResult result)
+    public void AddPathResult(PathRay start, PathRay end, IPathResult? result)
     {
         switch (result)
         {
@@ -131,7 +130,7 @@ public class PathBuilder
         AddPathResult(start, end, z);
     }
 
-    public void ArcTo(ArcDefinition arc)
+    public void ArcTo(ArcDefinition? arc)
     {
         if (arc is null)
             return;
@@ -154,7 +153,7 @@ public class PathBuilder
         CurrentPoint = p;
     }
 
-    public IPathResult LineToAndCreate(Point endPoint)
+    public IPathResult? LineToAndCreate(Point endPoint)
     {
         LineTo(endPoint);
         if (_list.Count == 0)

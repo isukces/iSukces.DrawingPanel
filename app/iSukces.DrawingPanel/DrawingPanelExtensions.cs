@@ -1,9 +1,7 @@
-#nullable disable
 using System;
 using System.Drawing;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 #if COMPATMATH
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
@@ -25,7 +23,6 @@ public static class DrawingPanelExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static bool SameReference<T>(this T a, T b) { return ReferenceEquals(a, b); }
 
-    [NotNull]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string ToInvariantString(this int d) { return d.ToString(CultureInfo.InvariantCulture); }
 

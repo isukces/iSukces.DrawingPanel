@@ -1,9 +1,7 @@
-#nullable disable
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using iSukces.Mathematics;
-using JetBrains.Annotations;
 
 namespace Sample.Paths;
 
@@ -34,7 +32,6 @@ public static class SamplePathsExtension
     public static double AngleMinusY(this Vector v) { return Angle(v.X, -v.Y); }
 
 
-    [NotNull]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string ToInv(this double d) { return d.ToString(CultureInfo.InvariantCulture); }
 }

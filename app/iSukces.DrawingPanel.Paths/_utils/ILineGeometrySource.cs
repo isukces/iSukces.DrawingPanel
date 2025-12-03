@@ -1,10 +1,8 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths;
@@ -16,7 +14,7 @@ public interface ILineGeometrySource
 
 public static class LineSourceExt
 {
-    public static Point? CrossWith([CanBeNull] this ILineGeometrySource a, [CanBeNull] ILineGeometrySource b)
+    public static Point? CrossWith(this ILineGeometrySource? a, ILineGeometrySource? b)
     {
         var lineA = a?.GetLineEquation();
         if (lineA == null)

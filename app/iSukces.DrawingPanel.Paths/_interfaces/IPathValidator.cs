@@ -1,17 +1,15 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths;
 
 public interface IPathValidator
 {
-    ArcValidationResult ValidateArc([NotNull] ArcDefinition arc, ArcDestination arcDestination);
+    ArcValidationResult ValidateArc(ArcDefinition arc, ArcDestination arcDestination);
     LineValidationResult ValidateLine(Vector vector);
     CircleCrossValidationResult ValidatePointForCircleConnectionValid(PathRay start, PathRay end, Point cross);
 }
@@ -47,7 +45,7 @@ public enum CircleCrossValidationResult
 
 public static class PathValidatorExtensions
 {
-    public static bool IsOk(this IPathValidator validator, ArcDefinition arc, ArcDestination arcDestination)
+    public static bool IsOk(this IPathValidator validator, ArcDefinition? arc, ArcDestination arcDestination)
     {
         if (arc is null)
             return false;

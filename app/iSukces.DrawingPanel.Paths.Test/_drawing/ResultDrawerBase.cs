@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -34,7 +33,7 @@ internal class ResultDrawerBase
         YRange = MinMax.FromCenterAndSize(YRange.Center, yLength);
     }
 
-    public void DrawArc(ArcDefinition c)
+    public void DrawArc(ArcDefinition? c)
     {
         if (c is null)
             return;
@@ -201,7 +200,7 @@ internal class ResultDrawerBase
 
     public void DrawCustom(string description,
         Func<IEnumerable<Point>> range,
-        Action drawAction, [CallerFilePath] string path = null)
+        Action drawAction, [CallerFilePath] string? path = null)
     {
         var dir = ArcResultDrawer.GetDir(path);
         if (dir is null)

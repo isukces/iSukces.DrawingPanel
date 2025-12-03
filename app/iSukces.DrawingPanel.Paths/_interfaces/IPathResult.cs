@@ -1,11 +1,9 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths;
@@ -17,7 +15,6 @@ public interface IPathResult
     Point Start { get; }
     Point End   { get; }
 
-    [NotNull]
     IReadOnlyList<IPathElement> Elements { get; }
 
     Vector StartVector { get; }
@@ -29,7 +26,7 @@ public interface IPathResult
 
 public static class PathResultExtensions
 {
-    public static bool FindDistanceFromSegmentStart(this IPathResult segment, Point aPoint,
+    public static bool FindDistanceFromSegmentStart(this IPathResult? segment, Point aPoint,
         out double distance, out Vector direction)
     {
         var elements = segment?.Elements;

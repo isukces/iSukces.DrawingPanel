@@ -21,7 +21,7 @@ public struct RulerDimensionCalculator
     /// <param name="min">w pixelach</param>
     /// <param name="max">w pixelach</param>
     /// <returns></returns>
-    public OrderedLongTuple GetTickRange(double min, double max)
+    public OrderedLongTuple? GetTickRange(double min, double max)
     {
         if (max < min) return null;
         try

@@ -1,4 +1,3 @@
-#nullable disable
 using BenchmarkDotNet.Running;
 
 namespace iSukces.DrawingPanel.Benchmark;

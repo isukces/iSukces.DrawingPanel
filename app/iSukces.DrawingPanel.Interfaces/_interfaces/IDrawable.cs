@@ -1,14 +1,12 @@
-#nullable disable
 using System;
 using System.Drawing;
-using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel.Interfaces;
 
 public interface IDrawable
 {
-    void Draw([NotNull] Graphics graphics);
-    void SetCanvasInfo([NotNull] DrawingCanvasInfo canvasInfo);
+    void Draw(Graphics graphics);
+    void SetCanvasInfo(DrawingCanvasInfo canvasInfo);
     event EventHandler Changed;
     bool               Visible { get; }
 

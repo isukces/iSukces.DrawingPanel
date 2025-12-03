@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +14,7 @@ namespace iSukces.DrawingPanel.Paths.Test;
 
 internal sealed class ResultDrawerConfig
 {
-    public void Draw([CallerFilePath] string path = null) { ResultDrawer.Draw(this, path); }
+    public void Draw([CallerFilePath] string? path = null) { ResultDrawer.Draw(this, path); }
 
     public FileInfo GetImageFile()
     {

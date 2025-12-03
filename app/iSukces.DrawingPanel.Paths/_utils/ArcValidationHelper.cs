@@ -1,18 +1,16 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace iSukces.DrawingPanel.Paths;
 
 public static class ArcValidationHelper
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static CircleCrossValidationResult Validate([CanBeNull] IPathValidator validator, PathRay start,
+    public static CircleCrossValidationResult Validate(IPathValidator? validator, PathRay start,
         PathRay end, Point cross)
     {
         if (validator is null)
@@ -23,7 +21,7 @@ public static class ArcValidationHelper
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static CircleCrossValidationResult Validate([CanBeNull] IPathValidator validator, PathRay start,
+    public static CircleCrossValidationResult Validate(IPathValidator? validator, PathRay start,
         PathRay end, Point cross, bool reverseEnd)
     {
         if (validator is null)

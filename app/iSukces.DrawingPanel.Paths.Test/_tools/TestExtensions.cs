@@ -1,4 +1,3 @@
-#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -47,7 +46,7 @@ internal static class TestExtensions
 
 
     public static bool ListSequenceEqual<TSource>(
-        this IList<TSource> first,
+        this IList<TSource>? first,
         IList<TSource> second)
     {
         if (first is null) return false;

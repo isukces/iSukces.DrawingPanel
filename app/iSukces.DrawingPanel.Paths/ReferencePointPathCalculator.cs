@@ -1,11 +1,9 @@
-#nullable disable
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
 using System.Windows;
 #endif
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 
 namespace iSukces.DrawingPanel.Paths;
@@ -28,7 +26,7 @@ public abstract class ReferencePointPathCalculator : PathBase
         return dot <= 0;
     }
 
-    protected static ArcDefinition MakeNotValidated(PathRay a, PathRay b, bool invertVector = false)
+    protected static ArcDefinition? MakeNotValidated(PathRay a, PathRay b, bool invertVector = false)
     {
         var cross = a.Cross(b);
         if (cross is null)
@@ -41,14 +39,12 @@ public abstract class ReferencePointPathCalculator : PathBase
     }
 
 
-    [NotNull]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected IPathResult CreateResult(params IPathElement[] elements)
     {
         return new PathResult(Start.Point, End.Point, elements);
     }
 
-    [NotNull]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected IPathResult CreateResultLine()
     {

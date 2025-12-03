@@ -1,4 +1,3 @@
-#nullable disable
 using System.Drawing;
 using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
@@ -63,7 +62,7 @@ internal class Presenter
         }
     }
 
-    private void DrawArc(ArcDefinition c)
+    private void DrawArc(ArcDefinition? c)
     {
         if (c is null)
             return;
