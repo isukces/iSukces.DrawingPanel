@@ -1,7 +1,7 @@
 // using System.IO;
 var builder = new ProjectBuilder
 {
-    VisualStudioExe = GlobalVar["MsBuild 2022"],
+    VisualStudioExe = GlobalVar["MsBuild 18"],
     Nuget = {
         Exe           = GlobalVar["Nuget"],
         RepositoryDir = GlobalVar["Private Nuget Repository"],
@@ -11,13 +11,15 @@ var builder = new ProjectBuilder
     SolutionDir  = ConfigDir
 };
 
-builder.UpdateVersionCore();
+var a = builder.ProjectName + ": "+ builder.UpdateVersionCore();
 
 builder.ProjectName = "iSukces.DrawingPanel";
-builder.UpdateVersionCore();
+a += ", " + builder.ProjectName + ": "+ builder.UpdateVersionCore();
 
 builder.ProjectName = "iSukces.DrawingPanel.Paths";
-builder.UpdateVersionCore();
+a += ", " + builder.ProjectName + ": "+ builder.UpdateVersionCore();
+
+Console.WriteLine("NUGET RELEASE "+a);
 
   
 Console.WriteLine("--FINISHED--");

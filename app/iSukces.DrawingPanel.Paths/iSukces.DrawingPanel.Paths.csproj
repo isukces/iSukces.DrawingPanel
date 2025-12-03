@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net9.0-windows;net10.0-windows</TargetFrameworks>
-    <AssemblyVersion>1.25.323.74</AssemblyVersion>
-    <FileVersion>1.25.323.74</FileVersion>
-    <Version>1.25.323.74</Version>
+    <AssemblyVersion>1.25.1203.75</AssemblyVersion>
+    <FileVersion>1.25.1203.75</FileVersion>
+    <Version>1.25.1203.75</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <NoWarn>1701;1702;1591</NoWarn>
