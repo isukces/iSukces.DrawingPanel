@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{21786D6B-C157-4633-8DCC-66B7A4E9DEBE}</ProjectGuid>
-    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
-    <LangVersion>13</LangVersion>
+    <TargetFrameworks>net8.0-windows;net9.0-windows;net10.0-windows</TargetFrameworks>
+    <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
@@ -14,8 +14,8 @@
     <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.15.2" />
-    <PackageReference Include="iSukces.Math" Version="1.25.323.131" />
-    <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageReference Include="iSukces.Math" Version="1.25.1203.132" />
+    <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
     <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <ProjectGuid>{15FE26FE-1C47-4954-BD5E-DD7AEF2EC030}</ProjectGuid>
-    <LangVersion>13</LangVersion>
+    <LangVersion>14</LangVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
   </PropertyGroup>
