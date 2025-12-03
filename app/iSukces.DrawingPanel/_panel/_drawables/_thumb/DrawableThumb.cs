@@ -102,13 +102,13 @@ public class DrawableThumb : IDrawableWithLayer
     /// </summary>
     public ThumbDraggingContext DraggingContext { get; set; }
 
-    public event EventHandler Changed;
+    public event EventHandler? Changed;
     public bool               Visible                => true;
     public bool               PresenterRenderingFlag { get; set; }
     public Layer              DrawableLayer          => Layer.Overlay;
 
 
-    public event EventHandler IsSelectedChanged;
+    public event EventHandler? IsSelectedChanged;
 
     private const float Size = 9;
     private const float SizeHalf = Size / 2;

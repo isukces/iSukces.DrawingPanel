@@ -154,7 +154,7 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
 
     #endregion
 
-    public event EventHandler Changed
+    public event EventHandler? Changed
     {
         add
         {
@@ -189,7 +189,7 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
     public bool PresenterRenderingFlag { get; set; }
     public bool PendingDrawing         { get; private set; }
 
-    public event EventHandler PendingDrawingFinished;
+    public event EventHandler? PendingDrawingFinished;
 
     #region Fields
 

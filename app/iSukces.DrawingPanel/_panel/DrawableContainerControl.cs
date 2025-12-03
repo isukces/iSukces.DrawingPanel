@@ -283,7 +283,7 @@ public partial class DrawableContainerControl : Control, ICadControlLogicOwner
 
     public DrawingCanvasInfo CanvasInfo => _logic.CanvasInfo;
 
-    public event EventHandler DrawingTranformChanged;
+    public event EventHandler? DrawingTranformChanged;
 
     #region Fields
 

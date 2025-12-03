@@ -7,7 +7,7 @@ public interface IDrawable
 {
     void Draw(Graphics graphics);
     void SetCanvasInfo(DrawingCanvasInfo canvasInfo);
-    event EventHandler Changed;
+    event EventHandler? Changed;
     bool               Visible { get; }
 
 
