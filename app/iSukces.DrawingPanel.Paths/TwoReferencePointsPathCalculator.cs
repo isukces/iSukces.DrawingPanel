@@ -19,7 +19,7 @@ public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalcula
         dict.Set(nameof(Reference2), Reference2);
     }
 
-    public IPathResult Compute(IPathValidator validator)
+    public IPathResult Compute(IPathValidator? validator)
     {
         var tmp = ComputeInternal(validator, out var result);
         if (tmp is not null)
@@ -28,7 +28,7 @@ public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalcula
         return new PathResult(Start.Point, End.Point, [line]);
     }
 
-    private IPathResult? ComputeInternal(IPathValidator validator, out ArcValidationResult result)
+    private IPathResult? ComputeInternal(IPathValidator? validator, out ArcValidationResult result)
     {
         var firstInvalid  = !Reference1.HasValidVector();
         var secondInvalid = !Reference2.HasValidVector();
@@ -52,8 +52,12 @@ public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalcula
         }
 
         var builder = new PathBuilder(Start.Point, validator);
+        int idx     = 0;
+        
         builder.AddConnectionAutomatic(Start, Reference1, false);
+        builder.MarkEndWayPoint(ref idx, Reference1);
         builder.AddConnectionAutomatic(Reference1, Reference2, false);
+        builder.MarkEndWayPoint(ref idx, Reference2);
         builder.AddConnectionAutomatic(Reference2, End, true);
 
         result = ArcValidationResult.Ok;
@@ -81,10 +85,6 @@ public sealed class TwoReferencePointsPathCalculator : ReferencePointPathCalcula
         }
     }
 
-    #region properties
-
     public PathRay Reference1 { get; set; }
     public PathRay Reference2 { get; set; }
-
-    #endregion
 }

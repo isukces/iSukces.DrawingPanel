@@ -153,8 +153,6 @@ public struct WayPoint
         return UseInputVector;
     }
 
-    #region properties
-
     public Vector Vector { get; }
 
     public Point Point { get; }
@@ -186,7 +184,7 @@ public struct WayPoint
         get => new PathRayWithArm(Point, Vector, OutputArmLength);
     }
 
-    public object Tag { get; set; }
-
-    #endregion
+    public object? Tag { get; set; }
+    
+    public string Id { get; set; } 
 }

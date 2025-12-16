@@ -27,16 +27,17 @@ public sealed class ArcPathMaker
 
     public ArcPathMakerResult? Compute()
     {
-        if (Vertices is null || Vertices.Count < 2)
+        var vertices = Vertices ?? [];
+        if (vertices.Count < 2)
             return null;
         Init();
         var sm = new ArcPathSegmentMaker
         {
-            PreviousPoint = Vertices[0]
+            PreviousPoint = vertices[0]
         };
-        for (var idx = 1; idx < Vertices.Count; idx++)
+        for (var idx = 1; idx < vertices.Count; idx++)
         {
-            sm.Point     = Vertices[idx];
+            sm.Point     = vertices[idx];
             sm.Validator = GetPathValidator?.Invoke(idx);
             sm.Flags     = _segmentFlags[idx];
             var result = sm.MakeItem();
@@ -49,11 +50,12 @@ public sealed class ArcPathMaker
 
     private void Init()
     {
-        _segmentFlags = new SegmentFlags[Vertices.Count];
-        var prevPoint = Vertices[0];
-        for (var index = 1; index < Vertices.Count; index++)
+        var vertices = Vertices ?? [];
+        _segmentFlags = new SegmentFlags[vertices.Count];
+        var prevPoint = vertices[0];
+        for (var index = 1; index < vertices.Count; index++)
         {
-            var point = Vertices[index];
+            var point = vertices[index];
             var flags = SegmentFlags.None;
             {
                 if ((prevPoint.Flags & FlexiPathMakerItem2Flags.HasOutVector) != 0)
@@ -70,20 +72,12 @@ public sealed class ArcPathMaker
         }
     }
 
-    #region properties
+    public Func<int, IPathValidator>? GetPathValidator { get; set; }
 
-    public Func<int, IPathValidator> GetPathValidator { get; set; }
-
-    public IReadOnlyList<ArcPathMakerVertex> Vertices { get; set; }
-
-    #endregion
-
-    #region Fields
+    public IReadOnlyList<ArcPathMakerVertex>? Vertices { get; set; }
 
     private readonly List<IPathResult> _pathResults = new();
-    private SegmentFlags[] _segmentFlags;
-
-    #endregion
+    private SegmentFlags[] _segmentFlags = null!;
 }
 
 [Flags]

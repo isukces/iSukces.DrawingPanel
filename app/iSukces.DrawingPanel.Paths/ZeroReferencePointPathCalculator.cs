@@ -42,12 +42,12 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
             return true;
 
         var oneAngle = one.Angle;
-        if (result.Arc1.Angle > oneAngle) return false;
-        if (result.Arc2.Angle > oneAngle) return false;
+        if (result.Arc1!.Angle > oneAngle) return false;
+        if (result.Arc2!.Angle > oneAngle) return false;
         return true;
     }
 
-    public static IPathResult Compute(PathRay start, PathRay end, IPathValidator validator,
+    public static IPathResult? Compute(PathRay start, PathRay end, IPathValidator? validator,
         ZeroReferencePointPathCalculatorFlags flags = ZeroReferencePointPathCalculatorFlags.None)
     {
         var x = new ZeroReferencePointPathCalculator
@@ -60,7 +60,7 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
         return x.Compute();
     }
 
-    public static IPathResult ComputeFromPararell(PathRay start, PathRay end, IPathValidator validator)
+    public static IPathResult? ComputeFromPararell(PathRay start, PathRay end, IPathValidator validator)
     {
         var x = new ZeroReferencePointPathCalculator
         {
@@ -72,7 +72,7 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
     }
 
 
-    private IPathResult Compute()
+    private IPathResult? Compute()
     {
         Start = Start.Normalize();
         End   = End.Normalize();
@@ -356,7 +356,7 @@ public sealed class ZeroReferencePointPathCalculator : ReferencePointPathCalcula
         };
     }
 
-    public IPathValidator                        Validator { get; set; }
+    public IPathValidator?                       Validator { get; set; }
     public ZeroReferencePointPathCalculatorFlags Flags     { get; set; }
 
 

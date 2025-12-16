@@ -21,13 +21,6 @@ internal sealed class ArcPathSegmentMaker
             if (pathResult is null)
             {
                 return new ZeroReferencePointPathCalculatorLineResult(_start.Point, _end.Point);
-                /*
-                var ex = new NotImplementedException(nameof(ZeroReferencePointPathCalculator) + " gives not result");
-                ex.Data.Set(nameof(_start), _start);
-                ex.Data.Set(nameof(_end), _end);
-                ex.Data.AddDebug();
-                throw ex;
-            */
             }
 
             return pathResult;
@@ -49,9 +42,9 @@ internal sealed class ArcPathSegmentMaker
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IPathResult Handle1()
+    private IPathResult? Handle1()
     {
-        var refs     = Point.ReferencePoints;
+        var refs     = Point.ReferencePoints!;
         var wayPoint = refs[0];
         if (wayPoint.UseInputVector)
             return Handle3AndMore();
@@ -96,9 +89,9 @@ internal sealed class ArcPathSegmentMaker
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IPathResult Handle2()
+    private IPathResult? Handle2()
     {
-        var refs = Point.ReferencePoints;
+        var refs = Point.ReferencePoints!;
         var wp0  = refs[0];
         if (wp0.UseInputVector || wp0.OutputArmLength > 0)
             return Handle3AndMore();
@@ -147,27 +140,30 @@ internal sealed class ArcPathSegmentMaker
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private IPathResult Handle3AndMore()
+    private IPathResult? Handle3AndMore()
     {
-        var refs    = Point.ReferencePoints;
-        var builder = new PdPathBuilder(_start.Point, Validator);
+        var refs    = Point.ReferencePoints!;
+        var builder = new PathBuilder(_start.Point, Validator);
 
         if (_inArmLengthPlus || _outArmLengthPlus)
             NormalizeVectorsAndMovePoints();
 
+        var            idx = 0;
         PathRayWithArm last;
         {
             var wayPoint = refs[0];
             last = wayPoint.OutputRay;
             var start = new PathRayWithArm(PreviousPoint.Location, _startVector, _outArmLength);
             builder.AddFlexi(start, wayPoint.InputRay);
+            builder.MarkEndWayPoint(ref idx, wayPoint);
         }
 
         for (var index = 1; index < refs.Count; index++)
         {
-            var t = refs[index];
-            builder.AddFlexi(last, t.InputRay);
-            last = t.OutputRay;
+            var wayPoint = refs[index];
+            builder.AddFlexi(last, wayPoint.InputRay);
+            last = wayPoint.OutputRay;
+            builder.MarkEndWayPoint(ref idx, wayPoint);
         }
 
         {
@@ -178,7 +174,7 @@ internal sealed class ArcPathSegmentMaker
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public IPathResult MakeItem()
+    public IPathResult? MakeItem()
     {
         var refs = Point.ReferencePoints;
 
@@ -267,11 +263,12 @@ internal sealed class ArcPathSegmentMaker
     public SegmentFlags Flags;
     public ArcPathMakerVertex Point;
     public ArcPathMakerVertex PreviousPoint;
-    public IPathValidator Validator;
+    public IPathValidator? Validator;
 
     #endregion
 }
 
+/*
 internal sealed class PdPathBuilder : PathBuilder
 {
     public PdPathBuilder(Point currentPoint, IPathValidator? validator = null)
@@ -287,5 +284,10 @@ internal sealed class PdPathBuilder : PathBuilder
             return;
         ArcTo(s.Arc1);
         ArcTo(s.Arc2);
-    }*/
+    }#1#
+    public void Mark(ref int idx, WayPoint wayPoint)
+    {
+        throw new NotImplementedException();
+    }
 }
+*/

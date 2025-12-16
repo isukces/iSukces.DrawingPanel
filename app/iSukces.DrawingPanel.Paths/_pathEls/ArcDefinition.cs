@@ -717,7 +717,8 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
 
     #endregion
 
-    public object Tag { get; set; }
+    public object    Tag         { get; set; }
+    public WayPoint? EndWayPoint { get; set; }
 
     #region Fields
 

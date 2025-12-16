@@ -15,7 +15,44 @@ namespace iSukces.DrawingPanel.Paths;
 
 public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculator
 {
-    public IPathResult Compute(IPathValidator validator)
+    internal void AppendData(IDictionary dictionary)
+    {
+        dictionary.Set(nameof(Start), Start);
+        dictionary.Set(nameof(End), End);
+        dictionary.Set(nameof(Reference), Reference);
+    }
+
+    private void CalculateCrosses(out Point? startCross, out Point? endCross)
+    {
+        var dist      = PathCalculationConfig.UseLineWhenDistanceLowerThan;
+        var reference = Reference;
+
+        var l = reference.GetLine();
+        {
+            var sMoved = Start.GetMovedRayOutput();
+            var l1     = sMoved.GetLine();
+
+            var d1 = Math.Abs(l1.DistanceNotNormalized(reference.Point));
+            var d2 = Math.Abs(l.DistanceNotNormalized(sMoved.Point));
+            if (d1 < dist && d2 < dist)
+                startCross = null;
+            else
+                startCross = PathsMathUtils.CrossNormalized(l, l1);
+        }
+        {
+            var eMoved = End.GetMovedRayInput();
+            var l2     = eMoved.GetLine();
+
+            var d1 = Math.Abs(l2.DistanceNotNormalized(reference.Point));
+            var d2 = Math.Abs(l.DistanceNotNormalized(eMoved.Point));
+            if (d1 < dist && d2 < dist)
+                endCross = null;
+            else
+                endCross = PathsMathUtils.CrossNormalized(l, l2);
+        }
+    }
+
+    public IPathResult Compute(IPathValidator? validator)
     {
         if (!Reference.HasValidVector())
         {
@@ -43,43 +80,9 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
         IReadOnlyList<IPathElement> FindPathElements()
         {
             var builder = new PathBuilder(Start.Point, validator);
+            var idx     = 0;
 
-            IReadOnlyList<IPathElement> FlexiS()
-            {
-                builder.Clear();
-                builder.AddFlexi(Start, Reference);
-                var endd = new PathRayWithArm(End.Point, -End.Vector, End.ArmLength);
-                builder.AddFlexi(Reference, endd);
-                return builder.List;
-            }
-
-            Point? startCrossNullable, endCrossNullable;
-            {
-                var dist = PathCalculationConfig.UseLineWhenDistanceLowerThan;
-                var l    = Reference.GetLine();
-                {
-                    var sMoved = Start.GetMovedRayOutput();
-                    var l1     = sMoved.GetLine();
-
-                    var d1 = Math.Abs(l1.DistanceNotNormalized(Reference.Point));
-                    var d2 = Math.Abs(l.DistanceNotNormalized(sMoved.Point));
-                    if (d1 < dist && d2 < dist)
-                        startCrossNullable = null;
-                    else
-                        startCrossNullable = PathsMathUtils.CrossNormalized(l, l1);
-                }
-                {
-                    var eMoved = End.GetMovedRayInput();
-                    var l2     = eMoved.GetLine();
-
-                    var d1 = Math.Abs(l2.DistanceNotNormalized(Reference.Point));
-                    var d2 = Math.Abs(l.DistanceNotNormalized(eMoved.Point));
-                    if (d1 < dist && d2 < dist)
-                        endCrossNullable = null;
-                    else
-                        endCrossNullable = PathsMathUtils.CrossNormalized(l, l2);
-                }
-            }
+            CalculateCrosses(out var startCrossNullable, out var endCrossNullable);
 
             if (startCrossNullable is null)
             {
@@ -95,14 +98,15 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
                     }
 
                     {
-                        var s = Start.GetMovedRayOutput();
-                        var r = Reference;
-                        var e = End.GetMovedRayInput().WithInvertedVector();
+                        var start  = Start.GetMovedRayOutput();
+                        var middle = Reference;
+                        var end    = End.GetMovedRayInput().WithInvertedVector();
 
-                        builder.AddFlexiFromPararell(s, r, validator);
-                        builder.LineTo(Reference.Point);
+                        builder.AddFlexiFromPararell(start, middle, validator);
+                        builder.LineTo(middle.Point);
+                        builder.MarkEndWayPoint(ref idx, middle);
 
-                        builder.AddFlexiFromPararell(r, e, validator);  
+                        builder.AddFlexiFromPararell(middle, end, validator);
                         builder.LineTo(End.Point);
                         return builder.List;
                     }
@@ -112,8 +116,9 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
                     var start  = Start.GetMovedRayOutput();
                     var middle = Reference;
                     var end    = End.GetMovedRayInput();
-                        
+
                     builder.AddFlexiFromPararell(start, middle, validator);
+                    builder.MarkEndWayPoint(ref idx, middle);
                     builder.AddFlexi(middle, end, true);
                 }
             }
@@ -124,8 +129,9 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
                     var start  = Start.GetMovedRayOutput();
                     var middle = Reference;
                     var end    = End.GetMovedRayInput().WithInvertedVector();
-                        
+
                     builder.AddFlexi(start, middle);
+                    builder.MarkEndWayPoint(ref idx, middle);
                     builder.AddFlexiFromPararell(middle, end, validator);
                 }
                 else
@@ -134,26 +140,31 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
                     var cross2 = endCrossNullable.Value;
                     var q      = FromTwoCrosses(cross1, cross2, builder, validator);
                     if (q == FromTwoCrossesResult.TwoS)
-                        return FlexiS();
+                        return FlexiSShape();
                 }
             }
 
             if (builder.List.Count == 0)
                 builder.AddLine(Start.Point, End.Point);
             return builder.List;
-        }
-    }
 
-    internal void AppendData(IDictionary dictionary)
-    {
-        dictionary.Set(nameof(Start), Start);
-        dictionary.Set(nameof(End), End);
-        dictionary.Set(nameof(Reference), Reference);
+            IReadOnlyList<IPathElement> FlexiSShape()
+            {
+                var middle = Reference;
+                builder.Clear();
+                builder.AddFlexi(Start, middle);
+                builder.MarkEndWayPoint(ref idx, middle);
+
+                var endd = new PathRayWithArm(End.Point, -End.Vector, End.ArmLength);
+                builder.AddFlexi(middle, endd);
+                return builder.List;
+            }
+        }
     }
 
     private FromTwoCrossesResult FromTwoCrosses(Point startCross, Point endCross,
         PathBuilder aggregator,
-        IPathValidator validator)
+        IPathValidator? validator)
     {
         var startIsInvalid = DotNotPositive(startCross, Start);
         if (startIsInvalid)
@@ -317,13 +328,9 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
             Reference = Reference.With(p);
     }
 
-    #region properties
-
     public PathRay Reference { get; set; }
 
-    #endregion
-
-    public enum FromTwoCrossesResult
+    private enum FromTwoCrossesResult
     {
         None,
         TwoS

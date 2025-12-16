@@ -24,11 +24,12 @@ public interface IPathElement : ILineCollider
     Point GetStartPoint();
     Vector GetStartVector();
 
-    #region properties
+    object? Tag { get; set; }
 
-    object Tag { get; set; }
-
-    #endregion
+    /// <summary>
+    /// An intermediate point at the end of a section of the path
+    /// </summary>
+    WayPoint? EndWayPoint { get; set; }
 }
 
 public class ClosestPointResult
@@ -55,15 +56,11 @@ public class ClosestPointResult
         Location     = location;
         ElementTrack = elementTrack;
     }
- 
 
-    #region properties
 
     public Point  ClosestPoint { get; }
     public Three  Location     { get; }
     public double ElementTrack { get; }
     public double SideMovement { get; }
     public Vector Direction    { get; }
-        
-    #endregion
 }

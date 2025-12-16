@@ -17,7 +17,7 @@ public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
     }
 
 
-    public static ZeroReferencePointPathCalculatorResult operator +(ZeroReferencePointPathCalculatorResult? a,
+    public static ZeroReferencePointPathCalculatorResult? operator +(ZeroReferencePointPathCalculatorResult? a,
         Vector v)
     {
         if (a is null)
@@ -86,8 +86,8 @@ public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
     #region properties
 
     public ZeroReferencePointPathCalculator.ResultKind Kind { get; }
-    public ArcDefinition                               Arc1 { get; set; }
-    public ArcDefinition                               Arc2 { get; set; }
+    public ArcDefinition?                              Arc1 { get; set; }
+    public ArcDefinition?                              Arc2 { get; set; }
 
     #endregion
 
@@ -142,12 +142,12 @@ public sealed class ZeroReferencePointPathCalculatorResult : IPathResult
                 case ZeroReferencePointPathCalculator.ResultKind.Point:
                     return default;
                 case ZeroReferencePointPathCalculator.ResultKind.OneArc:
-                    var line = End - Arc1.End;
+                    var line = End - Arc1!.End;
                     if (line.LengthSquared < PathBase.LengthEpsilonSquare)
                         return Arc1.DirectionEnd;
                     return line;
                 case ZeroReferencePointPathCalculator.ResultKind.TwoArcs:
-                    line = End - Arc2.End;
+                    line = End - Arc2!.End;
                     if (line.LengthSquared < PathBase.LengthEpsilonSquare)
                         return Arc2.DirectionEnd;
                     return line;

@@ -16,10 +16,10 @@ public class LinePathElement : IPathElement, ILineCollider
     public LinePathElement(Point start, Point end)
     {
         _start      = start;
-        _end        = end; 
-        _unitVector = _vector     = _end - _start;
+        _end        = end;
+        _unitVector = _vector = _end - _start;
         _unitVector.Normalize();
-        _length     = _vector.Length;
+        _length = _vector.Length;
     }
 
     private LinePathElement(Point start, Point end,
@@ -155,7 +155,8 @@ public class LinePathElement : IPathElement, ILineCollider
     public Point  End        => _end;
     public double Length     => _length;
 
-    public object Tag { get; set; }
+    public object    Tag         { get; set; }
+    public WayPoint? EndWayPoint { get; set; }
 
     private readonly Point _end;
     private readonly double _length;

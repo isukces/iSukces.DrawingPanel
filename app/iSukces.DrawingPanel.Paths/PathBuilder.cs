@@ -88,7 +88,7 @@ public class PathBuilder
         AddPathResult(start.GetRay(), end.GetRay(), result);
     }
 
-    public void AddFlexiFromPararell(PathRay start, PathRay end, IPathValidator validator)
+    public void AddFlexiFromPararell(PathRay start, PathRay end, IPathValidator? validator)
     {
         var tmp = ZeroReferencePointPathCalculator.ComputeFromPararell(start, end, validator);
         AddPathResult(start, end, tmp);
@@ -153,6 +153,14 @@ public class PathBuilder
         CurrentPoint = p;
     }
 
+    /*
+    public void LineToPathRay(PathRay wayPoint, ref int idx)
+    {
+        LineTo(wayPoint.Point);
+        MarkEndWayPoint(ref idx, wayPoint);
+    }
+
+    */
     public IPathResult? LineToAndCreate(Point endPoint)
     {
         LineTo(endPoint);
@@ -161,17 +169,24 @@ public class PathBuilder
         return new PathResult(_list[0].GetStartPoint(), endPoint, List);
     }
 
-    #region properties
-
     public IReadOnlyList<IPathElement> List      => _list;
     public IPathValidator              Validator { get; set; }
 
-    #endregion
-
-    #region Fields
-
-    private readonly List<IPathElement> _list = new List<IPathElement>();
+    private readonly List<IPathElement> _list = [];
     public Point CurrentPoint;
 
-    #endregion
+    /*public void MarkEndWayPoint(WayPoint wayPoint)
+    {
+        var idx = 0;
+        MarkEndWayPoint(ref idx, wayPoint);
+    }
+    */
+    
+    public void MarkEndWayPoint(ref int idx, WayPoint wayPoint)
+    {
+        var list  = List;
+        var count = list.Count;
+        while (idx < count)
+            list[idx++].EndWayPoint = wayPoint;
+    }
 }
