@@ -1,13 +1,7 @@
 using System;
 using BenchmarkDotNet.Attributes;
-using iSukces.DrawingPanel.Paths;
-using Point = System.Windows.Point;
-
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
+using iSukces.Mathematics;
+using Point = iSukces.Mathematics.Point;
 
 
 namespace iSukces.DrawingPanel.Benchmark;

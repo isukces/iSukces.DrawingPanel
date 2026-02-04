@@ -1,11 +1,9 @@
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
-using System.Windows;
 #endif
 using System;
 using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
 
 
 namespace iSukces.DrawingPanel.Paths;

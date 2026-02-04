@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
 
 namespace iSukces.DrawingPanel.Paths;
 
 public static class MoveUtils
 {
-    private static IPathElement TranslateElement(this IPathElement? element, Vector vector)
+    private static IPathElement? TranslateElement(this IPathElement? element, Vector vector)
     {
         switch (element)
         {

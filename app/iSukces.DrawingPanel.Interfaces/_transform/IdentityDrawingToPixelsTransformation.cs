@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 #if COMPATMATH
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 #else
-using WinPoint=System.Windows.Point;
+using WinPoint=iSukces.Mathematics.Point;
 #endif
 namespace iSukces.DrawingPanel.Interfaces;
 

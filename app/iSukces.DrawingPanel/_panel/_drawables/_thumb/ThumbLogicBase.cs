@@ -1,14 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using iSukces.DrawingPanel.Interfaces;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using WinPoint=System.Windows.Point;
-using Vector=System.Windows.Vector;
-#endif
+using WinPoint=iSukces.Mathematics.Point;
+using Vector=iSukces.Mathematics.Vector;
 
 namespace iSukces.DrawingPanel;
 
@@ -124,7 +118,7 @@ public class ThumbLogicBase<TThumb>
     {
         var draggedThumb = DraggingSession.Thumb;
         draggedThumb.IsSelected = !draggedThumb.IsSelected;
-        if (Keyboard.IsKeyDown(Key.LeftShift))
+        if (global::System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftShift))
             return;
         for (var index = Thumbs.Count - 1; index >= 0; index--)
         {

@@ -1,15 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
 using Newtonsoft.Json;
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-
-#else
-using System.Windows;
-#endif
-
 
 namespace iSukces.DrawingPanel.Paths;
 
@@ -29,7 +21,7 @@ public struct PathRayWithArm
             throw new ArgumentOutOfRangeException(nameof(armLength));
         if (armLength > 0)
         {
-            vector.Normalize();
+            vector = vector.GetNormalized();
             if (!vector.IsValidVector())
                 throw new ArgumentOutOfRangeException(nameof(vector));
         }
@@ -90,8 +82,7 @@ public struct PathRayWithArm
     {
         if (ArmLength > 0)
             return Vector;
-        var vector = Vector;
-        vector.Normalize();
+        var vector = Vector.GetNormalized();
         return vector;
     }
 
@@ -117,8 +108,7 @@ public struct PathRayWithArm
     {
         if (ArmLength > 0)
             return this;
-        var vector = Vector;
-        vector.Normalize();
+        var vector = Vector.GetNormalized();
         return new PathRayWithArm(Point, vector, ArmLength);
     }
 
@@ -144,13 +134,9 @@ public struct PathRayWithArm
         return new WayPoint(ray);
     }
 
-    #region properties
-
     public Vector Vector { get; }
 
     public Point Point { get; }
 
     public double ArmLength { get; }
-
-    #endregion
 }

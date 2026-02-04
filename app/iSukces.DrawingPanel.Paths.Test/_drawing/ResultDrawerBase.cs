@@ -10,8 +10,8 @@ using iSukces.Mathematics;
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using Point=System.Windows.Point;
-using Vector=System.Windows.Vector;
+using Point=iSukces.Mathematics.Point;
+using Vector=iSukces.Mathematics.Vector;
 #endif
 
 namespace iSukces.DrawingPanel.Paths.Test;
@@ -116,7 +116,7 @@ internal class ResultDrawerBase
         var factor = ahl / arrowHeadLength;
         var b      = Map(point).ToPoint();
         v = new Vector(v.X, -v.Y);
-        v.Normalize();
+        v = v.GetNormalized();
         if (!arrowStart)
             b -= v * ahl;
 
@@ -146,7 +146,7 @@ internal class ResultDrawerBase
 
     protected void DrawCircleWithVector(Point point, Vector v, bool isShort = false)
     {
-        v.Normalize();
+        v = v.GetNormalized();
         v *= 50;
         var a = Map(point);
         {

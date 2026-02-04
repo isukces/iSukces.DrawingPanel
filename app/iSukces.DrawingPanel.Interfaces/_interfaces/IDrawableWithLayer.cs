@@ -1,11 +1,4 @@
-using System.Windows;
-#if !WINDOWS
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using WinPoint=System.Windows.Point;
-using Vector=System.Windows.Vector;
-#endif
+using WinPoint=iSukces.Mathematics.Point;
 
 namespace iSukces.DrawingPanel.Interfaces;
 

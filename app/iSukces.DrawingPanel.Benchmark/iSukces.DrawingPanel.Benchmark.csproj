@@ -8,13 +8,13 @@
     <OutputType>Exe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <UseWpf>true</UseWpf>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.DrawingPanel.Paths\iSukces.DrawingPanel.Paths.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
-    <PackageReference Include="iSukces.Math" Version="1.25.1203.132" />
+    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
+    <Using Include="iSukces.Mathematics" />
   </ItemGroup>
 </Project>

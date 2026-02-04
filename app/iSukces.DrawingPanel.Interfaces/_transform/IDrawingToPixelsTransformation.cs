@@ -1,29 +1,23 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using WinPoint=System.Windows.Point;
-using Vector=System.Windows.Vector;
-#endif
+using SPoint=iSukces.Mathematics.Point;
 
 
 namespace iSukces.DrawingPanel.Interfaces;
 
 public interface IDrawingToPixelsTransformation
 {
-    WinPoint FromCanvas(WinPoint point);
+    SPoint FromCanvas(SPoint point);
 
-    WinPoint FromCanvas(Point point);
+    SPoint FromCanvas(Point point);
 
     Matrix GetTransform();
         
-    WinPoint ToCanvas(WinPoint point);
+    SPoint ToCanvas(SPoint point);
 
-    WinPoint ToCanvas(double pointX, double pointY);
+    SPoint ToCanvas(double pointX, double pointY);
 
-    PointF ToCanvasF(WinPoint point);
+    PointF ToCanvasF(SPoint point);
 
     PointF ToCanvasF(double pointX, double pointY);
 

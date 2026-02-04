@@ -1,10 +1,6 @@
 using System;
 using System.Drawing;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-#else
-using WinPoint=System.Windows.Point;
-#endif
+using WinPoint=iSukces.Mathematics.Point;
 
 namespace iSukces.DrawingPanel.Interfaces;
 

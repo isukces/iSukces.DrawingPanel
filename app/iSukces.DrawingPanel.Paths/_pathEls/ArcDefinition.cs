@@ -205,8 +205,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         var v2 = target - End;
         if (v1.LengthSquared < v2.LengthSquared)
         {
-            var versor = DirectionStart;
-            versor.Normalize();
+            var versor = DirectionStart.GetNormalized();
             var track  = versor * v1;
 #if DEBUG
             if (track > 0)
@@ -217,8 +216,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         }
         else
         {
-            var versor = DirectionEnd;
-            versor.Normalize();
+            var versor = DirectionEnd.GetNormalized();
             var track  = versor * v2;
 #if DEBUG
             if (track < 0)
@@ -234,8 +232,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
     {
         var d    = (End - Center);
         var l    = Radius - d.Length;
-        var unit = d;
-        unit.Normalize();
+        var unit = d.GetNormalized();
         End += l * unit;
 #if DEBUG
         d = (End - Center);
@@ -249,7 +246,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
     public ArcDefinition FixStartDirection()
     {
         var dir = DirectionVectorFromRadius(RadiusStart);
-        dir.Normalize();
+        dir = dir.GetNormalized();
 #if DEBUG
         if (dir * DirectionStart < 0)
             throw new Exception("Invalid direction");
@@ -327,7 +324,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
     public Point GetNearestPointOnCircle(Point point)
     {
         var v = point - Center;
-        v.Normalize();
+        v = v.GetNormalized();
         var res = Center + v * Radius;
         return res;
     }
@@ -387,8 +384,7 @@ public sealed class ArcDefinition : IPathElement, ILineCollider
         var tmp = radiusSquared - chordHalf * chordHalf;
         var a   = tmp <= 0 ? 0 : -Math.Sqrt(tmp);
 
-        var xOne = v;
-        xOne.Normalize();
+        var xOne = v.GetNormalized();
         var yOne = xOne.GetPrependicular(Direction == ArcDirection.Clockwise);
 
         for (var idx = segmentsCount / 2; idx >= 1; idx--)

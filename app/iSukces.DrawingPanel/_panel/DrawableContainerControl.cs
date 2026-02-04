@@ -10,8 +10,8 @@ using iSukces.DrawingPanel.Interfaces;
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Rect=iSukces.Mathematics.Compatibility.Rect;
 #else
-using Point=System.Windows.Point;
-using Rect=System.Windows.Rect;
+using Point=iSukces.Mathematics.Point;
+using Rect=iSukces.Mathematics.Rect;
 using System.Windows.Forms;
 using System.Drawing;
 #endif

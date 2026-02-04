@@ -8,8 +8,8 @@ using iSukces.DrawingPanel.Interfaces;
 using WinPoint=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using WinPoint=System.Windows.Point;
-using Vector=System.Windows.Vector;
+using WinPoint=iSukces.Mathematics.Point;
+using Vector=iSukces.Mathematics.Vector;
 #endif
 
 

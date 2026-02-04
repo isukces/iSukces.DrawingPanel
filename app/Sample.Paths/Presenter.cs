@@ -1,9 +1,8 @@
 using System.Drawing;
-using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
 using iSukces.DrawingPanel.Paths;
 using iSukces.Mathematics;
-using Point = System.Windows.Point;
+using Point = iSukces.Mathematics.Point;
 
 namespace Sample.Paths;
 

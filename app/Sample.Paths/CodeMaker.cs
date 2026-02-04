@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using iSukces.DrawingPanel.Paths;
+using Vector = iSukces.Mathematics.Vector;
+
 
 namespace Sample.Paths;
 

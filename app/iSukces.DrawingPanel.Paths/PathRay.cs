@@ -2,14 +2,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
 using Newtonsoft.Json;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using Point=System.Windows.Point;
-using Vector=System.Windows.Vector;
-#endif
-
 
 namespace iSukces.DrawingPanel.Paths;
 
@@ -41,8 +33,7 @@ public struct PathRay
     public PathRay(Point point, Point endPoint)
     {
         Point  = point;
-        Vector = endPoint - point;
-        Vector.Normalize();
+        Vector = (endPoint - point).GetNormalized();
     }
 
     public override string ToString()
@@ -116,8 +107,7 @@ public struct PathRay
 
     public PathRay Normalize()
     {
-        var v = Vector;
-        v.Normalize();
+        var v = Vector.GetNormalized();
         return new PathRay(Point, v);
     }
 

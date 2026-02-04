@@ -124,17 +124,15 @@ public class ArcPathMakerVertex
 
     public void NormalizeInVector()
     {
-        if ((Flags & FlexiPathMakerItem2Flags.HasInVector) != 0)
-            _inVector.Normalize();
+        if ((Flags & FlexiPathMakerItem2Flags.HasInVector) != 0) _inVector = _inVector.GetNormalized();
     }
 
     public void NormalizeOutVector()
     {
         if ((Flags & FlexiPathMakerItem2Flags.HasOutVector) != 0)
-            _outVector.Normalize();
+            _outVector = _outVector.GetNormalized();
     }
-
-
+    
     public bool ShouldSerializeInArmLength()
     {
         return InArmLength != 0d;

@@ -1,10 +1,10 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows;
 using iSukces.DrawingPanel;
 using iSukces.DrawingPanel.Interfaces;
 using iSukces.DrawingPanel.Paths;
-using Point = System.Windows.Point;
+using Point = iSukces.Mathematics.Point;
+using Vector = iSukces.Mathematics.Vector;
 
 namespace Sample.Paths;
 
@@ -24,7 +24,7 @@ internal sealed class PathsController : DrawableBase, IDpMouseButtonHandler
 
     private static Vector SetVector100(Vector v)
     {
-        v.Normalize();
+        v = v.GetNormalized();
         if (double.IsNaN(v.X))
             v = new Vector(1, 0);
         return v * 100;
@@ -48,7 +48,10 @@ internal sealed class PathsController : DrawableBase, IDpMouseButtonHandler
         {
             var loc = CanvasInfo.Transformation.FromCanvas(e.Location);
 
-            PathRayWithArm M(PathRayWithArm x) { return x.With(-Calc(x.Point, loc)); }
+            PathRayWithArm M(PathRayWithArm x)
+            {
+                return x.With(-Calc(x.Point, loc));
+            }
             // PathRay M(PathRay x) { return x.With(-Calc(x.Point, loc)); }
             switch (OptionIndex)
             {

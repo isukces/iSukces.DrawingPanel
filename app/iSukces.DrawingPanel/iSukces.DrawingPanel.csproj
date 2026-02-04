@@ -2,13 +2,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{A26B3431-314C-4B71-B75E-D1DEE0A894C2}</ProjectGuid>
-    <TargetFrameworks>net8.0-windows;net9.0-windows;net10.0-windows</TargetFrameworks>
-    <AssemblyVersion>1.25.1203.52</AssemblyVersion>
-    <FileVersion>1.25.1203.52</FileVersion>
-    <Version>1.25.1203.52</Version>
+    <TargetFrameworks>net8.0-windows;net10.0-windows</TargetFrameworks>
+    <AssemblyVersion>2.26.120.53</AssemblyVersion>
+    <FileVersion>2.26.120.53</FileVersion>
+    <Version>2.26.120.53</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
+    <UseWpf>true</UseWpf>
     <NoWarn>1701;1702;1591</NoWarn>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <Title>Drawing panel</Title>
@@ -17,12 +18,12 @@
     <ProjectReference Include="..\iSukces.DrawingPanel.Interfaces\iSukces.DrawingPanel.Interfaces.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.25.1203.132" />
+    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-windows'">
     <PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net10.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
     <PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
   </ItemGroup>
   <Import Project="..\Common.props" />

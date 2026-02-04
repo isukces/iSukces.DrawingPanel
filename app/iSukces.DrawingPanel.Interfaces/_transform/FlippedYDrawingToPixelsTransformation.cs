@@ -1,10 +1,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-#else
-using WinPoint=System.Windows.Point;
-#endif
+using Size = iSukces.Mathematics.Size;
+using Point = iSukces.Mathematics.Point;
 
 
 namespace iSukces.DrawingPanel.Interfaces;
@@ -18,9 +15,9 @@ public class FlippedYDrawingToPixelsTransformation : IDrawingToPixelsTransformat
         Scale  = scale;
     }
 
-    public static FlippedYDrawingToPixelsTransformation Make(Size viewPortSize, WinPoint center, double scale)
+    public static FlippedYDrawingToPixelsTransformation Make(System.Drawing.Size viewPortSize, Point center, double scale)
     {
-        var screenCenter = new WinPoint(viewPortSize.Width * 0.5, viewPortSize.Height * 0.5);
+        var screenCenter = new Point(viewPortSize.Width * 0.5, viewPortSize.Height * 0.5);
 
         var dx = screenCenter.X - center.X * scale;
         var dy = screenCenter.Y + center.Y * scale;
@@ -28,18 +25,18 @@ public class FlippedYDrawingToPixelsTransformation : IDrawingToPixelsTransformat
     }
 
 
-    public WinPoint FromCanvas(WinPoint point)
+    public Point FromCanvas(Point point)
     {
         var x = (point.X - DeltaX) / Scale;
         var y = (DeltaY - point.Y) / Scale;
-        return new WinPoint(x, y);
+        return new Point(x, y);
     }
 
-    public WinPoint FromCanvas(Point point)
+    public Point FromCanvas(System.Drawing.Point point)
     {
         var x = (point.X - DeltaX) / Scale;
         var y = (DeltaY - point.Y) / Scale;
-        return new WinPoint(x, y);
+        return new Point(x, y);
     }
 
     public Matrix GetTransform()
@@ -51,18 +48,18 @@ public class FlippedYDrawingToPixelsTransformation : IDrawingToPixelsTransformat
         return m;
     }
 
-    public WinPoint ToCanvas(WinPoint point)
+    public Point ToCanvas(Point point)
     {
         var x = DeltaX + point.X * Scale;
         var y = DeltaY - point.Y * Scale;
-        return new WinPoint(x, y);
+        return new Point(x, y);
     }
 
-    public WinPoint ToCanvas(double pointX, double pointY)
+    public Point ToCanvas(double pointX, double pointY)
     {
         var x = DeltaX + pointX * Scale;
         var y = DeltaY - pointY * Scale;
-        return new WinPoint(x, y);
+        return new Point(x, y);
     }
 
     public PointF ToCanvasF(double pointX, double pointY)
@@ -73,7 +70,7 @@ public class FlippedYDrawingToPixelsTransformation : IDrawingToPixelsTransformat
     }
 
 
-    public PointF ToCanvasF(WinPoint point)
+    public PointF ToCanvasF(Point point)
     {
         var x = DeltaX + point.X * Scale;
         var y = DeltaY - point.Y * Scale;

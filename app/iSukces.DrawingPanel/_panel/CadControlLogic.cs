@@ -1,15 +1,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using iSukces.DrawingPanel.Interfaces;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Rect=iSukces.Mathematics.Compatibility.Rect;
-#else
-using Point=System.Windows.Point;
-using Rect=System.Windows.Rect;
-#endif
+using Point=iSukces.Mathematics.Point;
+using Rect=iSukces.Mathematics.Rect;
 using Size = System.Drawing.Size;
 
 namespace iSukces.DrawingPanel;

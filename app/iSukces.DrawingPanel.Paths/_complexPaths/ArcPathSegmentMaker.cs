@@ -191,7 +191,7 @@ internal sealed class ArcPathSegmentMaker
         if ((Flags & SegmentFlags.BothVectors) != SegmentFlags.BothVectors)
         {
             var dir = Point.Location - PreviousPoint.Location;
-            dir.Normalize();
+            dir = dir.GetNormalized();
             if ((Flags & SegmentFlags.HasStartVector) == 0)
             {
                 _normalizationFlags &= ~NormalizationFlags.NormalizeStartVector;
@@ -228,7 +228,7 @@ internal sealed class ArcPathSegmentMaker
             if ((_normalizationFlags & mask) != 0)
             {
                 _normalizationFlags &= ~mask;
-                _startVector.Normalize();
+                _startVector = _startVector.GetNormalized();
             }
 
             _start = _start.With(_start.Point + _startVector * _outArmLength);
@@ -240,7 +240,7 @@ internal sealed class ArcPathSegmentMaker
             if ((_normalizationFlags & mask) != 0)
             {
                 _normalizationFlags &= ~mask;
-                _endVector.Normalize();
+                _endVector = _endVector.GetNormalized();
             }
 
             _end = _end.With(_end.Point - _endVector * _inArmLength);

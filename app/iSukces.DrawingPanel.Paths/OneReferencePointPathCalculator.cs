@@ -1,15 +1,9 @@
 #define _OLD_RESULT
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using iSukces.Mathematics;
-
 
 namespace iSukces.DrawingPanel.Paths;
 
@@ -207,10 +201,8 @@ public sealed class OneReferencePointPathCalculator : ReferencePointPathCalculat
         }
 
         var xReference = Reference.GetNormalizedVector();
-        var xStart     = Start.Vector;
-        var xEnd       = End.Vector;
-        xStart.Normalize();
-        xEnd.Normalize();
+        var xStart     = Start.Vector.GetNormalized();
+        var xEnd       = End.Vector.GetNormalized();
 
         var brakuje = startLength + endLength - middleLength;
         if (brakuje > 0)

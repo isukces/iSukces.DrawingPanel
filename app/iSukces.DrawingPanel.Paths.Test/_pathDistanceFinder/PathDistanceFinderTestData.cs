@@ -9,8 +9,8 @@ using Xunit;
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using Point=System.Windows.Point;
-using Vector=System.Windows.Vector;
+using Point=iSukces.Mathematics.Point;
+using Vector=iSukces.Mathematics.Vector;
 #endif
 
 
@@ -89,21 +89,21 @@ public sealed class PathDistanceFinderTestData
         {
             if (track < 0)
             {
-                var pathElement = elements.First();
+                var pathElement = elements[0];
                 var point       = pathElement.GetStartPoint();
                 var vector      = pathElement.GetStartVector();
-                vector.Normalize();
-                point += vector * track;
+                vector =  vector.GetNormalized();
+                point  += vector * track;
                 return new TrackInfo(point, vector);
             }
 
             if (track > totalLength)
             {
                 track -= totalLength;
-                var pathElement = elements.Last();
+                var pathElement = elements[^1];
                 var point       = pathElement.GetEndPoint();
                 var vector      = pathElement.GetEndVector();
-                vector.Normalize();
+                vector = vector.GetNormalized();
                 point += vector * track;
                 return new TrackInfo(point, vector);
             }

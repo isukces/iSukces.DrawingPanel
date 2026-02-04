@@ -1,12 +1,6 @@
 using System;
-
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-#else
-using Point=System.Windows.Point;
+using Point=iSukces.Mathematics.Point;
 using System.Collections.Generic;
-#endif
-
 
 
 namespace iSukces.DrawingPanel.Interfaces;

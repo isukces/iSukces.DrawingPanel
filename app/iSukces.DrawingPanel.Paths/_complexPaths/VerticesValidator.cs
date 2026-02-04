@@ -81,18 +81,14 @@ public sealed class VerticesValidator
         var p1 = _list[index - 1].Location;
         var p2 = _list[index].Location;
         var v  = p2 - p1;
-        v.Normalize();
+        v = v.GetNormalized();
         _vectors[index] = v;
         _exists[index]  = true;
         return v;
     }
 
-    #region Fields
-
     private readonly bool[] _exists;
     private readonly IReadOnlyList<ArcPathMakerVertex> _list;
     private readonly int _listCount;
     private readonly Vector[] _vectors;
-
-    #endregion
 }

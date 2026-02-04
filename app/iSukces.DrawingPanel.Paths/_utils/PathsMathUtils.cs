@@ -1,7 +1,6 @@
 #if COMPATMATH
 using iSukces.Mathematics.Compatibility;
 #else
-using System.Windows;
 #endif
 using System;
 using System.Runtime.CompilerServices;
@@ -122,13 +121,6 @@ public static class PathsMathUtils
         var crossPoint = l1.CrossWith(l2);
         return crossPoint;
     }
-
-    public static Vector GetNormalized(this Vector v)
-    {
-        v.Normalize();
-        return v;
-    }
-
 
     public static bool IsAngleBetweenSmallEnoughtBasedOnH(Vector vector1, Vector vector2, double h)
     {

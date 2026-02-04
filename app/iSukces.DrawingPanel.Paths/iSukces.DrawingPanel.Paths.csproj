@@ -2,10 +2,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
-    <TargetFrameworks>net8.0-windows;net9.0-windows;net10.0-windows</TargetFrameworks>
-    <AssemblyVersion>1.25.1203.75</AssemblyVersion>
-    <FileVersion>1.25.1203.75</FileVersion>
-    <Version>1.25.1203.75</Version>
+    <TargetFrameworks>net8.0-windows;net10.0-windows</TargetFrameworks>
+    <AssemblyVersion>2.26.120.76</AssemblyVersion>
+    <FileVersion>2.26.120.76</FileVersion>
+    <Version>2.26.120.76</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <NoWarn>1701;1702;1591</NoWarn>
@@ -13,8 +13,9 @@
     <Title>Drawing panel paths</Title>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="1.25.1203.132" />
+    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <Using Include="iSukces.Mathematics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">

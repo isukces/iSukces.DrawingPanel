@@ -8,8 +8,8 @@ using Xunit;
 using Point=iSukces.Mathematics.Compatibility.Point;
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 #else
-using Point=System.Windows.Point;
-using Vector=System.Windows.Vector;
+using Point=iSukces.Mathematics.Point;
+using Vector=iSukces.Mathematics.Vector;
 #endif
 
 
@@ -45,7 +45,7 @@ public partial class ArcDefinitionTests
         double expectedY)
     {
         var v = new Vector(x, y);
-        v.Normalize();
+        v = v.GetNormalized();
         v *= 50;
         var center = new Point(100, 200);
         var arc = new ArcDefinition
@@ -83,7 +83,7 @@ public partial class ArcDefinitionTests
     public void T03_Should_find_angle(double yOfStart, double x, double y, double expected)
     {
         var v = new Vector(x, y);
-        v.Normalize();
+        v = v.GetNormalized();
         v *= 50;
         var center = new Point(100, 200);
         var arc = new ArcDefinition
@@ -170,7 +170,7 @@ public partial class ArcDefinitionTests
         Assert.Equal(locExpected, loc, 10);
 
         var angle = locExpected / arc.Radius;
-        direction.Normalize();
+        direction = direction.GetNormalized();
         direction = direction.GetPrependicularVector();
         Assert.Equal(Math.Sin(angle), direction.Y, 5);
         Assert.Equal(Math.Cos(angle), direction.X, 5);
@@ -199,7 +199,7 @@ public partial class ArcDefinitionTests
         Assert.Equal(locExpected, loc, 10);
 
         var angle = -locExpected / arc.Radius;
-        direction.Normalize();
+        direction = direction.GetNormalized();
         direction = direction.GetPrependicular();
         Assert.Equal(Math.Sin(angle), direction.Y, 5);
         Assert.Equal(Math.Cos(angle), direction.X, 5);
@@ -665,7 +665,7 @@ public partial class ArcDefinitionTests
         if (!left)
             (start, end) = (end, start);
         var dirStart = (start - center).GetPrependicular(left);
-        dirStart.Normalize();
+        dirStart = dirStart.GetNormalized();
         var arc      = new ArcDefinition(center, start, dirStart, end);
 
         if (!left)
@@ -696,7 +696,7 @@ public partial class ArcDefinitionTests
         Point FindPoint(double x, double y, double radius1 = radius)
         {
             var v = new Vector(x, y);
-            v.Normalize();
+            v = v.GetNormalized();
             return center + radius1 * v;
         }
     }

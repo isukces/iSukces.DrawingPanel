@@ -1,10 +1,4 @@
-#if COMPATMATH
-using Point = iSukces.Mathematics.Compatibility.Point;
-using Vector = iSukces.Mathematics.Compatibility.Vector;
-#else
-using Point = System.Windows.Point;
-#endif
-using System.IO;
+using Point = iSukces.Mathematics.Point;
 using System.Runtime.CompilerServices;
 
 namespace iSukces.DrawingPanel.Paths.Test;

@@ -20,8 +20,7 @@ public class VectorNormalizeBenchmark
         for (var i = 0; i < Iterations; i++)
         {
             var v = new Vector(3, 4);
-            v.Normalize();
-            vv[i] = v;
+            vv[i] = v.GetNormalized();
         }
 
         return vv;
@@ -35,7 +34,7 @@ public class VectorNormalizeBenchmark
         for (var i = 0; i < Iterations; i++)
         {
             var v = new Vector(3, 4);
-            v     = v.NormalizeFast(); // benchmark extension method
+            v     = v.GetNormalized(); // benchmark extension method
             vv[i] = v;
         }
 

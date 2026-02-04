@@ -2,8 +2,8 @@
 using Vector=iSukces.Mathematics.Compatibility.Vector;
 using Point=iSukces.Mathematics.Compatibility.Point;
 #else
-using Point=System.Windows.Point;
-using Vector=System.Windows.Vector;
+using Point=iSukces.Mathematics.Point;
+using Vector=iSukces.Mathematics.Vector;
 #endif
 
 

@@ -1,29 +1,22 @@
 using System;
 using System.Collections.Generic;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using Point=System.Windows.Point;
-using Vector=System.Windows.Vector;
-#endif
-
+using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Paths;
 
 public class ArcPathMakerResult
 {
-    public ArcPathMakerResult(IReadOnlyList<IPathResult> segments)
+    public ArcPathMakerResult(IReadOnlyList<IPathResult>? segments)
     {
-        Segments = segments;
+        Segments = segments ?? [];
     }
 
-    public static ArcPathMakerResult operator +(ArcPathMakerResult? a, Vector v)
+    public static ArcPathMakerResult? operator +(ArcPathMakerResult? a, Vector v)
     {
         if (a is null)
             return null;
         var r = a.Segments;
-        if (r is null || r.Count==0)
+        if (r.Count==0)
             return a;
         var s = new IPathResult[r.Count];
         for (var index = 0; index < r.Count; index++)
@@ -70,15 +63,11 @@ public class ArcPathMakerResult
         return result;
     }
 
-    #region properties
-
     public IReadOnlyList<IPathResult> Segments { get; }
 
     public static ArcPathMakerResult Empty => new([]);
 
     public int Count => Segments.Count;
-
-    #endregion
 }
 
 
