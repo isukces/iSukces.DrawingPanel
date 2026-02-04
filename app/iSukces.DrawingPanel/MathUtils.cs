@@ -1,5 +1,3 @@
-using System;
-
 namespace iSukces.DrawingPanel;
 
 internal sealed class MathUtils

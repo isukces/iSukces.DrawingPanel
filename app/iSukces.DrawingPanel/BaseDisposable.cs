@@ -1,5 +1,3 @@
-using System;
-
 namespace iSukces.DrawingPanel;
 
 public class BaseDisposable : IDisposable

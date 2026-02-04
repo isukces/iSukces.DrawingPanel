@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using iSukces.DrawingPanel.Interfaces;
 using WinPoint=iSukces.Mathematics.Point;

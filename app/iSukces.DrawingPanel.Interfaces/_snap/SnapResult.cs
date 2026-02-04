@@ -1,8 +1,4 @@
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-#else
 using Point=iSukces.Mathematics.Point;
-#endif
 
 namespace iSukces.DrawingPanel.Interfaces;
 

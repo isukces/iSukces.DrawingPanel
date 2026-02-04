@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace iSukces.DrawingPanel.Paths.Test;
 
 internal static class TestNamesSorter

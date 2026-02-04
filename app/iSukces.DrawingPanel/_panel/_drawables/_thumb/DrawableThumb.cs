@@ -1,15 +1,8 @@
 #define _LOG
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
 using WinPoint=iSukces.Mathematics.Point;
-using Vector=iSukces.Mathematics.Vector;
-#endif
 
 namespace iSukces.DrawingPanel;
 

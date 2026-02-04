@@ -1,10 +1,3 @@
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 

@@ -1,23 +1,16 @@
-using System;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using WinPoint=iSukces.Mathematics.Point;
-using Vector=iSukces.Mathematics.Vector;
-#endif
+using SPoint=iSukces.Mathematics.Point;
 
 namespace iSukces.DrawingPanel;
 
 public sealed class TwoCorners
 {
-    public TwoCorners(WinPoint a, WinPoint b)
+    public TwoCorners(SPoint a, SPoint b)
     {
         A = a;
         B = b;
     }
 
-    public bool IsInside(WinPoint cp, double tolerance)
+    public bool IsInside(SPoint cp, double tolerance)
     {
         return cp.X + tolerance >= XMinimum
                && cp.X - tolerance <= XMaximum
@@ -31,6 +24,6 @@ public sealed class TwoCorners
     private double YMinimum => Math.Min(A.Y, B.Y);
     private double YMaximum => Math.Max(A.Y, B.Y);
 
-    public WinPoint A { get; }
-    public WinPoint B { get; }
+    public SPoint A { get; }
+    public SPoint B { get; }
 }

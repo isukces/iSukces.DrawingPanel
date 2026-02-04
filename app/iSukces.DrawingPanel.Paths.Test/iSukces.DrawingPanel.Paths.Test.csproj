@@ -61,4 +61,8 @@
     </Compile>
     <None Remove="iSukces.DrawingPanel.Paths.Test.csproj.DotSettings" />
   </ItemGroup>
+  <ItemGroup>
+    <Import Include="System" />
+    <Import Include="Xunit" />
+  </ItemGroup>
 </Project>

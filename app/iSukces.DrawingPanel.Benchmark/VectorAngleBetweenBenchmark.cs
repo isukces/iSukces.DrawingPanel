@@ -1,12 +1,6 @@
 using System;
 using BenchmarkDotNet.Attributes;
 using iSukces.DrawingPanel.Paths;
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-
 
 namespace iSukces.DrawingPanel.Benchmark;
 

@@ -1,4 +1,3 @@
-using System;
 using iSukces.DrawingPanel.Interfaces;
 
 namespace iSukces.DrawingPanel;

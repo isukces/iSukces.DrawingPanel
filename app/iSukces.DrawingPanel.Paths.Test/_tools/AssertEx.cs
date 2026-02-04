@@ -1,11 +1,6 @@
 using Xunit;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
 using WinPoint=iSukces.Mathematics.Point;
 using Vector=iSukces.Mathematics.Vector;
-#endif
 
 namespace iSukces.DrawingPanel.Paths.Test;
 

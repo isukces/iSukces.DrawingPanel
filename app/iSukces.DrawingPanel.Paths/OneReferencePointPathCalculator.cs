@@ -1,8 +1,5 @@
 #define _OLD_RESULT
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace iSukces.DrawingPanel.Paths;

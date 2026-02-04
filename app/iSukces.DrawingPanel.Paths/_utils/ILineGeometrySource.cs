@@ -1,9 +1,3 @@
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-#endif
-
-
 namespace iSukces.DrawingPanel.Paths;
 
 public interface ILineGeometrySource

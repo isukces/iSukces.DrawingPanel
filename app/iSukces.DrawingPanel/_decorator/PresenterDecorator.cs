@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Drawing;
 using iSukces.DrawingPanel.Interfaces;

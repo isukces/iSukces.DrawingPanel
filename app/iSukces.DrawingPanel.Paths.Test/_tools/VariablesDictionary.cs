@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace iSukces.DrawingPanel.Paths.Test;
@@ -55,7 +53,7 @@ public class VariablesDictionary
         }
     }
 
-    public static Func<Type, string> GetVarName { get; set; }
+    public static Func<Type, string?> GetVarName { get; set; }
 
     private readonly List<Info> _list = new();
 

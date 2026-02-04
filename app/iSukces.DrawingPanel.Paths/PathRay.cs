@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using iSukces.Mathematics;
 using Newtonsoft.Json;
 
 namespace iSukces.DrawingPanel.Paths;

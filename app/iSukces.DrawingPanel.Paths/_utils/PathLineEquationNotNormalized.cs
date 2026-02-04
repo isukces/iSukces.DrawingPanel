@@ -1,10 +1,4 @@
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-#endif
-using System;
 using System.Text;
-
 
 namespace iSukces.DrawingPanel.Paths;
 

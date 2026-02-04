@@ -4,13 +4,6 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 #endif
 
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-
-
 namespace iSukces.DrawingPanel.Paths;
 
 public sealed class ThreeReferencePointsPathCalculator : ReferencePointPathCalculator

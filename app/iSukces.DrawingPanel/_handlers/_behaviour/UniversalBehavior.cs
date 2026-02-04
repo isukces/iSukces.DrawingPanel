@@ -1,6 +1,5 @@
 #define KEYBOARD_FROM_FORM_
 #define _LOG
-using System;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
 

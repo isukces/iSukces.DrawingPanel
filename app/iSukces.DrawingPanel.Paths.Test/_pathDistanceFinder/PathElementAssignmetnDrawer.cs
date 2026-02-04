@@ -1,15 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Runtime.CompilerServices;
 using iSukces.Mathematics;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
 using Point=iSukces.Mathematics.Point;
-using Vector=iSukces.Mathematics.Vector;
-#endif
 
 namespace iSukces.DrawingPanel.Paths.Test;
 

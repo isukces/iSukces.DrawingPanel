@@ -1,8 +1,3 @@
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-#endif
-
 namespace iSukces.DrawingPanel.Paths;
 
 public class PathDistanceFinderResult
@@ -20,8 +15,6 @@ public class PathDistanceFinderResult
         ElementIndex       = elementIndex;
         ElementTrackOffset = elementTrackOffset;
     }
-
-    #region properties
 
     /// <summary>
     ///     Not negative value
@@ -46,6 +39,4 @@ public class PathDistanceFinderResult
     public double ElementTrackOffset { get; }
 
     public double AbsoluteTrack => ElementTrackOffset + Track;
-
-    #endregion
 }

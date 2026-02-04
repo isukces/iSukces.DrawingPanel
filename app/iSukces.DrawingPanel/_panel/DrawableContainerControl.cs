@@ -1,20 +1,13 @@
 #if DEBUG
 #define __USE_Debug_WriteLine
 #endif
-using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing.Imaging;
 using iSukces.DrawingPanel.Interfaces;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Rect=iSukces.Mathematics.Compatibility.Rect;
-#else
-using Point=iSukces.Mathematics.Point;
 using Rect=iSukces.Mathematics.Rect;
 using System.Windows.Forms;
 using System.Drawing;
-#endif
 
 namespace iSukces.DrawingPanel;
 

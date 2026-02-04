@@ -1,5 +1,3 @@
-using System;
-
 namespace iSukces.DrawingPanel;
 
 public struct RulerDimension : IEquatable<RulerDimension>

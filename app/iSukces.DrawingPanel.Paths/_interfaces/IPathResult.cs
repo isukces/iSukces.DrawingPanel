@@ -1,11 +1,3 @@
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
-using System.Collections.Generic;
-
-
 namespace iSukces.DrawingPanel.Paths;
 
 public interface IPathResult

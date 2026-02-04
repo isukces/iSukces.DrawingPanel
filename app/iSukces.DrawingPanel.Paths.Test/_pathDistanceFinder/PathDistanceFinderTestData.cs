@@ -1,18 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using iSukces.Mathematics;
 using Newtonsoft.Json;
 using Xunit;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
 using Point=iSukces.Mathematics.Point;
 using Vector=iSukces.Mathematics.Vector;
-#endif
-
 
 namespace iSukces.DrawingPanel.Paths.Test;
 

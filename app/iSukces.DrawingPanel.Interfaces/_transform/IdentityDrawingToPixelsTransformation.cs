@@ -1,19 +1,16 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-#else
-using WinPoint=iSukces.Mathematics.Point;
-#endif
+using SPoint=iSukces.Mathematics.Point;
+
 namespace iSukces.DrawingPanel.Interfaces;
 
 public sealed class IdentityDrawingToPixelsTransformation : IDrawingToPixelsTransformation
 {
     private IdentityDrawingToPixelsTransformation() { }
 
-    public WinPoint FromCanvas(WinPoint point) { return point; }
+    public SPoint FromCanvas(SPoint point) { return point; }
 
-    public WinPoint FromCanvas(Point point) { return new WinPoint(point.X, point.Y); }
+    public SPoint FromCanvas(Point point) { return new SPoint(point.X, point.Y); }
 
     public Matrix GetTransform()
     {
@@ -24,11 +21,11 @@ public sealed class IdentityDrawingToPixelsTransformation : IDrawingToPixelsTran
         return m;
     }
 
-    public WinPoint ToCanvas(WinPoint point) { return point; }
+    public SPoint ToCanvas(SPoint point) { return point; }
 
-    public WinPoint ToCanvas(double pointX, double pointY) { return new(pointX, pointY); }
+    public SPoint ToCanvas(double pointX, double pointY) { return new(pointX, pointY); }
 
-    public PointF ToCanvasF(WinPoint point) { return new((float)point.X, (float)point.Y); }
+    public PointF ToCanvasF(SPoint point) { return new((float)point.X, (float)point.Y); }
 
     public PointF ToCanvasF(double pointX, double pointY) { return new((float)pointX, (float)pointY); }
 

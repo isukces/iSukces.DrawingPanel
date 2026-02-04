@@ -1,18 +1,10 @@
-using System;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using iSukces.Mathematics;
 using Xunit;
 using Xunit.Abstractions;
-#if COMPATMATH
-using Point=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
 using Point=iSukces.Mathematics.Point;
 using Vector=iSukces.Mathematics.Vector;
-#endif
 
 namespace iSukces.DrawingPanel.Paths.Test;
 

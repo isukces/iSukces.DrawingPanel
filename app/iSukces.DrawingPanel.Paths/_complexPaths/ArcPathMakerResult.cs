@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using iSukces.Mathematics;
-
 namespace iSukces.DrawingPanel.Paths;
 
 public class ArcPathMakerResult

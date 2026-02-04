@@ -1,8 +1,3 @@
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-#else
-using System.Windows;
-#endif
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 

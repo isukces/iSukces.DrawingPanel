@@ -1,5 +1,3 @@
-using System;
-
 namespace iSukces.DrawingPanel.Paths.Test;
 
 public struct TypedExpression

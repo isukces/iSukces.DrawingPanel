@@ -1,5 +1,3 @@
-using System;
-
 namespace iSukces.DrawingPanel.Sample;
 
 internal struct AlignToValueAggregator

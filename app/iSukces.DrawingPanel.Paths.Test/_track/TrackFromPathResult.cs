@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace iSukces.DrawingPanel.Paths.Test;
 
 public sealed class TrackFromPathResult : IPathTracker

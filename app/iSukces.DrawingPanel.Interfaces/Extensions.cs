@@ -7,18 +7,12 @@ public static class Extensions
     public static IExtendedObservableCollection<IDrawable> Get(this IDrawingLayersContainer layersContainer,
         Layer layer)
     {
-        switch (layer)
+        return layer switch
         {
-            case Layer.Underlay:
-                return layersContainer.Underlay;
-            case Layer.Normal:
-                return layersContainer.Drawables;
-            case Layer.Overlay:
-                return layersContainer.Overlay;
-            default:
-                throw new ArgumentOutOfRangeException(
-                    nameof(layer),
-                    $"{layer} is not valid {nameof(Layer)} value");
-        }
+            Layer.Underlay => layersContainer.Underlay,
+            Layer.Normal => layersContainer.Drawables,
+            Layer.Overlay => layersContainer.Overlay,
+            _ => throw new ArgumentOutOfRangeException(nameof(layer), $"{layer} is not valid {nameof(Layer)} value")
+        };
     }
 }

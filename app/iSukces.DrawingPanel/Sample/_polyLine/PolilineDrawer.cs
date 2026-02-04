@@ -1,29 +1,23 @@
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
 using FontStyle = System.Drawing.FontStyle;
-#if COMPATMATH
-using WinPoint=iSukces.Mathematics.Compatibility.Point;
-using Vector=iSukces.Mathematics.Compatibility.Vector;
-#else
-using WinPoint=iSukces.Mathematics.Point;
-using Vector=iSukces.Mathematics.Vector;
-#endif
+using SPoint=iSukces.Mathematics.Point;
+using SVector=iSukces.Mathematics.Vector;
 
 
 namespace iSukces.DrawingPanel.Sample;
 
 public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
 {
-    private static void DrawDimension(Graphics graphics, WinPoint a, WinPoint b,
+    private static void DrawDimension(Graphics graphics, SPoint a, SPoint b,
         IDrawingToPixelsTransformation transf)
     {
         using var pen = new Pen(Color.Wheat, 1);
 
         var main          = b - a;
         var l             = main.Length;
-        var prependicular = new Vector(main.Y, -main.X);
+        var prependicular = new SVector(main.Y, -main.X);
         var flipped       = main.X > 0;
         if (flipped)
             prependicular = -prependicular;
@@ -42,7 +36,7 @@ public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
             {
                 var prepShort     = prependicular * extLine;
                 var makeLongerLen = flipped ? extLinePlus : -extLinePlus;
-                var pararell      = new Vector(prependicular.Y * makeLongerLen, -prependicular.X * makeLongerLen);
+                var pararell      = new SVector(prependicular.Y * makeLongerLen, -prependicular.X * makeLongerLen);
                 graphics.DrawLine(pen,
                     transf.ToCanvasF(a + prepShort - pararell),
                     transf.ToCanvasF(b + prepShort + pararell)

@@ -1,16 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-#if COMPATMATH
-using iSukces.Mathematics.Compatibility;
-
-#else
-using System.Windows;
-#endif
-
 
 namespace iSukces.DrawingPanel.Paths;
 
