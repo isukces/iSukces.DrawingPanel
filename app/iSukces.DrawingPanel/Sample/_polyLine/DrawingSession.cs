@@ -42,14 +42,14 @@ internal class DrawingSession
 
     private WinPoint Snap(WinPoint point, bool snapAngle)
     {
-        var p2             = Points[Points.Count - 2];
+        var p2             = Points[^2];
         var v              = point - p2;
         var lengthOriginal = v.Length;
         var lengthDesired  = Math.Round(lengthOriginal);
 
         if (snapAngle && Points.Count > 2)
         {
-            var p1             = Points[Points.Count - 3];
+            var p1             = Points[^3];
             var vReference     = p2 - p1;
             var angleReference = Math.Atan2(vReference.Y, vReference.X);
             var angle          = Math.Atan2(v.Y, v.X) * 180 / Math.PI;

@@ -22,8 +22,8 @@ public class SmileDrawable : DrawableBase
         var savedTransform = graphics.Transform;
         try
         {
-            using var matrix = CanvasInfo.Transformation.GetTransform();
-            graphics.Transform = matrix;
+            var matrix = CanvasInfo.Transformation.GetTransform();
+            graphics.Transform = matrix.ToGdi();
             if (FlipY)
                 graphics.ScaleTransform(1, -1);
 

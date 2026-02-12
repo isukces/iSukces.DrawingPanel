@@ -38,26 +38,31 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
 
     private void HandleKeyDown(object? sender, KeyEventArgs e)
     {
-        e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyDown(e));
+        var ee = e.ToModel();
+        e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyDown(ee));
         if (e.Handled)
             e.SuppressKeyPress = true;
     }
 
+
     private void HandleKeyUp(object? sender, KeyEventArgs e)
     {
-        e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyUp(e));
+        var ee = e.ToModel();
+        e.Handled = Handle<IDpKeyboardHandler>(h => h.HandleKeyUp(ee));
     }
 
-    private void HandleMouseWheel(object? sender, MouseEventArgs e)
+    private void HandleMouseWheel(object? sender, MouseEventArgs  e)
     {
-        Handle<IDpMouseWheelHandler>(h => h.HandleMouseWheel(e));
+        var ee = e.ToModel();
+        Handle<IDpMouseWheelHandler>(h => h.HandleMouseWheel(ee));
     }
 
-    private void HandleOnMouseDown(object? sender, MouseEventArgs e)
+    private void HandleOnMouseDown(object? sender, MouseEventArgs  e)
     {
+        var ee = e.ToModel();
         Handle<IDpMouseButtonHandler>(h =>
         {
-            var result = h.HandleOnMouseDown(e);
+            var result = h.HandleOnMouseDown(ee);
             switch (result)
             {
                 case DrawingHandleResult.Break:
@@ -70,7 +75,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
         });
     }
 
-    private void HandleOnMouseMove(object? sender, MouseEventArgs e)
+    private void HandleOnMouseMove(object? sender, MouseEventArgs  e)
     {
         if (KeyboardFrom != null)
         {
@@ -78,17 +83,19 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
                 KeyboardFrom.Focus();
         }
 
+        var ee = e.ToModel();
         Handle<IDpMouseButtonHandler>(h =>
         {
-            return h.HandleOnMouseMove(e);
+            return h.HandleOnMouseMove(ee);
         });
     }
 
-    private void HandleOnMouseUp(object? sender, MouseEventArgs e)
+    private void HandleOnMouseUp(object? sender, MouseEventArgs  e)
     {
+        var ee = e.ToModel();
         Handle<IDpMouseButtonHandler>(h =>
         {
-            var result = h.HandleOnMouseUp(e);
+            var    result = h.HandleOnMouseUp(ee);
             switch (result)
             {
                 case DrawingHandleResult.Break:
@@ -100,6 +107,7 @@ public sealed class UniversalBehavior : IDpHandlerContainer, IBehaviorSource
             return result;
         });
     }
+
 
 
     public Control? MouseMoveFrom

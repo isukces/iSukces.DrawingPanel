@@ -71,17 +71,17 @@ public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
         if (_session is null)
             return;
 
-        var src       = _session.Points;
-        var lastPoint = src[src.Count - 1];
-        var pointsF   = src.MapToArray(a => new PointF((float)a.X, (float)a.Y));
-        var m         = CanvasInfo.Transformation.GetTransform();
-        m.TransformPoints(pointsF);
-        m.Dispose();
+        var       src       = _session.Points;
+        var       lastPoint = src[^1];
+        var       pointsF   = src.MapToArray(a => new PointF((float)a.X, (float)a.Y));
+        var       m         = CanvasInfo.Transformation.GetTransform();
+        using var mm        = m.ToGdi();
+        mm.TransformPoints(pointsF);
 
         using var pen = new Pen(Color.Chartreuse, 3);
         graphics.DrawLines(pen, pointsF);
         // ==========
-        DrawDimension(graphics, src[src.Count - 2], lastPoint, CanvasInfo.Transformation);
+        DrawDimension(graphics, src[^2], lastPoint, CanvasInfo.Transformation);
 
         DrawAlignToLines(graphics, pointsF);
     }
@@ -98,7 +98,7 @@ public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
             var p      = pp[index];
             var transf = CanvasInfo.Transformation;
             var begin  = transf.ToCanvasF(_session.Points[p]);
-            var end    = pointsF[pointsF.Length - 1];
+            var end    = pointsF[^1];
             graphics.DrawLine(pen, begin, end);
         }
     }
@@ -106,22 +106,22 @@ public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
 
 partial class PolilineDrawer
 {
-    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs e) { return DrawingHandleResult.Continue; }
+    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs2 e) { return DrawingHandleResult.Continue; }
 
-    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args)
+    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs2 args)
     {
         if (_session is null)
             return DrawingHandleResult.Continue;
         var point = CanvasInfo.Transformation.FromCanvas(args.Location);
-        point                                      = _session.ProcessPoint(point, out _session.PointAlign, CanvasInfo.Transformation.Scale);
-        _session.Points[_session.Points.Count - 1] = point;
+        point               = _session.ProcessPoint(point, out _session.PointAlign, CanvasInfo.Transformation.Scale);
+        _session.Points[^1] = point;
         OnChanged();
         return DrawingHandleResult.Break;
     }
 
-    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs e)
+    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs2  e)
     {
-        if (e.Button != MouseButtons.Left)
+        if (e.Button != MouseButtons2.Left)
             return DrawingHandleResult.Continue;
 
         var point = CanvasInfo.Transformation.FromCanvas(e.Location);

@@ -1,10 +1,8 @@
-using System.Windows.Forms;
-
 namespace iSukces.DrawingPanel.Interfaces;
 
 public interface IDpMouseButtonHandler : IDpHandler
 {
-    DrawingHandleResult HandleOnMouseDown(MouseEventArgs e);
-    DrawingHandleResult HandleOnMouseMove(MouseEventArgs args);
-    DrawingHandleResult HandleOnMouseUp(MouseEventArgs e);
+    DrawingHandleResult HandleOnMouseDown(MouseEventArgs2 e);
+    DrawingHandleResult HandleOnMouseMove(MouseEventArgs2 args);
+    DrawingHandleResult HandleOnMouseUp(MouseEventArgs2 e);
 }

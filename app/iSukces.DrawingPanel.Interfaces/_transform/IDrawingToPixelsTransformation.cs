@@ -1,5 +1,6 @@
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using iSukces.Mathematics;
+using Point = System.Drawing.Point;
 using SPoint=iSukces.Mathematics.Point;
 
 

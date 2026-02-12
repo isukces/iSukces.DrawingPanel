@@ -175,30 +175,25 @@ public class GroupDrawable : TItem, ISupportInitialize, IDisposable, IGroupDrawa
 
     public bool Visible
     {
-        get => _visible;
+        get;
         set
         {
-            if (_visible == value)
+            if (field == value)
                 return;
-            _visible = value;
+            field = value;
             OnChanged();
         }
-    }
+    } = true;
 
     public bool PresenterRenderingFlag { get; set; }
     public bool PendingDrawing         { get; private set; }
 
     public event EventHandler? PendingDrawingFinished;
 
-    #region Fields
-
     private DrawingCanvasInfo _canvasInfo;
     private EventHandler _changed;
-    private ExtendedObservableCollection<TItem> _children;
+    private ExtendedObservableCollection<TItem>? _children;
     private bool _needNotifyOnChanged;
     private int _suspendLevel;
-    private bool _visible = true;
-
-    #endregion
 }
 

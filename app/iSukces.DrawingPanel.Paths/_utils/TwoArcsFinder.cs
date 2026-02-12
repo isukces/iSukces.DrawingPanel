@@ -35,19 +35,15 @@ public sealed class TwoArcsFinder
         var vx = sV.X - eV.X;
         var vy = sV.Y - eV.Y;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool GetAIsZero(in double sumX, in double sumY, in Vector eV, in Vector sV)
-        {
-            if (sumX == 0)
-                return eV.Y * sV.Y < 0;
-            if (sumY == 0)
-                return eV.X * sV.X < 0;
-            return false;
-        }
-
         var aIsZero = GetAIsZero(sumX, sumY, eV, sV);
 
         var a = (vy * vy) + (vx * vx) - 4; // a<=0
+        if (Math.Abs(a) < 1e-15)
+        {
+            a       = 0;
+            aIsZero = true;
+        }
+
         var b = -2 * (dy * vy + dx * vx); //   b any
         var c = dy * dy + dx * dx; // c >= 0
 
@@ -74,6 +70,20 @@ public sealed class TwoArcsFinder
         }
 
         return re;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool GetAIsZero(in double sumX, in double sumY, in Vector eV, in Vector sV)
+        {
+            const double eps = 1E-16;
+            //sumX = {double} 5.5511151231257827E-17
+            //sumY = {double} -1.1102230246251565E-16
+
+            if (Math.Abs(sumX) < eps)
+                return eV.Y * sV.Y < 0;
+            if (Math.Abs(sumY) < eps)
+                return eV.X * sV.X < 0;
+            return false;
+        }
     }
 
     public void Normalize()

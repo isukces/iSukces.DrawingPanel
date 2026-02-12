@@ -16,10 +16,12 @@ public partial class ArcPathMakerTests
 {""Location"":""210.045000453121,51.5032938674065"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0},
 {""Location"":""224.717683004725,105.268122033596"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":0}
 ]";
-        var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json);
+        var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json,
+            MyJsonConverters.Get());
         var wayPoint =
             JsonConvert.DeserializeObject<PathRay>(
-                @"{""Vector"":""0,0"",""Point"":""96.13121924784,59.8634246985647""}");
+                @"{""Vector"":""0,0"",""Point"":""96.13121924784,59.8634246985647""}",
+                MyJsonConverters.Get());
         input[1].ReferencePoints = [(WayPoint)wayPoint];
         // 
 
@@ -99,7 +101,8 @@ public partial class ArcPathMakerTests
 [{""Location"":""6551522.34418533,5574146.66044663"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""-0.255467483913962,0.966817648092271"",""OutArmLength"":0.0,""Flags"":2,""ReferencePoints"":null},
 {""Location"":""6551521.37233942,5574150.33840111"",""InVector"":""-0.255467483913962,0.966817648092271"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":1,
 ""ReferencePoints"":[{""Vector"":""0.123898409794026,1.99615860693746"",""Point"":""6551521.1209083,5574148.69763847"",""UseInputVector"":false,""InputVector"":""0,0"",""InputArmLength"":0.0,""OutputArmLength"":0.0,""InputRay"":{""Vector"":""0.123898409794026,1.99615860693746"",""Point"":""6551521.1209083,5574148.69763847"",""ArmLength"":0.0},""OutputRay"":{""Vector"":""0.123898409794026,1.99615860693746"",""Point"":""6551521.1209083,5574148.69763847"",""ArmLength"":0.0},""Tag"":{""OriginalTag"":{""Point"":{""$id"":""1"",""Uid"":""635305f6283544509409194818840029"",""Location"":""6551521.1209083,5574148.69763847""},""Direction"":""0.123898409794026,1.99615860693746""},""LeftRightMove"":0.0}}]}]";
-        var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json);
+        var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json,
+            MyJsonConverters.Get());
 
         var offset = new Vector(6551522.34418533, 5574146.66044663);
         input = ArcPathMakerVertex.Move(input, -offset);
@@ -217,7 +220,8 @@ public partial class ArcPathMakerTests
     {
         const string Json =
             @"[{""Location"":""6551522.34418533,5574146.66044663"",""InVector"":""0,0"",""InArmLength"":0.0,""OutVector"":""-0.255467483913962,0.966817648092271"",""OutArmLength"":0.0,""Flags"":2,""ReferencePoints"":null},{""Location"":""6551520.96855378,5574157.63177922"",""InVector"":""0.797106533311307,2.02114687021822"",""InArmLength"":0.0,""OutVector"":""0,0"",""OutArmLength"":0.0,""Flags"":1,""ReferencePoints"":[{""Vector"":""-0.966157735325396,1.93225387018174"",""Point"":""6551519.63539108,5574151.63526837"",""UseInputVector"":false,""InputVector"":""0,0"",""InputArmLength"":0.0,""OutputArmLength"":0.0,""InputRay"":{""Vector"":""-0.966157735325396,1.93225387018174"",""Point"":""6551519.63539108,5574151.63526837"",""ArmLength"":0.0},""OutputRay"":{""Vector"":""-0.966157735325396,1.93225387018174"",""Point"":""6551519.63539108,5574151.63526837"",""ArmLength"":0.0},""Tag"":{""OriginalTag"":{""Point"":{""$id"":""1"",""Uid"":""06fdaab10e9a49549bf6ba16f647485b"",""Location"":""6551519.63539108,5574151.63526837""},""Direction"":""-0.966157735325396,1.93225387018174""},""LeftRightMove"":0.0}}]}]";
-        var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json);
+        var input = JsonConvert.DeserializeObject<List<ArcPathMakerVertex>>(Json,
+            MyJsonConverters.Get());
 
         var offset = new Vector(6551522.34418533, 5574146.66044663);
         input = ArcPathMakerVertex.Move(input, -offset);

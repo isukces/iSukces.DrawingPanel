@@ -22,7 +22,7 @@ public class TwoArcsFinderTests
   ""StartDirection"": ""0.96711073366397649,0.25435571318907962""
 }";
 
-        var finder = JsonConvert.DeserializeObject<TwoArcsFinder>(Json);
+        var finder = JsonConvert.DeserializeObject<TwoArcsFinder>(Json, MyJsonConverters.Get());
 
         var isOk = finder.Compute(out var arc1, out var arc2, true);
         Assert.True(isOk);

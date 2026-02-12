@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Windows.Forms;
 using iSukces.DrawingPanel.Interfaces;
 using WinPoint=iSukces.Mathematics.Point;
 
@@ -20,7 +19,7 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
     }
 
 
-    public DrawingHandleResult HandleMouseWheel(MouseEventArgs e)
+    public DrawingHandleResult HandleMouseWheel(MouseEventArgs2 e)
     {
         var toLogicalBefore = ToLogicalLocation(_lastMouseSeenAt);
 
@@ -36,9 +35,9 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         return DrawingHandleResult.Break;
     }
 
-    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs e)
+    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs2  e)
     {
-        if (e.Button == MouseButtons.Middle)
+        if (e.Button == MouseButtons2.Middle)
         {
             var startPoint = ToLogicalLocation(e.Location);
             _dragMoveContext = new DragMoveContext
@@ -52,7 +51,7 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         return DrawingHandleResult.Continue;
     }
 
-    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args)
+    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs2  args)
     {
         _lastMouseSeenAt = args.Location;
         if (_dragMoveContext is null)
@@ -68,15 +67,21 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         return DrawingHandleResult.Break;
     }
 
-    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs e)
+    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs2  e)
     {
-        if (_dragMoveContext is null || e.Button != MouseButtons.Middle)
+        if (_dragMoveContext is null || e.Button != MouseButtons2.Middle)
             return DrawingHandleResult.Continue;
         _dragMoveContext = null;
         return DrawingHandleResult.Break;
     }
 
     private WinPoint ToLogicalLocation(Point mouseLocation)
+    {
+        var info            = GetDrawingCanvasInfo();
+        var toLogicalBefore = info.FromCanvas(mouseLocation);
+        return toLogicalBefore;
+    }
+    private WinPoint ToLogicalLocation(iSukces.Mathematics.Point mouseLocation)
     {
         var info            = GetDrawingCanvasInfo();
         var toLogicalBefore = info.FromCanvas(mouseLocation);
@@ -90,11 +95,11 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
 
     private DragMoveContext? _dragMoveContext;
 
-    private Point _lastMouseSeenAt;
+    private WinPoint _lastMouseSeenAt;
 
     private sealed class DragMoveContext
     {
-        public Point MouseStart { get; set; }
+        public WinPoint MouseStart { get; set; }
 
         public WinPoint Start { get; set; }
     }

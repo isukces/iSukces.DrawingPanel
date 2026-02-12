@@ -1,14 +1,12 @@
 using System;
-using System.Drawing;
 
 namespace iSukces.DrawingPanel.Interfaces;
 
-public interface IDrawable
+public interface IDrawableBase 
 {
-    void Draw(Graphics graphics);
     void SetCanvasInfo(DrawingCanvasInfo canvasInfo);
     event EventHandler? Changed;
-    bool               Visible { get; }
+    bool                Visible { get; }
 
 
     /// <summary>

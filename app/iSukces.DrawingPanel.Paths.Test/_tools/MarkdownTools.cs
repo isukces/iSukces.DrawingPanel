@@ -2,7 +2,7 @@ using System.Text;
 
 namespace iSukces.DrawingPanel.Paths.Test;
 
-internal class MarkdownTools
+internal static class MarkdownTools
 {
     public static void MakeMarkdownIndex(DirectoryInfo dir, Comparison<FileInfo> comparision)
     {

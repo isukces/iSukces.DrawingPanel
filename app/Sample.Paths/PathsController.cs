@@ -42,9 +42,9 @@ internal sealed class PathsController : DrawableBase, IDpMouseButtonHandler
         p.Draw();
     }
 
-    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs e)
+    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs2 e)
     {
-        if (e.Button == MouseButtons.Left)
+        if (e.Button == MouseButtons2.Left)
         {
             var loc = CanvasInfo.Transformation.FromCanvas(e.Location);
 
@@ -94,9 +94,9 @@ internal sealed class PathsController : DrawableBase, IDpMouseButtonHandler
         return DrawingHandleResult.Continue;
     }
 
-    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs args) { return DrawingHandleResult.Continue; }
+    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs2  args) { return DrawingHandleResult.Continue; }
 
-    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs e) { return DrawingHandleResult.Continue; }
+    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs2  e) { return DrawingHandleResult.Continue; }
 
     public void MaximumArc()
     {

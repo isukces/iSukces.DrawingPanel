@@ -20,8 +20,8 @@ public class PathBuilderTest
   ""Point"": ""63.2545531,51.08514872""
 }
 ";
-        var start      = JsonConvert.DeserializeObject<PathRayWithArm>(a1);
-        var reference1 = JsonConvert.DeserializeObject<PathRayWithArm>(a2);
+        var start      = JsonConvert.DeserializeObject<PathRayWithArm>(a1, MyJsonConverters.Get());
+        var reference1 = JsonConvert.DeserializeObject<PathRayWithArm>(a2, MyJsonConverters.Get());
 
         var pb = new PathBuilder(start.Point, new MyValidator(CircleCrossValidationResult.ForceLine));
         pb.AddConnectionAutomatic(start, reference1, false);
@@ -43,11 +43,21 @@ public class PathBuilderTest
   ""Point"": ""63.2545531,51.08514872""
 }
 ";
-        var start      = JsonConvert.DeserializeObject<PathRayWithArm>(a1);
-        var reference1 = JsonConvert.DeserializeObject<PathRayWithArm>(a2);
+        var start      = JsonConvert.DeserializeObject<PathRayWithArm>(a1, MyJsonConverters.Get());
+        var reference1 = JsonConvert.DeserializeObject<PathRayWithArm>(a2, MyJsonConverters.Get());
 
-        var pb = new PathBuilder(start.Point, new MyValidator(CircleCrossValidationResult.Invalid));
+        var pathValidator = new MyValidator(CircleCrossValidationResult.Invalid);
+        var pb            = new PathBuilder(start.Point, pathValidator);
         pb.AddConnectionAutomatic(start, reference1, false);
+
+        var cfg = new ResultDrawerConfig
+        {
+            Start  = start,
+            End    = reference1,
+            Result = new PathResult(pb.List),
+            Title  = new TestName(0, "", nameof(T02_Should_replace_strange_circle_with_line))
+        };
+        ResultDrawer.Draw(cfg);
         var list = pb.List;
         Assert.Equal(2, list.Count);
         var a = (ArcDefinition)list[0];

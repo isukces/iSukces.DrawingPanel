@@ -13,8 +13,3 @@ public interface IInitializeableDrawingLayersContainer : IDrawingLayersContainer
     ISupportInitialize
 {
 }
-
-public interface IDrawingCanvasInfoProvider
-{
-    DrawingCanvasInfo CanvasInfo { get; }
-}

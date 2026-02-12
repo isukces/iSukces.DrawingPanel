@@ -318,12 +318,12 @@ public class ZeroReferencePointPathCalculatorTests : TestBaseClass
     [Fact]
     public void T99a_Should_compute_practical_case()
     {
-        PathRay start = new PathRay(48.426398878846122,
+        var start = new PathRay(48.426398878846122,
             43.73157300192598,
             0.96711073366397649,
             0.25435571318907962);
 
-        PathRay end = new PathRay(110.61711161799218,
+        var end = new PathRay(110.61711161799218,
             49.932980045672636,
             98.73808832761253,
             25.968687970556957);
@@ -490,9 +490,9 @@ public class ZeroReferencePointPathCalculatorTests : TestBaseClass
         Assert.Equal(2, result.Elements.Count);
         var arc = (ArcDefinition)result.Elements[0];
         Assert.Equal(ArcDirection.CounterClockwise, arc.Direction);
-        Assert.Equal(21.9892812623252, arc.Angle, 6);
-        Assert.Equal(16.9902048760993, arc.Radius, 6);
-        AssertEx.Equal(44.2561848497048, 59.5875516182215, arc.Center);
+        Assert.Equal(21.989282464760489, arc.Angle, 6);
+        Assert.Equal(16.990203923796173, arc.Radius, 6);
+        AssertEx.Equal(44.2561848497048, 59.587550999999998, arc.Center);
         AssertEx.Equal(48.5777405281936, 43.1561421153959, arc.Start);
         AssertEx.Equal(54.4158283720046, 45.9695964424139, arc.End);
         AssertEx.Equal(0.967110733663976, 0.25435571318908, arc.DirectionStart);

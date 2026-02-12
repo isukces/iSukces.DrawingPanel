@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using iSukces.Mathematics;
 using Size = iSukces.Mathematics.Size;
 using Point = iSukces.Mathematics.Point;
 

@@ -15,15 +15,6 @@ public class PathBuilder
         if (reverseEnd)
             end1 = end1.WithInvertedVector();
 
-        bool CheckDot(ArcDefinition arc)
-        {
-            var dot = arc.DirectionStart * start1.Vector;
-            if (dot <= 0) return false;
-            dot = arc.DirectionEnd * end1.Vector;
-            if (dot <= 0) return false;
-            return true;
-        }
-
         var cross = start1.Cross(end1);
         if (cross is null)
         {
@@ -40,6 +31,8 @@ public class PathBuilder
             case CircleCrossValidationResult.Ok:
                 break;
             case CircleCrossValidationResult.Invalid:
+                AddFlexi(start, end, reverseEnd, ZeroReferencePointPathCalculatorFlags.DontUseOneArcSolution);
+                break;
             default:
                 AddFlexi(start, end, reverseEnd, ZeroReferencePointPathCalculatorFlags.DontUseOneArcSolution);
                 return;
@@ -59,6 +52,16 @@ public class PathBuilder
         }
 
         AddFlexi(start, end, reverseEnd);
+        return;
+
+        bool CheckDot(ArcDefinition arc)
+        {
+            var dot = arc.DirectionStart * start1.Vector;
+            if (dot <= 0) return false;
+            dot = arc.DirectionEnd * end1.Vector;
+            if (dot <= 0) return false;
+            return true;
+        }
     }
 
     /// <summary>
