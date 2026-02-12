@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <ProjectGuid>{03173AD8-A090-40F9-9DD0-BBEF925D303A}</ProjectGuid>
-        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-        <AssemblyVersion>2.26.120.31</AssemblyVersion>
-        <FileVersion>2.26.120.31</FileVersion>
-        <Version>2.26.120.31</Version>
-        <LangVersion>14</LangVersion>
-        <Nullable>enable</Nullable>
-        <NoWarn>1701;1702;1591</NoWarn>
-        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <Title>Drawing panel interfaces</Title>
-    </PropertyGroup>
-    <ItemGroup>
-        <Compile Update="_transform\DrawingPanelZoomInfoStorageData.cs">
-            <DependentUpon>IDrawingPanelZoomInfoStorage.cs</DependentUpon>
-        </Compile>
-        <PackageReference Include="iSukces.Math" Version="2.26.120.133"/>
-    </ItemGroup>
-    <Import Project="..\Common.props"/>
+  <PropertyGroup>
+    <ProjectGuid>{03173AD8-A090-40F9-9DD0-BBEF925D303A}</ProjectGuid>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <AssemblyVersion>2.26.212.32</AssemblyVersion>
+    <FileVersion>2.26.212.32</FileVersion>
+    <Version>2.26.212.32</Version>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <Title>Drawing panel interfaces</Title>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="_transform\DrawingPanelZoomInfoStorageData.cs">
+      <DependentUpon>IDrawingPanelZoomInfoStorage.cs</DependentUpon>
+    </Compile>
+    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
+  </ItemGroup>
+  <Import Project="..\Common.props" />
 </Project>

@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
-        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-        <AssemblyVersion>2.26.120.76</AssemblyVersion>
-        <FileVersion>2.26.120.76</FileVersion>
-        <Version>2.26.120.76</Version>
-        <LangVersion>14</LangVersion>
-        <Nullable>enable</Nullable>
-        <NoWarn>1701;1702;1591</NoWarn>
-        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <Title>Drawing panel paths</Title>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="iSukces.Math" Version="2.26.120.133"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.4"/>
-        <Using Include="iSukces.Mathematics"/>
-        <Using Include="System"/>
-        <Using Include="System.Collections"/>
-        <Using Include="System.Collections.Generic"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
-            <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
-        </Compile>
-        <Compile Update="ZeroReferencePointPathCalculatorResult.cs">
-            <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
-        </Compile>
-        <Compile Update="_utils\PathDistanceFinderResult.cs">
-            <DependentUpon>PathDistanceFinder.cs</DependentUpon>
-        </Compile>
-        <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings"/>
-    </ItemGroup>
-    <Import Project="..\Common.props"/>
+  <PropertyGroup>
+    <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <AssemblyVersion>2.26.212.77</AssemblyVersion>
+    <FileVersion>2.26.212.77</FileVersion>
+    <Version>2.26.212.77</Version>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <Title>Drawing panel paths</Title>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <Using Include="iSukces.Mathematics" />
+    <Using Include="System" />
+    <Using Include="System.Collections" />
+    <Using Include="System.Collections.Generic" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
+      <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
+    </Compile>
+    <Compile Update="ZeroReferencePointPathCalculatorResult.cs">
+      <DependentUpon>ZeroReferencePointPathCalculator.cs</DependentUpon>
+    </Compile>
+    <Compile Update="_utils\PathDistanceFinderResult.cs">
+      <DependentUpon>PathDistanceFinder.cs</DependentUpon>
+    </Compile>
+    <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
+  </ItemGroup>
+  <Import Project="..\Common.props" />
 </Project>

@@ -9,7 +9,7 @@ using System;
 namespace iSukces.DrawingPanel.Interfaces;
 
 [Flags]
-public enum MouseButtons2
+public enum DpMouseButtons
 {
     /// <summary>
     ///  The left mouse button was pressed.

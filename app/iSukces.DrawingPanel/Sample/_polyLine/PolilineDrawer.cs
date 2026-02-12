@@ -106,9 +106,9 @@ public partial class PolilineDrawer : DrawableBase, IDpMouseButtonHandler
 
 partial class PolilineDrawer
 {
-    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs2 e) { return DrawingHandleResult.Continue; }
+    public DrawingHandleResult HandleOnMouseDown(DpMouseEventArgs e) { return DrawingHandleResult.Continue; }
 
-    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs2 args)
+    public DrawingHandleResult HandleOnMouseMove(DpMouseEventArgs args)
     {
         if (_session is null)
             return DrawingHandleResult.Continue;
@@ -119,9 +119,9 @@ partial class PolilineDrawer
         return DrawingHandleResult.Break;
     }
 
-    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs2  e)
+    public DrawingHandleResult HandleOnMouseUp(DpMouseEventArgs  e)
     {
-        if (e.Button != MouseButtons2.Left)
+        if (e.Button != DpMouseButtons.Left)
             return DrawingHandleResult.Continue;
 
         var point = CanvasInfo.Transformation.FromCanvas(e.Location);

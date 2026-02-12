@@ -48,6 +48,14 @@ public class DrawableThumb : IDrawableWithLayer
         return Math.Abs(a.X - b.X) <= SizeHalf && Math.Abs(a.Y - b.Y) <= SizeHalf;
     }
 
+    public bool IsInside(iSukces.Mathematics.Point a)
+    {
+        if (_canvasInfo is null)
+            return false; // generalnie to program się wywalił na rzadko
+        var b = _canvasInfo.Transformation.ToCanvas(Center);
+        return Math.Abs(a.X - b.X) <= SizeHalf && Math.Abs(a.Y - b.Y) <= SizeHalf;
+    }
+
 
     private void OnChanged()
     {

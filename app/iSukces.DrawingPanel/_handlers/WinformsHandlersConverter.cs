@@ -7,10 +7,10 @@ namespace iSukces.DrawingPanel;
 
 public static class WinformsHandlersConverterX
 {
-    public static MouseEventArgs2 ToModel(this MouseEventArgs  src)
+    public static DpMouseEventArgs ToModel(this MouseEventArgs  src)
     {
-        var button = (MouseButtons2)src.Button; 
-        return new MouseEventArgs2(src.Delta, src.Location.ToModel(), button);
+        var button = (DpMouseButtons)src.Button; 
+        return new DpMouseEventArgs(src.Delta, src.Location.ToModel(), button);
     }
 
     private static Point ToModel(this System.Drawing.Point point)
@@ -18,9 +18,9 @@ public static class WinformsHandlersConverterX
         return new Point(point.X, point.Y);
     }
 
-    public static KeyEventArgs2 ToModel(this KeyEventArgs src)
+    public static DpKeyEventArgs ToModel(this KeyEventArgs src)
     {
-        var ee = new KeyEventArgs2(src.Alt, src.Control);
+        var ee = new DpKeyEventArgs(src.Alt, src.Control, src.KeyCode.ToString());
         return ee;
     }
 

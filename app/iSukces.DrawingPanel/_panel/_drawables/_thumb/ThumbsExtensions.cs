@@ -6,7 +6,7 @@ namespace iSukces.DrawingPanel;
 public static class ThumbsExtensions
 {
     public static int FindThumb<T>(this IReadOnlyList<T> thumbs, Point location)
-        where T:DrawableThumb
+        where T : DrawableThumb
     {
         for (var index = thumbs.Count - 1; index >= 0; index--)
         {
@@ -18,5 +18,19 @@ public static class ThumbsExtensions
 
         return -1;
     }
-        
+
+    public static int FindThumb<T>(this IReadOnlyList<T> thumbs, iSukces.Mathematics.Point location)
+        where T : DrawableThumb
+    {
+        for (var index = thumbs.Count - 1; index >= 0; index--)
+        {
+            var thumb    = thumbs[index];
+            var isInside = thumb.IsInside(location);
+            if (isInside)
+                return index;
+        }
+
+        return -1;
+    }
+
 }

@@ -19,7 +19,7 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
     }
 
 
-    public DrawingHandleResult HandleMouseWheel(MouseEventArgs2 e)
+    public DrawingHandleResult HandleMouseWheel(DpMouseEventArgs e)
     {
         var toLogicalBefore = ToLogicalLocation(_lastMouseSeenAt);
 
@@ -35,9 +35,9 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         return DrawingHandleResult.Break;
     }
 
-    public DrawingHandleResult HandleOnMouseDown(MouseEventArgs2  e)
+    public DrawingHandleResult HandleOnMouseDown(DpMouseEventArgs  e)
     {
-        if (e.Button == MouseButtons2.Middle)
+        if (e.Button == DpMouseButtons.Middle)
         {
             var startPoint = ToLogicalLocation(e.Location);
             _dragMoveContext = new DragMoveContext
@@ -51,7 +51,7 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         return DrawingHandleResult.Continue;
     }
 
-    public DrawingHandleResult HandleOnMouseMove(MouseEventArgs2  args)
+    public DrawingHandleResult HandleOnMouseMove(DpMouseEventArgs  args)
     {
         _lastMouseSeenAt = args.Location;
         if (_dragMoveContext is null)
@@ -67,9 +67,9 @@ public sealed class PanAndZoomBehavior : IDpMouseWheelHandler, IDpMouseButtonHan
         return DrawingHandleResult.Break;
     }
 
-    public DrawingHandleResult HandleOnMouseUp(MouseEventArgs2  e)
+    public DrawingHandleResult HandleOnMouseUp(DpMouseEventArgs  e)
     {
-        if (_dragMoveContext is null || e.Button != MouseButtons2.Middle)
+        if (_dragMoveContext is null || e.Button != DpMouseButtons.Middle)
             return DrawingHandleResult.Continue;
         _dragMoveContext = null;
         return DrawingHandleResult.Break;

@@ -2,7 +2,7 @@ namespace iSukces.DrawingPanel.Interfaces;
 
 public interface IDpMouseButtonHandler : IDpHandler
 {
-    DrawingHandleResult HandleOnMouseDown(MouseEventArgs2 e);
-    DrawingHandleResult HandleOnMouseMove(MouseEventArgs2 args);
-    DrawingHandleResult HandleOnMouseUp(MouseEventArgs2 e);
+    DrawingHandleResult HandleOnMouseDown(DpMouseEventArgs e);
+    DrawingHandleResult HandleOnMouseMove(DpMouseEventArgs args);
+    DrawingHandleResult HandleOnMouseUp(DpMouseEventArgs e);
 }

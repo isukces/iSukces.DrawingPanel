@@ -2,9 +2,9 @@ using iSukces.Mathematics;
 
 namespace iSukces.DrawingPanel.Interfaces;
 
-public sealed class MouseEventArgs2
+public sealed class DpMouseEventArgs
 {
-    public MouseEventArgs2(double delta, Point location, MouseButtons2 button)
+    public DpMouseEventArgs(double delta, Point location, DpMouseButtons button)
     {
         Delta        = delta;
         Location     = location;
@@ -13,5 +13,5 @@ public sealed class MouseEventArgs2
 
     public double Delta    { get; }
     public Point  Location { get; }
-    public MouseButtons2 Button { get; }
+    public DpMouseButtons Button { get; }
 }
