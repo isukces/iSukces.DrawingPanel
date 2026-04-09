@@ -13,10 +13,12 @@
     <Title>Drawing panel interfaces</Title>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="iSukces.Math" Version="2.26.409.135" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="_transform\DrawingPanelZoomInfoStorageData.cs">
       <DependentUpon>IDrawingPanelZoomInfoStorage.cs</DependentUpon>
     </Compile>
-    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
   </ItemGroup>
   <Import Project="..\Common.props" />
 </Project>

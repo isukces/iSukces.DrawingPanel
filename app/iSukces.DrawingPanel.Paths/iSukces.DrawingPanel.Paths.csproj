@@ -13,12 +13,8 @@
     <Title>Drawing panel paths</Title>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Math" Version="2.26.120.133" />
+    <PackageReference Include="iSukces.Math" Version="2.26.409.135" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <Using Include="iSukces.Mathematics" />
-    <Using Include="System" />
-    <Using Include="System.Collections" />
-    <Using Include="System.Collections.Generic" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ZeroReferencePointPathCalculatorLineResult.cs">
@@ -31,6 +27,10 @@
       <DependentUpon>PathDistanceFinder.cs</DependentUpon>
     </Compile>
     <None Remove="iSukces.DrawingPanel.Paths.csproj.DotSettings" />
+    <Using Include="iSukces.Mathematics" />
+    <Using Include="System" />
+    <Using Include="System.Collections" />
+    <Using Include="System.Collections.Generic" />
   </ItemGroup>
   <Import Project="..\Common.props" />
 </Project>
