@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{7A194A1C-A89E-430F-A58C-B9D47F0C0A16}</ProjectGuid>
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-    <AssemblyVersion>2.26.212.77</AssemblyVersion>
-    <FileVersion>2.26.212.77</FileVersion>
-    <Version>2.26.212.77</Version>
+    <AssemblyVersion>2.26.409.78</AssemblyVersion>
+    <FileVersion>2.26.409.78</FileVersion>
+    <Version>2.26.409.78</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <NoWarn>1701;1702;1591</NoWarn>

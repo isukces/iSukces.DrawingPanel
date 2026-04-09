@@ -3,9 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{A26B3431-314C-4B71-B75E-D1DEE0A894C2}</ProjectGuid>
     <TargetFrameworks>net8.0-windows;net10.0-windows</TargetFrameworks>
-    <AssemblyVersion>2.26.212.54</AssemblyVersion>
-    <FileVersion>2.26.212.54</FileVersion>
-    <Version>2.26.212.54</Version>
+    <AssemblyVersion>2.26.409.55</AssemblyVersion>
+    <FileVersion>2.26.409.55</FileVersion>
+    <Version>2.26.409.55</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
@@ -24,7 +24,7 @@
     <Using Include="System" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-windows'">
     <PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
