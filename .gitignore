@@ -10,3 +10,5 @@ app/build-debug.bat
 .claude/
 .roo/
 doc/Private/problems-01.md
+doc/changelog/
+doc/Private/task-nullable.md

@@ -1,4 +1,3 @@
-#nullable disable
 namespace iSukces.DrawingPanel.Paths.Test;
 
 public class TestName
@@ -10,7 +9,10 @@ public class TestName
         Title      = title;
     }
 
-    public string GetDescription() { return $"{GroupName} {TestNumber:00},  {Title}"; }
+    public string GetDescription()
+    {
+        return $"{GroupName} {TestNumber:00},  {Title}";
+    }
 
     public string GetFileName()
     {
@@ -20,9 +22,9 @@ public class TestName
     }
 
 
-    public string Title { get; set; }
+    public string Title { get; }
 
-    public string GroupName { get; set; }
+    public string GroupName { get; }
 
-    public int TestNumber { get; set; }
+    public int TestNumber { get; }
 }

@@ -1,4 +1,3 @@
-#nullable disable
 #if DEBUG && USE_TINYEXPR
 namespace iSukces.DrawingPanel.Paths
 {
